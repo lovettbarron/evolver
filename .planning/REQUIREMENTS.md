@@ -61,9 +61,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Curriculum Content
 
-- [ ] **CURR-01**: 35 Evolver sessions written across 10 modules (15-30 min each)
-- [ ] **CURR-02**: Each session has: objective, warm-up, setup, exercises with specific values, output checklist
-- [ ] **CURR-03**: ADHD design enforced: 5-min minimum, zero startup friction, specific parameter values
+- [x] **CURR-01**: 35 Evolver sessions written across 10 modules (15-30 min each)
+- [x] **CURR-02**: Each session has: objective, warm-up, setup, exercises with specific values, output checklist
+- [x] **CURR-03**: ADHD design enforced: 5-min minimum, zero startup friction, specific parameter values
 - [x] **CURR-04**: Evolver basic patch documented with full parameter dump
 - [x] **CURR-05**: Evolver signal flow, architecture, and module dependency map documented
 
@@ -138,9 +138,9 @@ Requirements for initial release. Each maps to roadmap phases.
 | INST-02 | Phase 2 | Pending |
 | INST-03 | Phase 2 | Pending |
 | INST-04 | Phase 1 | Complete |
-| CURR-01 | Phase 1 | Pending |
-| CURR-02 | Phase 1 | Pending |
-| CURR-03 | Phase 1 | Pending |
+| CURR-01 | Phase 1 | Complete |
+| CURR-02 | Phase 1 | Complete |
+| CURR-03 | Phase 1 | Complete |
 | CURR-04 | Phase 1 | Complete |
 | CURR-05 | Phase 1 | Complete |
 | DEPL-01 | Phase 6 | Pending |
