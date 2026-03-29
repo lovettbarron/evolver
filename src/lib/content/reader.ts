@@ -11,7 +11,7 @@ import {
   type Session,
   type Patch,
   type InstrumentFile,
-} from './schemas.js';
+} from './schemas';
 
 /**
  * Determine the content root directory based on config.

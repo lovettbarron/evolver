@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { ConfigSchema } from './content/schemas.js';
+import { ConfigSchema } from './content/schemas';
 
-export type { AppConfig } from './content/schemas.js';
+export type { AppConfig } from './content/schemas';
 
 export async function loadConfig() {
   const configPath = path.join(process.cwd(), 'evolver.config.json');
