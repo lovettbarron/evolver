@@ -5,6 +5,7 @@ status: draft
 shadcn_initialized: false
 preset: none
 created: 2026-03-29
+revised: 2026-03-29
 ---
 
 # Phase 02 — UI Design Contract
@@ -50,17 +51,16 @@ Exceptions: Touch targets for mobile navigation and CTA buttons use minimum 44px
 | Role | Size | Weight | Line Height | Font |
 |------|------|--------|-------------|------|
 | Body | 16px | 400 (regular) | 1.6 | Inter |
-| Label | 13px | 500 (medium) | 1.4 | Inter |
+| Label / Param | 14px | 400 (regular) | 1.5 | Inter (labels), JetBrains Mono (param values) |
 | Heading | 24px | 700 (bold) | 1.2 | Inter |
 | Display | 36px | 700 (bold) | 1.1 | Inter |
-| Param | 14px | 400 (regular) | 1.5 | JetBrains Mono |
 
-**Notes from CONTEXT.md decisions:**
-- Sans-serif headers (bold) and body per decision
-- Monospace for parameter values with distinct visual weight (`--param` token)
-- Display size used for the next-session hero card title
-- Body line-height at 1.6 for long-form session reading (Domus editorial feel)
-- Param role is specific to this project: synth parameter values in exercises and tables
+**Notes:**
+- 4 sizes, 2 weights. Label and Param share the 14px size; font family (Inter vs JetBrains Mono) is the differentiator.
+- Sans-serif headers (bold) and body per CONTEXT.md decision.
+- Monospace parameter values get the `--param` color token to further distinguish them from labels.
+- Display size used for the next-session hero card title and module headers.
+- Body line-height at 1.6 for long-form session reading (Domus editorial feel).
 
 ---
 
@@ -158,6 +158,8 @@ Exceptions: Touch targets for mobile navigation and CTA buttons use minimum 44px
 | Session row format | "{number}. {title}" with duration right-aligned |
 | Duration format | "{N} min" |
 | Framework page link | "About this method" |
+| Back arrow aria-label | "Back to session list" |
+| Close quick-ref aria-label | "Close quick reference panel" |
 
 **No destructive actions in this phase.** No delete, no reset, no data modification. All views are read-only content browsing.
 
@@ -216,6 +218,7 @@ Components the executor must build for this phase:
 - All interactive elements reachable via keyboard (Tab order follows visual order)
 - Focus indicators: 2px ring in `--accent` with 2px offset (visible against `--bg`)
 - Slide-out panel: focus trap when open, Escape key dismisses
+- Icon-only buttons (back arrow, close panel) have explicit `aria-label` attributes (see Copywriting Contract)
 - Color contrast: `--text` (#e8e8e8) on `--bg` (#0a0a0a) = ratio 17.4:1 (exceeds WCAG AAA)
 - Color contrast: `--muted` (#737373) on `--bg` (#0a0a0a) = ratio 5.2:1 (exceeds WCAG AA)
 - Color contrast: `--accent` (#c8ff00) on `--bg` (#0a0a0a) = ratio 14.8:1 (exceeds WCAG AAA)
