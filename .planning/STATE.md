@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-29T21:12:51.090Z"
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-03-29T21:18:58.537Z"
 last_activity: 2026-03-29 -- Completed 02-01 Next.js scaffold + session helpers
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 9
-  completed_plans: 7
+  completed_plans: 8
   percent: 78
 ---
 
@@ -56,6 +56,7 @@ Progress: [████████░░] 78%
 | Phase 01 P05 | 6min | 2 tasks | 17 files |
 | Phase 01 P06 | 2min | 2 tasks | 47 files |
 | Phase 02 P01 | 4min | 2 tasks | 12 files |
+| Phase 02 P03 | 4min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,9 @@ Recent decisions affecting current work:
 - [Phase 01]: 01-06: fs.cpSync for bundle script -- simple recursive copy, no external deps
 - [Phase 02]: @vitejs/plugin-react pinned to v4 (v6 requires vite 8, incompatible with vitest 3)
 - [Phase 02]: tsconfig switched from NodeNext to bundler moduleResolution for Next.js compatibility
+- [Phase 02]: Objective extracted from first non-heading content line (session schema has no objective field)
+- [Phase 02]: About page dual-source fallback: tries bundled src/content/framework/ then project root framework/
+- [Phase 02]: session-detail.tsx requires 'use client' for Next.js 15 dynamic import with ssr:false
 
 ### Pending Todos
 
@@ -97,6 +101,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29T21:12:51.088Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-03-29T21:18:58.534Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None
