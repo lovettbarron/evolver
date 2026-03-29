@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-04-PLAN.md
-last_updated: "2026-03-29T12:30:22.955Z"
-last_activity: 2026-03-29 -- Completed 01-04 curriculum sessions 01-18
+stopped_at: Completed 01-05-PLAN.md
+last_updated: "2026-03-29T16:15:25.066Z"
+last_activity: 2026-03-29 -- Completed 01-05 curriculum sessions 19-35
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 6
-  completed_plans: 4
-  percent: 67
+  completed_plans: 5
+  percent: 83
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-29)
 ## Current Position
 
 Phase: 1 of 6 (Content Pipeline + Curriculum)
-Plan: 4 of 6 in current phase
+Plan: 5 of 6 in current phase
 Status: Executing
-Last activity: 2026-03-29 -- Completed 01-04 curriculum sessions 01-18
+Last activity: 2026-03-29 -- Completed 01-05 curriculum sessions 19-35
 
-Progress: [███████░░░] 67%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [███████░░░] 67%
 | Phase 01 P02 | 4min | 2 tasks | 6 files |
 | Phase 01 P03 | 7min | 2 tasks | 4 files |
 | Phase 01 P04 | 13min | 2 tasks | 18 files |
+| Phase 01 P05 | 6min | 2 tasks | 17 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,10 @@ Recent decisions affecting current work:
 - [Phase 01]: 01-03: Module map retains 10-module/35-session structure after Anu Kirk cross-reference -- ordering validated
 - [Phase 01]: 01-04: All 18 sessions written from scratch -- existing 7 placeholders fully replaced per CONTEXT.md decision
 - [Phase 01]: 01-04: Session parameter values sourced from Anu Kirk exercises and DSI Manual definitions -- no invented values
+- [Phase 01]: 01-05: Recipe sessions (27-30) each produce 3 named patches with full parameter values
+- [Phase 01]: 01-05: Session 30 drum beat uses sequencer to morph single patch into multiple drum sounds per step
+- [Phase 01]: 01-05: Session 31 performance expression template (velocity/wheel/pressure/pedal) reusable across any patch
+- [Phase 01]: 01-05: Complete 35-session curriculum finished -- Modules 1-10 from foundations to capstone composition
 
 ### Pending Todos
 
@@ -83,10 +88,10 @@ None yet.
 
 - Research flag: Daily note parsing (Phase 5) is the most novel pattern -- may need a spike
 - Research flag: Vercel outputFileTracingIncludes for bundled content needs verification against Next.js 16
-- Existing work: 7 of 35 sessions already written -- Phase 1 curriculum work is partially complete
+- Resolved: All 35 sessions now written -- curriculum complete
 
 ## Session Continuity
 
-Last session: 2026-03-29T12:30:22.954Z
-Stopped at: Completed 01-04-PLAN.md
+Last session: 2026-03-29T16:14:28Z
+Stopped at: Completed 01-05-PLAN.md
 Resume file: None
