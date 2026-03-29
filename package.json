@@ -4,15 +4,25 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "bundle-content": "tsx scripts/bundle-content.ts",
     "validate-content": "tsx scripts/validate-content.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
+    "clsx": "^2.1.1",
     "glob": "^11.0.0",
     "gray-matter": "^4.0.3",
+    "lucide-react": "^1.7.0",
     "mermaid": "^11.13.0",
+    "next": "^15.5.14",
+    "postcss": "^8.5.8",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-callouts": "^2.1.2",
     "rehype-highlight": "^7.0.2",
@@ -24,11 +34,17 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "remark-wiki-link": "^2.0.1",
+    "tailwindcss": "^4.2.2",
     "unified": "^11.0.5",
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^22.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0",
     "vitest": "^3.0.0"

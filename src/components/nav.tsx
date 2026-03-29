@@ -1,0 +1,46 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { clsx } from 'clsx';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/instruments/evolver', label: 'Evolver' },
+  { href: '/instruments/evolver/sessions', label: 'Sessions' },
+];
+
+export function Nav() {
+  const pathname = usePathname();
+
+  return (
+    <nav className="flex items-center gap-lg px-lg h-[48px] bg-surface border-b border-surface">
+      <span className="font-mono text-sm text-muted tracking-wider uppercase mr-auto">
+        evolver
+      </span>
+      <div className="flex items-center gap-md overflow-x-auto">
+        {navLinks.map((link) => {
+          const isActive =
+            link.href === '/'
+              ? pathname === '/'
+              : pathname.startsWith(link.href);
+
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={clsx(
+                'text-sm whitespace-nowrap min-h-[48px] flex items-center transition-colors',
+                isActive
+                  ? 'text-text underline underline-offset-4'
+                  : 'text-muted hover:text-text',
+              )}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
