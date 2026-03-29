@@ -17,7 +17,7 @@ export function MermaidRenderer() {
       });
       const placeholders = document.querySelectorAll('.mermaid-placeholder');
       for (const el of placeholders) {
-        const diagram = el.getAttribute('data-diagram');
+        const diagram = el.getAttribute('data-chart');
         if (diagram) {
           try {
             const { svg } = await mermaid.render(

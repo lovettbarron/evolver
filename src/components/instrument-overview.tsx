@@ -1,4 +1,15 @@
+'use client';
+
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const MermaidRenderer = dynamic(
+  () =>
+    import('@/components/mermaid-renderer').then((m) => ({
+      default: m.MermaidRenderer,
+    })),
+  { ssr: false },
+);
 
 export interface InstrumentOverviewProps {
   title: string;
@@ -30,6 +41,7 @@ export function InstrumentOverview({
         <section className="mt-2xl">
           <h2 className="text-2xl font-bold mb-lg">Signal Flow</h2>
           <div className="prose" dangerouslySetInnerHTML={{ __html: signalFlowHtml }} />
+          <MermaidRenderer />
         </section>
       )}
 
