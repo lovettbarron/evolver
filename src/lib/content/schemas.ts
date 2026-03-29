@@ -10,6 +10,7 @@ export const SessionSchema = z.object({
   difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
   tags: z.array(z.string()),
   instrument: z.string(),
+  reference: z.string().optional(),
 }).passthrough();
 
 export const PatchSchema = z.object({

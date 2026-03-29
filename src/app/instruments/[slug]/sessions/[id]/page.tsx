@@ -49,6 +49,7 @@ export default async function SessionPage({
       next={next ? { slug: next.slug, title: next.data.title } : null}
       instrumentSlug={slug}
       quickRefContent={quickRefContent}
+      reference={current.data.reference ?? null}
     />
   );
 }

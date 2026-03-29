@@ -3,6 +3,7 @@
 import type { Session } from '@/lib/content/types';
 import { StickyHeader } from '@/components/sticky-header';
 import { PrevNextNav } from '@/components/prev-next-nav';
+import { SourceRef } from '@/components/source-ref';
 import dynamic from 'next/dynamic';
 
 const MermaidRenderer = dynamic(
@@ -20,6 +21,7 @@ interface SessionDetailProps {
   next: { slug: string; title: string } | null;
   instrumentSlug: string;
   quickRefContent: { label: string; html: string }[];
+  reference: string | null;
 }
 
 export function SessionDetail({
@@ -29,6 +31,7 @@ export function SessionDetail({
   next,
   instrumentSlug,
   quickRefContent,
+  reference,
 }: SessionDetailProps) {
   return (
     <div>
@@ -47,6 +50,11 @@ export function SessionDetail({
             <span className="text-muted/50">|</span>
             <span className="capitalize">{session.output_type}</span>
           </div>
+          {reference && (
+            <div className="mt-md text-sm">
+              <SourceRef reference={reference} />
+            </div>
+          )}
         </header>
         <div
           className="prose"
