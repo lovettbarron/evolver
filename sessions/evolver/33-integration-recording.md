@@ -4,7 +4,7 @@ module: "Integration & Composition"
 session_number: 33
 duration: 25
 prerequisite: 32
-output_type: template
+output_type: recording
 difficulty: advanced
 tags: [integration, recording, daw, midi, audio, workflow, template]
 instrument: evolver
