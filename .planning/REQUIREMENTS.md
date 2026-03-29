@@ -17,7 +17,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Session Browser
 
-- [ ] **SESS-01**: User can browse sessions grouped by learning module
+- [x] **SESS-01**: User can browse sessions grouped by learning module
 - [ ] **SESS-02**: User can read a session with formatted exercises, parameter tables, and checklists
 - [ ] **SESS-03**: User sees a "next session" action-first view showing exactly what to do next
 - [ ] **SESS-04**: User can access quick-reference cards (basic patch, signal flow) without opening a full session
@@ -54,7 +54,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Multi-Instrument
 
-- [ ] **INST-01**: URL routing is instrument-scoped: /instruments/[slug]/sessions/[id]
+- [x] **INST-01**: URL routing is instrument-scoped: /instruments/[slug]/sessions/[id]
 - [ ] **INST-02**: Each instrument has an overview page (architecture, signal flow, basic patch)
 - [ ] **INST-03**: Framework documentation (learning methodology, ADHD design) is visible in the app
 - [x] **INST-04**: Instrument data is discovered from filesystem (adding Cascadia = adding a directory)
@@ -112,7 +112,7 @@ Requirements for initial release. Each maps to roadmap phases.
 | PIPE-03 | Phase 1 | Complete |
 | PIPE-04 | Phase 1 | Complete |
 | PIPE-05 | Phase 1 | Complete |
-| SESS-01 | Phase 2 | Pending |
+| SESS-01 | Phase 2 | Complete |
 | SESS-02 | Phase 2 | Pending |
 | SESS-03 | Phase 2 | Pending |
 | SESS-04 | Phase 2 | Pending |
@@ -134,7 +134,7 @@ Requirements for initial release. Each maps to roadmap phases.
 | CHAL-02 | Phase 5 | Pending |
 | CHAL-03 | Phase 5 | Pending |
 | CHAL-04 | Phase 5 | Pending |
-| INST-01 | Phase 2 | Pending |
+| INST-01 | Phase 2 | Complete |
 | INST-02 | Phase 2 | Pending |
 | INST-03 | Phase 2 | Pending |
 | INST-04 | Phase 1 | Complete |

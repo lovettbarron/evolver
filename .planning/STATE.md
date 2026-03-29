@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-29T16:39:59.402Z"
-last_activity: 2026-03-29 -- Completed 01-05 curriculum sessions 19-35
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-29T21:12:51.090Z"
+last_activity: 2026-03-29 -- Completed 02-01 Next.js scaffold + session helpers
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 6
-  completed_plans: 6
-  percent: 83
+  total_plans: 9
+  completed_plans: 7
+  percent: 78
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-29)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 1: Content Pipeline + Curriculum
+**Current focus:** Phase 2: Session Browser
 
 ## Current Position
 
-Phase: 1 of 6 (Content Pipeline + Curriculum)
-Plan: 5 of 6 in current phase
+Phase: 2 of 6 (Session Browser)
+Plan: 1 of 3 in current phase
 Status: Executing
-Last activity: 2026-03-29 -- Completed 01-05 curriculum sessions 19-35
+Last activity: 2026-03-29 -- Completed 02-01 Next.js scaffold + session helpers
 
-Progress: [████████░░] 83%
+Progress: [████████░░] 78%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [████████░░] 83%
 | Phase 01 P04 | 13min | 2 tasks | 18 files |
 | Phase 01 P05 | 6min | 2 tasks | 17 files |
 | Phase 01 P06 | 2min | 2 tasks | 47 files |
+| Phase 02 P01 | 4min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 01]: 01-05: Session 31 performance expression template (velocity/wheel/pressure/pedal) reusable across any patch
 - [Phase 01]: 01-05: Complete 35-session curriculum finished -- Modules 1-10 from foundations to capstone composition
 - [Phase 01]: 01-06: fs.cpSync for bundle script -- simple recursive copy, no external deps
+- [Phase 02]: @vitejs/plugin-react pinned to v4 (v6 requires vite 8, incompatible with vitest 3)
+- [Phase 02]: tsconfig switched from NodeNext to bundler moduleResolution for Next.js compatibility
 
 ### Pending Todos
 
@@ -94,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29T16:39:59.400Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-session-browser/02-CONTEXT.md
+Last session: 2026-03-29T21:12:51.088Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
