@@ -13,7 +13,7 @@ This roadmap delivers an ADHD-friendly instrument learning platform: from a data
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Content Pipeline + Curriculum** - Data layer (vault reader, Zod schemas, markdown rendering) and complete 35-session Evolver curriculum (completed 2026-03-29)
-- [x] **Phase 2: Session Browser** - Browse sessions by module, read full session content, instrument-scoped routing (completed 2026-03-29)
+- [ ] **Phase 2: Session Browser** - Browse sessions by module, read full session content, instrument-scoped routing (gap closure in progress)
 - [ ] **Phase 3: Patch Library** - Browse, filter, and inspect documented patches with parameter tables
 - [ ] **Phase 4: MIDI SysEx Integration** - Receive, parse, store, and send SysEx patch dumps; patch diff view
 - [ ] **Phase 5: Progress + Challenges** - Additive progress dashboard and challenge exercises with patch responses
@@ -51,12 +51,14 @@ Plans:
   3. Opening the app shows a "next session" action-first view -- the user knows exactly what to do within 5 seconds
   4. User can access quick-reference cards (basic patch, signal flow) without leaving the session context
   5. Each instrument has an overview page showing architecture, signal flow, and basic patch; framework methodology docs are visible in the app
-**Plans**: 3 plans
+**Plans**: 5 plans
 
 Plans:
-- [ ] 02-01-PLAN.md -- Next.js scaffolding, Tailwind v4 design system, app shell, session helpers
-- [ ] 02-02-PLAN.md -- Session list page (module grouping) and session detail page (sticky header, quick-ref, prev/next, source refs, mermaid)
-- [ ] 02-03-PLAN.md -- Landing hero card, instrument overview page, framework about page
+- [x] 02-01-PLAN.md -- Next.js scaffolding, Tailwind v4 design system, app shell, session helpers
+- [x] 02-02-PLAN.md -- Session list page (module grouping) and session detail page (sticky header, quick-ref, prev/next, source refs, mermaid)
+- [x] 02-03-PLAN.md -- Landing hero card, instrument overview page, framework about page
+- [ ] 02-04-PLAN.md -- Gap closure: fix Mermaid data attribute mismatch, add MermaidRenderer to instrument overview
+- [ ] 02-05-PLAN.md -- Gap closure: wire source references into session detail page
 
 ### Phase 3: Patch Library
 **Goal**: Users can browse, filter, and inspect their documented patches with full parameter detail and session provenance
@@ -126,7 +128,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Content Pipeline + Curriculum | 6/6 | Complete   | 2026-03-29 |
-| 2. Session Browser | 3/3 | Complete   | 2026-03-29 |
+| 2. Session Browser | 3/5 | Gap closure | - |
 | 3. Patch Library | 0/TBD | Not started | - |
 | 4. MIDI SysEx Integration | 0/TBD | Not started | - |
 | 5. Progress + Challenges | 0/TBD | Not started | - |
