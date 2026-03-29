@@ -148,7 +148,7 @@ Exceptions: Touch targets for mobile navigation and CTA buttons use minimum 44px
 | Primary CTA | "Start Session" |
 | Hero subtitle | "Your next session is ready" |
 | Hero fallback note | "Browse sessions to pick up where you left off" |
-| Empty state heading | "No sessions found" |
+| Empty state heading | "Curriculum not loaded" |
 | Empty state body | "Session content could not be loaded. Check that your vault path is configured or restart in demo mode." |
 | Error state | "Something went wrong loading this session. Try refreshing the page, or go back to browse all sessions." |
 | Quick-ref button label | "Quick Ref" |
