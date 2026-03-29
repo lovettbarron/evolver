@@ -18,10 +18,10 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Session Browser
 
 - [x] **SESS-01**: User can browse sessions grouped by learning module
-- [ ] **SESS-02**: User can read a session with formatted exercises, parameter tables, and checklists
+- [x] **SESS-02**: User can read a session with formatted exercises, parameter tables, and checklists
 - [x] **SESS-03**: User sees a "next session" action-first view showing exactly what to do next
-- [ ] **SESS-04**: User can access quick-reference cards (basic patch, signal flow) without opening a full session
-- [ ] **SESS-05**: Sessions display source references and citations from reference materials
+- [x] **SESS-04**: User can access quick-reference cards (basic patch, signal flow) without opening a full session
+- [x] **SESS-05**: Sessions display source references and citations from reference materials
 
 ### Patch Library
 
@@ -113,10 +113,10 @@ Requirements for initial release. Each maps to roadmap phases.
 | PIPE-04 | Phase 1 | Complete |
 | PIPE-05 | Phase 1 | Complete |
 | SESS-01 | Phase 2 | Complete |
-| SESS-02 | Phase 2 | Pending |
+| SESS-02 | Phase 2 | Complete |
 | SESS-03 | Phase 2 | Complete |
-| SESS-04 | Phase 2 | Pending |
-| SESS-05 | Phase 2 | Pending |
+| SESS-04 | Phase 2 | Complete |
+| SESS-05 | Phase 2 | Complete |
 | PTCH-01 | Phase 3 | Pending |
 | PTCH-02 | Phase 3 | Pending |
 | PTCH-03 | Phase 3 | Pending |
