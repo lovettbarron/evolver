@@ -107,52 +107,52 @@ Requirements for initial release. Each maps to roadmap phases.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PIPE-01 | — | Pending |
-| PIPE-02 | — | Pending |
-| PIPE-03 | — | Pending |
-| PIPE-04 | — | Pending |
-| PIPE-05 | — | Pending |
-| SESS-01 | — | Pending |
-| SESS-02 | — | Pending |
-| SESS-03 | — | Pending |
-| SESS-04 | — | Pending |
-| SESS-05 | — | Pending |
-| PTCH-01 | — | Pending |
-| PTCH-02 | — | Pending |
-| PTCH-03 | — | Pending |
-| PTCH-04 | — | Pending |
-| MIDI-01 | — | Pending |
-| MIDI-02 | — | Pending |
-| MIDI-03 | — | Pending |
-| MIDI-04 | — | Pending |
-| MIDI-05 | — | Pending |
-| PROG-01 | — | Pending |
-| PROG-02 | — | Pending |
-| PROG-03 | — | Pending |
-| PROG-04 | — | Pending |
-| CHAL-01 | — | Pending |
-| CHAL-02 | — | Pending |
-| CHAL-03 | — | Pending |
-| CHAL-04 | — | Pending |
-| INST-01 | — | Pending |
-| INST-02 | — | Pending |
-| INST-03 | — | Pending |
-| INST-04 | — | Pending |
-| CURR-01 | — | Pending |
-| CURR-02 | — | Pending |
-| CURR-03 | — | Pending |
-| CURR-04 | — | Pending |
-| CURR-05 | — | Pending |
-| DEPL-01 | — | Pending |
-| DEPL-02 | — | Pending |
-| DEPL-03 | — | Pending |
-| DEPL-04 | — | Pending |
+| PIPE-01 | Phase 1 | Pending |
+| PIPE-02 | Phase 1 | Pending |
+| PIPE-03 | Phase 1 | Pending |
+| PIPE-04 | Phase 1 | Pending |
+| PIPE-05 | Phase 1 | Pending |
+| SESS-01 | Phase 2 | Pending |
+| SESS-02 | Phase 2 | Pending |
+| SESS-03 | Phase 2 | Pending |
+| SESS-04 | Phase 2 | Pending |
+| SESS-05 | Phase 2 | Pending |
+| PTCH-01 | Phase 3 | Pending |
+| PTCH-02 | Phase 3 | Pending |
+| PTCH-03 | Phase 3 | Pending |
+| PTCH-04 | Phase 3 | Pending |
+| MIDI-01 | Phase 4 | Pending |
+| MIDI-02 | Phase 4 | Pending |
+| MIDI-03 | Phase 4 | Pending |
+| MIDI-04 | Phase 4 | Pending |
+| MIDI-05 | Phase 4 | Pending |
+| PROG-01 | Phase 5 | Pending |
+| PROG-02 | Phase 5 | Pending |
+| PROG-03 | Phase 5 | Pending |
+| PROG-04 | Phase 5 | Pending |
+| CHAL-01 | Phase 5 | Pending |
+| CHAL-02 | Phase 5 | Pending |
+| CHAL-03 | Phase 5 | Pending |
+| CHAL-04 | Phase 5 | Pending |
+| INST-01 | Phase 2 | Pending |
+| INST-02 | Phase 2 | Pending |
+| INST-03 | Phase 2 | Pending |
+| INST-04 | Phase 1 | Pending |
+| CURR-01 | Phase 1 | Pending |
+| CURR-02 | Phase 1 | Pending |
+| CURR-03 | Phase 1 | Pending |
+| CURR-04 | Phase 1 | Pending |
+| CURR-05 | Phase 1 | Pending |
+| DEPL-01 | Phase 6 | Pending |
+| DEPL-02 | Phase 6 | Pending |
+| DEPL-03 | Phase 6 | Pending |
+| DEPL-04 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 40 total
-- Mapped to phases: 0
-- Unmapped: 40 ⚠️
+- Mapped to phases: 40
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-29*
-*Last updated: 2026-03-29 after initial definition*
+*Last updated: 2026-03-29 after roadmap phase mapping*
