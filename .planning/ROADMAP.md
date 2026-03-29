@@ -34,12 +34,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 6 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- Project scaffolding, Zod schemas, content reader, validate-content script
-- [ ] 01-02-PLAN.md -- Markdown rendering pipeline with Obsidian-flavored features
-- [ ] 01-03-PLAN.md -- Instrument docs frontmatter + module map review
-- [ ] 01-04-PLAN.md -- Curriculum sessions 01-18 (Modules 1-5)
-- [ ] 01-05-PLAN.md -- Curriculum sessions 19-35 (Modules 6-10)
-- [ ] 01-06-PLAN.md -- Bundle content to src/content/, reference PDFs, curriculum integration tests
+- [x] 01-01-PLAN.md -- Project scaffolding, Zod schemas, content reader, validate-content script
+- [x] 01-02-PLAN.md -- Markdown rendering pipeline with Obsidian-flavored features
+- [x] 01-03-PLAN.md -- Instrument docs frontmatter + module map review
+- [x] 01-04-PLAN.md -- Curriculum sessions 01-18 (Modules 1-5)
+- [x] 01-05-PLAN.md -- Curriculum sessions 19-35 (Modules 6-10)
+- [x] 01-06-PLAN.md -- Bundle content to src/content/, reference PDFs, curriculum integration tests
 
 ### Phase 2: Session Browser
 **Goal**: Users can browse, read, and navigate the Evolver curriculum through instrument-scoped routes with an action-first "what to do next" experience
@@ -51,11 +51,12 @@ Plans:
   3. Opening the app shows a "next session" action-first view -- the user knows exactly what to do within 5 seconds
   4. User can access quick-reference cards (basic patch, signal flow) without leaving the session context
   5. Each instrument has an overview page showing architecture, signal flow, and basic patch; framework methodology docs are visible in the app
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md -- Next.js scaffolding, Tailwind v4 design system, app shell, session helpers
+- [ ] 02-02-PLAN.md -- Session list page (module grouping) and session detail page (sticky header, quick-ref, prev/next, source refs, mermaid)
+- [ ] 02-03-PLAN.md -- Landing hero card, instrument overview page, framework about page
 
 ### Phase 3: Patch Library
 **Goal**: Users can browse, filter, and inspect their documented patches with full parameter detail and session provenance
@@ -125,7 +126,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Content Pipeline + Curriculum | 6/6 | Complete   | 2026-03-29 |
-| 2. Session Browser | 0/TBD | Not started | - |
+| 2. Session Browser | 0/3 | Planning complete | - |
 | 3. Patch Library | 0/TBD | Not started | - |
 | 4. MIDI SysEx Integration | 0/TBD | Not started | - |
 | 5. Progress + Challenges | 0/TBD | Not started | - |
