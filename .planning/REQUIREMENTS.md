@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Content Pipeline
 
-- [ ] **PIPE-01**: App reads markdown + YAML frontmatter from a configured Obsidian vault path
-- [ ] **PIPE-02**: App falls back to bundled demo content when no vault path is configured (Vercel deploy)
-- [ ] **PIPE-03**: All frontmatter is validated with Zod schemas at parse time
+- [x] **PIPE-01**: App reads markdown + YAML frontmatter from a configured Obsidian vault path
+- [x] **PIPE-02**: App falls back to bundled demo content when no vault path is configured (Vercel deploy)
+- [x] **PIPE-03**: All frontmatter is validated with Zod schemas at parse time
 - [ ] **PIPE-04**: Markdown renders with formatted parameter tables, callouts, and code blocks
 - [ ] **PIPE-05**: Reference PDFs are accessible locally and served via the demo app
 
@@ -57,7 +57,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **INST-01**: URL routing is instrument-scoped: /instruments/[slug]/sessions/[id]
 - [ ] **INST-02**: Each instrument has an overview page (architecture, signal flow, basic patch)
 - [ ] **INST-03**: Framework documentation (learning methodology, ADHD design) is visible in the app
-- [ ] **INST-04**: Instrument data is discovered from filesystem (adding Cascadia = adding a directory)
+- [x] **INST-04**: Instrument data is discovered from filesystem (adding Cascadia = adding a directory)
 
 ### Curriculum Content
 
@@ -107,9 +107,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PIPE-01 | Phase 1 | Pending |
-| PIPE-02 | Phase 1 | Pending |
-| PIPE-03 | Phase 1 | Pending |
+| PIPE-01 | Phase 1 | Complete |
+| PIPE-02 | Phase 1 | Complete |
+| PIPE-03 | Phase 1 | Complete |
 | PIPE-04 | Phase 1 | Pending |
 | PIPE-05 | Phase 1 | Pending |
 | SESS-01 | Phase 2 | Pending |
@@ -137,7 +137,7 @@ Requirements for initial release. Each maps to roadmap phases.
 | INST-01 | Phase 2 | Pending |
 | INST-02 | Phase 2 | Pending |
 | INST-03 | Phase 2 | Pending |
-| INST-04 | Phase 1 | Pending |
+| INST-04 | Phase 1 | Complete |
 | CURR-01 | Phase 1 | Pending |
 | CURR-02 | Phase 1 | Pending |
 | CURR-03 | Phase 1 | Pending |
