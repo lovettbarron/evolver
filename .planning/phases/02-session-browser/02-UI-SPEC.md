@@ -42,7 +42,7 @@ Declared values (must be multiples of 4):
 | 2xl | 48px | Major section breaks, hero spacing |
 | 3xl | 64px | Page-level vertical rhythm |
 
-Exceptions: Touch targets for mobile navigation and CTA buttons use minimum 44px height (accessibility).
+Exceptions: Touch targets for mobile navigation and CTA buttons use minimum 48px height (accessibility — uses 2xl token, exceeds WCAG 2.5.5 minimum).
 
 ---
 
