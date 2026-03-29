@@ -13,7 +13,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PIPE-02**: App falls back to bundled demo content when no vault path is configured (Vercel deploy)
 - [x] **PIPE-03**: All frontmatter is validated with Zod schemas at parse time
 - [x] **PIPE-04**: Markdown renders with formatted parameter tables, callouts, and code blocks
-- [ ] **PIPE-05**: Reference PDFs are accessible locally and served via the demo app
+- [x] **PIPE-05**: Reference PDFs are accessible locally and served via the demo app
 
 ### Session Browser
 
@@ -111,7 +111,7 @@ Requirements for initial release. Each maps to roadmap phases.
 | PIPE-02 | Phase 1 | Complete |
 | PIPE-03 | Phase 1 | Complete |
 | PIPE-04 | Phase 1 | Complete |
-| PIPE-05 | Phase 1 | Pending |
+| PIPE-05 | Phase 1 | Complete |
 | SESS-01 | Phase 2 | Pending |
 | SESS-02 | Phase 2 | Pending |
 | SESS-03 | Phase 2 | Pending |

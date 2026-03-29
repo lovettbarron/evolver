@@ -12,7 +12,7 @@ This roadmap delivers an ADHD-friendly instrument learning platform: from a data
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Content Pipeline + Curriculum** - Data layer (vault reader, Zod schemas, markdown rendering) and complete 35-session Evolver curriculum
+- [x] **Phase 1: Content Pipeline + Curriculum** - Data layer (vault reader, Zod schemas, markdown rendering) and complete 35-session Evolver curriculum (completed 2026-03-29)
 - [ ] **Phase 2: Session Browser** - Browse sessions by module, read full session content, instrument-scoped routing
 - [ ] **Phase 3: Patch Library** - Browse, filter, and inspect documented patches with parameter tables
 - [ ] **Phase 4: MIDI SysEx Integration** - Receive, parse, store, and send SysEx patch dumps; patch diff view
@@ -124,7 +124,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Content Pipeline + Curriculum | 5/6 | In Progress|  |
+| 1. Content Pipeline + Curriculum | 6/6 | Complete   | 2026-03-29 |
 | 2. Session Browser | 0/TBD | Not started | - |
 | 3. Patch Library | 0/TBD | Not started | - |
 | 4. MIDI SysEx Integration | 0/TBD | Not started | - |
