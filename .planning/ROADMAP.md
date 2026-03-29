@@ -31,11 +31,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Markdown files with parameter tables, callouts, wikilinks, and code blocks render correctly as HTML
   4. All 35 Evolver sessions exist as markdown files with objective, warm-up, setup, exercises with specific values, and output checklist
   5. Evolver basic patch and signal flow/architecture documentation exist with full parameter dumps
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md -- Project scaffolding, Zod schemas, content reader, validate-content script
+- [ ] 01-02-PLAN.md -- Markdown rendering pipeline with Obsidian-flavored features
+- [ ] 01-03-PLAN.md -- Instrument docs frontmatter + module map review
+- [ ] 01-04-PLAN.md -- Curriculum sessions 01-18 (Modules 1-5)
+- [ ] 01-05-PLAN.md -- Curriculum sessions 19-35 (Modules 6-10)
+- [ ] 01-06-PLAN.md -- Bundle content to src/content/, reference PDFs, curriculum integration tests
 
 ### Phase 2: Session Browser
 **Goal**: Users can browse, read, and navigate the Evolver curriculum through instrument-scoped routes with an action-first "what to do next" experience
@@ -120,7 +124,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Content Pipeline + Curriculum | 0/TBD | Not started | - |
+| 1. Content Pipeline + Curriculum | 0/6 | Not started | - |
 | 2. Session Browser | 0/TBD | Not started | - |
 | 3. Patch Library | 0/TBD | Not started | - |
 | 4. MIDI SysEx Integration | 0/TBD | Not started | - |
