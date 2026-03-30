@@ -66,13 +66,24 @@ export function requestEditBuffer(
       reject(new Error('SysEx response timeout (3s). Check MIDI connection.'));
     }, timeoutMs);
 
-    const buffer: number[] = [];
+    let buffer: number[] = [];
+    let inSysex = false;
     input.onmidimessage = (event: MIDIMessageEvent) => {
       const data = event.data;
       if (!data) return;
       for (let i = 0; i < data.length; i++) {
-        buffer.push(data[i]);
-        if (data[i] === 0xF7) {
+        const byte = data[i];
+        // Skip real-time messages (clock, active sensing, etc.)
+        if (byte >= 0xF8) continue;
+        if (byte === 0xF0) {
+          buffer = [0xF0];
+          inSysex = true;
+          continue;
+        }
+        if (!inSysex) continue;
+        buffer.push(byte);
+        if (byte === 0xF7) {
+          inSysex = false;
           clearTimeout(timeout);
           input.onmidimessage = null;
           const raw = new Uint8Array(buffer);
@@ -81,7 +92,6 @@ export function requestEditBuffer(
             reject(new Error('Invalid SysEx message received'));
             return;
           }
-          // Extract packed data: skip header (5 bytes) and footer (1 byte)
           const packedData = raw.slice(5, raw.length - 1);
           const unpacked = unpackMsBit(packedData);
           resolve(parseProgram(unpacked));

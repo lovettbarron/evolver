@@ -45,16 +45,28 @@ export function CapturePanel({ input, output, connected, onCapture }: CapturePan
     listenRef.current = listenMode;
     if (!listenMode || !input) return;
 
-    const buffer: number[] = [];
+    let buffer: number[] = [];
+    let inSysex = false;
     input.onmidimessage = (event: MIDIMessageEvent) => {
       if (!listenRef.current) return;
       const data = event.data;
       if (!data) return;
       for (let i = 0; i < data.length; i++) {
-        buffer.push(data[i]);
-        if (data[i] === 0xF7) {
+        const byte = data[i];
+        // Skip real-time messages (clock, active sensing, etc.)
+        if (byte >= 0xF8) continue;
+        if (byte === 0xF0) {
+          // Start of SysEx — reset buffer
+          buffer = [0xF0];
+          inSysex = true;
+          continue;
+        }
+        if (!inSysex) continue;
+        buffer.push(byte);
+        if (byte === 0xF7) {
+          inSysex = false;
           const raw = new Uint8Array(buffer);
-          buffer.length = 0;
+          buffer = [];
           const validation = validateSysexMessage(raw);
           if (validation.valid) {
             const packedData = raw.slice(5, raw.length - 1);
