@@ -1,152 +1,259 @@
-# Stack Research
+# Stack Research: Cascadia Instrument Support
 
-**Domain:** Obsidian-backed Next.js learning platform (instrument mastery)
-**Researched:** 2026-03-29
+**Domain:** Semi-modular synth learning platform (CV-only instrument addition)
+**Researched:** 2026-03-30
 **Confidence:** HIGH
 
-## Recommended Stack
+## Executive Summary
 
-This stack mirrors the proven PM Toolkit pattern: Next.js App Router with server components reading markdown files via gray-matter, rendered with react-markdown and rehype/remark plugins, styled with Tailwind CSS v4. The Evolver project is simpler than PM Toolkit (no database, no monorepo, no CLI) so the stack is deliberately minimal.
+The Cascadia milestone requires zero new npm dependencies. The existing stack (Next.js 15, Zod 3, markdown pipeline, Mermaid 11) covers all needs. The primary challenge is representational: how to document CV patch cable routings without SysEx or digital patch memory. The answer is a Patchbook-inspired YAML convention rendered with Mermaid (already installed) and custom React components using Tailwind (already installed).
 
-### Core Technologies
+## Recommended Stack Additions
 
-| Technology | Version | Purpose | Why Recommended |
-|------------|---------|---------|-----------------|
-| Next.js | ^16.2 | App Router framework, server components for vault reading | Proven pattern from PM Toolkit (running 16.1.6). App Router server components are the natural fit for reading filesystem content at request time. Turbopack dev server is now default and fast |
-| React | ^19.2 | UI library | Current stable (19.2.4). Server components for vault I/O, client components for progress tracking and interactivity |
-| TypeScript | ^5 | Type safety | Non-negotiable for Zod schema inference and catching frontmatter shape errors at build time |
-| Tailwind CSS | ^4.2 | Styling | CSS-first config in v4 eliminates tailwind.config.js. PM Toolkit already runs v4. Faster builds than v3 |
-| pnpm | ^10 | Package manager | Matches PM Toolkit. Faster installs, strict dependency resolution |
+### New Dependencies
 
-### Content Pipeline (Obsidian -> Web)
+None. The existing `package.json` covers all Cascadia requirements.
 
-| Library | Version | Purpose | Why Recommended |
-|---------|---------|---------|-----------------|
-| gray-matter | ^4.0.3 | Parse YAML frontmatter from markdown files | Industry standard (used by Gatsby, Astro, VitePress). PM Toolkit uses it. Stable at 4.0.3 for years -- battle-tested. MUST disable JS engine for security |
-| react-markdown | ^10.1.0 | Render markdown as React components | PM Toolkit uses it. Supports custom component mapping for synth parameter tables, callout boxes, audio embeds |
-| remark-gfm | ^4.0.1 | GitHub Flavored Markdown (tables, task lists, strikethrough) | Sessions use markdown tables extensively for parameter values. Tables are core to patch documentation |
-| rehype-pretty-code | ^0.14.3 | Syntax highlighting via Shiki | PM Toolkit pattern. Better than raw Shiki integration -- handles code blocks automatically with line numbers, highlighting |
-| rehype-raw | ^7.0.0 | Allow raw HTML in markdown | Needed for embedded audio players and custom HTML in session content |
-| rehype-slug | ^6.0.0 | Add IDs to headings | Enables linking to specific exercises within sessions (e.g., /sessions/evolver/01#exercise-3) |
-| shiki | ^4.0 | Syntax highlighting engine (used by rehype-pretty-code) | Peer dependency of rehype-pretty-code. VS Code-quality highlighting |
-| Zod | ^4.3 | Schema validation for frontmatter | PM Toolkit pattern. Validate session frontmatter, patch frontmatter, instrument config at the boundary. TypeScript inference from schemas |
+### Existing Dependencies That Cover Cascadia Needs
 
-### UI Components
+| Existing Dependency | Version (installed) | Cascadia Use |
+|---------------------|---------------------|-------------|
+| `mermaid` | ^11.13.0 | Signal flow diagrams for Cascadia architecture, auto-generated patch routing diagrams from YAML frontmatter |
+| `zod` | ^3.23.0 | Extended PatchSchema with `connections` and `settings` fields for CV patch documentation |
+| `gray-matter` | ^4.0.3 | Parse Cascadia patch YAML frontmatter (same pipeline as Evolver) |
+| `remark-*` / `rehype-*` pipeline | various | Render Cascadia session and patch markdown identically to Evolver |
+| `lucide-react` | ^1.7.0 | Icons for patch point types (audio out, CV in, gate, trigger) and module indicators |
+| `react-pdf` | ^10.4.1 | Cascadia manual reference (already at `/content/references/cascadia_manual_v1.1.pdf`) |
+| `clsx` | ^2.1.1 | Conditional styling for instrument-specific UI states (hide MIDI workspace, show patch diagram) |
 
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
-| radix-ui | ^1.4.3 | Accessible UI primitives (dialogs, popovers, progress bars) | Progress bars for module completion, instrument selector dropdown, session detail popovers. Use the unified package, not individual @radix-ui/react-* packages |
-| lucide-react | ^1.7.0 | Icons | Navigation icons, progress indicators, instrument icons, status badges |
-| class-variance-authority | ^0.7.1 | Component variant management | Button/card variants (session status: not-started/in-progress/complete) |
-| clsx | ^2.1.1 | Conditional class composition | Used alongside tailwind-merge for className logic |
-| tailwind-merge | ^3.4.0 | Merge Tailwind classes without conflicts | Prevents duplicate/conflicting Tailwind classes in component composition |
-| next-themes | ^0.4.6 | Dark/light mode toggle | Synth learning happens in studios -- dark mode is the primary theme |
+## The Patch Documentation Problem
 
-### Obsidian Integration
+### Problem
 
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
-| obsidian-callouts-markdown | ^1.0.5 | Render Obsidian-style callouts in react-markdown | PM Toolkit uses this. Supports `> [!tip]`, `> [!warning]` etc. Sessions use callouts for "If you only have 5 minutes" shortcuts |
-| server-only | ^0.0.1 | Prevent vault reader from being imported in client components | Security boundary. Vault reader touches filesystem -- must stay server-side |
+The Evolver stores patches as SysEx parameter dumps -- every knob position is an exact integer in a data structure. The Cascadia has no patch memory and no SysEx. A "patch" is a physical cable configuration plus knob/slider positions. How do we represent this in markdown?
 
-### Development Tools
+### Solution: Patchbook-Inspired YAML Convention
 
-| Tool | Purpose | Notes |
-|------|---------|-------|
-| @tailwindcss/postcss | PostCSS plugin for Tailwind v4 | Required for Tailwind v4 CSS-first workflow |
-| vitest | Unit/integration testing | PM Toolkit pattern. Faster than Jest, native ESM, works with React Testing Library |
-| @testing-library/react | Component testing | Test session rendering, progress state, markdown output |
-| eslint + eslint-config-next | Linting | Next.js-aware rules out of the box |
-| tw-animate-css | Tailwind animation utilities | Subtle progress animations, session transitions |
+Use a structured YAML frontmatter format inspired by [Patchbook](https://github.com/SpektroAudio/Patchbook), a markup language for modular synth patches by Spektro Audio. We adopt its conventions as YAML parsed by existing Zod schemas. No new dependency needed -- Patchbook itself is a Python parser we do not want.
 
-## Installation
+**Why not Patchbook directly:** Python tool, wrong runtime. We already have markdown + YAML + Zod. Adopting its notation ideas into our existing format is simpler.
 
-```bash
-# Core framework
-pnpm add next@^16.2 react@^19.2 react-dom@^19.2
+**Why not React Flow (@xyflow/react v12.10.2):** 200KB+ interactive node graph editor designed for drag-and-drop UIs. We need static, read-only patch documentation. Mermaid flowcharts handle this and are already installed.
 
-# Content pipeline
-pnpm add gray-matter@^4.0.3 react-markdown@^10.1.0 remark-gfm@^4.0.1 rehype-pretty-code@^0.14.3 rehype-raw@^7.0.0 rehype-slug@^6.0.0 shiki@^4.0 zod@^4.3
+**Why not d3:** Massive general-purpose visualization library. Overkill for labeled connection diagrams between named modules.
 
-# UI
-pnpm add radix-ui@^1.4.3 lucide-react@^1.7.0 class-variance-authority@^0.7.1 clsx@^2.1.1 tailwind-merge@^3.4.0 next-themes@^0.4.6
+### Proposed Cascadia Patch Frontmatter
 
-# Obsidian integration
-pnpm add obsidian-callouts-markdown@^1.0.5 server-only@^0.0.1
+```yaml
+---
+name: "Acid Bass with LPF Sweep"
+type: bass
+session_origin: 3
+description: "303-inspired acid bass using VCO A through the multimode VCF"
+tags: [bass, acid, lpf, vcf]
+instrument: cascadia
+created: "2026-04-15"
+patch_format: cv  # distinguishes from Evolver 'sysex' format
 
-# Dev dependencies
-pnpm add -D typescript@^5 @types/node@^20 @types/react@^19 @types/react-dom@^19 @tailwindcss/postcss@^4 tailwindcss@^4 eslint@^9 eslint-config-next@^16.2 vitest@^4 @testing-library/react@^16 @testing-library/dom@^10 @testing-library/jest-dom@^6 tw-animate-css@^1.4
+# Cable connections (Patchbook-inspired)
+connections:
+  - from: "VCO A (Triangle)"
+    to: "Mixer (Ch 1)"
+    type: audio
+  - from: "MIDI (Pitch Out)"
+    to: "VCO A (1V/Oct)"
+    type: pitch
+  - from: "EG 1 (Out)"
+    to: "VCF (FM 2)"
+    type: cv
+  - from: "LFO 1 (Triangle)"
+    to: "VCO A (FM 1)"
+    type: cv
+
+# Knob/slider positions (percentages, not exact values)
+settings:
+  VCO A:
+    frequency: "C2"
+    wave_shape: "Triangle"
+    pulse_width: "50%"
+  VCF:
+    cutoff: "30%"
+    resonance: "70%"
+    mode: "LP"
+  EG 1:
+    attack: "0%"
+    decay: "45%"
+    sustain: "5%"
+    release: "15%"
+---
+```
+
+### Connection Type Taxonomy
+
+Adopted from Patchbook's signal type notation:
+
+| Type | Meaning | Color Hint (for diagrams) |
+|------|---------|--------------------------|
+| `audio` | Audio signal path | Blue |
+| `cv` | Control voltage modulation | Orange |
+| `pitch` | 1V/Oct pitch tracking | Green |
+| `gate` | Gate/trigger signal | Red |
+| `clock` | Clock signal | Purple |
+
+### Rendering Strategy
+
+Two render modes from the same YAML data, no new dependencies:
+
+1. **Connection table** (default): Structured "From -> To (Type)" table. Works everywhere including Obsidian.
+2. **Mermaid diagram** (enhanced): Auto-generate a Mermaid flowchart from the `connections` array at render time. New component transforms YAML into Mermaid graph definition string, passes to existing `MermaidRenderer`.
+
+Example generated Mermaid:
+```
+graph LR
+    VCOA[VCO A] -->|Triangle| Mixer
+    MIDI -->|Pitch Out| VCOA
+    EG1[EG 1] -->|CV| VCF
+    LFO1[LFO 1] -->|CV| VCOA
+    Mixer --> VCF --> VCA --> Output
+```
+
+## Schema Changes Required
+
+### Extended PatchSchema
+
+```typescript
+const ConnectionSchema = z.object({
+  from: z.string(),   // "Module (Output Label)"
+  to: z.string(),     // "Module (Input Label)"
+  type: z.enum(['audio', 'cv', 'pitch', 'gate', 'clock']),
+});
+
+const SettingValueSchema = z.record(z.string(), z.string());
+
+// Add to existing PatchSchema:
+patch_format: z.enum(['sysex', 'cv']).optional(),
+connections: z.array(ConnectionSchema).optional(),
+settings: z.record(z.string(), SettingValueSchema).optional(),
+```
+
+The existing `.passthrough()` on PatchSchema means these new fields will pass validation even before the schema is formally updated, but they should be added explicitly for type inference.
+
+### Extended InstrumentFileSchema
+
+```typescript
+// Add 'patch-points' to the type enum:
+type: z.enum([
+  'overview', 'signal-flow', 'basic-patch', 'modules',
+  'patch-points',  // NEW: Cascadia's 101 patch points reference
+]),
+```
+
+## New Components (Zero New Dependencies)
+
+| Component | Purpose | Built With |
+|-----------|---------|------------|
+| `PatchConnectionDiagram` | Transform `connections` YAML into Mermaid flowchart, render via existing `MermaidRenderer` | `mermaid` (installed) |
+| `PatchConnectionTable` | Render connections as structured table with type icons | React + Tailwind + `lucide-react` (installed) |
+| `KnobSettings` | Render `settings` YAML as module-grouped parameter tables | React + Tailwind (installed) |
+| `PatchPointReference` | Quick-reference of Cascadia's 101 patch points by module | React + Tailwind + `lucide-react` (installed) |
+| `InstrumentMidiGuard` | Conditionally hide MIDI/SysEx workspace for CV-only instruments | React conditional rendering |
+
+## Cascadia Module Taxonomy
+
+The Cascadia has a fixed set of modules that patch content must reference consistently. This should be a TypeScript const object, not a dependency:
+
+```typescript
+export const CASCADIA_MODULES = {
+  'VCO A': { type: 'oscillator', patchPoints: 8 },
+  'VCO B': { type: 'oscillator', patchPoints: 6 },
+  'Noise': { type: 'source', patchPoints: 2 },
+  'Sub Osc': { type: 'source', patchPoints: 1 },
+  'Mixer': { type: 'mixer', patchPoints: 8 },
+  'VCF': { type: 'filter', patchPoints: 10 },
+  'Wave Folder': { type: 'waveshaper', patchPoints: 4 },
+  'Ring Mod': { type: 'modulator', patchPoints: 3 },
+  'VCA': { type: 'amplifier', patchPoints: 4 },
+  'EG 1': { type: 'envelope', patchPoints: 4 },
+  'EG 2': { type: 'envelope', patchPoints: 4 },
+  'LFO 1': { type: 'modulation', patchPoints: 6 },
+  'LFO 2': { type: 'modulation', patchPoints: 4 },
+  'S&H': { type: 'utility', patchPoints: 4 },
+  'Slew': { type: 'utility', patchPoints: 3 },
+  'FX Send/Return': { type: 'effects', patchPoints: 4 },
+  'Attenuators': { type: 'utility', patchPoints: 8 },
+  'Mult': { type: 'utility', patchPoints: 6 },
+  'MIDI': { type: 'interface', patchPoints: 6 },
+  'Output': { type: 'output', patchPoints: 4 },
+} as const;
 ```
 
 ## Alternatives Considered
 
-| Recommended | Alternative | When to Use Alternative |
-|-------------|-------------|-------------------------|
-| react-markdown + rehype | next-mdx-remote / MDX | If you need interactive components embedded in markdown. This project doesn't -- sessions are pure content with parameter tables. MDX adds compilation complexity for no benefit |
-| gray-matter | @content-collections/core | If you want build-time content validation with watch mode. Overkill for a single-user tool reading from a local vault |
-| Zod v4 | Zod v3 (3.24.x) | Only if a dependency requires Zod v3 peer. v4 has better performance and cleaner API. PM Toolkit could upgrade too |
-| rehype-pretty-code | Shiki directly | If you need fine-grained control over highlighting. rehype-pretty-code wraps Shiki with sensible defaults for markdown pipelines |
-| radix-ui (unified) | shadcn/ui | If you want pre-styled components. This project is simple enough that raw Radix + Tailwind is cleaner. shadcn/ui adds a CLI, component registry, and opinions about styling that aren't needed for a personal tool |
-| pnpm | npm | Never. pnpm is strictly better for workspace projects and matches PM Toolkit |
-| Flat file reading | SQLite (better-sqlite3) | If you need querying, aggregation, or cross-referencing at scale. PM Toolkit added SQLite for complex PRD/stakeholder relationships. This project has ~35 sessions and ~50 patches -- flat file reading is sufficient |
+| Recommended | Alternative | Why Not |
+|-------------|-------------|---------|
+| Mermaid flowcharts for patch routing | @xyflow/react (React Flow) v12 | 200KB+ interactive library for read-only static diagrams. Mermaid already installed, works in Obsidian too |
+| Patchbook-inspired YAML | Patchbook Python parser | Wrong runtime. We only need the notation conventions, not the Python tool |
+| YAML frontmatter for connections | Separate `.patch` file format | Breaks content pipeline. YAML in frontmatter keeps everything in one markdown file |
+| Percentage-based knob settings | Free-text parameter tables (like Evolver) | Evolver tables work because SysEx gives exact integers. Cascadia knobs are analog -- percentages need structure to be searchable |
+| Mermaid auto-generation from YAML | Hand-written Mermaid in markdown body | Error-prone, duplicates connection data, hard to keep in sync with frontmatter |
+| Static SVG panel diagram (future) | Interactive canvas-based patch visualizer | Good long-term differentiator but large design effort. Start with tables + Mermaid |
 
-## What NOT to Use
+## What NOT to Add
 
 | Avoid | Why | Use Instead |
 |-------|-----|-------------|
-| Contentlayer | Abandoned / unmaintained since 2023. Known build issues with newer Next.js versions | gray-matter + custom vault reader (PM Toolkit pattern) |
-| next-mdx-remote | Adds JSX compilation step to every page render. Sessions are pure markdown with tables -- no interactive components needed in content | react-markdown with remark/rehype plugins |
-| Prisma / Drizzle | No database in this project. Content lives in Obsidian markdown files. Adding an ORM is architectural over-engineering | Direct filesystem reads via Node.js fs |
-| @mdx-js/react | See next-mdx-remote above. MDX is for interactive content. This is a read-only learning tool | react-markdown |
-| styled-components / CSS modules | PM Toolkit uses Tailwind. Mixing paradigms creates maintenance burden | Tailwind CSS v4 |
-| moment.js / dayjs | No date manipulation needed. Sessions are sequence-based, not calendar-based (per ADHD design principles) | Native Date if ever needed |
-| Zustand / Redux | No complex client state. Progress is tracked in Obsidian vault files, not in-browser state. Server components handle data flow | React useState + server components |
-| MongoDB / Firebase | Cloud databases add deployment complexity and auth requirements for a personal tool with demo mode | Filesystem reads + demo-content directory |
+| `@xyflow/react` | 200KB+, interactive features unused, client-only rendering | Mermaid (installed) |
+| `reactflow` | Deprecated package name for @xyflow/react | N/A |
+| `d3` / `d3-*` | Massive general-purpose viz library, steep API | Mermaid for graphs, Tailwind for custom UI |
+| `tone.js` / Web Audio | This is documentation, not a synth emulator | Out of scope |
+| Any new MIDI library | Cascadia has no SysEx. MIDI is input-only (note data) | Existing MIDI code stays Evolver-specific |
+| `canvas` / `konva` / `fabric.js` | Canvas-based rendering for what is fundamentally text data | HTML tables + Mermaid SVG |
+| `graphviz` / `viz.js` | Patchbook uses GraphViz but we already have Mermaid | Mermaid (installed) |
 
-## Stack Patterns by Variant
+## Stack Patterns by Instrument Type
 
-**If running locally (vault mode):**
-- Vault reader reads from `~/song` (Obsidian vault path from config)
-- Real session progress, real patches, real practice data
-- Config: `evolver.config.yaml` with `vaultPath: ~/song`
+**If instrument has SysEx (like Evolver):**
+- `patch_format: 'sysex'` in frontmatter
+- Show MIDI workspace components
+- Render parameter tables with exact numeric values
+- Enable SysEx capture/send/diff features
 
-**If deployed to Vercel (demo mode):**
-- Vault reader falls back to `demo-content/` directory bundled in repo
-- Curriculum is visible, practice data is synthetic
-- `outputFileTracingIncludes` in next.config.ts must include `./demo-content/**/*`
-- No config file needed -- absence of vault path triggers demo mode automatically
+**If instrument is CV-only (like Cascadia):**
+- `patch_format: 'cv'` in frontmatter
+- Hide MIDI workspace via `InstrumentMidiGuard`
+- Render Mermaid signal flow from `connections` array
+- Show knob settings as percentage/descriptive values
+- Add "Patch Points Used" summary from connections data
+- Link to Baratatronix for patch inspiration format reference
 
-**If adding a second instrument (Cascadia):**
-- No stack changes needed
-- Content structure already supports `sessions/<instrument>/`, `patches/<instrument>/`
-- Vault reader uses instrument as content type parameter
+## Installation
+
+```bash
+# No new packages needed.
+# Existing dependencies cover all Cascadia requirements.
+```
 
 ## Version Compatibility
 
-| Package A | Compatible With | Notes |
-|-----------|-----------------|-------|
-| next@^16.2 | react@^19.2 | Next.js 16 requires React 19. Do not attempt React 18 |
-| rehype-pretty-code@^0.14 | shiki@^4.0 | rehype-pretty-code uses Shiki as peer dependency. Must use Shiki 4.x |
-| tailwindcss@^4.2 | @tailwindcss/postcss@^4 | Tailwind v4 uses PostCSS plugin, not the old tailwindcss CLI |
-| zod@^4.3 | typescript@^5 | Zod v4 requires TS 5.x for proper type inference |
-| radix-ui@^1.4 | react@^19 | Unified Radix package works with React 19 |
-| react-markdown@^10.1 | remark-gfm@^4, rehype-raw@^7, rehype-slug@^6 | All part of the unified remark/rehype ecosystem. Compatible by design |
+No new packages means no new compatibility concerns.
+
+| Package | Installed | Cascadia Impact |
+|---------|-----------|-----------------|
+| mermaid | ^11.13.0 | Flowchart diagram type handles all patch routing visualization needed |
+| zod | ^3.23.0 | `.passthrough()` on schemas means new YAML fields work immediately; formal schema update needed for type inference |
+| next | ^15.5.14 | App Router conditional rendering handles instrument-specific UI |
+| lucide-react | ^1.7.0 | Has cable/plug/signal icons suitable for patch point type indicators |
 
 ## Sources
 
-- PM Toolkit `package.json` (running in production) -- PRIMARY source for version compatibility and library selection (HIGH confidence)
-- PM Toolkit vault-reader, content-parser, config patterns -- Proven architecture to replicate (HIGH confidence)
-- [Next.js releases](https://github.com/vercel/next.js/releases) -- v16.2.1 latest (HIGH confidence)
-- [React versions](https://react.dev/versions) -- v19.2.4 latest (HIGH confidence)
-- [Tailwind CSS releases](https://github.com/tailwindlabs/tailwindcss/releases) -- v4.2.2 latest (HIGH confidence)
-- [Shiki npm](https://www.npmjs.com/package/shiki) -- v4.0.2 latest (HIGH confidence)
-- [react-markdown npm](https://www.npmjs.com/package/react-markdown) -- v10.1.0 latest (HIGH confidence)
-- [gray-matter npm](https://www.npmjs.com/package/gray-matter) -- v4.0.3 latest, stable for years (HIGH confidence)
-- [rehype-pretty-code npm](https://www.npmjs.com/package/rehype-pretty-code) -- v0.14.3 latest (HIGH confidence)
-- [Zod v4 release notes](https://zod.dev/v4) -- v4.3.6 latest (HIGH confidence)
-- [Radix UI unified package](https://ui.shadcn.com/docs/changelog/2026-02-radix-ui) -- v1.4.3 (HIGH confidence)
-- [lucide-react npm](https://www.npmjs.com/package/lucide-react) -- v1.7.0 latest (HIGH confidence)
+- [Baratatronix Cascadia Patches](https://www.baratatronix.com/cascadia-patches) -- Patch documentation format with audio previews, visual diagrams, tag categorization (MEDIUM confidence)
+- [Baratatronix Ageispolis Pad](https://www.baratatronix.com/cascadia/cascadia-ageispolis-pad) -- Individual patch: visual diagram + patching instructions + dual-mono setup (MEDIUM confidence)
+- [Intellijel Cascadia Patch Sheet](https://intellijel.com/downloads/manuals/cascadia_patch_sheet.pdf) -- Official blank template for documenting cable connections (HIGH confidence)
+- [Intellijel Cascadia Manual v1.1](https://intellijel.com/downloads/manuals/cascadia_manual_v1.1_2023.04.18.pdf) -- 101 patch points, module architecture, default signal flow (HIGH confidence)
+- [Patchbook by SpektroAudio](https://github.com/SpektroAudio/Patchbook) -- Markup language for modular patches: connection syntax, type taxonomy, parameter notation (HIGH confidence)
+- [PATCH & TWEAK Symbols](https://www.patchandtweak.com/symbols/) -- Free CC-licensed symbol system for modular patch documentation (MEDIUM confidence)
+- [@xyflow/react on npm](https://www.npmjs.com/package/@xyflow/react) -- v12.10.2, evaluated and rejected as overkill (HIGH confidence)
 
 ---
-*Stack research for: Obsidian-backed Next.js instrument learning platform*
-*Researched: 2026-03-29*
+*Stack research for: Cascadia instrument support in Evolver learning platform*
+*Researched: 2026-03-30*

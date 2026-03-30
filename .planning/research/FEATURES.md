@@ -1,190 +1,307 @@
-# Feature Research
+# Feature Landscape: Cascadia Instrument Support
 
-**Domain:** Instrument learning platform with Obsidian-backed data layer and Next.js frontend
-**Researched:** 2026-03-29
-**Confidence:** HIGH (well-scoped personal tool with clear patterns from PM Toolkit)
+**Domain:** Cascadia curriculum, patch documentation, and UI adaptations for a semi-modular synthesizer learning platform
+**Researched:** 2026-03-30
+**Milestone:** v1.1 Cascadia Instrument Support
 
-## Feature Landscape
+## Table Stakes
 
-### Table Stakes (Users Expect These)
+Features users expect when a second instrument is added to the platform. Missing = Cascadia feels like an afterthought compared to Evolver.
 
-Features the product must have to fulfill its core promise. Without these, the tool fails at its primary job of making the Evolver curriculum browsable, progress visible, and learning structured.
+| Feature | Why Expected | Complexity | Dependencies |
+|---------|--------------|------------|--------------|
+| Cascadia instrument data files (overview, architecture, signal flow, module docs) | Evolver has `overview.md`, `signal-flow.md`, `modules.md`, `basic-patch.md`; Cascadia needs parity | Med | None -- pure content authoring |
+| 25-session Cascadia curriculum (7 modules, 15-30 min each) | The platform's core value is structured curriculum; a second instrument without sessions is just a patch library | High | Instrument data files must exist first |
+| Cascadia "init state" documentation | Evolver has a 198-parameter basic patch table. Cascadia needs an equivalent "start here" state documenting all knob/switch/slider default positions | Med | None -- content derived from manual |
+| Patch documentation schema for cable-routed instruments | Evolver patches are parameter-value tables. Cascadia patches require cable routing + approximate knob positions. A new schema is needed | High | New Zod schema design |
+| Instrument selector working in UI | Already scaffolded but needs to actually switch content between Evolver and Cascadia | Low | Existing multi-instrument routing foundation |
+| Hide/adapt SysEx workspace for Cascadia | Cascadia has no patch memory and no SysEx. Showing the MIDI SysEx workspace is confusing | Low | Instrument-specific feature flags |
+| Demo mode with Cascadia synthetic learner data | Evolver demo mode exists with a synthetic learner journey; Cascadia needs its own | Med | Curriculum content + existing demo pattern |
+| Module-grouped session browser for Cascadia | Same browsing pattern as Evolver but with Cascadia's 7-module structure | Low | Curriculum content exists |
+| Challenge exercises with Cascadia-appropriate outputs | Evolver challenges produce saved patches (SysEx). Cascadia challenges produce documented patch sheets | Med | Patch documentation schema |
+| ADHD-paced session design | Non-negotiable platform constraint: zero activation energy, warm-ups, hard stops, single objective per session | Low | Curriculum design discipline |
 
-| Feature | Why Expected | Complexity | Notes |
-|---------|--------------|------------|-------|
-| Session browser | Core purpose of the frontend -- browse the 35-session curriculum in sequence | LOW | List/detail view, read from markdown + frontmatter. PM Toolkit pattern proven |
-| Session detail view | Users need to read session content (objective, exercises, output checklist) | LOW | Render markdown to HTML, display frontmatter metadata (module, duration, prereqs) |
-| Module grouping | Sessions are organized into 10 modules -- browsing must reflect this hierarchy | LOW | Group sessions by module from frontmatter, show module-level progress |
-| Progress tracking display | ADHD design principle: "progress must be visible" -- core to the learning system | MEDIUM | Read completion state from Obsidian session logs. Show completed/total per module |
-| Patch library browser | Documented patches are a primary output -- they need a searchable home | MEDIUM | Read patch markdown files, display parameter tables, filter by type/session |
-| Patch detail view | Full parameter dump display so you can recreate any patch from scratch | LOW | Render parameter tables from markdown, show description, playing tips, tags |
-| Demo mode | Vercel deployment needs synthetic data so curriculum is publicly visible | MEDIUM | Bundled content for deployment vs live vault reading for local. Feature flag or env var |
-| Responsive layout | Must work on laptop next to the Evolver -- not mobile-first but responsive enough | LOW | Standard responsive CSS. No native app needed per project constraints |
-| Multi-instrument selector | Framework is designed for extensibility (Evolver now, Cascadia later) | LOW | Instrument switcher in nav. Route structure: /instruments/[slug]/sessions, /instruments/[slug]/patches |
-| Basic navigation | Home, sessions, patches, progress -- the four core views | LOW | Standard Next.js App Router layout with nav component |
+## Differentiators
 
-### Differentiators (Competitive Advantage)
+Features unique to Cascadia that have no Evolver precedent. These justify adding the instrument and demonstrate the framework's flexibility.
 
-Features that set this apart from generic learning platforms (Syntorial, Ableton Learning Synths) and generic practice trackers (Modacity, Andante). These align with the project's unique position as a personal, ADHD-aware, hardware-instrument-specific learning tool backed by Obsidian.
+| Feature | Value Proposition | Complexity | Dependencies |
+|---------|-------------------|------------|--------------|
+| Visual patch sheet documentation | Cascadia patches require seeing WHERE cables connect -- unlike Evolver's "set parameter X to value Y" tables. The manual itself uses labeled cables (A, B, C, D...) on annotated panel diagrams (pp.14-16). Baratatronix provides downloadable Illustrator/Affinity templates for this. The platform should at minimum render cable lists and ideally show simplified panel annotation | High | SVG template system or structured cable YAML |
+| Normalled signal path documentation | Cascadia works without any cables thanks to extensive normalled connections (VCO B sine to VCO A FM2, Envelope A to VCA, Envelope B to VCF FM1, LFO Y to PWM, etc.). Each session and patch must document which normals are active and what breaking a normal does. This is a fundamentally different teaching model from Evolver | Med | Signal flow data extracted from manual |
+| Audio preview references per patch | Baratatronix includes dry audio previews for all Cascadia patches. The platform should reference audio files so learners have a target sound. "Does my patch sound like this?" | Med | Audio recording/hosting pattern |
+| "Make a Sound" as Session 01 (adapted from manual pp.11-16) | The manual's progressive walkthrough is perfect ADHD material: start simple (PWM + sub + filter), add Envelope B for punch, add wave folding with S&H randomness, add FM with LFO modulation, add FX pedal integration. Five steps, each building on the last, each producing an audible difference. Map directly to Session 01 | Low | None -- content design |
+| Envelope B multi-mode sessions (ENV/LFO/BURST) | Envelope B is effectively three instruments in one module. ENV mode gives AD/AHR/Cycle envelopes. LFO mode gives Free/Sync/LFV oscillation. BURST mode gives pulse burst generation. Each mode changes what Rise/Fall/Shape sliders do. No Evolver equivalent -- deserves dedicated sessions | Med | Curriculum design |
+| FX Send/Return integration sessions | Cascadia treats external effects as first-class citizens with front-panel Send/Return controls, LINE/INST level switch, phase invert, and dry/wet mix. The manual's "Make a Sound" walkthrough (p.16) demonstrates routing ring mod through a fuzz pedal. Sessions teaching FX pedal integration are unique to semi-modular workflow | Low | None -- content |
+| Unipolar vs bipolar slider teaching | Cascadia's panel uses visual conventions (center line on bipolar sliders, no line on unipolar) that encode modulation behavior. Teaching this visual language is unique to Cascadia and helps learners "read" the panel intuitively | Low | None -- content |
+| Cross-instrument concept mapping | "You learned filter envelopes on Evolver (Session 12). Cascadia's equivalent uses Envelope B in ENV mode patched to VCF FM1, which is normalled by default." For users who completed Evolver first, bridge references accelerate learning | Med | Both curricula complete |
+| VCO B as dual-purpose module sessions | VCO B operates at audio rate (VCO mode) or sub-audio rate (LFO mode at 1/1000 frequency). Teaching it as both a sound source AND a modulation source in dedicated sessions is a unique Cascadia concept | Low | Curriculum design |
 
-| Feature | Value Proposition | Complexity | Notes |
-|---------|-------------------|------------|-------|
-| ADHD-optimized session presentation | Zero-decision startup: session page shows exactly what to do first, no scrolling past theory. "Open and do step 1" principle in the UI | MEDIUM | Prioritize action items visually. Warm-up section prominent. Collapse optional exploration. Timer suggestion visible but not enforced |
-| Progress dashboard with streak-free design | Sequence-based progress (not calendar/streak). Shows "sessions completed" and "patches created" without guilt-inducing missed-day tracking | MEDIUM | Deliberately avoid streak counters (ADHD guilt spiral). Show module completion bars, total patches, last session completed. Celebrate what's done, not what's missed |
-| Cross-session continuity display | Each session shows what comes before and after, with warm-up context from previous session. Reduces re-entry friction | LOW | Previous/next session links with preview. Warm-up section references previous session's key output |
-| Searchable patch parameter tables | Unlike community patch sites (Patchstorage, SynthLib) which share files, this shows exact parameter values as searchable, diff-from-basic-patch tables | MEDIUM | Parse parameter tables from markdown. Show only values that differ from basic patch. Filter/search by parameter name or value |
-| Session quick-reference mode | 5-minute refresher view: just the key parameter values and patch settings, no full exercises. For days when you have 5 minutes not 20 | LOW | Alternate compact view of session content. Pull key values and output checklist only |
-| Technique guide collection | "How I made this sound" write-ups linked to patches and sessions. Builds over time into a personal synthesis reference | LOW | Rendered from markdown in technique-guides directory. Links to related patches and sessions |
-| Audio sample playback | Sound examples embedded in session and patch pages -- hear what a patch sounds like before recreating it | MEDIUM | Audio file references in frontmatter. HTML5 audio player. Files stored in vault or repo |
-| Instrument signal flow diagram | Interactive or static signal flow visualization for the Evolver (and later Cascadia). Understanding architecture aids learning | HIGH | SVG or canvas-based diagram. Could start as a static image and evolve. Evolver signal flow is well-documented in repo |
-| Session time estimate with ADHD context | Show "20 min" but also "can be split: exercises 1-3 (10 min) + exercises 4-5 (10 min)" for sessions that support partial completion | LOW | Metadata in frontmatter. Display in session header |
+## Anti-Features
 
-### Anti-Features (Commonly Requested, Often Problematic)
+Features to explicitly NOT build for Cascadia.
 
-Features that seem useful but would undermine the project's core principles or add complexity without proportional value.
-
-| Feature | Why Requested | Why Problematic | Alternative |
-|---------|---------------|-----------------|-------------|
-| Streak/calendar tracking | Gamification seems motivating | ADHD guilt spiral when streaks break. Calendar views highlight missed days. Directly contradicts project constraint "skipping days is expected, not failure" | Sequence-based progress bars. "You've completed 12 of 35 sessions" -- no dates, no judgment |
-| Real-time MIDI/sysex integration | Auto-capture patch parameters from hardware | Project explicitly scopes this out. Adds massive complexity (USB MIDI, sysex parsing, browser MIDI API). Manual documentation is intentional -- the act of writing down parameters reinforces learning | Keep manual patch documentation. Could add a structured form for parameter entry later |
-| Interactive synth emulation | Let users preview sounds in-browser like Syntorial or Ableton Learning Synths | The Evolver has unique analog+digital architecture that can't be faithfully emulated. The point is learning the physical hardware, not a simulation | Audio recordings of patches (before/after). Static signal flow diagrams |
-| Social features / community sharing | Share patches and progress with other Evolver users | Personal tool. Multi-user adds auth, moderation, data separation. Community patch sharing sites already exist (Patchstorage, SynthLib) | Demo mode makes curriculum publicly viewable. Patches are in markdown -- share via repo or blog post |
-| Spaced repetition algorithm | Optimize review timing based on forgetting curves | Over-engineering for a 35-session linear curriculum. The warm-up system already handles review. Adding SRS adds complexity and decision fatigue ("which review should I do?") | Warm-ups bridge forgetting gaps. Repeat-session-if-warm-up-feels-unfamiliar rule is simpler and sufficient |
-| Video tutorials | Richer media for teaching | Explicitly out of scope for v1 per PROJECT.md. Video production is a separate skill and time sink. Text + audio covers the use case | Text sessions with audio examples. Written technique guides |
-| Automated practice reminders / push notifications | Help users remember to practice | ADHD users often have notification overload. External reminders feel like pressure, not motivation. The tool should be pull-based (you come to it when ready) | Make the dashboard welcoming when you arrive. Show "pick up where you left off" prominently |
-| Complex analytics / charts | Visualize practice patterns over time | Premature for a personal tool with 35 sessions. Analytics create meta-work (analyzing data about practice instead of practicing). ADHD trap: optimizing the system instead of using it | Simple counts: sessions done, patches saved, current module. That's enough |
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| MIDI SysEx capture/send/parse/diff for Cascadia | Cascadia has no SysEx patch memory. It converts MIDI to CV via the MIDI/CV section but stores no patches digitally | Hide SysEx workspace when Cascadia selected; show patch documentation workspace instead |
+| Automated patch recall/loading | Cascadia patches exist as physical knob/cable states -- there is no way to load a patch programmatically | Document patches as reproducible "recipes" with exact positions. The manual setup IS the learning |
+| Numeric parameter tables (Evolver-style) | Evolver has 198 parameters with numeric readouts (e.g., "Frequency: 164"). Cascadia knobs have no numeric displays -- you cannot say "set FREQ to 164" because the knob has no markings beyond the panel labels | Use clock positions for knobs ("FREQ at 2 o'clock"), named positions for switches ("MODE: LP4"), and percentage/position for sliders ("FM1 slider at 75%") |
+| Full Eurorack module integration curriculum | Cascadia has 100+ Eurorack-compatible patch points, but teaching external module integration is another instrument's curriculum. Scope explosion | Mention Eurorack compatibility in overview. Keep curriculum focused on Cascadia-only patching. One session can demonstrate external module connection as a concept |
+| Interactive patch builder / drag-and-drop cable UI | Tempting to build a visual patching tool, but this is a learning platform, not a patch design app | Structured cable documentation in YAML renders to labeled lists. Visual patch sheets can be static annotated images |
+| Cascadia Config App integration | Intellijel has a web-based Config App for MIDI settings, envelope output modes, etc. Integrating with it adds complexity for edge-case configuration | Document Config App settings as prerequisites when relevant ("ensure Config App > Synth > Envelope Stage Outputs is set to Trigger") |
+| Video tutorials | Out of scope per PROJECT.md for all instruments | Text sessions + audio references + annotated panel images |
 
 ## Feature Dependencies
 
 ```
-[Vault Reader (markdown + frontmatter parsing)]
-    +-- requires --> [Session Browser]
-    +-- requires --> [Patch Library Browser]
-    +-- requires --> [Progress Tracking Display]
-    +-- requires --> [Demo Mode (synthetic data fallback)]
+Instrument Data Files (overview, signal-flow, modules, init-state)
+    |
+    +--> Init State Documentation (all default knob/switch/slider positions)
+    |       |
+    |       +--> Curriculum Sessions 01-25
+    |               |
+    |               +--> Challenge Exercises (per session)
+    |               |
+    |               +--> Demo Mode Synthetic Data
+    |
+    +--> Signal Flow / Normals Map (which modules connect by default)
+            |
+            +--> Normalled-vs-Patched Documentation
+            |
+            +--> Curriculum references to default routing
 
-[Session Browser]
-    +-- requires --> [Session Detail View]
-    +-- requires --> [Module Grouping]
+Patch Documentation Schema (cable routing YAML + panel state format)
+    |
+    +--> Patch Library Entries (Cascadia patches in new format)
+    |
+    +--> Visual Patch Sheet Rendering (optional, can defer)
+    |
+    +--> Audio Preview References (per patch)
 
-[Session Detail View]
-    +-- enhances --> [Cross-Session Continuity Display]
-    +-- enhances --> [Session Quick-Reference Mode]
-    +-- enhances --> [Audio Sample Playback]
-    +-- enhances --> [ADHD-Optimized Session Presentation]
-
-[Patch Library Browser]
-    +-- requires --> [Patch Detail View]
-    +-- enhances --> [Searchable Patch Parameter Tables]
-
-[Progress Tracking Display]
-    +-- requires --> [Progress Dashboard]
-
-[Multi-Instrument Selector]
-    +-- requires --> [Vault Reader] (instrument-scoped paths)
-    +-- enhances --> [Session Browser] (filtered by instrument)
-    +-- enhances --> [Patch Library Browser] (filtered by instrument)
-
-[Demo Mode]
-    +-- conflicts --> [Live Vault Reading] (mutually exclusive at runtime, same interface)
+UI Adaptations
+    |
+    +--> Instrument Selector (switch between Evolver/Cascadia)
+    |       |
+    |       +--> Route filtering (sessions/patches scoped to instrument)
+    |
+    +--> SysEx Workspace Hiding (instrument feature flags)
+    |
+    +--> Patch Display Adaptation (parameter tables vs cable docs)
 ```
 
-### Dependency Notes
+## Curriculum Structure: 25 Sessions, 7 Modules
 
-- **Vault Reader is the foundation:** Everything depends on parsing markdown + YAML frontmatter from the Obsidian vault (or bundled demo content). This is the PM Toolkit pattern and must be built first.
-- **Demo Mode and Live Vault are runtime alternatives:** Same components, different data source. Environment variable or build flag switches between them. Design the data layer interface first, implement both sources against it.
-- **Multi-Instrument Selector is structural:** Route structure must accommodate multiple instruments from the start, even if only Evolver exists at launch. Retrofitting instrument scoping is a rewrite.
-- **Audio playback is additive:** Can be layered on after session and patch views exist. Depends on audio files being referenced in frontmatter.
+### Rationale: Why 25 Sessions / 7 Modules (not 35/10 like Evolver)
 
-## MVP Definition
+The Evolver has more discrete parameter spaces requiring dedicated sessions:
+- **4 oscillators** (2 analog + 2 digital) = 8 sessions. Cascadia has 2 analog VCOs = 4 sessions
+- **Built-in sequencer** (4 tracks x 16 steps) = 5 sessions. Cascadia has no sequencer = 0 sessions
+- **Digital effects** (3-tap delay, distortion, tuned feedback, output hack) = 3 sessions. Cascadia has FX Send/Return only = 1 session
+- **Mod slots** (4 configurable source-amount-dest) = simpler than Cascadia's utility section
 
-### Launch With (v1)
+Cascadia adds depth that Evolver lacks:
+- **Utilities section** (S&H, Slew, Mixuverter, LFO X/Y/Z, Patchbay, Ring Mod) = 4 sessions
+- **Envelope B triple-mode** (ENV/LFO/BURST) = needs 2 sessions vs Evolver's single envelope type
+- **Wave Folder** = dedicated module with no Evolver equivalent = 1 session
+- **FX Send/Return + Line In** = external integration = 2 sessions
 
-Minimum viable product that delivers the core value: "makes the curriculum browsable, progress visible, and shareable with others."
+At 2-3 sessions/week, 25 sessions = approximately 8-10 weeks. Matches Evolver's pace.
 
-- [ ] Vault reader (markdown + YAML frontmatter parsing) -- foundation for everything
-- [ ] Session browser with module grouping -- browse the 35-session curriculum
-- [ ] Session detail view -- read session content, exercises, output checklist
-- [ ] Patch library browser -- browse documented patches by type
-- [ ] Patch detail view with parameter tables -- see full patch documentation
-- [ ] Progress dashboard (sessions completed, patches saved, current module) -- visible progress
-- [ ] Multi-instrument route structure -- `/instruments/[slug]/...` even if only Evolver exists
-- [ ] Demo mode with bundled content -- deployable to Vercel
-- [ ] Responsive layout -- usable on laptop next to the synth
-- [ ] Basic navigation (home, sessions, patches, progress) -- standard app shell
+### Proposed Module Map
 
-### Add After Validation (v1.x)
+```
+Module 1: Foundations (2 sessions)
+    +---> Module 2: Oscillators (4 sessions)
+         +---> Module 3: Envelopes & Amplitude (3 sessions)
+         |    +---> Module 4: Filter & Wave Folder (4 sessions)
+         |         +---> Module 5: Modulation & Utilities (4 sessions)
+         |              +---> Module 6: Advanced Patching & FX (4 sessions)
+         |                   +---> Module 7: Sound Design & Integration (4 sessions)
+         +---> Module 3 (parallel entry from oscillators)
+```
 
-Features to add once core browsing and progress tracking are working well.
+### Session Detail
 
-- [ ] ADHD-optimized session presentation (action-first layout, collapsed exploration) -- after validating the basic session view works during actual practice
-- [ ] Cross-session continuity (prev/next with warm-up context) -- after completing enough sessions to validate the flow
-- [ ] Searchable/filterable patch parameter tables -- after accumulating 10+ patches to make search meaningful
-- [ ] Session quick-reference mode -- after discovering which sessions benefit from a compact view
-- [ ] Audio sample playback -- after recording audio examples during sessions
+**Module 1: Foundations (2 sessions, ~40 min)**
+Goal: Set up, make sound, understand the panel layout and normalled signal path.
 
-### Future Consideration (v2+)
+| Session | Topic | Duration | Output |
+|---------|-------|----------|--------|
+| 01 | Setup & "Make a Sound" (manual pp.11-16 adapted) | 20 min | First sound produced, init state documented |
+| 02 | Panel tour, normals, MIDI/CV setup, slider conventions | 20 min | Panel sections identified, MIDI connected |
 
-Features to defer until the Evolver curriculum is substantially complete and Cascadia work begins.
+Session 01 follows the manual's progressive walkthrough: (1) connect power/audio/MIDI, (2) set up basic PWM+sub+filter patch, (3) add Envelope B for filter punch, (4) note that no cables were needed -- all via normalled connections. ADHD-optimized: immediate sound within 3 minutes.
 
-- [ ] Instrument signal flow diagram -- HIGH complexity, nice-to-have visualization
-- [ ] Technique guide collection -- needs enough written content to justify a dedicated section
-- [ ] Second instrument (Cascadia) -- validates the multi-instrument framework
-- [ ] Streak-free progress dashboard enhancements (module completion celebrations, patch gallery view)
+Session 02 teaches the panel's color-coded sections, the graphical conventions (outputs in blocks, inputs outside blocks, normals shown with bubbles, arrows for signal flow, center-line for bipolar sliders, light/dark slider caps for parameter vs modulation amount).
 
-## Feature Prioritization Matrix
+**Module 2: Oscillators (4 sessions, ~85 min)**
+Goal: Understand and use both VCOs as sound sources and modulation sources.
 
-| Feature | User Value | Implementation Cost | Priority |
-|---------|------------|---------------------|----------|
-| Vault reader (markdown + frontmatter) | HIGH | MEDIUM | P1 |
-| Session browser + module grouping | HIGH | LOW | P1 |
-| Session detail view | HIGH | LOW | P1 |
-| Patch library browser | HIGH | LOW | P1 |
-| Patch detail view | HIGH | LOW | P1 |
-| Progress dashboard | HIGH | MEDIUM | P1 |
-| Demo mode | HIGH | MEDIUM | P1 |
-| Multi-instrument route structure | MEDIUM | LOW | P1 |
-| Responsive layout | MEDIUM | LOW | P1 |
-| ADHD-optimized session presentation | HIGH | MEDIUM | P2 |
-| Cross-session continuity | MEDIUM | LOW | P2 |
-| Searchable patch parameters | MEDIUM | MEDIUM | P2 |
-| Session quick-reference mode | MEDIUM | LOW | P2 |
-| Audio sample playback | MEDIUM | MEDIUM | P2 |
-| Signal flow diagram | LOW | HIGH | P3 |
-| Technique guide collection | LOW | LOW | P3 |
+| Session | Topic | Duration | Output |
+|---------|-------|----------|--------|
+| 03 | VCO A basics -- waveshapes via Mixer, pitch, octave, sub-oscillator | 20 min | Patch exploring each waveform |
+| 04 | VCO A advanced -- PWM, FM1 (exponential), FM2/INDEX (TZFM vs EXP), sync (soft/hard) | 25 min | FM patch, sync patch |
+| 05 | VCO B -- audio vs LFO mode, four simultaneous outputs (sine/tri/saw/square), pitch tracking | 20 min | VCO B as LFO modulation patch |
+| 06 | Two-oscillator patches -- detuning, intervals, VCO B as FM source, oscillator sync between VCOs | 20 min | Detuned pad patch, sync lead patch |
 
-**Priority key:**
-- P1: Must have for launch -- delivers core value proposition
-- P2: Should have, add after validating core works during actual practice
-- P3: Nice to have, defer until curriculum is further along
+**Module 3: Envelopes & Amplitude (3 sessions, ~65 min)**
+Goal: Shape sound over time using both envelopes, understand VCA behavior, use Push Gate.
 
-## Competitor Feature Analysis
+| Session | Topic | Duration | Output |
+|---------|-------|----------|--------|
+| 07 | Envelope A -- ADSR+Hold (3 hold positions: off/gate-extender/AHDSR), speed switch, CTRL source | 25 min | Percussive vs pad envelope patches |
+| 08 | Envelope B modes -- Envelope (AD/AHR/Cycle), LFO (Free/Sync/LFV), introduction to Burst | 20 min | Cycling envelope drone, LFO shape exploration |
+| 09 | VCA A, VCA B/LPF, Push Gate -- amplitude paths, secondary VCA as low-pass gate, manual triggering | 20 min | LPG-style pluck patch |
 
-| Feature | Syntorial | Ableton Learning Synths | Practice Apps (Modacity/Andante) | Patch Sites (Patchstorage/SynthPatch) | Evolver (This Project) |
-|---------|-----------|------------------------|----------------------------------|---------------------------------------|------------------------|
-| Structured curriculum | 199 lessons, linear | Chapter-based, linear | No curriculum | No curriculum | 35 sessions, 10 modules, linear with warm-up bridges |
-| Interactive synth | Built-in (Primer) | Browser synth | N/A | N/A | No -- physical hardware focus |
-| Ear training | Core feature (challenges) | Implicit (play and listen) | No | No | Implicit (exercises produce audible results) |
-| Patch library | 706 patches from lessons | Presets | N/A | Community uploads | Personal patches with full parameter documentation |
-| Progress tracking | Lesson completion | None | Timer, streaks, charts | None | Sequence-based, streak-free, module completion |
-| ADHD considerations | None explicit | None explicit | Some (timers, reminders) | None | Core design principle -- zero activation energy, time-boxing, forgiveness |
-| Hardware-specific | Generic synthesis concepts | Generic synthesis concepts | Generic practice | Platform-specific uploads | Deep single-instrument curriculum with exact parameter values |
-| Offline/personal | Desktop app | Browser only | Mobile app | Browser community | Local vault + deployed demo |
-| Shareable | No | No | No | Yes (community) | Demo mode (curriculum visible, practice data synthetic) |
+**Module 4: Filter & Wave Folder (4 sessions, ~85 min)**
+Goal: Shape timbre with the multimode filter and wave folder.
+
+| Session | Topic | Duration | Output |
+|---------|-------|----------|--------|
+| 10 | VCF basics -- 7 modes (LP4/LP1/HP4/BP4/HP1/N+LP/N+HP), frequency, Q, self-oscillation | 25 min | Filter sweep patch per mode |
+| 11 | VCF modulation -- FM1/FM2/FM3 inputs, envelope-to-filter (normalled Env B to FM1), keyboard tracking | 20 min | Envelope-controlled filter patch |
+| 12 | Wave Folder -- fold amount, MOD to FOLD, using wave folding for harmonic richness, combining with VCF | 20 min | Wave-folded bass patch |
+| 13 | Mixer -- combining VCO A sources (pulse/sub/noise), noise types (white/pink/alt), soft clipping, level balancing | 20 min | Mixed-source textural patch |
+
+**Module 5: Modulation & Utilities (4 sessions, ~85 min)**
+Goal: Use Cascadia's utility modules for complex modulation routing.
+
+| Session | Topic | Duration | Output |
+|---------|-------|----------|--------|
+| 14 | LFO X/Y/Z -- rate, rate dividers, output shapes, normalled destinations (X to PW, Y to PWM, Z to nothing) | 20 min | LFO-modulated evolving patch |
+| 15 | S&H and Slew/Env Follow -- random stepped voltages, smoothing, envelope following external audio | 25 min | S&H random modulation patch |
+| 16 | Mixuverter, Mults, Sum, Invert, BI>UNI -- combining and transforming control voltages | 20 min | Complex modulation routing patch |
+| 17 | Patchbay (9 normals), Expression Source -- understanding the default routing matrix, expression pedal | 20 min | Expression-controlled performance patch |
+
+**Module 6: Advanced Patching & FX (4 sessions, ~85 min)**
+Goal: Use Ring Mod, external effects, external audio, and complex multi-cable patches.
+
+| Session | Topic | Duration | Output |
+|---------|-------|----------|--------|
+| 18 | Ring Mod -- VCO A x VCO B multiplication, normalled inputs, using as sound source and modulation | 20 min | Ring mod metallic patch |
+| 19 | FX Send/Return -- integrating external pedals, LINE/INST level, phase, dry/wet, signal chain placement | 25 min | FX-integrated patch (requires pedal) |
+| 20 | Line In -- processing external audio through Cascadia's filter/wavefolder/envelopes | 20 min | External audio processing patch |
+| 21 | Envelope B Burst mode deep dive + complex multi-cable patches -- breaking normals intentionally | 20 min | Burst-mode rhythmic patch |
+
+**Module 7: Sound Design & Integration (4 sessions, ~85 min)**
+Goal: Combine everything into musical results and integrate with DAW.
+
+| Session | Topic | Duration | Output |
+|---------|-------|----------|--------|
+| 22 | Recipe: Bass patches -- acid bass (LPF + Env B), sub bass (wave folder), FM bass | 20 min | 2-3 documented bass patches |
+| 23 | Recipe: Lead/melodic patches -- sync lead, TZFM bell, wave-folded harmonic lead | 20 min | 2-3 documented lead patches |
+| 24 | Recipe: Textural/generative -- S&H-driven evolution, burst-mode rhythms, drone with LFV | 25 min | 2-3 documented texture patches |
+| 25 | Integration: Recording into Ableton, performance setup, what to reach for when making music | 20 min | Recorded audio in DAW session |
+
+## Patch Documentation Format (Critical Design Decision)
+
+### The Problem
+
+Evolver patches are parameter tables:
+```markdown
+| Parameter | Value | Notes |
+|-----------|-------|-------|
+| Osc 1 Frequency | C0 | Base pitch |
+| Osc 1 Shape | Saw | Sawtooth wave |
+```
+
+This works because the Evolver has numeric readouts for every parameter. Cascadia has no numeric readouts -- knobs are unmarked continuous controls, sliders have no numbered scales.
+
+### The Solution: Two-Part Patch Format
+
+**Part 1: Panel State (knob/switch/slider positions by section)**
+
+```yaml
+panel_state:
+  vco_a:
+    pitch: "12 o'clock"
+    octave: 3
+    pw: "50% (center)"
+    pw_mod: "0 (bottom)"
+    fm1: "0 (center, no FM)"
+    index_mod: "0 (bottom)"
+    index: "0 (bottom)"
+    tzfm_exp: "EXP"
+    ac_dc: "AC"
+    sync_type: "X (off)"
+    pulse_position: "UP (center-triggered)"
+  mixer:
+    in1: "75%"
+    in2: "0"
+    sub: "50%"
+    noise: "0"
+    noise_type: "SUB-1"
+    soft_clip: "OFF"
+  vcf:
+    freq: "2 o'clock"
+    q: "0 (fully CCW)"
+    mode: "LP4"
+    fm1: "0 (center)"
+    fm2: "0 (center)"
+    fm3: "0 (center)"
+```
+
+**Part 2: Cable Routing (labeled pairs following manual convention)**
+
+```yaml
+cables:
+  - id: A
+    from: "ENV B OUT [5.F]"
+    to: "S&H TRIG IN [12.1.A]"
+    color: "red"
+    purpose: "Trigger S&H on each note for random voltage"
+    breaks_normal: null
+  - id: B
+    from: "S&H OUT [12.1.B]"
+    to: "WAVE FOLDER FOLD IN"
+    color: "blue"
+    purpose: "Random fold amount per note"
+    breaks_normal: "VCA A normalled to Wave Folder input"
+```
+
+**Part 3: Context**
+
+```yaml
+normals_active:
+  - "MIDI PITCH to VCO A PITCH and VCF FM2"
+  - "MIDI GATE to ENV A GATE and ENV B GATE"
+  - "ENV A to VCA A"
+  - "LFO X to VCO A PW (via LFO Y divider)"
+normals_broken:
+  - "Cable B breaks VCA A normal to Wave Folder"
+what_to_listen_for: "Random wave folding amount changes on each note attack"
+audio_reference: null
+```
+
+This YAML maps cleanly to the existing Zod schema pattern and can render in the UI as both a structured list and (eventually) annotated panel diagrams.
+
+## MVP Recommendation
+
+Build in this order:
+
+1. **Instrument data files** (overview.md, signal-flow.md, modules.md, init-state.md) -- pure content, no code, blocks everything else
+2. **Patch documentation schema** -- new Zod schema for cable-routing patches. Must be designed before writing any Cascadia patches or curriculum that references them
+3. **Curriculum sessions 01-09** (Modules 1-3: Foundations + Oscillators + Envelopes) -- minimum for someone to start using Cascadia meaningfully, validates the session format works for semi-modular
+4. **UI: instrument selector + SysEx workspace conditional display** -- small code change, necessary for the app to not feel broken
+5. **Curriculum sessions 10-25** (Modules 4-7) -- complete the curriculum
+6. **Demo mode synthetic data** -- needed for Vercel deployment to show Cascadia content
+7. **5-10 standalone patch library entries** -- documented patches outside the curriculum for browsing
+
+Defer to v1.2+:
+- **Visual patch sheet SVG rendering**: Ship text-based cable lists first, add visual rendering later. Baratatronix's Illustrator templates are a reference for eventual visual format
+- **Audio preview hosting**: Link to Baratatronix as external reference initially. Add self-hosted audio when recording infrastructure exists
+- **Cross-instrument concept mapping**: Requires both curricula to be fully authored and tested
+- **Normalled-vs-patched interactive diagrams**: Static signal flow docs are sufficient. Interactive version is a significant frontend investment
+- **Expression Source / MIDI CC mapping UI**: Edge case for advanced users; document in text
 
 ## Sources
 
-- [Syntorial](https://www.syntorial.com/) -- leading interactive synth learning platform (190+ lessons, built-in synth, 706 patches)
-- [Ableton Learning Synths](https://learningsynths.ableton.com/) -- free browser-based synthesis education
-- [Modacity](https://www.modacity.co/) -- music practice journal with progress tracking
-- [Andante](https://andante.app/) -- music practice journal with streaks and mood tracking
-- [tuneUPGRADE](https://www.tuneupgrade.com/) -- practice tracker with gamification (leaderboard, leveling)
-- [Patchstorage](https://patchstorage.com/) -- community patch sharing platform
-- [SynthPatch.io](https://www.synthpatch.io/) -- interactive patch documentation and sharing
-- [Synthesizer Patch Library](https://synthpatchlib.com/) -- community patch sharing for hardware synths
-- [Building a NextJS blog with Obsidian as CMS](https://www.neilmathew.co/posts/nextjs-blog-with-obsidian-as-cms) -- Obsidian + Next.js pattern reference
-- [Using Obsidian as a CMS](https://franknoirot.co/posts/obsidian-cms/) -- vault-to-frontend publishing workflow
+- Intellijel Cascadia Manual v1.1, revision 2023.04.18 (110 pages, in-repo at `src/content/references/cascadia_manual_v1.1.pdf`) -- HIGH confidence, primary source for all module details, signal flow, and normalled connections
+- Baratatronix.com Cascadia patch library (categorized patches in Bass/Brass/Classics/Generative/Lead/Modulation/Paraphonic/Percussion with audio previews, downloadable Illustrator/Affinity Design templates, comprehensive PDF compilation) -- MEDIUM confidence, format observed via web fetch
+- Existing Evolver curriculum: 35 sessions across 10 modules (in-repo at `sessions/evolver/`) -- HIGH confidence, establishes session format, frontmatter schema, module grouping pattern
+- Existing Evolver instrument data: overview.md, signal-flow.md, modules.md, basic-patch.md (in-repo at `instruments/evolver/`) -- HIGH confidence, establishes instrument data file pattern
+- PROJECT.md v1.1 milestone definition -- HIGH confidence, defines scope and constraints
 
 ---
-*Feature research for: Instrument learning platform with Obsidian-backed data layer*
-*Researched: 2026-03-29*
+*Feature research for: Cascadia instrument support (v1.1 milestone)*
+*Researched: 2026-03-30*

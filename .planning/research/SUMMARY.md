@@ -1,186 +1,179 @@
 # Project Research Summary
 
-**Project:** Evolver
-**Domain:** Obsidian-backed instrument learning platform (ADHD-optimized, Next.js frontend, markdown-as-data)
-**Researched:** 2026-03-29
+**Project:** Evolver — v1.1 Cascadia Instrument Support
+**Domain:** Multi-instrument synthesizer learning platform (adding CV-only semi-modular to existing SysEx-capable single-instrument app)
+**Researched:** 2026-03-30
 **Confidence:** HIGH
 
 ## Executive Summary
 
-Evolver is a personal web frontend for a structured 35-session synthesizer learning curriculum, backed by an Obsidian vault as the data source. Experts build this class of tool as a thin visualization layer over a filesystem content pipeline: server-side markdown parsing, Zod frontmatter validation, and React Server Components for data access, with minimal client-side interaction. The dominant pattern — confirmed by the PM Toolkit reference implementation running in production — is a strategy-pattern content reader (vault vs. bundled demo), direct server component data access (no API routes), and static generation for curriculum pages. This is a read-only app; Obsidian is the single source of truth for all content and progress.
+The v1.1 milestone adds the Intellijel Cascadia semi-modular synthesizer as a second instrument to an existing Evolver-focused learning platform. The fundamental challenge is not technical complexity but representational mismatch: the entire codebase assumes a SysEx-capable, preset-storing instrument, while the Cascadia has no patch memory, no SysEx, and no numeric parameters. Every patch is a physical cable configuration plus approximate knob positions. The recommended approach treats these as genuinely different data models — not a generalized abstraction, but instrument-specific data shapes driving shared rendering infrastructure.
 
-The recommended approach is to build the data layer first (config, Zod schemas, content reader, markdown pipeline), then layer on curriculum views (sessions, patches), then the progress dashboard, then polish and Vercel deployment. The stack is deliberately minimal: Next.js 16 + React 19, gray-matter + remark/rehype plugins, Tailwind v4, Radix UI primitives, Zod v4. No database, no ORM, no API routes, no complex client state. Flat-file reading is sufficient for ~200 content files across even three instruments.
+The good news is that the existing architecture is well-positioned for this extension. The content reader (`reader.ts`) is already parameterized by instrument slug, the `[slug]` routing works for any instrument immediately, and the markdown pipeline handles any table-based content. Zero new npm dependencies are required — Mermaid, Zod, and Tailwind already cover all Cascadia visualization and validation needs. The primary engineering work is schema extension, UI chrome de-hardcoding, and gating the MIDI workspace behind instrument capability flags. Content authoring (25 sessions, instrument docs, demo patches) is the larger time investment.
 
-The key risks are architectural: vault path divergence between local dev and Vercel (mitigated by building the reader abstraction and demo mode in Phase 1), frontmatter schema drift as content grows (mitigated by Zod validation at parse time), and ADHD-hostile frontend design that undermines the very principles the curriculum is built on (mitigated by enforcing "zero activation energy" as a design constraint from the first component, not a polish task). Multi-instrument over-engineering is explicitly called out as a trap to avoid — ship Evolver with hardcoded instrument references, add the instrument dimension only when Cascadia content actually exists.
+The key risk is scope creep in the wrong direction: attempting to build interactive cable visualizers, generalizing the MIDI library, or building a drag-and-drop patch editor before any real curriculum content exists. All three are explicitly anti-patterns. The correct sequence is content-first — write the instrument docs and initial sessions — which forces the natural documentation format to emerge before UI components are built to match it. The Cascadia is a legitimate second-class citizen of the platform by design; Patchbook-inspired YAML in markdown frontmatter, rendered as Mermaid flowcharts and structured tables via existing infrastructure, is sufficient for v1.1.
 
 ## Key Findings
 
 ### Recommended Stack
 
-The stack mirrors PM Toolkit exactly, scaled down to match the simpler domain (no database, no monorepo, no CLI). The PM Toolkit is already running this stack in production, providing HIGH confidence across all version choices. The most critical technical decision is using Next.js App Router server components for all data access — no API routes, no client-side fetching — which enables direct filesystem reads from vault content without any serialization overhead.
+Zero new dependencies. The existing Next.js 15, Zod 3, gray-matter, Mermaid 11, and Tailwind stack fully covers Cascadia requirements. Mermaid handles signal flow and auto-generated patch routing diagrams from YAML. Zod extends to cable routing schemas via optional fields on existing schemas (`.passthrough()` already ensures backward compatibility). React PDF already loads the Cascadia manual, which is already in the repository at `src/content/references/cascadia_manual_v1.1.pdf`.
 
 **Core technologies:**
-- **Next.js 16 + React 19**: App Router with RSC for server-side vault reading — required, not optional; Next.js 16 mandates React 19
-- **gray-matter + remark/rehype pipeline**: Frontmatter parsing and markdown rendering — industry standard, proven in PM Toolkit; JS engine must be disabled for security
-- **Zod v4**: Runtime frontmatter schema validation — critical for catching content errors at parse time, not rendering time
-- **Tailwind CSS v4**: CSS-first config, no tailwind.config.js, faster builds than v3
-- **Radix UI (unified)**: Accessible UI primitives for progress bars, dropdowns, popovers — preferred over shadcn/ui for this simple personal tool
-- **pnpm**: Matches PM Toolkit, strict dependency resolution, faster installs
+- `mermaid ^11.13.0`: Auto-generate patch routing diagrams from `connections` YAML frontmatter — already installed, no new component library needed
+- `zod ^3.23.0`: Extend `PatchSchema` with optional `patch_cables`, `audio_url`, and `connections` fields; extend `InstrumentFileSchema` with `capabilities` and `references` fields
+- `gray-matter ^4.0.3`: Parse Cascadia YAML frontmatter in the same pipeline as Evolver — unchanged
+- `lucide-react ^1.7.0`: Patch point type icons (audio, CV, gate, clock) — already installed
 
-**Key version constraints:** Next.js 16 requires React 19; rehype-pretty-code 0.14.x requires Shiki 4.x as peer; Zod v4 requires TypeScript 5.x.
-
-**Explicitly avoid:** Contentlayer (abandoned 2023), next-mdx-remote (compilation overhead for pure-content sessions), Zustand/Redux (no complex client state needed), any database/ORM (flat-file reading is sufficient at this scale).
+**What to explicitly avoid:** `@xyflow/react` (200KB+ interactive graph editor for read-only diagrams), any MIDI library (Cascadia has no SysEx), canvas-based rendering tools, Patchbook Python parser (only the notation conventions are needed, not the tool).
 
 ### Expected Features
 
-The research defines a clean three-tier feature model. The vault reader is the non-negotiable foundation — every other feature depends on it. Multi-instrument route structure should be stubbed into the architecture from day one even though only Evolver ships at launch.
+**Must have (table stakes):**
+- Cascadia instrument data files (overview, signal-flow, modules, basic-patch/init-state) — parity with Evolver's existing structure
+- 25-session curriculum across 7 modules (Foundations, Oscillators, Envelopes, Filter/WaveFolder, Modulation/Utilities, Advanced Patching/FX, Sound Design)
+- Patch documentation schema for CV instruments (cable routing YAML + approximate knob positions)
+- Instrument selector working in UI — already scaffolded, needs to actually route content
+- Hide/adapt SysEx workspace for Cascadia — critical UX correctness issue
+- Demo mode with Cascadia synthetic learner data (required for Vercel deployment to show multi-instrument feature)
 
-**Must have (table stakes — v1):**
-- Vault reader (markdown + YAML frontmatter parsing) — foundation for all other features
-- Session browser with module grouping — browse 35-session curriculum organized into 10 modules
-- Session detail view — render full session content, exercises, output checklist
-- Patch library browser — browse documented patches, filter by type
-- Patch detail view with parameter tables — full parameter documentation for patch recreation
-- Progress dashboard — sessions completed, patches saved, current module position
-- Demo mode with bundled content — Vercel-deployable with synthetic learner data
-- Responsive layout — usable on laptop next to the synthesizer
+**Should have (differentiators):**
+- Visual patch sheet documentation via Mermaid flowcharts auto-generated from `connections` YAML
+- Normalled signal path documentation (Cascadia works without cables; each session must explain which defaults are active)
+- Audio preview references per patch (link to Baratatronix initially, self-hosted later)
+- Envelope B triple-mode sessions (ENV/LFO/BURST — unique to Cascadia, no Evolver equivalent)
+- Cross-instrument concept mapping for users who completed Evolver curriculum first
 
-**Should have (v1.x — add after validating core works during actual practice):**
-- ADHD-optimized session presentation — action-first layout, collapsed optional exploration
-- Cross-session continuity — prev/next links with warm-up context
-- Searchable patch parameter tables — meaningful once 10+ patches accumulate
-- Session quick-reference mode — compact view for 5-minute sessions
-- Audio sample playback — after recording audio examples during practice
-
-**Defer to v2+:**
-- Instrument signal flow diagram — HIGH complexity, nice-to-have visualization
-- Technique guide collection — needs content volume to justify a dedicated section
-- Second instrument (Cascadia) — validates the multi-instrument framework
-- Progress dashboard enhancements (patch gallery, module completion celebrations)
-
-**Anti-features (never build):** streak/calendar tracking, real-time MIDI integration, interactive synth emulation, social features, spaced repetition algorithm, automated practice reminders, complex analytics charts.
+**Defer to v1.2+:**
+- Interactive patch builder / drag-and-drop cable UI
+- Visual patch sheet SVG rendering (annotated panel diagrams)
+- Self-hosted audio previews
+- Cascadia Config App integration
+- Normalled-vs-patched interactive diagrams
+- Cross-instrument concept mapping (requires both curricula to be complete and tested)
 
 ### Architecture Approach
 
-The architecture is three layers: Obsidian vault (or bundled demo content) → content reader with Zod validation → Next.js RSC presentation layer. The content reader uses the strategy pattern with identical interfaces for both implementations (`VaultReader`, `BundledReader`), selected by config. Domain services sit above the reader and implement business logic (filter by instrument, compute progress, sort by sequence). Server components call domain services directly and pass typed props to thin client components. The web app is purely read-only — no write APIs, no database, no mutation endpoints. Obsidian is the single source of truth.
+The existing architecture needs extension in two areas: schema evolution to support cable-routing patch data, and UI chrome de-hardcoding to support multiple instruments. The content filesystem, reader, and all `[slug]` routes already work for any instrument slug — adding `src/content/instruments/cascadia/` is sufficient for the instrument to appear in discovery. The critical architectural pattern is **capability flags, not instrument slug checks**: components must read `capabilities.midi_sysex` from instrument frontmatter, not branch on `slug === 'evolver'`.
 
-**Major components:**
-1. **Config module** — reads `evolver.config.json`, determines vault path vs. demo mode, never hardcodes paths
-2. **Content Reader (strategy pattern)** — `VaultReader` for local dev, `BundledReader` for Vercel; identical interface, swapped by config
-3. **Zod schemas** — validate every frontmatter type at parse time; fail loudly in dev, skip gracefully in production
-4. **Domain services** — `getSessions()`, `getPatches()`, `getInstruments()`, `getProgress()`; business logic layer above the reader
-5. **Route handlers (RSC)** — page-level server components, no API routes, direct domain service calls
-6. **Markdown renderer** — custom remark plugin for Obsidian wikilink conversion, parameter table formatting, callout support
-7. **Client components** — thin interactive leaf nodes: search inputs, progress indicators, module navigation
+**Major components and required changes:**
+1. `schemas.ts` — Extend `PatchSchema` with optional `patch_cables`/`audio_url` fields; add `capabilities` and `references` to `InstrumentFileSchema`; expand `type` enum to include `patch-points`
+2. `nav.tsx` — Replace hardcoded Evolver links with dynamic links from `discoverInstruments()` passed as props from layout server component; hide MIDI link for non-SysEx instruments
+3. `[slug]/midi/page.tsx` — Gate behind `capabilities.midi_sysex` check; return informational page for CV instruments
+4. `patch-detail.tsx` — Render cable routing section when `patch_cables` present in frontmatter
+5. `[slug]/page.tsx` — Read references from overview frontmatter instead of hardcoded const
+6. `instrument-overview.tsx` — Compute module count from session data instead of hardcoded "10 modules"
+7. `src/lib/midi/` — Leave entirely unchanged. Evolver-specific by design.
 
-**Key patterns to follow:** strategy pattern for content source (never hardcode vault path), Zod at content boundaries (never trust raw gray-matter output), RSC for data access (never API routes for read-only content), filesystem-driven instrument registry (instruments discovered by scanning directories, not hardcoded), progress as derived state (computed from daily notes in local mode, synthetic JSON in demo mode).
+**What requires no changes:** `reader.ts`, `session-detail.tsx`, `markdown/processor.ts`, `progress.ts`, `patch-grid.tsx`, all `[slug]` App Router routes.
 
 ### Critical Pitfalls
 
-1. **Vault path divergence (local vs. Vercel)** — Build the reader abstraction and `BundledReader` in Phase 1, not as an afterthought. Demo mode must be tested with `CONTENT_SOURCE=bundled` on a clean checkout from the start. Recovery if ignored: 2-3 days of codebase-wide refactoring.
+1. **Hardcoded Evolver references in nav and UI chrome** — Nav, send-panel, app-shell, and instrument overview all hardcode "evolver" or "Evolver". Must be fixed before any Cascadia content is added; otherwise the UI is visually broken for the second instrument. Verify with `grep -r "evolver" src/components/` returning zero non-content hits.
 
-2. **Frontmatter schema drift** — Define Zod schemas before writing session content and validate all files with `npm run validate-content` in CI. Silent `undefined` bugs accumulate across 35 session files without this boundary. Recovery: tedious but mechanical file-by-file fixes.
+2. **PatchSchema assumes SysEx workflow** — `source`, `capture_date`, `program_number`, and writer infrastructure assume Evolver's data model. Cascadia patches use `patch_cables` as a genuinely different optional shape. Do not force CV patch data into SysEx structures; `.passthrough()` is the escape hatch. Create `saveDocumentedPatch()` separate from `saveCapturedPatch()`.
 
-3. **Demo mode as afterthought** — Demo mode requires curated synthetic learner data (60% complete, 12 patches, modules 1-5 done) not random generation or empty dashboards. A progress dashboard showing zeros is not a demo. Build synthetic data before building the progress dashboard so the dashboard is developed against realistic content.
+3. **MIDI workspace renders broken UI for non-SysEx instruments** — `/instruments/cascadia/midi` shows Connection/Capture/Send panels that do nothing useful for Cascadia. Gate the route by `capabilities.midi_sysex`. Do not generalize the MIDI library to accommodate Cascadia — the correct answer is to not render it at all.
 
-4. **ADHD-hostile frontend design** — The five-second test: can the user be reading their next session within 5 seconds of opening the app? Default view is the NEXT session, not a list of all 35. No streak counters. No percentages. No time-based metrics. Navigation has 3 items maximum. Enforced as a design constraint from the first component.
+4. **Config defaults to Evolver, blocking multi-instrument discovery** — Home page uses `config.instrument || 'evolver'`. `discoverInstruments()` already exists and works. Wire it to the home page for an instrument picker; remove the `'evolver'` default.
 
-5. **Multi-instrument over-engineering** — Hardcode "evolver" in the vault reader for v1. No instrument selector UI, no `[instrument]` route segments, no instrument-scoped queries. The file structure already supports extensibility cheaply; the code should not pay for it until Cascadia content exists. Recovery if over-engineered: HIGH cost, touches every layer.
+5. **Building Cascadia UI before content exists** — The wrong abstractions get built when components precede content. Write 5 sessions and 3 patches first; let the natural documentation format emerge; then build UI to match. Violating this order is the most expensive mistake of the milestone.
 
 ## Implications for Roadmap
 
-Based on research, suggested phase structure:
+Based on combined research, the dependency chain is clear: content foundation unlocks schema validation, schema extension unlocks UI adaptation, UI adaptation unlocks demo mode verification. Five phases, approximately 5 hours of code changes plus content authoring time.
 
-### Phase 1: Foundation (Data Layer)
-**Rationale:** Everything depends on the content reader. Building UI before the reader abstraction creates coupling that is expensive to refactor. Vault path divergence (Pitfall 1) and frontmatter schema drift (Pitfall 2) must be addressed before any content is rendered. This phase produces no visible UI but is the load-bearing work.
-**Delivers:** Config module, Zod schemas for all content types, `ContentReader` interface, `VaultReader` and `BundledReader` implementations, markdown processing pipeline (gray-matter + remark + wikilink plugin + callout support), `npm run validate-content` script
-**Addresses:** FEATURES.md vault reader (P1), demo mode data layer (P1)
-**Avoids:** Vault path divergence (Pitfall 1), frontmatter schema drift (Pitfall 2), client-side markdown parsing (anti-pattern 3), API routes for read-only content (anti-pattern 1)
+### Phase 1: Foundation — Schema, UI De-Hardcoding, and Content Structure
 
-### Phase 2: Core Curriculum Views
-**Rationale:** Sessions are the primary content type and the most likely to reveal issues in the markdown rendering pipeline with real content. Building sessions before patches also matches the dependency graph (patch views are simpler and have no prerequisites). ADHD design constraint is enforced from the first component, not retrofitted.
-**Delivers:** Session list page (grouped by modules), session detail view (full rendered content, exercises, output checklist), basic navigation shell, responsive layout foundation
-**Uses:** react-markdown + remark-gfm + rehype-pretty-code + rehype-slug, Tailwind v4, Radix UI, lucide-react
-**Implements:** Route handlers (RSC), server components calling domain services, thin client components for interactive elements
-**Avoids:** ADHD-hostile frontend design (Pitfall 4) — five-second test enforced from first session component
+**Rationale:** Schema evolution and UI chrome cleanup must happen before any Cascadia content is added. If components hardcode "evolver" and schemas don't support cable routing types, content creation is blocked by validation errors and the live app is visually broken for the second instrument. These are blocking dependencies for all downstream phases.
+**Delivers:** Multi-instrument-ready infrastructure; Cascadia content directory appears in instrument discovery; MIDI workspace gated by capability flags; nav shows both instruments dynamically; references data-driven from frontmatter; `output_type` enum extended for Cascadia routing outputs
+**Addresses:** Instrument selector, SysEx workspace hiding, instrument data file structure
+**Avoids:** Pitfalls 1 (hardcoded nav), 2 (PatchSchema coupling), 3 (MIDI workspace), 4 (config default), 10 (narrow InstrumentFileSchema enum), 11 (hardcoded "10 modules")
+**Research flag:** Standard patterns — well-understood Zod schema extension and React conditional rendering. No research phase needed.
 
-### Phase 3: Patch Library
-**Rationale:** Patch views are simpler than sessions (no sequencing, no prereqs, no module grouping logic) and can be built rapidly once the reader and rendering pipeline are proven. Parameter table rendering is the key technical challenge and builds on the markdown pipeline from Phase 1.
-**Delivers:** Patch library browser (filterable by type), patch detail view (parameter tables, playing tips, session reference), basic search
-**Uses:** Searchable patch parameter tables (P2 feature from FEATURES.md), remark plugin for parameter table formatting
-**Implements:** `getPatches()` domain service, patch Zod schema validation
+### Phase 2: Instrument Documentation and Init State
 
-### Phase 4: Progress + Dashboard
-**Rationale:** Progress is the most complex data access pattern (daily note scanning) and depends on all other views existing to show progress within. Synthetic demo data must be curated before this phase so the dashboard is built against realistic data. Progress metrics must enforce the guilt-free design from day one.
-**Delivers:** Progress dashboard (sessions completed, patches saved, current module — additive counts only, no streaks, no percentages), daily note scanner for local progress derivation, synthetic progress JSON for demo mode (60% complete, realistic learner journey)
-**Avoids:** Guilt-inducing progress tracking (Pitfall 7) — no denominators, no time-based metrics, no streak counters
+**Rationale:** The instrument data files (overview, signal-flow, modules, init-state) are the foundation that every curriculum session and patch references. They must be authored before curriculum sessions can be written, as sessions reference module names, normalled connections, and patch point labels that are canonicalized in these files.
+**Delivers:** `src/content/instruments/cascadia/` with overview.md, signal-flow.md, modules.md, basic-patch.md; Cascadia manual PDF linkage via references frontmatter; normalled connections map; `CASCADIA_MODULES` taxonomy constant
+**Addresses:** Cascadia instrument data files, init state documentation, signal flow documentation
+**Avoids:** Pitfall 5 (patch documentation format mismatch — canonical module names established here prevent inconsistent cable routing labels across sessions and patches)
+**Research flag:** Skip research phase. Cascadia manual is already in-repository. Source material is HIGH confidence.
 
-### Phase 5: Demo Mode + Deployment
-**Rationale:** Demo mode requires the full curriculum content plus curated synthetic data to tell a compelling story. Vercel deployment configuration (`outputFileTracingIncludes`, static generation with `generateStaticParams`) is well-documented but has specific gotchas that should be addressed as a dedicated phase, not squeezed into earlier phases.
-**Delivers:** Bundled demo content directory, curated synthetic learner data, Vercel deployment configuration, `CONTENT_SOURCE=bundled` CI test, public Vercel URL
-**Avoids:** Demo mode as afterthought (Pitfall 3) — synthetic data already exists from Phase 4, this phase assembles it for deployment
+### Phase 3: Patch Documentation Schema and Demo Patches
 
-### Phase 6: Polish + V1.x Features
-**Rationale:** With the core working and validated during actual practice sessions, these enhancements can be added with informed priorities rather than speculated ones. ADHD-optimized layout changes, session quick-reference mode, and cross-session continuity are all low-cost improvements that require knowing which parts of the basic UI create friction.
-**Delivers:** ADHD-optimized session presentation (action-first layout, collapsed exploration), cross-session continuity (prev/next with warm-up context), session quick-reference mode, audio sample playback (when audio recordings exist)
+**Rationale:** The cable routing patch format (Patchbook-inspired YAML with `connections`, `settings`, `panel_state`) must be designed and validated against real examples before curriculum sessions reference it. Writing 3-5 demo patches first forces the schema to stabilize and ensures the patch detail component renders correctly before curriculum sessions depend on the format.
+**Delivers:** Extended `PatchSchema` with `patch_cables`/`connections`/`audio_url` fields; `patch-detail.tsx` cable routing rendering; 3-5 documented Cascadia demo patches; `PatchConnectionTable` and `KnobSettings` components; patch format indicator on patch cards
+**Addresses:** Patch documentation schema, challenge exercises with cable outputs; visual patch sheet documentation via Mermaid
+**Avoids:** Pitfall 5 (format mismatch), Anti-Pattern 1 (instrument-specific component forks — single PatchDetail with conditional sections), Anti-Pattern 5 (building UI before content)
+**Research flag:** Skip research phase. STACK.md has definitive schema design. Mermaid generation pattern is straightforward.
+
+### Phase 4: Curriculum — Modules 1-3 (Sessions 01-09)
+
+**Rationale:** Modules 1-3 (Foundations, Oscillators, Envelopes/Amplitude) are the minimum viable curriculum. Shipping this subset validates that the session format works for semi-modular instruments before committing to the full 25-session build. Session 01 follows the Cascadia manual's pp.11-16 "Make a Sound" progressive walkthrough — ADHD-optimized, immediate sound within 3 minutes.
+**Delivers:** 9 sessions covering setup, panel navigation, VCO A/B, Envelope A/B, VCA, Push Gate; challenge exercises with cable routing outputs; demo mode synthetic learner data for Cascadia
+**Addresses:** 25-session curriculum (first 9), ADHD-paced session design, demo mode synthetic data; Envelope B multi-mode sessions
+**Avoids:** Pitfall 6 (curriculum pacing assumes preset workflow — sessions must reference cable connections, not menu navigation; use "document your patch" not "save your patch"); Pitfall 8 (add Cascadia test fixtures before this phase)
+**Research flag:** Skip research phase. Session format is established and Cascadia manual is primary source.
+
+### Phase 5: Curriculum — Modules 4-7 (Sessions 10-25) and Completion
+
+**Rationale:** Complete the curriculum after the session format is validated against real learner feedback from Modules 1-3. Modules 4-7 build on the foundation with filter/wave folding, modulation utilities, advanced patching, and integration sessions.
+**Delivers:** 16 remaining sessions (Filter, WaveFolder, Mixer, LFO/S&H/Slew/Mixuverter/Patchbay, Ring Mod, FX Send/Return, Line In, Burst mode, sound design recipes, DAW integration); 5-10 standalone patch library entries; verified demo mode with both instruments showing in discovery
+**Addresses:** Full curriculum completion; FX Send/Return integration sessions, cross-module recipe sessions, unipolar/bipolar slider teaching, VCO B dual-purpose sessions
+**Avoids:** Pitfall 9 (demo mode missing Cascadia — verify `discoverInstruments()` returns both instruments before milestone close); Pitfall 8 (test suite must include `instrument: 'cascadia'` fixtures before this phase ships)
+**Research flag:** Skip research phase. Standard curriculum authoring against established manual source.
 
 ### Phase Ordering Rationale
 
-- **Foundation before UI:** The reader abstraction is the single most expensive pitfall to retrofit. It must exist before any component renders real data.
-- **Sessions before patches:** Sessions are the primary content type and reveal rendering pipeline issues early. Patches are simpler and benefit from a proven pipeline.
-- **Progress last among core views:** Daily note scanning is the most complex data access pattern. Building it after sessions and patches means the vault reader is already proven and stable.
-- **Demo mode alongside progress, not deferred:** Synthetic learner data should exist before the progress dashboard is built so it can be developed against realistic content. The Vercel deployment itself is deferred to Phase 5 but the data layer is not.
-- **Polish after validation:** V1.x features like ADHD-optimized layout and quick-reference mode are improvements to known pain points, not speculative features. They require actual practice sessions to identify which parts of the basic UI create friction.
+- Phase 1 before all others: schema validation errors and broken UI chrome block every downstream task
+- Phase 2 before Phase 3: canonical module names and normalled connections must be established before patches reference them by name
+- Phase 3 before Phase 4: patch documentation format must stabilize before curriculum sessions reference patches
+- Phase 4 before Phase 5: validate session format against Modules 1-3 before full curriculum commitment
+- `src/lib/midi/` is explicitly excluded from all phases — do not touch it for Cascadia support
 
 ### Research Flags
 
-Phases likely needing deeper research during planning:
-- **Phase 4 (Progress):** Daily note parsing from Obsidian is the most novel pattern — not directly demonstrated in PM Toolkit. The specific template structure and tag extraction logic will need concrete implementation research. Consider spiking this before committing to the full phase plan.
-- **Phase 5 (Deployment):** Vercel `outputFileTracingIncludes` for bundled content and `generateStaticParams` behavior with the content directory need verification against the specific Next.js 16 + App Router configuration.
+Phases needing deeper research during planning: None. All phases draw from high-confidence existing sources (in-repository manual, direct codebase inspection, established patterns).
 
-Phases with standard patterns (skip additional research-phase):
-- **Phase 1 (Foundation):** PM Toolkit provides a direct reference implementation for the reader abstraction, Zod schemas, and gray-matter pipeline. HIGH confidence patterns.
-- **Phase 2 (Session Views):** RSC + remark/rehype pipeline is well-documented and PM Toolkit-proven. Standard App Router patterns apply.
-- **Phase 3 (Patch Library):** Simpler than sessions. No novel patterns. Standard list/detail with markdown rendering.
-- **Phase 6 (Polish):** ADHD design principles are documented in `framework/adhd-design.md`. UI changes are low-risk and reversible.
+Phases with standard patterns (skip research-phase):
+- **All phases:** Patterns are well-documented. Stack is existing dependencies. Architecture is direct codebase extension. Schema changes are additive optional fields. Content follows established session and patch templates.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | PM Toolkit is a running production reference with identical tech choices. All major library versions verified against npm/GitHub releases. |
-| Features | HIGH | Well-scoped personal tool with clear constraints from PROJECT.md. Competitor analysis confirms what the tool does and doesn't need. Anti-features list is definitive. |
-| Architecture | HIGH | Directly modeled on PM Toolkit vault reader pattern. Three-layer structure (content → reader → RSC) is well-established for this class of tool. |
-| Pitfalls | HIGH | Pitfalls derived from a combination of PM Toolkit implementation experience, documented Vercel filesystem constraints, and ADHD UX literature. All are actionable with specific prevention steps. |
+| Stack | HIGH | Zero new dependencies; all tools already installed and in use. Alternatives evaluated and rejected with clear rationale (React Flow, Patchbook Python, d3, canvas libraries all dismissed). |
+| Features | HIGH | Primary source (Cascadia manual v1.1) is in-repository. Evolver curriculum provides direct precedent for session structure. Baratatronix provides external format validation at MEDIUM confidence. |
+| Architecture | HIGH | Based on direct codebase inspection of 98 files. All integration points identified from source, not inference. Component boundaries and data flow are explicit. |
+| Pitfalls | HIGH | Identified from direct code audit (nav.tsx, schemas.ts, midi/ directory, component strings). 11 pitfalls documented with specific file references, recovery costs, and phase mapping. |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Daily note progress parsing:** The exact format of Obsidian daily note session logs (tag structure, frontmatter vs. body, date format) needs verification against the actual vault files before Phase 4 is planned in detail. The data model exists in theory; the parsing implementation is unvalidated.
-- **Obsidian callout rendering:** The `obsidian-callouts-markdown` library handles `> [!tip]` syntax, but session files may use additional Obsidian-specific callout variants. Test with actual session content before committing to this library as the solution.
-- **Audio file strategy:** No audio files exist yet. The audio sample playback feature (P2) requires a decision about storage (public/ in repo vs. vault-only, Git LFS vs. external hosting). This gap doesn't block v1 but needs resolution before Phase 6.
-- **Wikilink usage in existing sessions:** The 7 existing session files may already contain `[[wikilinks]]`. A quick audit before Phase 1 will determine whether the custom remark wikilink plugin is needed immediately or can be deferred.
+- **Audio preview hosting strategy:** Linking to Baratatronix externally is the right v1.1 approach, but the self-hosted pattern (storage location, Git LFS vs. external) needs a decision before v1.2. Low urgency for this milestone.
+- **`output_type` enum for Cascadia:** PITFALLS.md recommends adding `'routing'` to the enum for Cascadia sessions that produce documented cable configurations rather than saved presets. Needs a decision in Phase 1: extend the enum or reinterpret existing `'patch'` type. Either is acceptable; pick one and document it.
+- **Demo patch selection:** Research specifies 3-5 demo patches as minimum for demo mode. The exact patches to author for maximum pedagogical coverage (one per module, spread across session origins) is not determined. Resolve during Phase 3 content authoring.
+- **Cross-instrument concept mapping format:** The bridge reference pattern needs a frontmatter stub design. Deferred to v1.2, but a `cross_reference` optional field could be reserved in the Phase 1 schema work without building UI for it.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- PM Toolkit codebase (`/Users/andrewlovettbarron/src/pmtoolkit/`) — vault reader pattern, config pattern, content type system, demo mode implementation; running in production with identical stack
-- Next.js 16.2.1 release — App Router RSC model, `generateStaticParams`, `outputFileTracingIncludes`
-- gray-matter 4.0.3 (npm) — stable for years, JS engine security consideration documented
-- Zod v4 release notes — v4.3.x, TypeScript 5.x requirement, improved performance over v3
-- Radix UI unified package changelog — v1.4.3, React 19 compatibility confirmed
+- `src/content/references/cascadia_manual_v1.1.pdf` (in-repository) — module architecture, 101 patch points, normalled connections, default signal flow, "Make a Sound" walkthrough pp.11-16
+- Direct codebase inspection — `src/lib/content/schemas.ts`, `reader.ts`, `nav.tsx`, `src/lib/midi/`, `src/components/` (98 files with Evolver/SysEx references audited)
+- Existing Evolver curriculum `src/content/sessions/evolver/` — session format, module grouping, frontmatter schema patterns
+- `PROJECT.md` v1.1 milestone definition — scope constraints, anti-features
+- [Intellijel Cascadia Patch Sheet](https://intellijel.com/downloads/manuals/cascadia_patch_sheet.pdf) — official blank template for cable documentation
+- [Patchbook by SpektroAudio](https://github.com/SpektroAudio/Patchbook) — cable routing notation conventions and signal type taxonomy (audio, cv, pitch, gate, clock)
 
 ### Secondary (MEDIUM confidence)
-- [Vercel: Loading Static Files in Next.js](https://vercel.com/kb/guide/loading-static-file-nextjs-api-route) — path resolution differences between dev and production
-- [Francois Best: Reading files on Vercel during ISR](https://francoisbest.com/posts/2023/reading-files-on-vercel-during-nextjs-isr) — process.cwd() and file tracer behavior
-- [zod-matter](https://github.com/HiDeoo/zod-matter) — Zod validation wrapper for gray-matter output
-- [UXPA: Designing for ADHD in UX](https://uxpa.org/designing-for-adhd-in-ux/) — ADHD UX design principles informing anti-feature decisions
-- Project's own `framework/adhd-design.md` — ADHD design principles that frontend must not violate
+- [Baratatronix.com Cascadia patch library](https://www.baratatronix.com/cascadia-patches) — patch documentation format with audio previews, connection lists, and downloadable Illustrator/Affinity panel templates
+- [Baratatronix Ageispolis Pad](https://www.baratatronix.com/cascadia/cascadia-ageispolis-pad) — individual patch example with visual diagram and patching instructions
+- [@xyflow/react on npm](https://www.npmjs.com/package/@xyflow/react) — evaluated at v12.10.2 and rejected as overkill for static patch documentation
 
 ### Tertiary (LOW confidence)
-- Competitor analysis (Syntorial, Modacity, Patchstorage) — feature landscape context; feature decisions are driven by project constraints not competitor benchmarking
+- [PATCH & TWEAK Symbols](https://www.patchandtweak.com/symbols/) — CC-licensed symbol system for modular documentation; informational only, not adopted
 
 ---
-*Research completed: 2026-03-29*
+*Research completed: 2026-03-30*
 *Ready for roadmap: yes*
