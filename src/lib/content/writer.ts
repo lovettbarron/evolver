@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
-import { getContentRoot } from './reader.js';
-import type { AppConfig } from './schemas.js';
+import { getContentRoot } from './reader';
+import type { AppConfig } from './schemas';
 
 export interface CapturedPatchInput {
   name: string;

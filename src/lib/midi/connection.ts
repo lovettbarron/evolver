@@ -69,6 +69,7 @@ export function requestEditBuffer(
     const buffer: number[] = [];
     input.onmidimessage = (event: MIDIMessageEvent) => {
       const data = event.data;
+      if (!data) return;
       for (let i = 0; i < data.length; i++) {
         buffer.push(data[i]);
         if (data[i] === 0xF7) {
