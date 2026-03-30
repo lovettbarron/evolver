@@ -69,10 +69,11 @@ Plans:
   2. User can filter patches by type (bass, lead, pad, drum, texture, sequence)
   3. User can open a patch and see full parameter dump, playing tips, and technique notes
   4. User can navigate from any patch to the session that created it
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md -- Demo patch content files (16 patches) and patch helper utility module
+- [ ] 03-02-PLAN.md -- Patch list page (card grid, filter pills) and patch detail page (provenance, parameter tables)
 
 ### Phase 4: MIDI SysEx Integration
 **Goal**: Users can capture patches from the Evolver over MIDI, store them as structured data, send patches back, and compare patches side-by-side
@@ -129,7 +130,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 |-------|----------------|--------|-----------|
 | 1. Content Pipeline + Curriculum | 6/6 | Complete   | 2026-03-29 |
 | 2. Session Browser | 3/5 | Gap closure | - |
-| 3. Patch Library | 0/TBD | Not started | - |
+| 3. Patch Library | 0/2 | Planned | - |
 | 4. MIDI SysEx Integration | 0/TBD | Not started | - |
 | 5. Progress + Challenges | 0/TBD | Not started | - |
 | 6. Deployment | 0/TBD | Not started | - |
