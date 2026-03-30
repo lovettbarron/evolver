@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: completed
-stopped_at: Completed 06-03-PLAN.md (Vercel deployment config complete, deploy deferred to user)
-last_updated: "2026-03-30T20:24:24.801Z"
-last_activity: 2026-03-30 -- Completed 06-03 Vercel deployment configuration
+milestone: v1.1
+milestone_name: cascadia
+status: active
+stopped_at: null
+last_updated: "2026-03-30T22:00:00.000Z"
+last_activity: 2026-03-30 -- Milestone v1.1 started
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 23
-  completed_plans: 23
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-29)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 4: MIDI SysEx Integration -- complete
+**Current focus:** v1.1 Cascadia Instrument Support — defining requirements
 
 ## Current Position
 
-Phase: 6 of 6 (Deployment)
-Plan: 3 of 3 in current phase
-Status: Complete
-Last activity: 2026-03-30 -- Completed 06-03 Vercel deployment configuration
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-03-30 — Milestone v1.1 started
 
-Progress: [██████████] 100%
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
