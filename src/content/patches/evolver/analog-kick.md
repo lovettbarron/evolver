@@ -6,6 +6,7 @@ description: "Deep, thumpy kick drum using self-oscillating filter with fast pit
 tags: [drum, kick, analog, self-oscillation, percussion]
 instrument: evolver
 created: "2026-02-18"
+challenge_id: "30-1"
 ---
 
 # Analog Kick

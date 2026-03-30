@@ -6,6 +6,7 @@ description: "Deep, round sub bass with minimal harmonics and tight envelope -- 
 tags: [bass, sub, foundation, low-end, analog]
 instrument: evolver
 created: "2026-02-10"
+challenge_id: "27-2"
 ---
 
 # Sub Bass

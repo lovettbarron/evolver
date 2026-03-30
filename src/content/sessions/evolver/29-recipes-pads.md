@@ -117,6 +117,11 @@ Dense, evolving texture using multiple modulation sources stacked together -- LF
 - Try the PWM pad with hard sync enabled: creates a more aggressive, harmonically rich pad
 - Layer all three approaches: PWM on analog oscillators, waveshape modulation on digital, FM and mod slots all active simultaneously
 
+> [!challenge] Create Your Own Evolving Pad
+> Build a pad that evolves over time using LFO modulation on filter and oscillator parameters.
+> Your patch should have slow, breathing movement similar to [[pwm-pad]].
+> Save your result with `challenge_id: 29-1` in the frontmatter.
+
 ## Output Checklist
 
 - [ ] PWM Pad patch saved -- lush, shifting stereo, chorus-like

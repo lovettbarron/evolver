@@ -6,6 +6,7 @@ description: "Classic 303-inspired acid bass with resonant filter sweep, glide, 
 tags: [bass, acid, resonant, glide, "303", squelch]
 instrument: evolver
 created: "2026-02-10"
+challenge_id: "27-1"
 ---
 
 # Acid Bass

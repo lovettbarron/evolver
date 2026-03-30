@@ -6,6 +6,7 @@ description: "Bright, bell-like FM lead with velocity-sensitive complexity -- so
 tags: [lead, fm, bell, velocity, digital, performance]
 instrument: evolver
 created: "2026-02-12"
+challenge_id: "28-1"
 ---
 
 # FM Lead

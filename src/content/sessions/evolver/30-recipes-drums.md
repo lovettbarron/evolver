@@ -140,6 +140,11 @@ Now combine all three drum sounds into a single sequenced patch. The sequencer m
 - Change BPM to `80` and Clock Divide to `8th` for a half-time feel
 - Layer the drum patch with your acid bass from Session 27 by alternating programs -- one for drums, one for bass, switching between them with MIDI program change
 
+> [!challenge] Create Your Own Drum Sound
+> Build a percussive sound using short envelopes and noise or FM techniques.
+> Your patch should approximate the punch of [[analog-kick]].
+> Save your result with `challenge_id: 30-1` in the frontmatter.
+
 ## Output Checklist
 
 - [ ] Kick drum sound created -- deep, punchy, self-oscillating filter

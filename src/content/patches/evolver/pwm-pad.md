@@ -6,6 +6,7 @@ description: "Lush, chorus-like pad using pulse width modulation on both analog 
 tags: [pad, pwm, chorus, lush, analog, stereo]
 instrument: evolver
 created: "2026-02-15"
+challenge_id: "29-1"
 ---
 
 # PWM Pad

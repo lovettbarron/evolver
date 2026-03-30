@@ -112,6 +112,11 @@ Warm, expressive lead using resonant filter sweep and mod wheel control (classic
 - Try the sync lead with a sequenced pattern -- sync leads sound incredible with the sequencer
 - Layer two lead approaches: set Osc 1-2 to sync lead settings and Osc 3-4 to FM settings for a hybrid
 
+> [!challenge] Create Your Own FM Lead
+> Build an FM lead patch using digital oscillator FM modulation with filter envelope shaping.
+> Your patch should approximate the timbral complexity of [[fm-lead]].
+> Save your result with `challenge_id: 28-1` in the frontmatter.
+
 ## Output Checklist
 
 - [ ] Sync Lead patch saved -- hard sync, aggressive, envelope-swept

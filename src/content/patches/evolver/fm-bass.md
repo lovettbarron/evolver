@@ -6,6 +6,7 @@ description: "Metallic, punchy bass using FM between digital oscillators with en
 tags: [bass, fm, metallic, digital, punchy]
 instrument: evolver
 created: "2026-02-10"
+challenge_id: "27-3"
 ---
 
 # FM Bass
