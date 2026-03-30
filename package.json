@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run bundle-content",
     "build": "next build",
     "start": "next start",
     "bundle-content": "tsx scripts/bundle-content.ts",

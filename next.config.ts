@@ -1,7 +1,9 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Content is read from filesystem, not fetched
+  outputFileTracingIncludes: {
+    '/*': ['./src/content/**/*'],
+  },
   webpack: (config) => {
     config.resolve.alias.canvas = false;
     return config;

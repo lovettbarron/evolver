@@ -103,16 +103,6 @@ Metallic, punchy low end using FM between digital oscillators. Modern bass sound
 - Add the delay from Session 19 to any bass patch for dubby echoes: Delay 1 Time = `2 Steps`, Level = `35`, Feedback 1 = `40`, Feedback 2 = `25`
 - Make a "Reese bass": two detuned saws (Osc 1 Fine = `+8`, Osc 2 Fine = `-8`) with LFO on filter cutoff
 
-> [!challenge] Create Your Own Acid Bass
-> Starting from the basic patch, create an acid bass patch with resonant filter sweep
-> and glide. Your patch should approximate the character of [[acid-bass]].
-> Save your result with `challenge_id: 27-1` in the frontmatter.
-
-> [!challenge] Create Your Own Sub Bass
-> Build a deep sub bass using only analog oscillators with minimal harmonics.
-> Your patch should approximate the low-end weight of [[sub-bass]].
-> Save your result with `challenge_id: 27-2` in the frontmatter.
-
 ## Output Checklist
 
 - [ ] Sub Bass patch saved -- deep, round, centered
