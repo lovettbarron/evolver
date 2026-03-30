@@ -119,10 +119,12 @@ Plans:
   2. The Vercel deployment shows the full curriculum with synthetic practice data (realistic 60% progress, 12+ patches, modules 1-5 complete)
   3. Reference PDFs are accessible in both local and demo modes
   4. A clean `git clone && npm install && npm run dev` with no vault path configured starts in demo mode with all features visible
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 06-01: TBD
+- [ ] 06-01-PLAN.md -- PDF viewer (react-pdf) with deep page linking, wired into session citations and instrument overview
+- [ ] 06-02-PLAN.md -- Synthetic learner journey data, demo badge in nav, setup CTA in footer/about
+- [ ] 06-03-PLAN.md -- Vercel deployment config (outputFileTracingIncludes, prebuild hook, vercel.json), deploy and verify
 
 ## Progress
 
@@ -136,4 +138,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. Patch Library | 2/2 | Complete   | 2026-03-30 |
 | 4. MIDI SysEx Integration | 4/4 | Complete   | 2026-03-30 |
 | 5. Progress + Challenges | 3/3 | Complete   | 2026-03-30 |
-| 6. Deployment | 0/TBD | Not started | - |
+| 6. Deployment | 0/3 | Planning complete | - |
