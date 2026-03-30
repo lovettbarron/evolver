@@ -5,7 +5,10 @@ import { MidiConnection } from './midi-connection';
 import { CapturePanel } from './capture-panel';
 import { PatchSaveForm } from './patch-save-form';
 import { SendPanel } from './send-panel';
-import type { ParsedPatch } from '@/lib/midi/types';
+import { DiffPicker } from './diff-picker';
+import { DiffView } from './diff-view';
+import type { ParsedPatch, SysexJson } from '@/lib/midi/types';
+import basicPatchJson from '@/content/instruments/evolver/basic-patch.sysex.json';
 
 interface MidiPageProps {
   instrumentSlug: string;
@@ -65,6 +68,23 @@ export function MidiPage({ instrumentSlug }: MidiPageProps) {
     fetchPatches();
   };
 
+  const [diffPatchA, setDiffPatchA] = useState<ParsedPatch | null>(null);
+  const [diffPatchB, setDiffPatchB] = useState<ParsedPatch | null>(null);
+  const [diffNameA, setDiffNameA] = useState('');
+  const [diffNameB, setDiffNameB] = useState('');
+
+  const handleDiffSelection = useCallback(
+    (patchA: ParsedPatch | null, patchB: ParsedPatch | null, nameA: string, nameB: string) => {
+      setDiffPatchA(patchA);
+      setDiffPatchB(patchB);
+      setDiffNameA(nameA);
+      setDiffNameB(nameB);
+    },
+    [],
+  );
+
+  const basicPatchData: SysexJson = basicPatchJson as SysexJson;
+
   const isConnected = connectionState.status === 'connected';
 
   return (
@@ -105,6 +125,22 @@ export function MidiPage({ instrumentSlug }: MidiPageProps) {
           output={connectionState.output}
           connected={isConnected}
           patches={patches}
+        />
+      </section>
+
+      {/* Compare Patches Section */}
+      <section className="bg-surface rounded-[6px] p-lg mb-xl">
+        <h2 className="text-[20px] font-bold mb-md">Compare Patches</h2>
+        <DiffPicker
+          patches={patches}
+          basicPatchData={basicPatchData}
+          onSelectionChange={handleDiffSelection}
+        />
+        <DiffView
+          patchA={diffPatchA}
+          patchB={diffPatchB}
+          nameA={diffNameA}
+          nameB={diffNameB}
         />
       </section>
     </div>
