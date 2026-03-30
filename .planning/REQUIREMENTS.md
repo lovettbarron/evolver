@@ -32,10 +32,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### MIDI SysEx Integration
 
-- [ ] **MIDI-01**: App can receive SysEx program dumps from the Evolver over MIDI
+- [x] **MIDI-01**: App can receive SysEx program dumps from the Evolver over MIDI
 - [x] **MIDI-02**: App parses SysEx data into structured parameter values matching the Evolver's program format
 - [x] **MIDI-03**: App stores extracted patches as structured data (markdown + frontmatter or JSON)
-- [ ] **MIDI-04**: App can send SysEx program data back to the Evolver to restore a patch
+- [x] **MIDI-04**: App can send SysEx program data back to the Evolver to restore a patch
 - [ ] **MIDI-05**: User can compare two patches parameter-by-parameter (diff view)
 
 ### Progress Tracking
@@ -121,10 +121,10 @@ Requirements for initial release. Each maps to roadmap phases.
 | PTCH-02 | Phase 3 | Complete |
 | PTCH-03 | Phase 3 | Complete |
 | PTCH-04 | Phase 3 | Complete |
-| MIDI-01 | Phase 4 | Pending |
+| MIDI-01 | Phase 4 | Complete |
 | MIDI-02 | Phase 4 | Complete |
 | MIDI-03 | Phase 4 | Complete |
-| MIDI-04 | Phase 4 | Pending |
+| MIDI-04 | Phase 4 | Complete |
 | MIDI-05 | Phase 4 | Pending |
 | PROG-01 | Phase 5 | Pending |
 | PROG-02 | Phase 5 | Pending |
