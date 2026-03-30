@@ -4,6 +4,7 @@ import { glob } from 'glob';
 import { listSessions, listPatches } from './content/reader';
 import { groupByModule } from './sessions';
 import type { AppConfig } from './content/schemas';
+import { SYNTHETIC_COMPLETED_SESSIONS } from './synthetic-daily-notes';
 
 export interface ProgressData {
   sessionsCompleted: number;
@@ -83,13 +84,9 @@ export async function computeProgress(
 
 /**
  * Return a synthetic set of completed sessions for demo/dev mode.
- * Simulates ~60% journey: Modules 1-6 complete (sessions 1-22),
- * plus a few from Module 7 (sessions 23-24).
+ * Simulates ~60% journey: Modules 1-6 complete (sessions 1-21),
+ * currently in Module 7.
  */
 export function getSyntheticCompletedSessions(): Set<number> {
-  return new Set([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23, 24,
-  ]);
+  return SYNTHETIC_COMPLETED_SESSIONS;
 }

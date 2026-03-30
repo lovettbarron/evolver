@@ -192,12 +192,14 @@ describe('computeProgress', () => {
 });
 
 describe('getSyntheticCompletedSessions', () => {
-  it('returns a Set containing sessions 1-24', () => {
+  it('returns a Set containing sessions 1-21 (Modules 1-6 complete)', () => {
     const result = getSyntheticCompletedSessions();
-    expect(result.size).toBe(24);
-    for (let i = 1; i <= 24; i++) {
+    expect(result.size).toBe(21);
+    for (let i = 1; i <= 21; i++) {
       expect(result.has(i)).toBe(true);
     }
+    // Module 7 sessions (22+) should NOT be included
+    expect(result.has(22)).toBe(false);
   });
 });
 
