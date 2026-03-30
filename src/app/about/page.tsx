@@ -1,8 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { renderMarkdown } from '@/lib/markdown/processor';
+import { loadConfig } from '@/lib/config';
 
 export default async function AboutPage() {
+  const config = await loadConfig();
+  const isDemoMode = !config.vaultPath;
   // Read framework docs from project root (not from content directory)
   // These are bundled in src/content/framework/ by the bundle script,
   // but also exist at project root. Try bundled first, fall back to root.
@@ -41,6 +44,21 @@ export default async function AboutPage() {
           <hr className="border-muted/30 my-2xl" />
           <div className="prose" dangerouslySetInnerHTML={{ __html: adhdHtml }} />
         </>
+      )}
+      {isDemoMode && (
+        <section className="mt-2xl p-lg bg-surface rounded border border-surface">
+          <h2 className="text-xl font-bold mb-md">Run It Yourself</h2>
+          <p className="text-muted mb-md">
+            This is a demo showing the Evolver learning system with synthetic practice data.
+            To use it with your own Evolver and Obsidian vault:
+          </p>
+          <ol className="list-decimal pl-lg text-muted space-y-xs">
+            <li>Clone the repository: <code className="text-param">git clone https://github.com/lovettbarron/evolver.git</code></li>
+            <li>Install dependencies: <code className="text-param">npm install</code></li>
+            <li>Create <code className="text-param">evolver.config.json</code> with your vault path</li>
+            <li>Run <code className="text-param">npm run dev</code></li>
+          </ol>
+        </section>
       )}
     </div>
   );

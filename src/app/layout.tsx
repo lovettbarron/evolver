@@ -1,5 +1,6 @@
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { AppShell } from '@/components/app-shell';
+import { loadConfig } from '@/lib/config';
 import './globals.css';
 
 const inter = Inter({
@@ -19,11 +20,14 @@ export const metadata = {
   description: 'ADHD-friendly structured instrument mastery',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const config = await loadConfig();
+  const isDemoMode = !config.vaultPath;
+
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body>
-        <AppShell>{children}</AppShell>
+        <AppShell isDemoMode={isDemoMode}>{children}</AppShell>
       </body>
     </html>
   );

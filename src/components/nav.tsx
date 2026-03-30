@@ -13,13 +13,18 @@ const navLinks = [
   { href: '/instruments/evolver/progress', label: 'Progress' },
 ];
 
-export function Nav() {
+export function Nav({ isDemoMode }: { isDemoMode?: boolean }) {
   const pathname = usePathname();
 
   return (
     <nav className="flex items-center gap-lg px-lg h-[48px] bg-surface border-b border-surface">
-      <span className="font-mono text-sm text-muted tracking-wider uppercase mr-auto">
+      <span className="font-mono text-sm text-muted tracking-wider uppercase mr-auto flex items-center">
         evolver
+        {isDemoMode && (
+          <span className="text-[10px] font-mono uppercase tracking-wider text-bg bg-accent/80 px-xs py-[1px] rounded ml-sm">
+            Demo
+          </span>
+        )}
       </span>
       <div className="flex items-center gap-md overflow-x-auto">
         {navLinks.map((link) => {
