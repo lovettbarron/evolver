@@ -4,6 +4,11 @@ import { renderMarkdown } from '@/lib/markdown/processor';
 import { InstrumentOverview } from '@/components/instrument-overview';
 import { notFound } from 'next/navigation';
 
+const references = [
+  { label: 'DSI Evolver Manual (v1.3)', pdfPath: '/api/references/Evo_Key_Manual_1.3.pdf' },
+  { label: 'The Definitive Guide to Evolver — Anu Kirk', pdfPath: '/api/references/evolverguide.pdf' },
+];
+
 export default async function InstrumentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const config = await loadConfig();
@@ -30,6 +35,7 @@ export default async function InstrumentPage({ params }: { params: Promise<{ slu
       hasBasicPatch={!!basicPatch}
       sessionCount={sessions.length}
       slug={slug}
+      references={references}
     />
   );
 }

@@ -1,7 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { FileText } from 'lucide-react';
+import { PdfViewer } from './pdf-viewer';
 
 const MermaidRenderer = dynamic(
   () =>
@@ -19,6 +22,7 @@ export interface InstrumentOverviewProps {
   hasBasicPatch: boolean;
   sessionCount: number;
   slug: string;
+  references?: Array<{ label: string; pdfPath: string }>;
 }
 
 export function InstrumentOverview({
@@ -29,7 +33,10 @@ export function InstrumentOverview({
   hasBasicPatch,
   sessionCount,
   slug,
+  references,
 }: InstrumentOverviewProps) {
+  const [openPdf, setOpenPdf] = useState<string | null>(null);
+
   return (
     <div className="max-w-[720px] mx-auto px-lg lg:px-xl py-2xl">
       <h1 className="text-4xl font-bold leading-[1.1] mb-sm">{title}</h1>
@@ -42,6 +49,24 @@ export function InstrumentOverview({
           <h2 className="text-2xl font-bold mb-lg">Signal Flow</h2>
           <div className="prose" dangerouslySetInnerHTML={{ __html: signalFlowHtml }} />
           <MermaidRenderer />
+        </section>
+      )}
+
+      {references && references.length > 0 && (
+        <section className="mt-2xl">
+          <h2 className="text-2xl font-bold mb-lg">References</h2>
+          <div className="flex flex-col gap-md">
+            {references.map((ref) => (
+              <button
+                key={ref.pdfPath}
+                onClick={() => setOpenPdf(ref.pdfPath)}
+                className="bg-surface p-md rounded hover:border-accent border border-surface transition-colors cursor-pointer text-left flex items-center gap-md"
+              >
+                <FileText size={20} className="text-muted shrink-0" />
+                <span className="text-text">{ref.label}</span>
+              </button>
+            ))}
+          </div>
         </section>
       )}
 
@@ -66,6 +91,13 @@ export function InstrumentOverview({
           Start Curriculum
         </Link>
       </div>
+
+      {openPdf && (
+        <PdfViewer
+          src={openPdf}
+          onClose={() => setOpenPdf(null)}
+        />
+      )}
     </div>
   );
 }
