@@ -10,6 +10,7 @@ const navLinks = [
   { href: '/instruments/evolver/sessions', label: 'Sessions' },
   { href: '/instruments/evolver/patches', label: 'Patches' },
   { href: '/instruments/evolver/midi', label: 'MIDI' },
+  { href: '/instruments/evolver/progress', label: 'Progress' },
 ];
 
 export function Nav() {
