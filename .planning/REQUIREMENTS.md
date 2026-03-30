@@ -47,9 +47,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Challenge Mode
 
-- [ ] **CHAL-01**: Sessions include challenge exercises ("create a patch that does X")
+- [x] **CHAL-01**: Sessions include challenge exercises ("create a patch that does X")
 - [x] **CHAL-02**: User can save challenge responses as patches linked to the challenge
-- [ ] **CHAL-03**: Challenges reference audio examples or saved patches as targets to match/approximate
+- [x] **CHAL-03**: Challenges reference audio examples or saved patches as targets to match/approximate
 - [x] **CHAL-04**: Challenge completion tracked as part of progress
 
 ### Multi-Instrument
@@ -130,9 +130,9 @@ Requirements for initial release. Each maps to roadmap phases.
 | PROG-02 | Phase 5 | Complete |
 | PROG-03 | Phase 5 | Complete |
 | PROG-04 | Phase 5 | Complete |
-| CHAL-01 | Phase 5 | Pending |
+| CHAL-01 | Phase 5 | Complete |
 | CHAL-02 | Phase 5 | Complete |
-| CHAL-03 | Phase 5 | Pending |
+| CHAL-03 | Phase 5 | Complete |
 | CHAL-04 | Phase 5 | Complete |
 | INST-01 | Phase 2 | Complete |
 | INST-02 | Phase 2 | Complete |
