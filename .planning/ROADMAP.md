@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Content Pipeline + Curriculum** - Data layer (vault reader, Zod schemas, markdown rendering) and complete 35-session Evolver curriculum (completed 2026-03-29)
 - [ ] **Phase 2: Session Browser** - Browse sessions by module, read full session content, instrument-scoped routing (gap closure in progress)
-- [ ] **Phase 3: Patch Library** - Browse, filter, and inspect documented patches with parameter tables
+- [x] **Phase 3: Patch Library** - Browse, filter, and inspect documented patches with parameter tables (completed 2026-03-30)
 - [ ] **Phase 4: MIDI SysEx Integration** - Receive, parse, store, and send SysEx patch dumps; patch diff view
 - [ ] **Phase 5: Progress + Challenges** - Additive progress dashboard and challenge exercises with patch responses
 - [ ] **Phase 6: Deployment** - Local vault mode, Vercel demo mode with synthetic data, reference PDF serving
@@ -130,7 +130,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 |-------|----------------|--------|-----------|
 | 1. Content Pipeline + Curriculum | 6/6 | Complete   | 2026-03-29 |
 | 2. Session Browser | 3/5 | Gap closure | - |
-| 3. Patch Library | 0/2 | Planned | - |
+| 3. Patch Library | 2/2 | Complete   | 2026-03-30 |
 | 4. MIDI SysEx Integration | 0/TBD | Not started | - |
 | 5. Progress + Challenges | 0/TBD | Not started | - |
 | 6. Deployment | 0/TBD | Not started | - |
