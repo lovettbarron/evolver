@@ -72,7 +72,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DEPL-01**: App runs locally reading from ~/song vault
 - [ ] **DEPL-02**: App deploys to Vercel with demo mode (curriculum visible, practice data synthetic)
 - [x] **DEPL-03**: Demo mode includes curated synthetic learner journey (realistic progress state)
-- [ ] **DEPL-04**: Reference PDFs accessible in both local and demo modes
+- [x] **DEPL-04**: Reference PDFs accessible in both local and demo modes
 
 ## v2 Requirements
 
@@ -146,7 +146,7 @@ Requirements for initial release. Each maps to roadmap phases.
 | DEPL-01 | Phase 6 | Complete |
 | DEPL-02 | Phase 6 | Pending |
 | DEPL-03 | Phase 6 | Complete |
-| DEPL-04 | Phase 6 | Pending |
+| DEPL-04 | Phase 6 | Complete |
 
 **Coverage:**
 - v1 requirements: 40 total

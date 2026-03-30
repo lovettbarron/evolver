@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-02-PLAN.md
-last_updated: "2026-03-30T18:41:26.233Z"
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-03-30T18:41:34.299Z"
 last_activity: 2026-03-30 -- Completed 06-02 Demo mode enhancement
 progress:
   total_phases: 6
@@ -70,6 +70,7 @@ Progress: [█████████░] 91%
 | Phase 05 P02 | 2min | 2 tasks | 5 files |
 | Phase 05 P03 | 2min | 2 tasks | 13 files |
 | Phase 06 P02 | 2min | 2 tasks | 7 files |
+| Phase 06 P01 | 3min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -125,6 +126,8 @@ Recent decisions affecting current work:
 - [Phase 05]: Lucide Target SVG inlined as challenge callout indicator icon
 - [Phase 05]: Challenge callout CSS uses accent color for both border and title text
 - [Phase 06]: Synthetic journey uses 21 sessions (Modules 1-6), isDemoMode threaded as prop from layout
+- [Phase 06]: API route pattern for PDF serving instead of public/ copy -- supports vault and bundled content sources
+- [Phase 06]: Webpack canvas=false alias required for react-pdf SSR compatibility
 
 ### Pending Todos
 
@@ -138,6 +141,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-30T18:40:59.411Z
-Stopped at: Completed 06-02-PLAN.md
+Last session: 2026-03-30T18:41:34.297Z
+Stopped at: Completed 06-01-PLAN.md
 Resume file: None
