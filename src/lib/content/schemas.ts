@@ -25,6 +25,7 @@ export const PatchSchema = z.object({
   source: z.enum(['manual', 'sysex']).optional(),
   capture_date: z.string().optional(),
   program_number: z.number().int().min(0).max(127).optional(),
+  challenge_id: z.string().optional(),
 }).passthrough();
 
 export const InstrumentFileSchema = z.object({
