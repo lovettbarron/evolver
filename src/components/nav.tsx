@@ -8,6 +8,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/instruments/evolver', label: 'Evolver' },
   { href: '/instruments/evolver/sessions', label: 'Sessions' },
+  { href: '/instruments/evolver/patches', label: 'Patches' },
 ];
 
 export function Nav() {
