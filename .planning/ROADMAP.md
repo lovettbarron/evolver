@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Session Browser** - Browse sessions by module, read full session content, instrument-scoped routing (gap closure in progress)
 - [x] **Phase 3: Patch Library** - Browse, filter, and inspect documented patches with parameter tables (completed 2026-03-30)
 - [x] **Phase 4: MIDI SysEx Integration** - Receive, parse, store, and send SysEx patch dumps; patch diff view (completed 2026-03-30)
-- [ ] **Phase 5: Progress + Challenges** - Additive progress dashboard and challenge exercises with patch responses
+- [x] **Phase 5: Progress + Challenges** - Additive progress dashboard and challenge exercises with patch responses (completed 2026-03-30)
 - [ ] **Phase 6: Deployment** - Local vault mode, Vercel demo mode with synthetic data, reference PDF serving
 
 ## Phase Details
@@ -135,5 +135,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 2. Session Browser | 3/5 | Gap closure | - |
 | 3. Patch Library | 2/2 | Complete   | 2026-03-30 |
 | 4. MIDI SysEx Integration | 4/4 | Complete   | 2026-03-30 |
-| 5. Progress + Challenges | 0/3 | Not started | - |
+| 5. Progress + Challenges | 3/3 | Complete   | 2026-03-30 |
 | 6. Deployment | 0/TBD | Not started | - |
