@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: 06-03 Task 1 complete, checkpoint at Task 2 (human-verify) + Vercel auth gate
-last_updated: "2026-03-30T18:43:58.877Z"
-last_activity: 2026-03-30 -- Completed 06-02 Demo mode enhancement
+stopped_at: Completed 06-03 Vercel deployment config (deploy deferred to user)
+last_updated: "2026-03-30T18:55:00.000Z"
+last_activity: 2026-03-30 -- Completed 06-03 Vercel deployment configuration
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 23
-  completed_plans: 22
-  percent: 91
+  completed_plans: 23
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-29)
 ## Current Position
 
 Phase: 6 of 6 (Deployment)
-Plan: 2 of 3 in current phase
-Status: Executing Phase 6
-Last activity: 2026-03-30 -- Completed 06-02 Demo mode enhancement
+Plan: 3 of 3 in current phase
+Status: Complete
+Last activity: 2026-03-30 -- Completed 06-03 Vercel deployment configuration
 
-Progress: [█████████░] 91%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -128,6 +128,9 @@ Recent decisions affecting current work:
 - [Phase 06]: Synthetic journey uses 21 sessions (Modules 1-6), isDemoMode threaded as prop from layout
 - [Phase 06]: API route pattern for PDF serving instead of public/ copy -- supports vault and bundled content sources
 - [Phase 06]: Webpack canvas=false alias required for react-pdf SSR compatibility
+- [Phase 06]: outputFileTracingIncludes targets ./src/content/**/* -- required for dynamic fs.readdirSync paths in serverless
+- [Phase 06]: prebuild hook (npm run bundle-content) wired before every build, local and Vercel CI
+- [Phase 06]: vercel.json buildCommand chains prebuild+build; deployment deferred to user (Vercel CLI auth gate)
 
 ### Pending Todos
 
@@ -141,6 +144,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-30T18:43:58.875Z
-Stopped at: 06-03 Task 1 complete, checkpoint at Task 2 (human-verify) + Vercel auth gate
+Last session: 2026-03-30T18:55:00.000Z
+Stopped at: Completed 06-03-PLAN.md (Vercel deployment config complete, deploy deferred to user)
 Resume file: None
