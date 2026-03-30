@@ -1,11 +1,10 @@
 # Requirements: Instrument Deep Learning
 
 **Defined:** 2026-03-29
+**Updated:** 2026-03-30 (v1.1 milestone)
 **Core Value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
 
-## v1 Requirements
-
-Requirements for initial release. Each maps to roadmap phases.
+## v1.0 Requirements (Complete)
 
 ### Content Pipeline
 
@@ -74,12 +73,49 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DEPL-03**: Demo mode includes curated synthetic learner journey (realistic progress state)
 - [x] **DEPL-04**: Reference PDFs accessible in both local and demo modes
 
+## v1.1 Requirements
+
+Requirements for Cascadia instrument support. Each maps to roadmap phases.
+
+### Cascadia Instrument Data
+
+- [ ] **CASC-01**: Cascadia instrument overview page with architecture description, signal flow, and module layout
+- [ ] **CASC-02**: Cascadia normalled signal path documented (what you hear with zero cables patched)
+- [ ] **CASC-03**: Each Cascadia module documented with controls, jacks, normals, and LED behavior
+- [ ] **CASC-04**: Cascadia reference PDF (manual v1.1) accessible via PDF viewer
+
+### Multi-Instrument UI
+
+- [ ] **MULTI-01**: Navigation dynamically lists all discovered instruments (no hardcoded Evolver links)
+- [ ] **MULTI-02**: Instrument selector visible on landing page for choosing between Evolver and Cascadia
+- [ ] **MULTI-03**: MIDI/SysEx workspace hidden for instruments without SysEx capability (capability flag in instrument config)
+- [ ] **MULTI-04**: Patch detail view adapts to instrument type: parameter tables for Evolver, cable routing + knob positions for Cascadia
+
+### Cascadia Patch Documentation
+
+- [ ] **CPATCH-01**: Patch frontmatter supports cable routing as structured connections array (source, destination, purpose)
+- [ ] **CPATCH-02**: Patch frontmatter supports knob/slider positions as settings map (module, control, value as clock position or percentage)
+- [ ] **CPATCH-03**: Patch detail page renders cable connections as a readable list or Mermaid diagram
+- [ ] **CPATCH-04**: Patch detail page renders knob/slider settings grouped by module
+- [ ] **CPATCH-05**: Patches include embedded audio previews (Baratatronix-style with playable audio files)
+- [ ] **CPATCH-06**: 12-16 demo patches covering bass, lead, pad, drum, texture, and FX categories
+
+### Cascadia Curriculum
+
+- [ ] **CCURR-01**: 25 Cascadia sessions across 7 modules (15-30 min each, ADHD-paced)
+- [ ] **CCURR-02**: Each session teaches a generalized synthesis concept (e.g., "what is a wave folder", "how sample & hold works") using Cascadia as the hands-on vehicle
+- [ ] **CCURR-03**: Each session highlights what is unique to Cascadia's implementation of the concept (e.g., Envelope B triple-mode, specific normalling choices, mixuverter design)
+- [ ] **CCURR-04**: Sessions document which normalled connections are active and what patching a cable overrides
+- [ ] **CCURR-05**: Module 1 (Foundations) follows the manual's "Make a Sound" progression: basic sound → PWM → sub → filter envelope → wave folding → FM → FX pedal
+- [ ] **CCURR-06**: Recipe sessions produce named patches with full cable routing and knob settings documented
+
+### Cascadia Demo Mode
+
+- [ ] **CDEMO-01**: Cascadia content bundled in src/content/ for Vercel demo mode
+- [ ] **CDEMO-02**: Synthetic Cascadia learner journey showing ~50% progress (separate from Evolver journey)
+- [ ] **CDEMO-03**: Landing page and instrument selector show both instruments in demo mode
+
 ## v2 Requirements
-
-### Additional Instruments
-
-- **INST-10**: Intellijel Cascadia curriculum and instrument data
-- **INST-11**: Framework validation: confirm methodology transfers to semi-modular
 
 ### Audio Integration
 
@@ -88,9 +124,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Enhanced Patch Tools
 
-- **PTCH-10**: Batch SysEx dump (all banks)
+- **PTCH-10**: Batch SysEx dump (all banks) — Evolver only
 - **PTCH-11**: Patch randomization / mutation for exploration
 - **PTCH-12**: Patch sharing export format
+
+### Visual Patch Sheets
+
+- **VIS-01**: SVG-based Cascadia panel diagram with labeled patch points
+- **VIS-02**: Interactive patch cable visualizer showing connections on panel diagram
 
 ## Out of Scope
 
@@ -100,8 +141,11 @@ Requirements for initial release. Each maps to roadmap phases.
 | Mobile native app | Web-first, responsive is sufficient |
 | User accounts / multi-user | Personal tool with public demo mode |
 | Video tutorials | Text + audio for v1 |
-| Database / ORM | Markdown + flat files is the correct architecture for this scale |
-| Automated MIDI sequencing | Out of scope — this is a learning tool, not a DAW |
+| Database / ORM | Markdown + flat files is the correct architecture |
+| Automated MIDI sequencing | Learning tool, not a DAW |
+| MIDI SysEx for Cascadia | Cascadia has no patch memory or SysEx — CV-only instrument |
+| Interactive patch cable visualizer | Deferred to v2 (VIS-01/02) — structured YAML + Mermaid is sufficient for v1.1 |
+| Abstracting MIDI library for multi-instrument | Evolver MIDI code works, Cascadia doesn't need it — don't refactor |
 
 ## Traceability
 
@@ -147,12 +191,36 @@ Requirements for initial release. Each maps to roadmap phases.
 | DEPL-02 | Phase 6 | Pending |
 | DEPL-03 | Phase 6 | Complete |
 | DEPL-04 | Phase 6 | Complete |
+| CASC-01 | Pending | Pending |
+| CASC-02 | Pending | Pending |
+| CASC-03 | Pending | Pending |
+| CASC-04 | Pending | Pending |
+| MULTI-01 | Pending | Pending |
+| MULTI-02 | Pending | Pending |
+| MULTI-03 | Pending | Pending |
+| MULTI-04 | Pending | Pending |
+| CPATCH-01 | Pending | Pending |
+| CPATCH-02 | Pending | Pending |
+| CPATCH-03 | Pending | Pending |
+| CPATCH-04 | Pending | Pending |
+| CPATCH-05 | Pending | Pending |
+| CPATCH-06 | Pending | Pending |
+| CCURR-01 | Pending | Pending |
+| CCURR-02 | Pending | Pending |
+| CCURR-03 | Pending | Pending |
+| CCURR-04 | Pending | Pending |
+| CCURR-05 | Pending | Pending |
+| CCURR-06 | Pending | Pending |
+| CDEMO-01 | Pending | Pending |
+| CDEMO-02 | Pending | Pending |
+| CDEMO-03 | Pending | Pending |
 
 **Coverage:**
-- v1 requirements: 40 total
-- Mapped to phases: 40
-- Unmapped: 0
+- v1.0 requirements: 40 total (39 complete, 1 pending)
+- v1.1 requirements: 19 total
+- Mapped to phases: 40 (v1.0)
+- Unmapped: 19 (v1.1 — awaiting roadmap)
 
 ---
 *Requirements defined: 2026-03-29*
-*Last updated: 2026-03-29 after roadmap phase mapping*
+*Last updated: 2026-03-30 after v1.1 milestone requirements*
