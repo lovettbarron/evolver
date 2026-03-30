@@ -25,8 +25,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Patch Library
 
-- [ ] **PTCH-01**: User can browse documented patches with parameter tables
-- [ ] **PTCH-02**: User can filter patches by type (bass, lead, pad, drum, texture, sequence)
+- [x] **PTCH-01**: User can browse documented patches with parameter tables
+- [x] **PTCH-02**: User can filter patches by type (bass, lead, pad, drum, texture, sequence)
 - [ ] **PTCH-03**: User can navigate from a patch to the session that created it
 - [ ] **PTCH-04**: Patch detail view shows full parameter dump, playing tips, and technique notes
 
@@ -117,8 +117,8 @@ Requirements for initial release. Each maps to roadmap phases.
 | SESS-03 | Phase 2 | Complete |
 | SESS-04 | Phase 2 | Complete |
 | SESS-05 | Phase 2 | Complete |
-| PTCH-01 | Phase 3 | Pending |
-| PTCH-02 | Phase 3 | Pending |
+| PTCH-01 | Phase 3 | Complete |
+| PTCH-02 | Phase 3 | Complete |
 | PTCH-03 | Phase 3 | Pending |
 | PTCH-04 | Phase 3 | Pending |
 | MIDI-01 | Phase 4 | Pending |
