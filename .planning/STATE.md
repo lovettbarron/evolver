@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 6 context gathered
-last_updated: "2026-03-30T14:10:40.736Z"
-last_activity: 2026-03-30 -- Completed 05-03 Challenge callouts and content
+status: executing
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-03-30T18:41:26.233Z"
+last_activity: 2026-03-30 -- Completed 06-02 Demo mode enhancement
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 20
-  completed_plans: 20
-  percent: 100
+  total_plans: 23
+  completed_plans: 22
+  percent: 91
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-29)
 
 ## Current Position
 
-Phase: 5 of 6 (Progress & Challenges)
-Plan: 3 of 3 in current phase (all complete)
-Status: Phase 5 Complete
-Last activity: 2026-03-30 -- Completed 05-03 Challenge callouts and content
+Phase: 6 of 6 (Deployment)
+Plan: 2 of 3 in current phase
+Status: Executing Phase 6
+Last activity: 2026-03-30 -- Completed 06-02 Demo mode enhancement
 
-Progress: [██████████] 100%
+Progress: [█████████░] 91%
 
 ## Performance Metrics
 
@@ -69,6 +69,7 @@ Progress: [██████████] 100%
 | Phase 05 P01 | 2min | 1 tasks | 3 files |
 | Phase 05 P02 | 2min | 2 tasks | 5 files |
 | Phase 05 P03 | 2min | 2 tasks | 13 files |
+| Phase 06 P02 | 2min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -123,6 +124,7 @@ Recent decisions affecting current work:
 - [Phase 05]: Module dots use title attribute for tooltips, not custom tooltip component
 - [Phase 05]: Lucide Target SVG inlined as challenge callout indicator icon
 - [Phase 05]: Challenge callout CSS uses accent color for both border and title text
+- [Phase 06]: Synthetic journey uses 21 sessions (Modules 1-6), isDemoMode threaded as prop from layout
 
 ### Pending Todos
 
@@ -136,6 +138,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-30T14:10:40.734Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-deployment/06-CONTEXT.md
+Last session: 2026-03-30T18:40:59.411Z
+Stopped at: Completed 06-02-PLAN.md
+Resume file: None
