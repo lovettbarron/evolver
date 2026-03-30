@@ -21,6 +21,10 @@ export const PatchSchema = z.object({
   tags: z.array(z.string()),
   instrument: z.string(),
   created: z.string(),
+  // SysEx integration fields (Phase 4)
+  source: z.enum(['manual', 'sysex']).optional(),
+  capture_date: z.string().optional(),
+  program_number: z.number().int().min(0).max(127).optional(),
 }).passthrough();
 
 export const InstrumentFileSchema = z.object({

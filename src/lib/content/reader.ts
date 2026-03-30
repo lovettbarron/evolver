@@ -83,7 +83,7 @@ export async function listSessions(
 export async function listPatches(
   instrument: string,
   config: AppConfig,
-): Promise<Array<{ data: Patch; content: string; slug: string }>> {
+): Promise<Array<{ data: Patch; content: string; slug: string; sysexData: Record<string, unknown> | null }>> {
   const root = getContentRoot(config);
   const pattern = path.join(root, 'patches', instrument, '*.md');
   const files = await glob(pattern);
@@ -96,7 +96,19 @@ export async function listPatches(
         const { data, content } = matter(raw);
         const validated = PatchSchema.parse(data);
         const slug = path.basename(filePath, '.md');
-        return { data: validated, content, slug };
+
+        // Check for .sysex.json sidecar file
+        const sidecarPath = path.join(path.dirname(filePath), `${slug}.sysex.json`);
+        let sysexData: Record<string, unknown> | null = null;
+        try {
+          await fs.access(sidecarPath);
+          const sidecarRaw = await fs.readFile(sidecarPath, 'utf-8');
+          sysexData = JSON.parse(sidecarRaw) as Record<string, unknown>;
+        } catch {
+          // No sidecar file or invalid JSON — leave as null
+        }
+
+        return { data: validated, content, slug, sysexData };
       }),
   );
 
