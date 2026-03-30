@@ -40,17 +40,17 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Progress Tracking
 
-- [ ] **PROG-01**: User sees module completion status (additive count, no streaks)
-- [ ] **PROG-02**: App scans ~/song daily notes for session log entries (tag-based)
-- [ ] **PROG-03**: Dashboard shows additive metrics: sessions completed, patches created, modules done
-- [ ] **PROG-04**: No streak counters, no "days since", no guilt-inducing metrics
+- [x] **PROG-01**: User sees module completion status (additive count, no streaks)
+- [x] **PROG-02**: App scans ~/song daily notes for session log entries (tag-based)
+- [x] **PROG-03**: Dashboard shows additive metrics: sessions completed, patches created, modules done
+- [x] **PROG-04**: No streak counters, no "days since", no guilt-inducing metrics
 
 ### Challenge Mode
 
 - [ ] **CHAL-01**: Sessions include challenge exercises ("create a patch that does X")
-- [ ] **CHAL-02**: User can save challenge responses as patches linked to the challenge
+- [x] **CHAL-02**: User can save challenge responses as patches linked to the challenge
 - [ ] **CHAL-03**: Challenges reference audio examples or saved patches as targets to match/approximate
-- [ ] **CHAL-04**: Challenge completion tracked as part of progress
+- [x] **CHAL-04**: Challenge completion tracked as part of progress
 
 ### Multi-Instrument
 
@@ -126,14 +126,14 @@ Requirements for initial release. Each maps to roadmap phases.
 | MIDI-03 | Phase 4 | Complete |
 | MIDI-04 | Phase 4 | Complete |
 | MIDI-05 | Phase 4 | Complete |
-| PROG-01 | Phase 5 | Pending |
-| PROG-02 | Phase 5 | Pending |
-| PROG-03 | Phase 5 | Pending |
-| PROG-04 | Phase 5 | Pending |
+| PROG-01 | Phase 5 | Complete |
+| PROG-02 | Phase 5 | Complete |
+| PROG-03 | Phase 5 | Complete |
+| PROG-04 | Phase 5 | Complete |
 | CHAL-01 | Phase 5 | Pending |
-| CHAL-02 | Phase 5 | Pending |
+| CHAL-02 | Phase 5 | Complete |
 | CHAL-03 | Phase 5 | Pending |
-| CHAL-04 | Phase 5 | Pending |
+| CHAL-04 | Phase 5 | Complete |
 | INST-01 | Phase 2 | Complete |
 | INST-02 | Phase 2 | Complete |
 | INST-03 | Phase 2 | Complete |
