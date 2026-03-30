@@ -103,11 +103,12 @@ Plans:
   3. Sessions include challenge exercises ("create a patch that does X") with audio/patch targets to match
   4. User can save challenge responses as patches linked to the originating challenge
   5. Challenge completion is reflected in progress counts
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
+- [ ] 05-01-PLAN.md -- Data layer: PatchSchema challenge_id, daily note scanner, progress computation, unit tests
+- [ ] 05-02-PLAN.md -- Progress dashboard UI: CountCard, ModuleJourney, EmptyProgressState, progress page, Nav link
+- [ ] 05-03-PLAN.md -- Challenge content: rehype-callouts config, challenge callouts in sessions 27-30, demo patch challenge_ids
 
 ### Phase 6: Deployment
 **Goal**: The app runs locally against the real vault and deploys to Vercel with a compelling demo showing curriculum content and a realistic synthetic learner journey
@@ -134,5 +135,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 2. Session Browser | 3/5 | Gap closure | - |
 | 3. Patch Library | 2/2 | Complete   | 2026-03-30 |
 | 4. MIDI SysEx Integration | 4/4 | Complete   | 2026-03-30 |
-| 5. Progress + Challenges | 0/TBD | Not started | - |
+| 5. Progress + Challenges | 0/3 | Not started | - |
 | 6. Deployment | 0/TBD | Not started | - |
