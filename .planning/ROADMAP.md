@@ -85,11 +85,13 @@ Plans:
   3. Captured patches are stored as structured data (markdown + frontmatter or JSON) that the content reader can load
   4. User can send a stored patch back to the Evolver to restore it on the hardware
   5. User can view two patches side-by-side with parameter differences highlighted
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md -- SysEx parser/encoder, parameter map (128 program + 64 sequencer), types, basic-patch JSON sidecar
+- [ ] 04-02-PLAN.md -- PatchSchema extension, content reader sidecar discovery, content writer for captured patches
+- [ ] 04-03-PLAN.md -- MIDI connection manager, MIDI workspace page (connection, capture, send sections), nav link
+- [ ] 04-04-PLAN.md -- Diff engine, diff picker/view UI, Compare Patches section on MIDI page
 
 ### Phase 5: Progress + Challenges
 **Goal**: Users see guilt-free additive progress metrics and can complete challenge exercises that produce documented patches
@@ -131,6 +133,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 1. Content Pipeline + Curriculum | 6/6 | Complete   | 2026-03-29 |
 | 2. Session Browser | 3/5 | Gap closure | - |
 | 3. Patch Library | 2/2 | Complete   | 2026-03-30 |
-| 4. MIDI SysEx Integration | 0/TBD | Not started | - |
+| 4. MIDI SysEx Integration | 0/4 | Planning complete | - |
 | 5. Progress + Challenges | 0/TBD | Not started | - |
 | 6. Deployment | 0/TBD | Not started | - |
