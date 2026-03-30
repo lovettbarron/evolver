@@ -123,6 +123,14 @@
     border-radius: 0 6px 6px 0;
   }
 
+  .prose .callout[data-callout="challenge"] {
+    border-left-color: var(--color-accent);
+  }
+
+  .prose .callout[data-callout="challenge"] .callout-title {
+    color: var(--color-accent);
+  }
+
   /* Task list styling */
   .prose .contains-task-list {
     list-style: none;
