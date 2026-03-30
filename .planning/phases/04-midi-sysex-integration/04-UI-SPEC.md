@@ -85,6 +85,12 @@ Accent reserved for:
 
 ---
 
+## Focal Point
+
+The **"Capture Current Patch"** button is the primary visual anchor on the MIDI workspace page. It uses the accent background (`bg-accent` with dark text), the largest touch target, and sits at the top of the Capture section -- the first interactive section after the connection status. All other CTAs ("Send to Device", "Save to Library") use secondary visual weight (outline or muted variants) to maintain a single dominant focal point.
+
+---
+
 ## Component Inventory
 
 ### New Components (this phase)
@@ -201,7 +207,7 @@ Each section (Connection, Capture, Send, Diff) uses a consistent card pattern:
 - Backdrop: `bg-bg/80` with blur
 - Heading: "Send Patch to Evolver" at 20px bold
 - Body: "This will load **[Patch Name]** into the Evolver's edit buffer. Your current unsaved edits on the hardware will be replaced."
-- Buttons row: "Cancel" (muted text, no bg) + "Send Patch" (accent bg, dark text)
+- Buttons row: "Don't Send" (muted text, no bg) + "Send Patch" (accent bg, dark text)
 - Escape key and backdrop click dismiss
 
 ### Diff View
@@ -232,7 +238,7 @@ Each section (Connection, Capture, Send, Diff) uses a consistent card pattern:
 | Send confirmation heading | "Send Patch to Evolver" |
 | Send confirmation body | "This will load **[Patch Name]** into the Evolver's edit buffer. Your current unsaved edits on the hardware will be replaced." |
 | Send confirmation CTA | "Send Patch" |
-| Send confirmation cancel | "Cancel" |
+| Send confirmation cancel | "Don't Send" |
 | Send success | "Patch loaded on Evolver" |
 | Send error | "Send failed. Check your MIDI connection and try again." |
 | Diff summary (no diff) | "Patches are identical" |
