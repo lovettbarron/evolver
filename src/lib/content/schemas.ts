@@ -26,6 +26,9 @@ export const PatchSchema = z.object({
   capture_date: z.string().optional(),
   program_number: z.number().int().min(0).max(127).optional(),
   challenge_id: z.string().optional(),
+  // Phase 7: stub fields for CV-based instruments (refined in Phase 9)
+  cable_routing: z.unknown().optional(),
+  knob_settings: z.unknown().optional(),
 }).passthrough();
 
 export const InstrumentFileSchema = z.object({
@@ -39,6 +42,21 @@ export const InstrumentFileSchema = z.object({
 export type Session = z.infer<typeof SessionSchema>;
 export type Patch = z.infer<typeof PatchSchema>;
 export type InstrumentFile = z.infer<typeof InstrumentFileSchema>;
+
+// Instrument configuration schema (Phase 7: multi-instrument support)
+export const InstrumentConfigSchema = z.object({
+  display_name: z.string(),
+  tagline: z.string(),
+  manufacturer: z.string(),
+  sysex: z.boolean(),
+  patch_memory: z.boolean(),
+  reference_pdfs: z.array(z.object({
+    label: z.string(),
+    file: z.string(),
+  })),
+}).passthrough();
+
+export type InstrumentConfig = z.infer<typeof InstrumentConfigSchema>;
 
 // Config schema (also used by config.ts)
 export const ConfigSchema = z.object({
