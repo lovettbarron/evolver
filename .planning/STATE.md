@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Cascadia Instrument Support
 status: executing
-stopped_at: Phase 9 UI-SPEC approved
-last_updated: "2026-03-31T21:39:26.243Z"
+stopped_at: Completed 09-01-PLAN.md
+last_updated: "2026-03-31T21:58:26.980Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
   percent: 100
 ---
 
@@ -60,6 +60,7 @@ Progress: [██████████] 100%
 | Phase 07 P01 | 3min | 2 tasks | 10 files |
 | Phase 07 P02 | 4min | 2 tasks | 8 files |
 | Phase 07 P03 | 6min | 2 tasks | 9 files |
+| Phase 09 P01 | 2min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,8 @@ Recent decisions affecting current work:
 - 07-02: Instrument prop shape simplified in AppShell before passing to Nav (slug/displayName/sysex only)
 - 07-03: Markdown wikilinks without instrumentSlug resolve to root-relative paths (/{permalink})
 - 07-03: Source-ref PDF map extended with static Cascadia entries; data-driven approach deferred to Phase 10
+- [Phase 09]: CableConnectionSchema uses string types for source/destination/purpose - flexible for any CV instrument
+- [Phase 09]: KnobSettingSchema value field is string not number to support non-numeric settings
 
 ### Roadmap Evolution
 
@@ -98,6 +101,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T21:30:49.823Z
-Stopped at: Phase 9 UI-SPEC approved
-Resume file: .planning/phases/09-patch-documentation-demo-patches/09-UI-SPEC.md
+Last session: 2026-03-31T21:58:26.976Z
+Stopped at: Completed 09-01-PLAN.md
+Resume file: None
