@@ -1,12 +1,21 @@
-'use client';
-
-import { use } from 'react';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
+import { loadConfig } from '@/lib/config';
+import { loadInstrumentConfig } from '@/lib/content/reader';
 import { MidiPage } from '@/components/midi-page';
+import { NoSysexPage } from '@/components/no-sysex-page';
 
-export default function MidiRoute({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
+export default async function MidiRoute({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const config = await loadConfig();
+  const instrumentConfig = await loadInstrumentConfig(slug, config);
+
+  if (!instrumentConfig.sysex) {
+    return <NoSysexPage
+      displayName={instrumentConfig.display_name}
+      patchesHref={`/instruments/${slug}/patches`}
+    />;
+  }
 
   return (
     <div>

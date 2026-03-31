@@ -112,13 +112,13 @@ describe('renderMarkdown', () => {
 
   describe('wikilinks', () => {
     it('renders wikilink with permalink as app route', async () => {
-      const html = await renderMarkdown('Check [[basic-patch]] here', ['basic-patch']);
+      const html = await renderMarkdown('Check [[basic-patch]] here', ['basic-patch'], 'evolver');
       expect(html).toContain('href="/instruments/evolver/basic-patch"');
       expect(html).toContain('class="wikilink"');
     });
 
     it('renders aliased wikilink with display text', async () => {
-      const html = await renderMarkdown('See [[basic-patch|Basic Patch]] info', ['basic-patch']);
+      const html = await renderMarkdown('See [[basic-patch|Basic Patch]] info', ['basic-patch'], 'evolver');
       expect(html).toContain('href="/instruments/evolver/basic-patch"');
       expect(html).toContain('>Basic Patch</a>');
     });
@@ -130,17 +130,24 @@ describe('renderMarkdown', () => {
     });
 
     it('renders valid wikilink without wikilink-broken class', async () => {
-      const html = await renderMarkdown('See [[basic-patch]]', ['basic-patch']);
+      const html = await renderMarkdown('See [[basic-patch]]', ['basic-patch'], 'evolver');
       expect(html).not.toContain('wikilink-broken');
     });
 
     it('handles multiple wikilinks in one line', async () => {
       const html = await renderMarkdown(
         'See [[basic-patch]] and [[signal-flow]]',
-        ['basic-patch', 'signal-flow']
+        ['basic-patch', 'signal-flow'],
+        'evolver',
       );
       expect(html).toContain('href="/instruments/evolver/basic-patch"');
       expect(html).toContain('href="/instruments/evolver/signal-flow"');
+    });
+
+    it('renders wikilink with root-relative path when no instrumentSlug', async () => {
+      const html = await renderMarkdown('Check [[basic-patch]] here', ['basic-patch']);
+      expect(html).toContain('href="/basic-patch"');
+      expect(html).toContain('class="wikilink"');
     });
   });
 
@@ -327,7 +334,7 @@ sendCC(102, 50);
 Tags: #foundations #navigation #beginner
 `;
 
-      const html = await renderMarkdown(md, ['basic-patch', 'signal-flow']);
+      const html = await renderMarkdown(md, ['basic-patch', 'signal-flow'], 'evolver');
 
       // Frontmatter stripped
       expect(html).not.toContain('session_number');
@@ -390,7 +397,7 @@ describe('createMarkdownProcessor', () => {
   });
 
   it('accepts custom permalinks for wikilink resolution', async () => {
-    const processor = createMarkdownProcessor(['my-page']);
+    const processor = createMarkdownProcessor(['my-page'], 'evolver');
     const result = await processor.process('See [[my-page]]');
     const html = String(result);
     expect(html).toContain('href="/instruments/evolver/my-page"');

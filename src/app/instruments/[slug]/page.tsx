@@ -1,13 +1,8 @@
-import { listInstrumentFiles, listSessions } from '@/lib/content/reader';
+import { listInstrumentFiles, listSessions, loadInstrumentConfig } from '@/lib/content/reader';
 import { loadConfig } from '@/lib/config';
 import { renderMarkdown } from '@/lib/markdown/processor';
 import { InstrumentOverview } from '@/components/instrument-overview';
 import { notFound } from 'next/navigation';
-
-const references = [
-  { label: 'DSI Evolver Manual (v1.3)', pdfPath: '/api/references/Evo_Key_Manual_1.3.pdf' },
-  { label: 'The Definitive Guide to Evolver — Anu Kirk', pdfPath: '/api/references/evolverguide.pdf' },
-];
 
 export default async function InstrumentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -20,11 +15,27 @@ export default async function InstrumentPage({ params }: { params: Promise<{ slu
   const signalFlow = files.find(f => f.data.type === 'signal-flow');
   const basicPatch = files.find(f => f.data.type === 'basic-patch');
 
-  const overviewHtml = await renderMarkdown(overview.content);
-  const signalFlowHtml = signalFlow ? await renderMarkdown(signalFlow.content) : null;
+  const overviewHtml = await renderMarkdown(overview.content, [], slug);
+  const signalFlowHtml = signalFlow ? await renderMarkdown(signalFlow.content, [], slug) : null;
 
-  // Get total session count for display
+  // Load instrument config for dynamic references
+  const instrumentConfig = await loadInstrumentConfig(slug, config);
+  const references = instrumentConfig.reference_pdfs.map(ref => ({
+    label: ref.label,
+    pdfPath: `/api/references/${ref.file}`,
+  }));
+
+  // Get sessions for count and hero card
   const sessions = await listSessions(slug, config);
+
+  const nextSession = sessions[0] || null;
+  const nextSessionData = nextSession ? {
+    moduleName: nextSession.data.module,
+    sessionTitle: nextSession.data.title,
+    objective: nextSession.content.split('\n').filter(l => l.trim() && !l.startsWith('#'))[0]?.trim().slice(0, 120) || nextSession.data.title,
+    duration: nextSession.data.duration,
+    href: `/instruments/${slug}/sessions/${nextSession.slug}`,
+  } : null;
 
   return (
     <InstrumentOverview
@@ -36,6 +47,7 @@ export default async function InstrumentPage({ params }: { params: Promise<{ slu
       sessionCount={sessions.length}
       slug={slug}
       references={references}
+      nextSession={nextSessionData}
     />
   );
 }

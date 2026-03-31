@@ -7,6 +7,8 @@ const PDF_MAP: Record<string, string> = {
   'anu kirk': '/api/references/evolverguide.pdf',
   'dsi manual': '/api/references/Evo_Key_Manual_1.3.pdf',
   'evolver guide': '/api/references/evolverguide.pdf',
+  'cascadia manual': '/api/references/cascadia_manual_v1.1.pdf',
+  'intellijel': '/api/references/cascadia_manual_v1.1.pdf',
 };
 
 function parsePdfRef(reference: string): { pdfPath: string; page: number } | null {

@@ -36,7 +36,7 @@ import { remarkObsidianEmbeds } from './plugins/obsidian-embeds';
  * 14. rehypeAutolinkHeadings
  * 15. rehypeStringify
  */
-export function createMarkdownProcessor(wikilinkPermalinks: string[] = []) {
+export function createMarkdownProcessor(wikilinkPermalinks: string[] = [], instrumentSlug?: string) {
   return unified()
     .use(remarkParse)
     .use(remarkFrontmatter, ['yaml'])
@@ -44,7 +44,9 @@ export function createMarkdownProcessor(wikilinkPermalinks: string[] = []) {
     .use(remarkObsidianEmbeds)
     .use(remarkWikiLink, {
       permalinks: wikilinkPermalinks,
-      hrefTemplate: (permalink: string) => `/instruments/evolver/${permalink}`,
+      hrefTemplate: (permalink: string) => instrumentSlug
+        ? `/instruments/${instrumentSlug}/${permalink}`
+        : `/${permalink}`,
       aliasDivider: '|',
       wikiLinkClassName: 'wikilink',
       newClassName: 'wikilink-broken',
@@ -81,9 +83,10 @@ export function createMarkdownProcessor(wikilinkPermalinks: string[] = []) {
  */
 export async function renderMarkdown(
   content: string,
-  permalinks: string[] = []
+  permalinks: string[] = [],
+  instrumentSlug?: string,
 ): Promise<string> {
-  const processor = createMarkdownProcessor(permalinks);
+  const processor = createMarkdownProcessor(permalinks, instrumentSlug);
   const result = await processor.process(content);
   return String(result);
 }

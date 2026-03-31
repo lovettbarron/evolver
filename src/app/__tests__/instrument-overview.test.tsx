@@ -39,7 +39,7 @@ describe('InstrumentOverview', () => {
 
   test('renders session count', () => {
     render(<InstrumentOverview {...defaultProps} />);
-    expect(screen.getByText('35 sessions across 10 modules')).toBeDefined();
+    expect(screen.getByText('35 sessions')).toBeDefined();
   });
 
   test('renders Signal Flow section when signalFlowHtml is provided', () => {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FileText } from 'lucide-react';
 import { PdfViewer } from './pdf-viewer';
+import { HeroCard } from './hero-card';
 
 const MermaidRenderer = dynamic(
   () =>
@@ -23,6 +24,13 @@ export interface InstrumentOverviewProps {
   sessionCount: number;
   slug: string;
   references?: Array<{ label: string; pdfPath: string }>;
+  nextSession?: {
+    moduleName: string;
+    sessionTitle: string;
+    objective: string;
+    duration: number;
+    href: string;
+  } | null;
 }
 
 export function InstrumentOverview({
@@ -34,6 +42,7 @@ export function InstrumentOverview({
   sessionCount,
   slug,
   references,
+  nextSession,
 }: InstrumentOverviewProps) {
   const [openPdf, setOpenPdf] = useState<string | null>(null);
 
@@ -41,6 +50,18 @@ export function InstrumentOverview({
     <div className="max-w-[720px] mx-auto px-lg lg:px-xl py-2xl">
       <h1 className="text-4xl font-bold leading-[1.1] mb-sm">{title}</h1>
       <p className="text-muted text-sm mb-2xl">{manufacturer}</p>
+
+      {nextSession && (
+        <div className="mb-2xl">
+          <HeroCard
+            moduleName={nextSession.moduleName}
+            sessionTitle={nextSession.sessionTitle}
+            objective={nextSession.objective}
+            duration={nextSession.duration}
+            href={nextSession.href}
+          />
+        </div>
+      )}
 
       <div className="prose" dangerouslySetInnerHTML={{ __html: overviewHtml }} />
 
@@ -82,7 +103,7 @@ export function InstrumentOverview({
           </Link>
         )}
         <p className="text-muted text-sm">
-          {sessionCount} sessions across 10 modules
+          {sessionCount} sessions
         </p>
         <Link
           href={`/instruments/${slug}/sessions`}
