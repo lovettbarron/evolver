@@ -199,6 +199,49 @@ describe('InstrumentFileSchema', () => {
     const result = InstrumentFileSchema.parse(data);
     expect(result.extra).toBe('allowed');
   });
+
+  it('accepts type module with module-specific fields', () => {
+    const data = {
+      type: 'module',
+      instrument: 'cascadia',
+      title: 'VCO A',
+      manufacturer: 'Intellijel',
+      category: 'sound-source',
+      control_count: 11,
+      jack_count: 8,
+      has_normals: true,
+    };
+    const result = InstrumentFileSchema.parse(data);
+    expect(result.type).toBe('module');
+    expect(result.category).toBe('sound-source');
+    expect(result.control_count).toBe(11);
+    expect(result.jack_count).toBe(8);
+    expect(result.has_normals).toBe(true);
+  });
+
+  it('accepts type module without optional module fields', () => {
+    const data = {
+      type: 'module',
+      instrument: 'cascadia',
+      title: 'Simple Module',
+      manufacturer: 'Intellijel',
+    };
+    const result = InstrumentFileSchema.parse(data);
+    expect(result.type).toBe('module');
+    expect(result.category).toBeUndefined();
+    expect(result.control_count).toBeUndefined();
+  });
+
+  it('rejects invalid category enum for module', () => {
+    const data = {
+      type: 'module',
+      instrument: 'cascadia',
+      title: 'Bad',
+      manufacturer: 'Intellijel',
+      category: 'invalid-category',
+    };
+    expect(() => InstrumentFileSchema.parse(data)).toThrow(ZodError);
+  });
 });
 
 describe('InstrumentConfigSchema', () => {
