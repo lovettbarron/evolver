@@ -24,9 +24,24 @@ const CANONICAL_MODULES = [
 ];
 
 function extractModuleName(label: string): string {
-  for (const mod of CANONICAL_MODULES) {
+  // Sort by length descending so longer matches win (e.g., "VCA B / LPF" before "VCA")
+  const sorted = [...CANONICAL_MODULES].sort((a, b) => b.length - a.length);
+  for (const mod of sorted) {
     if (label.startsWith(mod)) {
       return mod;
+    }
+    // Handle slash-separated variants: "LFO X/Y/Z" matches "LFO X", "LFO Y", "LFO Z"
+    if (mod.includes('/')) {
+      const parts = mod.split('/').map((p) => p.trim());
+      const base = parts[0].includes(' ')
+        ? parts[0].substring(0, parts[0].lastIndexOf(' '))
+        : '';
+      for (const part of parts) {
+        const variant = part.includes(' ') ? part : `${base} ${part}`.trim();
+        if (variant && label.startsWith(variant)) {
+          return mod;
+        }
+      }
     }
   }
   // Fallback: first word
