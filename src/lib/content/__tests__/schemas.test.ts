@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { SessionSchema, PatchSchema, InstrumentFileSchema, ConfigSchema } from '../schemas.js';
+import { SessionSchema, PatchSchema, InstrumentFileSchema, ConfigSchema, InstrumentConfigSchema } from '../schemas.js';
 import { ZodError } from 'zod';
 
 describe('SessionSchema', () => {
@@ -102,6 +102,67 @@ describe('PatchSchema', () => {
     const result = PatchSchema.parse(data);
     expect(result.custom_field).toBe('bar');
   });
+
+  it('accepts patch data with cable_routing and knob_settings undefined', () => {
+    const data = {
+      name: 'Fat Bass',
+      type: 'bass',
+      session_origin: 6,
+      description: 'Deep sub',
+      tags: ['bass'],
+      instrument: 'evolver',
+      created: '2026-01-15',
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.cable_routing).toBeUndefined();
+    expect(result.knob_settings).toBeUndefined();
+  });
+
+  it('accepts patch data with cable_routing set to an arbitrary object', () => {
+    const data = {
+      name: 'Modular Patch',
+      type: 'texture',
+      session_origin: null,
+      description: 'CV routing test',
+      tags: ['modular'],
+      instrument: 'cascadia',
+      created: '2026-03-15',
+      cable_routing: { output_a: 'input_b', mult: ['vca', 'filter'] },
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.cable_routing).toEqual({ output_a: 'input_b', mult: ['vca', 'filter'] });
+  });
+
+  it('accepts patch data with knob_settings set to an arbitrary array', () => {
+    const data = {
+      name: 'Modular Patch',
+      type: 'texture',
+      session_origin: null,
+      description: 'Knob test',
+      tags: ['modular'],
+      instrument: 'cascadia',
+      created: '2026-03-15',
+      knob_settings: [{ knob: 'cutoff', value: 0.7 }, { knob: 'resonance', value: 0.3 }],
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.knob_settings).toHaveLength(2);
+  });
+
+  it('still accepts existing Evolver patch data without cable_routing or knob_settings', () => {
+    const data = {
+      name: 'Fat Bass',
+      type: 'bass',
+      session_origin: 6,
+      description: 'Deep sub',
+      tags: ['bass'],
+      instrument: 'evolver',
+      created: '2026-01-15',
+      source: 'manual',
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.name).toBe('Fat Bass');
+    expect(result.source).toBe('manual');
+  });
 });
 
 describe('InstrumentFileSchema', () => {
@@ -137,6 +198,80 @@ describe('InstrumentFileSchema', () => {
     };
     const result = InstrumentFileSchema.parse(data);
     expect(result.extra).toBe('allowed');
+  });
+});
+
+describe('InstrumentConfigSchema', () => {
+  it('accepts valid Evolver config', () => {
+    const data = {
+      display_name: 'Mono Evolver',
+      tagline: 'Analog/digital hybrid synthesizer mastery',
+      manufacturer: 'Dave Smith Instruments',
+      sysex: true,
+      patch_memory: true,
+      reference_pdfs: [
+        { label: 'DSI Evolver Manual (v1.3)', file: 'Evo_Key_Manual_1.3.pdf' },
+      ],
+    };
+    const result = InstrumentConfigSchema.parse(data);
+    expect(result.display_name).toBe('Mono Evolver');
+    expect(result.sysex).toBe(true);
+    expect(result.patch_memory).toBe(true);
+    expect(result.reference_pdfs).toHaveLength(1);
+  });
+
+  it('accepts valid Cascadia config', () => {
+    const data = {
+      display_name: 'Cascadia',
+      tagline: 'West coast modular synthesis exploration',
+      manufacturer: 'Intellijel',
+      sysex: false,
+      patch_memory: false,
+      reference_pdfs: [
+        { label: 'Cascadia Manual (v1.1)', file: 'cascadia_manual_v1.1.pdf' },
+      ],
+    };
+    const result = InstrumentConfigSchema.parse(data);
+    expect(result.display_name).toBe('Cascadia');
+    expect(result.sysex).toBe(false);
+    expect(result.patch_memory).toBe(false);
+  });
+
+  it('rejects object missing display_name', () => {
+    const data = {
+      tagline: 'test',
+      manufacturer: 'test',
+      sysex: true,
+      patch_memory: true,
+      reference_pdfs: [],
+    };
+    expect(() => InstrumentConfigSchema.parse(data)).toThrow(ZodError);
+  });
+
+  it('rejects sysex as string instead of boolean', () => {
+    const data = {
+      display_name: 'Test',
+      tagline: 'test',
+      manufacturer: 'test',
+      sysex: 'true',
+      patch_memory: true,
+      reference_pdfs: [],
+    };
+    expect(() => InstrumentConfigSchema.parse(data)).toThrow(ZodError);
+  });
+
+  it('passes through unknown fields', () => {
+    const data = {
+      display_name: 'Test',
+      tagline: 'test',
+      manufacturer: 'test',
+      sysex: true,
+      patch_memory: true,
+      reference_pdfs: [],
+      future_field: 'hello',
+    };
+    const result = InstrumentConfigSchema.parse(data);
+    expect(result.future_field).toBe('hello');
   });
 });
 
