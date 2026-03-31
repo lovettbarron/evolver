@@ -88,7 +88,7 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 
 - [x] **MULTI-01**: Navigation dynamically lists all discovered instruments (no hardcoded Evolver links)
 - [x] **MULTI-02**: Instrument selector visible on landing page for choosing between Evolver and Cascadia
-- [ ] **MULTI-03**: MIDI/SysEx workspace hidden for instruments without SysEx capability (capability flag in instrument config)
+- [x] **MULTI-03**: MIDI/SysEx workspace hidden for instruments without SysEx capability (capability flag in instrument config)
 - [x] **MULTI-04**: Patch detail view adapts to instrument type: parameter tables for Evolver, cable routing + knob positions for Cascadia
 
 ### Cascadia Patch Documentation
@@ -197,7 +197,7 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 | CASC-04 | Phase 7 | Complete |
 | MULTI-01 | Phase 7 | Complete |
 | MULTI-02 | Phase 7 | Complete |
-| MULTI-03 | Phase 7 | Pending |
+| MULTI-03 | Phase 7 | Complete |
 | MULTI-04 | Phase 7 | Complete |
 | CPATCH-01 | Phase 9 | Pending |
 | CPATCH-02 | Phase 9 | Pending |
