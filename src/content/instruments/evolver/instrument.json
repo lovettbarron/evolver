@@ -1,0 +1,11 @@
+{
+  "display_name": "Mono Evolver",
+  "tagline": "Analog/digital hybrid synthesizer mastery",
+  "manufacturer": "Dave Smith Instruments",
+  "sysex": true,
+  "patch_memory": true,
+  "reference_pdfs": [
+    { "label": "DSI Evolver Manual (v1.3)", "file": "Evo_Key_Manual_1.3.pdf" },
+    { "label": "The Definitive Guide to Evolver \u2014 Anu Kirk", "file": "evolverguide.pdf" }
+  ]
+}

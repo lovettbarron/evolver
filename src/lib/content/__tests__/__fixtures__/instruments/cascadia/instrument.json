@@ -1,0 +1,10 @@
+{
+  "display_name": "Cascadia",
+  "tagline": "West coast modular synthesis exploration",
+  "manufacturer": "Intellijel",
+  "sysex": false,
+  "patch_memory": false,
+  "reference_pdfs": [
+    { "label": "Cascadia Manual (v1.1)", "file": "cascadia_manual_v1.1.pdf" }
+  ]
+}

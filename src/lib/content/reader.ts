@@ -7,10 +7,12 @@ import {
   SessionSchema,
   PatchSchema,
   InstrumentFileSchema,
+  InstrumentConfigSchema,
   type AppConfig,
   type Session,
   type Patch,
   type InstrumentFile,
+  type InstrumentConfig,
 } from './schemas';
 
 /**
@@ -36,6 +38,19 @@ export async function readContentFile<T extends z.ZodType>(
   const { data, content } = matter(raw);
   const validated = schema.parse(data);
   return { data: validated, content };
+}
+
+/**
+ * Load and validate an instrument's configuration from its instrument.json file.
+ */
+export async function loadInstrumentConfig(
+  slug: string,
+  config: AppConfig,
+): Promise<InstrumentConfig> {
+  const root = getContentRoot(config);
+  const configPath = path.join(root, 'instruments', slug, 'instrument.json');
+  const raw = await fs.readFile(configPath, 'utf-8');
+  return InstrumentConfigSchema.parse(JSON.parse(raw));
 }
 
 /**
