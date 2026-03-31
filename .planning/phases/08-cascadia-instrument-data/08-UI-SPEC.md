@@ -54,7 +54,6 @@ Source: globals.css `@theme` block -- these tokens are already defined and used 
 | Body | 16px | 400 | 1.6 |
 | Label / Small | 14px | 400 | 1.5 |
 | Heading 3 | 20px | 700 | 1.2 |
-| Heading 2 | 24px | 700 | 1.2 |
 | Heading 1 / Display | 36px | 700 | 1.1 |
 
 Source: globals.css `.prose` rules -- these sizes are already established. Phase 8 reuses them exactly.
@@ -63,6 +62,7 @@ Phase-specific typography notes:
 - Module card titles use 20px/700 (Heading 3 role)
 - Module category labels use 14px/400 uppercase with `tracking-wider` (matches patch-card type badge pattern)
 - Control/jack table content uses 14px/400 body with mono font for values (matches `.param-table` pattern)
+- Module Index category group headers use 20px/700 (Heading 3 role)
 
 ---
 
@@ -172,7 +172,7 @@ Sections:
 1. **Page title**: "Modules" at 36px/700
 2. **Subtitle**: instrument name + total module count in muted 14px
 3. **Category filter pills** (optional, same pattern as patch type filter): `sound-source | shaper | modulator | utility | all`
-4. **Module card grid**: grouped by category with category headers at 24px/700
+4. **Module card grid**: grouped by category with category headers at 20px/700
 
 Filter pill styling (from existing patch filter pattern):
 - Active: `bg-accent text-bg font-bold`
