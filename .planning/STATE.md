@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Cascadia Instrument Support
-status: planning
-stopped_at: Phase 7 UI-SPEC approved
-last_updated: "2026-03-31T05:23:34.656Z"
-last_activity: 2026-03-30 -- Roadmap created for v1.1 (phases 7-11)
+status: executing
+stopped_at: Completed 07-01-PLAN.md
+last_updated: "2026-03-31T06:09:12.755Z"
+last_activity: 2026-03-31 -- Completed 07-01 schema and data foundation
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_plans: 3
+  completed_plans: 1
+  percent: 33
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-30)
 ## Current Position
 
 Phase: 7 of 11 (Multi-Instrument UI + Schema Foundation)
-Plan: Not yet planned
-Status: Ready to plan
-Last activity: 2026-03-30 -- Roadmap created for v1.1 (phases 7-11)
+Plan: 2 of 3
+Status: Executing
+Last activity: 2026-03-31 -- Completed 07-01 schema and data foundation
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: Stable
 
 *Updated after each plan completion*
+| Phase 07 P01 | 3min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,9 @@ Recent decisions affecting current work:
 - v1.1: Curriculum split into two phases (10, 11) -- validate session format on Modules 1-3 before full commitment
 - v1.1: CCURR-01 (25 sessions) spans Phases 10+11 -- assigned to Phase 10 as primary, Phase 11 completes it
 - v1.1: src/lib/midi/ explicitly excluded from all phases -- Cascadia has no SysEx
+- 07-01: InstrumentConfigSchema uses .passthrough() for future-proofing
+- 07-01: PatchSchema stub fields use z.unknown().optional() until Phase 9 refinement
+- [Phase 07]: InstrumentConfigSchema uses .passthrough() for future-proofing unknown fields
 
 ### Pending Todos
 
@@ -82,6 +86,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T05:23:34.654Z
-Stopped at: Phase 7 UI-SPEC approved
-Resume file: .planning/phases/07-multi-instrument-ui-schema-foundation/07-UI-SPEC.md
+Last session: 2026-03-31T06:09:11.663Z
+Stopped at: Completed 07-01-PLAN.md
+Resume file: None
