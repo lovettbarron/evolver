@@ -1,0 +1,53 @@
+import Link from 'next/link';
+
+interface ModuleCardProps {
+  slug: string;
+  instrumentSlug: string;
+  title: string;
+  category?: string;
+  controlCount?: number;
+  jackCount?: number;
+  hasNormals?: boolean;
+  purpose: string;
+}
+
+export function ModuleCard({
+  slug,
+  instrumentSlug,
+  title,
+  category,
+  controlCount,
+  jackCount,
+  hasNormals,
+  purpose,
+}: ModuleCardProps) {
+  return (
+    <Link
+      href={`/instruments/${instrumentSlug}/modules/${slug}`}
+      aria-label={`Open module: ${title}`}
+      className="bg-surface rounded-[6px] p-lg border border-transparent hover:border-accent transition-colors block"
+    >
+      <div className="flex items-start justify-between mb-sm">
+        {category && (
+          <span className="text-accent text-sm uppercase tracking-wider font-normal">
+            {category}
+          </span>
+        )}
+        {jackCount != null && (
+          <span className="text-muted text-sm">{jackCount} jacks</span>
+        )}
+      </div>
+
+      <h3 className="text-[20px] font-bold leading-[1.2] mb-sm">{title}</h3>
+
+      <p className="text-text text-base leading-[1.6] line-clamp-2 mb-md">
+        {purpose}
+      </p>
+
+      <div className="flex items-center gap-md text-muted text-sm">
+        {controlCount != null && <span>{controlCount} controls</span>}
+        {hasNormals && <span>Has normals</span>}
+      </div>
+    </Link>
+  );
+}
