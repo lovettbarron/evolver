@@ -24,6 +24,7 @@ export interface InstrumentOverviewProps {
   sessionCount: number;
   slug: string;
   references?: Array<{ label: string; pdfPath: string }>;
+  moduleCount?: number;
   nextSession?: {
     moduleName: string;
     sessionTitle: string;
@@ -40,6 +41,7 @@ export function InstrumentOverview({
   signalFlowHtml,
   hasBasicPatch,
   sessionCount,
+  moduleCount,
   slug,
   references,
   nextSession,
@@ -103,8 +105,16 @@ export function InstrumentOverview({
           </Link>
         )}
         <p className="text-muted text-sm">
-          {sessionCount} sessions
+          {moduleCount && moduleCount > 0 ? `${moduleCount} modules · ` : ''}{sessionCount} sessions
         </p>
+        {moduleCount && moduleCount > 0 && (
+          <Link
+            href={`/instruments/${slug}/modules`}
+            className="inline-flex items-center justify-center bg-accent text-bg font-bold py-md px-xl rounded min-h-[48px] hover:brightness-110 focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg transition-[filter]"
+          >
+            Explore Modules
+          </Link>
+        )}
         <Link
           href={`/instruments/${slug}/sessions`}
           className="inline-flex items-center justify-center bg-accent text-bg font-bold py-md px-xl rounded min-h-[48px] hover:brightness-110 focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg transition-[filter]"

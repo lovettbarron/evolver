@@ -1,4 +1,4 @@
-import { listInstrumentFiles, listSessions, loadInstrumentConfig } from '@/lib/content/reader';
+import { listInstrumentFiles, listSessions, listModules, loadInstrumentConfig } from '@/lib/content/reader';
 import { loadConfig } from '@/lib/config';
 import { renderMarkdown } from '@/lib/markdown/processor';
 import { InstrumentOverview } from '@/components/instrument-overview';
@@ -25,6 +25,9 @@ export default async function InstrumentPage({ params }: { params: Promise<{ slu
     pdfPath: `/api/references/${ref.file}`,
   }));
 
+  // Get modules for count
+  const modules = await listModules(slug, config);
+
   // Get sessions for count and hero card
   const sessions = await listSessions(slug, config);
 
@@ -45,6 +48,7 @@ export default async function InstrumentPage({ params }: { params: Promise<{ slu
       signalFlowHtml={signalFlowHtml}
       hasBasicPatch={!!basicPatch}
       sessionCount={sessions.length}
+      moduleCount={modules.length}
       slug={slug}
       references={references}
       nextSession={nextSessionData}
