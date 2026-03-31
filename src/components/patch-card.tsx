@@ -16,9 +16,18 @@ export function PatchCard({ patch, slug, instrumentSlug }: PatchCardProps) {
         className="block bg-surface rounded-[6px] p-lg border border-transparent hover:border-accent transition-colors"
       >
         <div className="flex justify-between items-center mb-sm">
-          <span className="text-sm uppercase tracking-wider text-accent">
-            {patch.type}
-          </span>
+          <div className="flex items-center gap-sm">
+            <span className="text-sm uppercase tracking-wider text-accent">
+              {patch.type}
+            </span>
+            {patch.cable_routing &&
+              Array.isArray(patch.cable_routing) &&
+              (patch.cable_routing as Array<unknown>).length > 0 && (
+                <span className="text-sm text-muted">
+                  {(patch.cable_routing as Array<unknown>).length} cables
+                </span>
+              )}
+          </div>
           <span className="text-sm text-muted">{patch.created}</span>
         </div>
         <h3 className="text-xl font-bold mb-sm">{patch.name}</h3>
