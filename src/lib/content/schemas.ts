@@ -13,9 +13,20 @@ export const SessionSchema = z.object({
   reference: z.string().optional(),
 }).passthrough();
 
+export const CableConnectionSchema = z.object({
+  source: z.string(),
+  destination: z.string(),
+  purpose: z.string(),
+});
+
+export const KnobSettingSchema = z.object({
+  control: z.string(),
+  value: z.string(),
+});
+
 export const PatchSchema = z.object({
   name: z.string(),
-  type: z.enum(['bass', 'lead', 'pad', 'drum', 'texture', 'sequence']),
+  type: z.enum(['bass', 'lead', 'pad', 'drum', 'texture', 'sequence', 'fx']),
   session_origin: z.union([z.number(), z.null()]),
   description: z.string(),
   tags: z.array(z.string()),
@@ -26,9 +37,10 @@ export const PatchSchema = z.object({
   capture_date: z.string().optional(),
   program_number: z.number().int().min(0).max(127).optional(),
   challenge_id: z.string().optional(),
-  // Phase 7: stub fields for CV-based instruments (refined in Phase 9)
-  cable_routing: z.unknown().optional(),
-  knob_settings: z.unknown().optional(),
+  // Phase 9: typed fields for CV-based instruments
+  cable_routing: z.array(CableConnectionSchema).optional(),
+  knob_settings: z.record(z.string(), z.array(KnobSettingSchema)).optional(),
+  audio_preview: z.string().optional(),
 }).passthrough();
 
 export const InstrumentFileSchema = z.object({
@@ -46,6 +58,8 @@ export const InstrumentFileSchema = z.object({
 export type Session = z.infer<typeof SessionSchema>;
 export type Patch = z.infer<typeof PatchSchema>;
 export type InstrumentFile = z.infer<typeof InstrumentFileSchema>;
+export type CableConnection = z.infer<typeof CableConnectionSchema>;
+export type KnobSetting = z.infer<typeof KnobSettingSchema>;
 
 // Instrument configuration schema (Phase 7: multi-instrument support)
 export const InstrumentConfigSchema = z.object({

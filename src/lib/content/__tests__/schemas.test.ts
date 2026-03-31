@@ -118,7 +118,7 @@ describe('PatchSchema', () => {
     expect(result.knob_settings).toBeUndefined();
   });
 
-  it('accepts patch data with cable_routing set to an arbitrary object', () => {
+  it('accepts patch data with typed cable_routing array', () => {
     const data = {
       name: 'Modular Patch',
       type: 'texture',
@@ -127,13 +127,14 @@ describe('PatchSchema', () => {
       tags: ['modular'],
       instrument: 'cascadia',
       created: '2026-03-15',
-      cable_routing: { output_a: 'input_b', mult: ['vca', 'filter'] },
+      cable_routing: [{ source: 'LFO Out', destination: 'VCF In', purpose: 'Modulation' }],
     };
     const result = PatchSchema.parse(data);
-    expect(result.cable_routing).toEqual({ output_a: 'input_b', mult: ['vca', 'filter'] });
+    expect(result.cable_routing).toHaveLength(1);
+    expect(result.cable_routing![0].source).toBe('LFO Out');
   });
 
-  it('accepts patch data with knob_settings set to an arbitrary array', () => {
+  it('accepts patch data with typed knob_settings record', () => {
     const data = {
       name: 'Modular Patch',
       type: 'texture',
@@ -142,10 +143,10 @@ describe('PatchSchema', () => {
       tags: ['modular'],
       instrument: 'cascadia',
       created: '2026-03-15',
-      knob_settings: [{ knob: 'cutoff', value: 0.7 }, { knob: 'resonance', value: 0.3 }],
+      knob_settings: { 'VCF': [{ control: 'cutoff', value: '0.7' }, { control: 'resonance', value: '0.3' }] },
     };
     const result = PatchSchema.parse(data);
-    expect(result.knob_settings).toHaveLength(2);
+    expect(result.knob_settings!['VCF']).toHaveLength(2);
   });
 
   it('still accepts existing Evolver patch data without cable_routing or knob_settings', () => {
