@@ -179,7 +179,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 5. Progress + Challenges | v1.0 | 3/3 | Complete | 2026-03-30 |
 | 6. Deployment | v1.0 | 3/3 | Complete | 2026-03-30 |
 | 7. Multi-Instrument UI + Schema Foundation | v1.1 | 0/3 | Planning | - |
-| 8. Cascadia Instrument Data | v1.1 | 1/3 | In Progress | - |
+| 8. Cascadia Instrument Data | v1.1 | 2/3 | In Progress|  |
 | 9. Patch Documentation + Demo Patches | v1.1 | 0/? | Not started | - |
 | 10. Curriculum Modules 1-3 | v1.1 | 0/? | Not started | - |
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 0/? | Not started | - |
