@@ -112,7 +112,12 @@ Plans:
   3. Visiting /instruments/cascadia/midi shows an informational page (not the SysEx workspace) because Cascadia has no MIDI SysEx capability
   4. Cascadia reference PDF (manual v1.1) is accessible via the PDF viewer from the Cascadia instrument pages
   5. PatchSchema accepts optional cable routing and knob settings fields without breaking existing Evolver patches
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 07-01-PLAN.md -- Data layer: InstrumentConfigSchema, instrument.json files, loadInstrumentConfig(), PatchSchema stubs
+- [ ] 07-02-PLAN.md -- Nav + Landing: dynamic nav with instrument switcher, landing page instrument selector cards
+- [ ] 07-03-PLAN.md -- Pages: capability-gated MIDI route, dynamic instrument overview, markdown/source-ref de-hardcoding
 
 ### Phase 8: Cascadia Instrument Data
 **Goal**: Users can browse the Cascadia instrument pages and understand its architecture, default signal path, and every module's controls and patch points
@@ -173,7 +178,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 4. MIDI SysEx Integration | v1.0 | 4/4 | Complete | 2026-03-30 |
 | 5. Progress + Challenges | v1.0 | 3/3 | Complete | 2026-03-30 |
 | 6. Deployment | v1.0 | 3/3 | Complete | 2026-03-30 |
-| 7. Multi-Instrument UI + Schema Foundation | v1.1 | 0/? | Not started | - |
+| 7. Multi-Instrument UI + Schema Foundation | v1.1 | 0/3 | Planning | - |
 | 8. Cascadia Instrument Data | v1.1 | 0/? | Not started | - |
 | 9. Patch Documentation + Demo Patches | v1.1 | 0/? | Not started | - |
 | 10. Curriculum Modules 1-3 | v1.1 | 0/? | Not started | - |
