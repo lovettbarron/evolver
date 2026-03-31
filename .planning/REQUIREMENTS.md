@@ -98,7 +98,7 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 - [x] **CPATCH-03**: Patch detail page renders cable connections as a readable list or Mermaid diagram
 - [x] **CPATCH-04**: Patch detail page renders knob/slider settings grouped by module
 - [x] **CPATCH-05**: Patches include embedded audio previews (Baratatronix-style with playable audio files)
-- [ ] **CPATCH-06**: 12-16 demo patches covering bass, lead, pad, drum, texture, and FX categories
+- [x] **CPATCH-06**: 12-16 demo patches covering bass, lead, pad, drum, texture, and FX categories
 
 ### Cascadia Curriculum
 
@@ -204,7 +204,7 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 | CPATCH-03 | Phase 9 | Complete |
 | CPATCH-04 | Phase 9 | Complete |
 | CPATCH-05 | Phase 9 | Complete |
-| CPATCH-06 | Phase 9 | Pending |
+| CPATCH-06 | Phase 9 | Complete |
 | CCURR-01 | Phase 10 | Pending |
 | CCURR-02 | Phase 10 | Pending |
 | CCURR-03 | Phase 10 | Pending |

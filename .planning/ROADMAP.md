@@ -144,7 +144,7 @@ Plans:
 Plans:
 - [x] 09-01-PLAN.md -- Schema refinement: typed cable_routing, knob_settings, audio_preview, fx enum
 - [x] 09-02-PLAN.md -- UI components: CableRoutingList, CableRoutingDiagram, KnobSettingsTable, AudioPreviewPlaceholder, PatchDetail wiring
-- [ ] 09-03-PLAN.md -- Demo content: 13 Cascadia demo patches across bass, lead, pad, drum, texture, FX categories
+- [x] 09-03-PLAN.md -- Demo content: 13 Cascadia demo patches across bass, lead, pad, drum, texture, FX categories
 
 ### Phase 10: Curriculum Modules 1-3
 **Goal**: Users can work through the first 9 Cascadia sessions covering setup, oscillators, and envelopes -- enough to validate the session format for semi-modular instruments
