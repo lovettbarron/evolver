@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import path from 'path';
 import { ZodError } from 'zod';
-import { readContentFile, discoverInstruments, listSessions, listPatches, getContentRoot } from '../reader.js';
+import { readContentFile, discoverInstruments, listSessions, listPatches, getContentRoot, loadInstrumentConfig } from '../reader.js';
 import { InstrumentFileSchema, SessionSchema, PatchSchema } from '../schemas.js';
 import type { AppConfig } from '../schemas.js';
 
@@ -54,12 +54,42 @@ describe('discoverInstruments', () => {
     expect(instruments).toContain('evolver');
   });
 
+  it('returns both cascadia and evolver', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const instruments = await discoverInstruments(config);
+    expect(instruments).toContain('cascadia');
+    expect(instruments).toContain('evolver');
+  });
+
   it('does not include dotfiles or non-directories', async () => {
     const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
     const instruments = await discoverInstruments(config);
     for (const name of instruments) {
       expect(name).not.toMatch(/^\./);
     }
+  });
+});
+
+describe('loadInstrumentConfig', () => {
+  it('loads and validates Evolver instrument config', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const result = await loadInstrumentConfig('evolver', config);
+    expect(result.display_name).toBe('Mono Evolver');
+    expect(result.sysex).toBe(true);
+    expect(result.patch_memory).toBe(true);
+  });
+
+  it('loads and validates Cascadia instrument config', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const result = await loadInstrumentConfig('cascadia', config);
+    expect(result.display_name).toBe('Cascadia');
+    expect(result.sysex).toBe(false);
+    expect(result.patch_memory).toBe(false);
+  });
+
+  it('throws for nonexistent instrument', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    await expect(loadInstrumentConfig('nonexistent', config)).rejects.toThrow();
   });
 });
 
