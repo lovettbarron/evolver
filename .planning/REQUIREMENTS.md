@@ -81,7 +81,7 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 
 - [ ] **CASC-01**: Cascadia instrument overview page with architecture description, signal flow, and module layout
 - [ ] **CASC-02**: Cascadia normalled signal path documented (what you hear with zero cables patched)
-- [ ] **CASC-03**: Each Cascadia module documented with controls, jacks, normals, and LED behavior
+- [x] **CASC-03**: Each Cascadia module documented with controls, jacks, normals, and LED behavior
 - [x] **CASC-04**: Cascadia reference PDF (manual v1.1) accessible via PDF viewer
 
 ### Multi-Instrument UI
@@ -193,7 +193,7 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 | DEPL-04 | Phase 6 | Complete |
 | CASC-01 | Phase 8 | Pending |
 | CASC-02 | Phase 8 | Pending |
-| CASC-03 | Phase 8 | Pending |
+| CASC-03 | Phase 8 | Complete |
 | CASC-04 | Phase 7 | Complete |
 | MULTI-01 | Phase 7 | Complete |
 | MULTI-02 | Phase 7 | Complete |
