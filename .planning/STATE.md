@@ -83,6 +83,10 @@ Recent decisions affecting current work:
 - 07-03: Markdown wikilinks without instrumentSlug resolve to root-relative paths (/{permalink})
 - 07-03: Source-ref PDF map extended with static Cascadia entries; data-driven approach deferred to Phase 10
 
+### Roadmap Evolution
+
+- Phase 12 added: Evolver Panel Visualizer Component — React component rendering panel SVG with interactive patch state, knob positions, and curriculum annotation overlays
+
 ### Pending Todos
 
 None yet.

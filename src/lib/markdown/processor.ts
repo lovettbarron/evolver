@@ -67,9 +67,8 @@ export function createMarkdownProcessor(wikilinkPermalinks: string[] = [], instr
     .use(rehypeObsidianTags)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, {
-      behavior: 'prepend',
-      properties: { className: ['heading-anchor'], ariaHidden: 'true' },
-      content: { type: 'text', value: '#' },
+      behavior: 'wrap',
+      properties: { className: ['heading-anchor'] },
     })
     .use(rehypeStringify);
 }

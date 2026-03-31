@@ -1,7 +1,13 @@
 'use client';
 
 import { useEffect, useCallback, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { X } from 'lucide-react';
+
+const MermaidRenderer = dynamic(
+  () => import('@/components/mermaid-renderer').then((m) => ({ default: m.MermaidRenderer })),
+  { ssr: false },
+);
 
 interface QuickRefPanelProps {
   content: { label: string; html: string }[];
@@ -83,10 +89,11 @@ export function QuickRefPanel({ content, isOpen, onClose }: QuickRefPanelProps) 
         <div className="p-lg overflow-y-auto h-[calc(100%-120px)]">
           {content.length > 0 && (
             <div
-              className="prose"
+              className="prose quick-ref-prose"
               dangerouslySetInnerHTML={{ __html: content[activeTab]?.html ?? '' }}
             />
           )}
+          <MermaidRenderer />
         </div>
       </div>
     </>

@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { PdfViewer } from './pdf-viewer';
+import dynamic from 'next/dynamic';
+
+const PdfViewer = dynamic(
+  () => import('./pdf-viewer').then((m) => ({ default: m.PdfViewer })),
+  { ssr: false },
+);
 
 const PDF_MAP: Record<string, string> = {
   'anu kirk': '/api/references/evolverguide.pdf',

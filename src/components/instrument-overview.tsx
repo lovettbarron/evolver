@@ -4,13 +4,20 @@ import { useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FileText } from 'lucide-react';
-import { PdfViewer } from './pdf-viewer';
 import { HeroCard } from './hero-card';
 
 const MermaidRenderer = dynamic(
   () =>
     import('@/components/mermaid-renderer').then((m) => ({
       default: m.MermaidRenderer,
+    })),
+  { ssr: false },
+);
+
+const PdfViewer = dynamic(
+  () =>
+    import('@/components/pdf-viewer').then((m) => ({
+      default: m.PdfViewer,
     })),
   { ssr: false },
 );

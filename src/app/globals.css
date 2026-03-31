@@ -44,6 +44,12 @@
   .prose h2 { font-size: 24px; margin-top: 2em; margin-bottom: 0.75em; }
   .prose h3 { font-size: 20px; margin-top: 1.5em; margin-bottom: 0.5em; }
 
+  /* Quick reference panel: compact heading sizes */
+  .quick-ref-prose h1 { font-size: 20px; margin-top: 0; margin-bottom: 0.5em; }
+  .quick-ref-prose h2 { font-size: 16px; margin-top: 1.25em; margin-bottom: 0.5em; }
+  .quick-ref-prose h3 { font-size: 14px; margin-top: 1em; margin-bottom: 0.25em; }
+  .quick-ref-prose .mermaid-placeholder { overflow-x: auto; }
+
   .prose p { margin-bottom: 1em; }
 
   .prose a {
@@ -52,6 +58,12 @@
     text-underline-offset: 2px;
   }
   .prose a:hover { color: var(--color-accent); }
+
+  .prose a.heading-anchor {
+    text-decoration: none;
+    color: inherit;
+  }
+  .prose a.heading-anchor:hover { color: var(--color-accent); }
 
   .prose ul, .prose ol { margin-bottom: 1em; padding-left: 1.5em; }
   .prose li { margin-bottom: 0.25em; }
@@ -76,6 +88,33 @@
   .prose pre code {
     background: none;
     padding: 0;
+  }
+
+  /* Base table styling for all markdown tables */
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5em;
+    font-size: 14px;
+  }
+
+  .prose th {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--color-muted);
+    color: var(--color-muted);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .prose td {
+    padding: 8px 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-surface) 80%, var(--color-muted));
+    vertical-align: top;
+  }
+
+  .prose tr:nth-child(even) td {
+    background-color: var(--color-surface);
   }
 
   /* Parameter table styling from Phase 1 HTML classes */

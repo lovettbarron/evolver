@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import matter from 'gray-matter';
 import fs from 'fs/promises';
+import os from 'os';
 import path from 'path';
 import { glob } from 'glob';
 import {
@@ -20,7 +21,14 @@ import {
  * If vaultPath is set, use it. Otherwise, use bundled content at src/content/.
  */
 export function getContentRoot(config: AppConfig): string {
-  return config.vaultPath ?? path.join(process.cwd(), 'src/content');
+  const vaultPath = config.vaultPath;
+  if (vaultPath) {
+    if (vaultPath.startsWith('~')) {
+      return path.join(os.homedir(), vaultPath.slice(1));
+    }
+    return vaultPath;
+  }
+  return path.join(process.cwd(), 'src/content');
 }
 
 /**
