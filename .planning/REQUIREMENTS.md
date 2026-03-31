@@ -95,8 +95,8 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 
 - [x] **CPATCH-01**: Patch frontmatter supports cable routing as structured connections array (source, destination, purpose)
 - [x] **CPATCH-02**: Patch frontmatter supports knob/slider positions as settings map (module, control, value as clock position or percentage)
-- [ ] **CPATCH-03**: Patch detail page renders cable connections as a readable list or Mermaid diagram
-- [ ] **CPATCH-04**: Patch detail page renders knob/slider settings grouped by module
+- [x] **CPATCH-03**: Patch detail page renders cable connections as a readable list or Mermaid diagram
+- [x] **CPATCH-04**: Patch detail page renders knob/slider settings grouped by module
 - [x] **CPATCH-05**: Patches include embedded audio previews (Baratatronix-style with playable audio files)
 - [ ] **CPATCH-06**: 12-16 demo patches covering bass, lead, pad, drum, texture, and FX categories
 
@@ -201,8 +201,8 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 | MULTI-04 | Phase 7 | Complete |
 | CPATCH-01 | Phase 9 | Complete |
 | CPATCH-02 | Phase 9 | Complete |
-| CPATCH-03 | Phase 9 | Pending |
-| CPATCH-04 | Phase 9 | Pending |
+| CPATCH-03 | Phase 9 | Complete |
+| CPATCH-04 | Phase 9 | Complete |
 | CPATCH-05 | Phase 9 | Complete |
 | CPATCH-06 | Phase 9 | Pending |
 | CCURR-01 | Phase 10 | Pending |
