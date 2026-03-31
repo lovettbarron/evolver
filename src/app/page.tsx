@@ -1,50 +1,55 @@
-import { listSessions } from '@/lib/content/reader';
+import { discoverInstruments, loadInstrumentConfig, listSessions, listPatches } from '@/lib/content/reader';
 import { loadConfig } from '@/lib/config';
-import { HeroCard } from '@/components/hero-card';
-import Link from 'next/link';
+import { InstrumentCard } from '@/components/instrument-card';
 
 export default async function Home() {
   const config = await loadConfig();
-  // Default instrument is evolver
-  const instrument = config.instrument || 'evolver';
-  const sessions = await listSessions(instrument, config);
+  const slugs = await discoverInstruments(config);
 
-  // Next session defaults to Session 1 until Phase 5 adds real progress tracking
-  const nextSession = sessions[0];
-
-  if (!nextSession) {
-    // Empty state per UI-SPEC copywriting
+  if (slugs.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-3xl text-center">
-        <h1 className="text-4xl font-bold mb-md">Curriculum not loaded</h1>
+        <h1 className="text-2xl font-bold">No instruments found</h1>
         <p className="text-muted max-w-md">
-          Session content could not be loaded. Check that your vault path is configured or restart in demo mode.
+          No instrument directories were discovered. Check that your vault contains an instruments/ folder with at least one instrument.
         </p>
       </div>
     );
   }
 
-  // Extract objective from session content: use the first non-empty, non-heading line
-  const contentLines = nextSession.content.split('\n').filter(line => line.trim() && !line.startsWith('#'));
-  const objective = contentLines.length > 0 ? contentLines[0].trim().slice(0, 120) : nextSession.data.title;
+  const instruments = await Promise.all(
+    slugs.map(async (slug) => {
+      const instrumentConfig = await loadInstrumentConfig(slug, config);
+      const sessions = await listSessions(slug, config);
+      const patches = await listPatches(slug, config);
+      return {
+        slug,
+        displayName: instrumentConfig.display_name,
+        tagline: instrumentConfig.tagline,
+        sessionCount: sessions.length,
+        patchCount: patches.length,
+      };
+    })
+  );
 
   return (
-    <div className="flex flex-col items-center py-3xl">
-      <p className="text-muted mb-lg">Your next session is ready</p>
-      <HeroCard
-        moduleName={nextSession.data.module}
-        sessionTitle={nextSession.data.title}
-        objective={objective}
-        duration={nextSession.data.duration}
-        href={`/instruments/${instrument}/sessions/${nextSession.slug}`}
-      />
-      <p className="text-muted mt-2xl text-sm">
-        Browse sessions to pick up where you left off
-      </p>
-      <div className="flex gap-lg mt-md">
-        <Link href={`/instruments/${instrument}/sessions`} className="text-text underline underline-offset-2 hover:text-accent">
-          Browse All Sessions
-        </Link>
+    <div className="max-w-[720px] mx-auto py-3xl">
+      <h1 className="text-4xl font-bold text-center">Choose Your Instrument</h1>
+      <p className="text-base text-muted text-center mt-md">Pick up where you left off</p>
+      <div className="flex justify-center mt-2xl">
+        <div className="flex flex-col sm:flex-row gap-lg">
+          {instruments.map((instrument) => (
+            <div key={instrument.slug} className="flex-1 min-w-[280px] max-w-[360px]">
+              <InstrumentCard
+                slug={instrument.slug}
+                displayName={instrument.displayName}
+                tagline={instrument.tagline}
+                sessionCount={instrument.sessionCount}
+                patchCount={instrument.patchCount}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
