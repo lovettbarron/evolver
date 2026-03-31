@@ -1,10 +1,25 @@
 import Link from 'next/link';
 import { Nav } from '@/components/nav';
+import type { InstrumentConfig } from '@/lib/content/schemas';
 
-export function AppShell({ children, isDemoMode }: { children: React.ReactNode; isDemoMode: boolean }) {
+export function AppShell({
+  children,
+  isDemoMode,
+  instruments,
+}: {
+  children: React.ReactNode;
+  isDemoMode: boolean;
+  instruments: Array<{ slug: string; config: InstrumentConfig }>;
+}) {
+  const navInstruments = instruments.map((i) => ({
+    slug: i.slug,
+    displayName: i.config.display_name,
+    sysex: i.config.sysex,
+  }));
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Nav isDemoMode={isDemoMode} />
+      <Nav isDemoMode={isDemoMode} instruments={navInstruments} />
       <main className="flex-1">{children}</main>
       <footer className="border-t border-surface px-lg py-lg text-sm text-muted">
         <div className="max-w-[720px] mx-auto flex items-center justify-between">

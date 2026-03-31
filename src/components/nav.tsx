@@ -3,31 +3,57 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
+import { InstrumentSwitcher } from '@/components/instrument-switcher';
 
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/instruments/evolver', label: 'Evolver' },
-  { href: '/instruments/evolver/sessions', label: 'Sessions' },
-  { href: '/instruments/evolver/patches', label: 'Patches' },
-  { href: '/instruments/evolver/midi', label: 'MIDI' },
-  { href: '/instruments/evolver/progress', label: 'Progress' },
-];
+interface NavInstrument {
+  slug: string;
+  displayName: string;
+  sysex: boolean;
+}
 
-export function Nav({ isDemoMode }: { isDemoMode?: boolean }) {
+export function Nav({
+  isDemoMode,
+  instruments,
+}: {
+  isDemoMode?: boolean;
+  instruments: NavInstrument[];
+}) {
   const pathname = usePathname();
+
+  // Extract current instrument slug from URL pattern /instruments/{slug}/...
+  const slugMatch = pathname.match(/\/instruments\/([^/]+)/);
+  const currentSlug = slugMatch ? slugMatch[1] : '';
+
+  // Find current instrument capabilities
+  const currentInstrument = instruments.find((i) => i.slug === currentSlug);
+
+  // Build dynamic sub-links based on current instrument
+  const subLinks: Array<{ href: string; label: string }> = [{ href: '/', label: 'Home' }];
+
+  if (currentSlug) {
+    subLinks.push({ href: `/instruments/${currentSlug}/sessions`, label: 'Sessions' });
+    subLinks.push({ href: `/instruments/${currentSlug}/patches`, label: 'Patches' });
+
+    if (currentInstrument?.sysex) {
+      subLinks.push({ href: `/instruments/${currentSlug}/midi`, label: 'MIDI' });
+    }
+
+    subLinks.push({ href: `/instruments/${currentSlug}/progress`, label: 'Progress' });
+  }
 
   return (
     <nav className="flex items-center gap-lg px-lg h-[48px] bg-surface border-b border-surface">
-      <span className="font-mono text-sm text-muted tracking-wider uppercase mr-auto flex items-center">
+      <span className="font-mono text-sm text-muted tracking-wider uppercase flex items-center gap-sm">
         evolver
         {isDemoMode && (
-          <span className="text-[10px] font-mono uppercase tracking-wider text-bg bg-accent/80 px-xs py-[1px] rounded ml-sm">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-bg bg-accent/80 px-xs py-[1px] rounded">
             Demo
           </span>
         )}
       </span>
-      <div className="flex items-center gap-md overflow-x-auto">
-        {navLinks.map((link) => {
+      <InstrumentSwitcher instruments={instruments} currentSlug={currentSlug} />
+      <div className="flex items-center gap-md overflow-x-auto ml-auto">
+        {subLinks.map((link) => {
           const isActive =
             link.href === '/'
               ? pathname === '/'
