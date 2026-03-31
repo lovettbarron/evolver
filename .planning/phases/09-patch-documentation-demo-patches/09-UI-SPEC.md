@@ -1,7 +1,7 @@
 ---
 phase: 9
 slug: patch-documentation-demo-patches
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-03-31
@@ -53,11 +53,11 @@ Source: Existing `--spacing-*` tokens in globals.css. No new tokens needed.
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
 | Body | 16px | 400 | 1.6 |
-| Label / Table Header / Secondary Text | 13px | 600 | 1.4 |
+| Label / Table Header / Secondary Text | 13px | 700 | 1.4 |
 | Module Group Heading | 20px | 700 | 1.2 |
 | Patch Title (h1) | 24px | 700 | 1.2 |
 
-4 sizes total: 13px, 16px, 20px, 24px. No other sizes permitted in this phase.
+4 sizes total: 13px, 16px, 20px, 24px. 2 weights total: 400, 700. No other sizes or weights permitted in this phase.
 
 Source: Existing `.prose` styles in globals.css. Body at 1.6 line-height is the established project convention (not 1.5).
 
@@ -292,11 +292,11 @@ No shadcn. No third-party registries. All components are hand-built with Tailwin
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-03-31
