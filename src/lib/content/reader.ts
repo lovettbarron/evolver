@@ -131,6 +131,30 @@ export async function listPatches(
 }
 
 /**
+ * List all module documentation files for an instrument from its modules/ subdirectory.
+ */
+export async function listModules(
+  instrument: string,
+  config: AppConfig,
+): Promise<Array<{ data: InstrumentFile; content: string; slug: string }>> {
+  const root = getContentRoot(config);
+  const pattern = path.join(root, 'instruments', instrument, 'modules', '*.md');
+  const files = await glob(pattern);
+
+  const results = await Promise.all(
+    files.map(async (filePath) => {
+      const raw = await fs.readFile(filePath, 'utf-8');
+      const { data, content } = matter(raw);
+      const validated = InstrumentFileSchema.parse(data);
+      const slug = path.basename(filePath, '.md');
+      return { data: validated, content, slug };
+    }),
+  );
+
+  return results;
+}
+
+/**
  * List all instrument files (overview, signal-flow, etc.) for an instrument.
  */
 export async function listInstrumentFiles(
