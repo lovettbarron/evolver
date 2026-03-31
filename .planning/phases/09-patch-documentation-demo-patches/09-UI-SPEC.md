@@ -5,6 +5,7 @@ status: draft
 shadcn_initialized: false
 preset: none
 created: 2026-03-31
+revised: 2026-03-31
 ---
 
 # Phase 9 — UI Design Contract
@@ -52,17 +53,23 @@ Source: Existing `--spacing-*` tokens in globals.css. No new tokens needed.
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
 | Body | 16px | 400 | 1.6 |
-| Label / Table Header | 13px | 600 | 1.4 |
+| Label / Table Header / Secondary Text | 13px | 600 | 1.4 |
 | Module Group Heading | 20px | 700 | 1.2 |
 | Patch Title (h1) | 24px | 700 | 1.2 |
+
+4 sizes total: 13px, 16px, 20px, 24px. No other sizes permitted in this phase.
 
 Source: Existing `.prose` styles in globals.css. Body at 1.6 line-height is the established project convention (not 1.5).
 
 Additional rules for this phase:
-- Cable routing values (source/destination) render in `font-mono` at 14px, weight 400, color `--color-param` (#a3e635) -- matches existing parameter value treatment
-- Knob position values render in `font-mono` at 14px, weight 400, color `--color-param` -- same treatment as Evolver parameter tables
+- Cable routing values (source/destination) render in `font-mono` at 13px, weight 400, color `--color-param` (#a3e635) -- matches existing parameter value treatment
+- Knob position values render in `font-mono` at 13px, weight 400, color `--color-param` -- same treatment as Evolver parameter tables
 - Clock position strings ("2 o'clock", "full CW") render as plain text, not code -- they are human-readable descriptions
 - Module group headings in knob settings use `.prose h3` styling: 20px, weight 700, line-height 1.2
+- Mermaid edge labels: 13px, `--color-muted` (diagram library renders at this size via theme config)
+- Purpose text below cable rows: 13px, `--color-muted`, `font-sans`
+- Audio preview placeholder text: 13px, `--color-muted`
+- "Rest at default" notes: 13px italic, `--color-muted`
 
 ---
 
@@ -111,6 +118,10 @@ Source: Existing color tokens in globals.css. No new colors introduced. `--color
 
 ## Layout Contract
 
+### Primary Focal Point
+
+On the Cascadia patch detail page, the **patch title (h1)** is the primary visual anchor. It is the largest text element on the page (24px, weight 700) and appears immediately below the sticky header. The type badge sits inline to its right at 13px, providing context without competing for attention. All other content flows below in reading order.
+
 ### CableRoutingList Layout
 
 ```
@@ -127,9 +138,9 @@ Source: Existing color tokens in globals.css. No new colors introduced. `--color
 ```
 
 - Each cable is a `surface` background row with `lg` (24px) padding
-- Source and destination in `font-mono`, `--color-param`
+- Source and destination in `font-mono`, `--color-param`, 13px
 - Arrow separator: literal " --> " in `--color-muted`
-- Purpose text below in 14px, `--color-muted`, `font-sans`
+- Purpose text below in 13px, `--color-muted`, `font-sans`
 - Gap between cable rows: `sm` (8px)
 - Border-radius on each row: 6px (matches existing card rounding)
 
@@ -138,7 +149,7 @@ Source: Existing color tokens in globals.css. No new colors introduced. `--color
 - Toggle button: "Show Diagram" / "Hide Diagram" text button, no fill, `--color-accent` text, positioned right-aligned below CableRoutingList header
 - Mermaid graph direction: `LR` (left to right) -- signal flows left to right matching conventional synth signal flow
 - Node styling: module names as rounded rectangle nodes, `--color-surface` fill, `--color-text` label
-- Edge labels: purpose text on each connection line, `--color-muted`, 12px
+- Edge labels: purpose text on each connection line, `--color-muted`, 13px
 - Container: `.mermaid-placeholder` class for pre-hydration state (reuses existing CSS)
 - Max width: 100% of content area (720px), horizontal scroll if diagram exceeds
 
@@ -165,8 +176,8 @@ Source: Existing color tokens in globals.css. No new colors introduced. `--color
 
 - Reuses existing `.prose table` and `.param-table` CSS classes
 - Control column: `font-sans`, `--color-text`
-- Value column: `font-mono`, `--color-param`
-- "Rest at default" note: 14px italic, `--color-muted`, below table with `sm` (8px) top margin
+- Value column: `font-mono`, `--color-param`, 13px
+- "Rest at default" note: 13px italic, `--color-muted`, below table with `sm` (8px) top margin
 - Module groups separated by `lg` (24px) vertical spacing
 
 ### AudioPreviewPlaceholder Layout
@@ -180,14 +191,14 @@ Source: Existing color tokens in globals.css. No new colors introduced. `--color
 
 - Full-width container, `--color-surface` background, 6px border-radius
 - Icon: `lucide-react` `Volume2` icon, 20px, `--color-accent`
-- Text: 14px, `--color-muted`
+- Text: 13px, `--color-muted`
 - Padding: `md` (16px) all sides
 - Positioned after patch description, before cable routing section
 
 ### Patch Detail Page Order (Cascadia)
 
 1. Sticky header (existing -- "Patches" back link, patch name)
-2. Patch title (h1) + type badge + "standalone" label (no session origin)
+2. **Patch title (h1) + type badge + "standalone" label -- PRIMARY FOCAL POINT** (no session origin)
 3. Audio preview placeholder (if `audio_preview` field exists)
 4. Patch description (markdown body prose)
 5. Cable Routing section (CableRoutingList + optional CableRoutingDiagram toggle)
