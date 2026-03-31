@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Cascadia Instrument Support
 status: executing
-stopped_at: Completed 07-01-PLAN.md
+stopped_at: Completed 07-02-PLAN.md
 last_updated: "2026-03-31T06:09:12.755Z"
 last_activity: 2026-03-31 -- Completed 07-01 schema and data foundation
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 33
+  completed_plans: 2
+  percent: 66
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-30)
 ## Current Position
 
 Phase: 7 of 11 (Multi-Instrument UI + Schema Foundation)
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Executing
-Last activity: 2026-03-31 -- Completed 07-01 schema and data foundation
+Last activity: 2026-03-31 -- Completed 07-02 dynamic nav and instrument selector
 
-Progress: [███░░░░░░░] 33%
+Progress: [██████░░░░] 66%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [███░░░░░░░] 33%
 
 *Updated after each plan completion*
 | Phase 07 P01 | 3min | 2 tasks | 10 files |
+| Phase 07 P02 | 4min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - 07-01: InstrumentConfigSchema uses .passthrough() for future-proofing
 - 07-01: PatchSchema stub fields use z.unknown().optional() until Phase 9 refinement
 - [Phase 07]: InstrumentConfigSchema uses .passthrough() for future-proofing unknown fields
+- 07-02: Nav instrument context derived from URL pathname regex, not React state
+- 07-02: Instrument prop shape simplified in AppShell before passing to Nav (slug/displayName/sysex only)
 
 ### Pending Todos
 
@@ -87,5 +90,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-31T06:09:11.663Z
-Stopped at: Completed 07-01-PLAN.md
+Stopped at: Completed 07-02-PLAN.md
 Resume file: None
