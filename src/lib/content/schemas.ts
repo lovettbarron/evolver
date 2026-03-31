@@ -32,10 +32,14 @@ export const PatchSchema = z.object({
 }).passthrough();
 
 export const InstrumentFileSchema = z.object({
-  type: z.enum(['overview', 'signal-flow', 'basic-patch', 'modules']),
+  type: z.enum(['overview', 'signal-flow', 'basic-patch', 'modules', 'module']),
   instrument: z.string(),
   title: z.string(),
   manufacturer: z.string(),
+  category: z.enum(['sound-source', 'shaper', 'modulator', 'utility']).optional(),
+  control_count: z.number().int().nonnegative().optional(),
+  jack_count: z.number().int().nonnegative().optional(),
+  has_normals: z.boolean().optional(),
 }).passthrough();
 
 // Inferred types
