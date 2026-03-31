@@ -2,8 +2,8 @@
 phase: 10
 slug: curriculum-modules-1-3
 status: draft
-nyquist_compliant: false
-wave_0_complete: false
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-03-31
 ---
 
@@ -38,15 +38,15 @@ created: 2026-03-31
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 10-01-01 | 01 | 1 | CCURR-01, CCURR-05 | file check | `test -f sessions/cascadia/01-foundations-first-sound.md` | ❌ W0 | ⬜ pending |
-| 10-01-02 | 01 | 1 | CCURR-01, CCURR-05 | file check | `test -f sessions/cascadia/02-foundations-pwm-sub.md` | ❌ W0 | ⬜ pending |
-| 10-01-03 | 01 | 1 | CCURR-01, CCURR-05 | file check | `test -f sessions/cascadia/03-foundations-shaping.md` | ❌ W0 | ⬜ pending |
-| 10-02-01 | 02 | 1 | CCURR-01, CCURR-02 | file check | `test -f sessions/cascadia/04-oscillators-vco-a.md` | ❌ W0 | ⬜ pending |
-| 10-02-02 | 02 | 1 | CCURR-01, CCURR-02 | file check | `test -f sessions/cascadia/05-oscillators-vco-b.md` | ❌ W0 | ⬜ pending |
-| 10-02-03 | 02 | 1 | CCURR-01, CCURR-02 | file check | `test -f sessions/cascadia/06-oscillators-wavefolder.md` | ❌ W0 | ⬜ pending |
-| 10-03-01 | 03 | 1 | CCURR-01, CCURR-03 | file check | `test -f sessions/cascadia/07-envelopes-env-a-vca.md` | ❌ W0 | ⬜ pending |
-| 10-03-02 | 03 | 1 | CCURR-01, CCURR-03 | file check | `test -f sessions/cascadia/08-envelopes-env-b.md` | ❌ W0 | ⬜ pending |
-| 10-03-03 | 03 | 1 | CCURR-01, CCURR-03 | file check | `test -f sessions/cascadia/09-envelopes-dynamics.md` | ❌ W0 | ⬜ pending |
+| 10-01-01 | 01 | 1 | CCURR-01, CCURR-05 | file check | `test -f sessions/cascadia/01-foundations-orientation-first-sound.md` | ✅ | ⬜ pending |
+| 10-01-02 | 01 | 1 | CCURR-01, CCURR-05 | file check | `test -f sessions/cascadia/02-foundations-pwm-sub-oscillator.md` | ✅ | ⬜ pending |
+| 10-01-03 | 01 | 1 | CCURR-01, CCURR-05 | file check | `test -f sessions/cascadia/03-foundations-filter-wavefold-fm-fx.md` | ✅ | ⬜ pending |
+| 10-02-01 | 02 | 2 | CCURR-01, CCURR-02 | file check | `test -f sessions/cascadia/04-oscillators-vco-a-shapes-tuning.md` | ✅ | ⬜ pending |
+| 10-02-02 | 02 | 2 | CCURR-01, CCURR-02 | file check | `test -f sessions/cascadia/05-oscillators-vco-b-fm-sync.md` | ✅ | ⬜ pending |
+| 10-02-03 | 02 | 2 | CCURR-01, CCURR-02 | file check | `test -f sessions/cascadia/06-oscillators-wave-folder.md` | ✅ | ⬜ pending |
+| 10-03-01 | 03 | 3 | CCURR-01, CCURR-03 | file check | `test -f sessions/cascadia/07-envelopes-envelope-a-vca-a.md` | ✅ | ⬜ pending |
+| 10-03-02 | 03 | 3 | CCURR-01, CCURR-03 | file check | `test -f sessions/cascadia/08-envelopes-envelope-b-triple-mode.md` | ✅ | ⬜ pending |
+| 10-03-03 | 03 | 3 | CCURR-01, CCURR-03 | file check | `test -f sessions/cascadia/09-envelopes-vca-b-mixer-dynamics.md` | ✅ | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -54,8 +54,8 @@ created: 2026-03-31
 
 ## Wave 0 Requirements
 
-- [ ] `sessions/cascadia/` directory created
-- [ ] Verify Evolver session format for template reference: `head -15 sessions/evolver/01-foundations-navigation.md`
+- [x] `sessions/cascadia/` directory created
+- [x] Verify Evolver session format for template reference: `head -15 sessions/evolver/01-foundations-navigation.md`
 
 *Existing infrastructure covers session content validation.*
 
@@ -74,11 +74,11 @@ created: 2026-03-31
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 1s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 1s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved
