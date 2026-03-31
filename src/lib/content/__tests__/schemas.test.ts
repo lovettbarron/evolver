@@ -165,6 +165,122 @@ describe('PatchSchema', () => {
   });
 });
 
+describe('PatchSchema - Phase 9 refinements', () => {
+  const cascadiaBase = {
+    name: 'Test Patch',
+    type: 'bass' as const,
+    session_origin: null,
+    description: 'Test description',
+    tags: ['test'],
+    instrument: 'cascadia',
+    created: '2026-03-31',
+  };
+
+  it('accepts fx as valid patch type', () => {
+    const data = { ...cascadiaBase, type: 'fx' };
+    const result = PatchSchema.parse(data);
+    expect(result.type).toBe('fx');
+  });
+
+  it('accepts typed cable_routing array', () => {
+    const data = {
+      ...cascadiaBase,
+      cable_routing: [
+        { source: 'LFO X Out', destination: 'VCO A FM 1 In', purpose: 'Slow pitch vibrato' },
+      ],
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.cable_routing[0].source).toBe('LFO X Out');
+  });
+
+  it('rejects cable_routing as arbitrary object', () => {
+    const data = {
+      ...cascadiaBase,
+      cable_routing: { output_a: 'input_b' },
+    };
+    expect(() => PatchSchema.parse(data)).toThrow(ZodError);
+  });
+
+  it('rejects cable_routing entry missing purpose', () => {
+    const data = {
+      ...cascadiaBase,
+      cable_routing: [{ source: 'A', destination: 'B' }],
+    };
+    expect(() => PatchSchema.parse(data)).toThrow(ZodError);
+  });
+
+  it('accepts typed knob_settings record', () => {
+    const data = {
+      ...cascadiaBase,
+      knob_settings: {
+        'VCO A': [{ control: 'Octave', value: '4' }],
+      },
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.knob_settings['VCO A'][0].control).toBe('Octave');
+  });
+
+  it('rejects knob_settings as flat array', () => {
+    const data = {
+      ...cascadiaBase,
+      knob_settings: [{ knob: 'cutoff', value: 0.7 }],
+    };
+    expect(() => PatchSchema.parse(data)).toThrow(ZodError);
+  });
+
+  it('accepts audio_preview as optional string', () => {
+    const data = {
+      ...cascadiaBase,
+      audio_preview: 'sub-bass-01.mp3',
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.audio_preview).toBe('sub-bass-01.mp3');
+  });
+
+  it('backward compatible: Evolver patch without new fields', () => {
+    const data = {
+      name: 'Fat Bass',
+      type: 'bass' as const,
+      session_origin: 6,
+      description: 'Deep sub',
+      tags: ['bass'],
+      instrument: 'evolver',
+      created: '2026-01-15',
+      source: 'manual' as const,
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.name).toBe('Fat Bass');
+    expect(result.cable_routing).toBeUndefined();
+    expect(result.knob_settings).toBeUndefined();
+    expect(result.audio_preview).toBeUndefined();
+  });
+
+  it('accepts complete Cascadia patch frontmatter', () => {
+    const data = {
+      ...cascadiaBase,
+      cable_routing: [
+        { source: 'LFO X Out', destination: 'VCO A FM 1 In', purpose: 'Slow pitch vibrato' },
+        { source: 'VCO A Saw Out', destination: 'VCF In', purpose: 'Audio signal path' },
+      ],
+      knob_settings: {
+        'VCO A': [
+          { control: 'Octave', value: '4' },
+          { control: 'Fine Tune', value: '0' },
+        ],
+        'VCF': [
+          { control: 'Cutoff', value: '7' },
+          { control: 'Resonance', value: '3' },
+        ],
+      },
+      audio_preview: 'cascadia-bass-01.mp3',
+    };
+    const result = PatchSchema.parse(data);
+    expect(result.cable_routing).toHaveLength(2);
+    expect(result.knob_settings['VCF'][0].control).toBe('Cutoff');
+    expect(result.audio_preview).toBe('cascadia-bass-01.mp3');
+  });
+});
+
 describe('InstrumentFileSchema', () => {
   it('parses valid instrument file data', () => {
     const data = {
