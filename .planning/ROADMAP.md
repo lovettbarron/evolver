@@ -127,12 +127,7 @@ Plans:
   1. Cascadia overview page shows the instrument's architecture description, signal flow, and module layout
   2. User can read the normalled signal path documentation explaining what the Cascadia produces with zero cables patched
   3. Each Cascadia module page documents all controls, jacks, normalled connections, and LED behavior
-**Plans**: 3 plans
-
-Plans:
-- [ ] 08-01-PLAN.md -- Schema extension (module type + fields), listModules() reader, test fixtures and test cases
-- [ ] 08-02-PLAN.md -- Content authoring: overview rewrite, signal-flow with Mermaid, modules index, 17 module documentation files
-- [ ] 08-03-PLAN.md -- UI routes and components: ModuleIndex, ModuleDetail, ModuleCard, overview page module links
+**Plans**: TBD
 
 ### Phase 9: Patch Documentation + Demo Patches
 **Goal**: Users can browse Cascadia patches documented with cable routing and knob positions, hear audio previews, and see connection diagrams
@@ -184,7 +179,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 5. Progress + Challenges | v1.0 | 3/3 | Complete | 2026-03-30 |
 | 6. Deployment | v1.0 | 3/3 | Complete | 2026-03-30 |
 | 7. Multi-Instrument UI + Schema Foundation | v1.1 | 0/3 | Planning | - |
-| 8. Cascadia Instrument Data | v1.1 | 0/3 | Planning | - |
+| 8. Cascadia Instrument Data | v1.1 | 1/3 | In Progress | - |
 | 9. Patch Documentation + Demo Patches | v1.1 | 0/? | Not started | - |
 | 10. Curriculum Modules 1-3 | v1.1 | 0/? | Not started | - |
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 0/? | Not started | - |

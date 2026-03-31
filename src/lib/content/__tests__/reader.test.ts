@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import path from 'path';
 import { ZodError } from 'zod';
-import { readContentFile, discoverInstruments, listSessions, listPatches, getContentRoot, loadInstrumentConfig } from '../reader.js';
+import { readContentFile, discoverInstruments, listSessions, listPatches, listModules, getContentRoot, loadInstrumentConfig } from '../reader.js';
 import { InstrumentFileSchema, SessionSchema, PatchSchema } from '../schemas.js';
 import type { AppConfig } from '../schemas.js';
 
@@ -116,5 +116,39 @@ describe('listPatches', () => {
     expect(patches.length).toBe(1);
     expect(patches[0].data.name).toBe('Fat Bass');
     expect(patches[0].slug).toBe('fat-bass');
+  });
+});
+
+describe('listModules', () => {
+  it('discovers module files from modules/ subdirectory', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'cascadia' };
+    const modules = await listModules('cascadia', config);
+    expect(modules.length).toBe(2);
+    const slugs = modules.map(m => m.slug).sort();
+    expect(slugs).toEqual(['mixer', 'vco-a']);
+  });
+
+  it('validates module frontmatter with InstrumentFileSchema', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'cascadia' };
+    const modules = await listModules('cascadia', config);
+    const vcoA = modules.find(m => m.slug === 'vco-a');
+    expect(vcoA).toBeDefined();
+    expect(vcoA!.data.type).toBe('module');
+    expect(vcoA!.data.category).toBe('sound-source');
+    expect(vcoA!.data.control_count).toBe(11);
+    expect(vcoA!.data.has_normals).toBe(true);
+  });
+
+  it('returns empty array for instrument with no modules/ directory', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const modules = await listModules('evolver', config);
+    expect(modules).toEqual([]);
+  });
+
+  it('includes markdown content in results', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'cascadia' };
+    const modules = await listModules('cascadia', config);
+    const mixer = modules.find(m => m.slug === 'mixer');
+    expect(mixer!.content).toContain('Combines oscillator outputs');
   });
 });
