@@ -139,7 +139,12 @@ Plans:
   3. Patch detail page renders cable connections as a readable list or Mermaid signal flow diagram
   4. Patch detail page renders knob/slider settings grouped by module with values as clock positions or percentages
   5. At least 12 demo patches exist covering bass, lead, pad, drum, texture, and FX categories with embedded audio preview references
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 09-01-PLAN.md -- Schema refinement: typed cable_routing, knob_settings, audio_preview, fx enum
+- [ ] 09-02-PLAN.md -- UI components: CableRoutingList, CableRoutingDiagram, KnobSettingsTable, AudioPreviewPlaceholder, PatchDetail wiring
+- [ ] 09-03-PLAN.md -- Demo content: 13 Cascadia demo patches across bass, lead, pad, drum, texture, FX categories
 
 ### Phase 10: Curriculum Modules 1-3
 **Goal**: Users can work through the first 9 Cascadia sessions covering setup, oscillators, and envelopes -- enough to validate the session format for semi-modular instruments
@@ -180,7 +185,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 6. Deployment | v1.0 | 3/3 | Complete | 2026-03-30 |
 | 7. Multi-Instrument UI + Schema Foundation | v1.1 | 0/3 | Planning | - |
 | 8. Cascadia Instrument Data | v1.1 | 2/3 | In Progress|  |
-| 9. Patch Documentation + Demo Patches | v1.1 | 0/? | Not started | - |
+| 9. Patch Documentation + Demo Patches | v1.1 | 0/3 | Planning | - |
 | 10. Curriculum Modules 1-3 | v1.1 | 0/? | Not started | - |
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 0/? | Not started | - |
 
