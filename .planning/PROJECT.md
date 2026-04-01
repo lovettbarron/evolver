@@ -106,4 +106,4 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 | Framework in-repo | Framework ships with curriculum, single source of truth for methodology | — Pending |
 
 ---
-*Last updated: 2026-03-30 after v1.1 milestone start*
+*Last updated: 2026-04-01 after Phase 10 complete — 9 Cascadia sessions + 4 curriculum patches*
