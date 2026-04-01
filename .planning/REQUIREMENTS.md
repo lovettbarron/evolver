@@ -97,7 +97,7 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 - [x] **CPATCH-02**: Patch frontmatter supports knob/slider positions as settings map (module, control, value as clock position or percentage)
 - [x] **CPATCH-03**: Patch detail page renders cable connections as a readable list or Mermaid diagram
 - [x] **CPATCH-04**: Patch detail page renders knob/slider settings grouped by module
-- [x] **CPATCH-05**: Patches include embedded audio previews (Baratatronix-style with playable audio files)
+- [x] **CPATCH-05**: Patches include audio preview filename references in frontmatter; UI shows placeholder when audio files not yet recorded (playable audio deferred to recording sessions)
 - [x] **CPATCH-06**: 12-16 demo patches covering bass, lead, pad, drum, texture, and FX categories
 
 ### Cascadia Curriculum

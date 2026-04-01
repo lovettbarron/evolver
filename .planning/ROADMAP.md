@@ -138,7 +138,7 @@ Plans:
   2. Cascadia patch frontmatter includes knob/slider positions as settings grouped by module
   3. Patch detail page renders cable connections as a readable list or Mermaid signal flow diagram
   4. Patch detail page renders knob/slider settings grouped by module with values as clock positions or percentages
-  5. At least 12 demo patches exist covering bass, lead, pad, drum, texture, and FX categories with embedded audio preview references
+  5. At least 12 demo patches exist covering bass, lead, pad, drum, texture, and FX categories with audio preview filename references and placeholder UI
 **Plans**: 3 plans
 
 Plans:

@@ -10,32 +10,62 @@ manufacturer: "Dave Smith Instruments"
 ## Signal Flow Diagram (Mermaid)
 
 ```mermaid
-graph LR
-    %% Left channel
-    AO1["Analog Osc 1"] --> MIXL["Mixer L"]
-    DO3["Digital Osc 3"] --> MIXL
-    NL["Noise"] --> MIXL
-    EIL["Ext In L"] --> MIXL
-    MIXL --> LPFL["LPF L"] --> VCAL["VCA L"]
+graph TD
+    subgraph LEFT["LEFT CHANNEL"]
+        AO1["Analog Osc 1<br/>(Saw/Tri/Pulse)"]
+        DO3["Digital Osc 3<br/>(Waveshapes 1-128)"]
+        NL["Noise"]
+        EIL["External In L"]
+        MIXL["Mixer L"]
+        LPFL["Analog LPF L<br/>(2/4-pole)"]
+        VCAL["VCA L"]
+    end
 
-    %% Right channel
-    AO2["Analog Osc 2"] --> MIXR["Mixer R"]
-    DO4["Digital Osc 4"] --> MIXR
-    NR["Noise"] --> MIXR
-    EIR["Ext In R"] --> MIXR
-    MIXR --> LPFR["LPF R"] --> VCAR["VCA R"]
+    subgraph RIGHT["RIGHT CHANNEL"]
+        AO2["Analog Osc 2<br/>(Saw/Tri/Pulse)"]
+        DO4["Digital Osc 4<br/>(Waveshapes 1-128)"]
+        NR["Noise"]
+        EIR["External In R"]
+        MIXR["Mixer R"]
+        LPFR["Analog LPF R<br/>(2/4-pole)"]
+        VCAR["VCA R"]
+    end
 
-    %% Shared processing
-    VCAL --> HPF["Highpass Filter"]
+    AO1 --> MIXL
+    DO3 --> MIXL
+    NL --> MIXL
+    EIL --> MIXL
+
+    AO2 --> MIXR
+    DO4 --> MIXR
+    NR --> MIXR
+    EIR --> MIXR
+
+    MIXL --> LPFL
+    LPFL --> VCAL
+
+    MIXR --> LPFR
+    LPFR --> VCAR
+
+    VCAL --> HPF["Highpass Filter<br/>(digital, 4-pole)"]
     VCAR --> HPF
-    HPF --> DIST["Distortion"] --> HACK["Output Hack"] --> PAN["Pan"]
 
-    %% Output
-    PAN --> DELAY["Digital Delay"] --> OUT(("Stereo Output"))
-    PAN --> TFB["Tuned Feedback"] --> OUT
+    HPF --> DIST["Distortion<br/>(+ noise gate)"]
+    DIST --> HACK["Output Hack"]
+    HACK --> PAN["Pan<br/>(7 modes)"]
+
+    PAN --> DELAY["Digital Delay<br/>(3 taps, 1 sec max)"]
+    DELAY -->|"Feedback 1"| DELAY
+    DELAY -->|"Feedback 2<br/>(to filter input)"| LPFL
+    DELAY -->|"Feedback 2<br/>(to filter input)"| LPFR
+
+    PAN --> TFB["Tuned Feedback<br/>(L+R delay lines)"]
+    TFB -->|"feeds back to<br/>filter input"| LPFL
+    TFB -->|"feeds back to<br/>filter input"| LPFR
+
+    DELAY --> OUT["Stereo Output"]
+    TFB --> OUT
 ```
-
-> **Feedback paths** (not shown to keep layout clean): Digital Delay FB2 feeds back to both LPF L and LPF R inputs. Tuned Feedback also feeds back to both filter inputs. These feedback loops are what give the Evolver its distinctive resonant and Karplus-Strong timbres.
 
 ## Audio Path (Text Diagram)
 
