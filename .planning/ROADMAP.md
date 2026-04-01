@@ -159,7 +159,7 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 10-01-PLAN.md -- Foundations module: Sessions 1-3 (orientation, PWM/sub, filter/wavefold/FM/FX) + foundations-filter-sweep patch
+- [x] 10-01-PLAN.md -- Foundations module: Sessions 1-3 (orientation, PWM/sub, filter/wavefold/FM/FX) + foundations-filter-sweep patch
 - [ ] 10-02-PLAN.md -- Oscillators module: Sessions 4-6 (VCO A shapes, VCO B FM/sync, wave folder) + fm-bell patch
 - [ ] 10-03-PLAN.md -- Envelopes & Amplitude module: Sessions 7-9 (Envelope A/VCA A, Envelope B triple-mode, VCA B/LPG/mixer) + shaped-dynamics and lpg-bongo patches
 
@@ -191,7 +191,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 7. Multi-Instrument UI + Schema Foundation | v1.1 | 0/3 | Planning | - |
 | 8. Cascadia Instrument Data | v1.1 | 2/3 | In Progress|  |
 | 9. Patch Documentation + Demo Patches | v1.1 | 0/3 | Planning | - |
-| 10. Curriculum Modules 1-3 | v1.1 | 0/3 | Planning | - |
+| 10. Curriculum Modules 1-3 | v1.1 | 1/3 | In Progress|  |
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 0/? | Not started | - |
 
 ### Phase 12: Evolver Panel Visualizer Component
@@ -199,7 +199,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 **Goal:** [To be planned]
 **Requirements**: TBD
 **Depends on:** Phase 11
-**Plans:** 0 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 - [ ] TBD (run /gsd:plan-phase 12 to break down)

@@ -102,11 +102,11 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 
 ### Cascadia Curriculum
 
-- [ ] **CCURR-01**: 25 Cascadia sessions across 7 modules (15-30 min each, ADHD-paced)
-- [ ] **CCURR-02**: Each session teaches a generalized synthesis concept (e.g., "what is a wave folder", "how sample & hold works") using Cascadia as the hands-on vehicle
-- [ ] **CCURR-03**: Each session highlights what is unique to Cascadia's implementation of the concept (e.g., Envelope B triple-mode, specific normalling choices, mixuverter design)
-- [ ] **CCURR-04**: Sessions document which normalled connections are active and what patching a cable overrides
-- [ ] **CCURR-05**: Module 1 (Foundations) follows the manual's "Make a Sound" progression: basic sound -> PWM -> sub -> filter envelope -> wave folding -> FM -> FX pedal
+- [x] **CCURR-01**: 25 Cascadia sessions across 7 modules (15-30 min each, ADHD-paced)
+- [x] **CCURR-02**: Each session teaches a generalized synthesis concept (e.g., "what is a wave folder", "how sample & hold works") using Cascadia as the hands-on vehicle
+- [x] **CCURR-03**: Each session highlights what is unique to Cascadia's implementation of the concept (e.g., Envelope B triple-mode, specific normalling choices, mixuverter design)
+- [x] **CCURR-04**: Sessions document which normalled connections are active and what patching a cable overrides
+- [x] **CCURR-05**: Module 1 (Foundations) follows the manual's "Make a Sound" progression: basic sound -> PWM -> sub -> filter envelope -> wave folding -> FM -> FX pedal
 - [ ] **CCURR-06**: Recipe sessions produce named patches with full cable routing and knob settings documented
 
 ### Cascadia Demo Mode
@@ -205,11 +205,11 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 | CPATCH-04 | Phase 9 | Complete |
 | CPATCH-05 | Phase 9 | Complete |
 | CPATCH-06 | Phase 9 | Complete |
-| CCURR-01 | Phase 10 | Pending |
-| CCURR-02 | Phase 10 | Pending |
-| CCURR-03 | Phase 10 | Pending |
-| CCURR-04 | Phase 10 | Pending |
-| CCURR-05 | Phase 10 | Pending |
+| CCURR-01 | Phase 10 | Complete |
+| CCURR-02 | Phase 10 | Complete |
+| CCURR-03 | Phase 10 | Complete |
+| CCURR-04 | Phase 10 | Complete |
+| CCURR-05 | Phase 10 | Complete |
 | CCURR-06 | Phase 11 | Pending |
 | CDEMO-01 | Phase 11 | Pending |
 | CDEMO-02 | Phase 11 | Pending |
