@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState, useRef, useCallback, memo } from 'react';
+import { clsx } from 'clsx';
 import { CONTROL_METADATA, SECTION_BOUNDS, midiToRotation } from '@/lib/evolver-panel-data';
+import { PanelTooltip } from './evolver-panel-tooltip';
 
 // ===== Types =====
 
@@ -221,6 +223,9 @@ function EvolverPanelInner({
   className,
 }: EvolverPanelProps) {
   const [internalValues, setInternalValues] = useState<Record<string, number>>({});
+  const [hoveredControl, setHoveredControl] = useState<string | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+
   const effectiveValues = knobValues ?? internalValues;
   const effectiveOnChange = onKnobChange ?? ((id: string, val: number) => {
     setInternalValues(prev => ({ ...prev, [id]: val }));
@@ -229,6 +234,41 @@ function EvolverPanelInner({
   const getVal = (id: string) => effectiveValues[id] ?? 64;
   const isHighlighted = (id: string) => highlights?.some(h => h.controlId === id) ?? false;
   const getHighlightColor = (id: string) => highlights?.find(h => h.controlId === id)?.color;
+
+  // Event delegation: find the closest control element from any hover target
+  const findControlId = useCallback((target: EventTarget | null): string | null => {
+    let el = target as Element | null;
+    while (el && el !== svgRef.current) {
+      const id = el.getAttribute('id');
+      if (id && CONTROL_METADATA[id]) return id;
+      el = el.parentElement;
+    }
+    return null;
+  }, []);
+
+  const onMouseEnter = useCallback(
+    (e: React.MouseEvent) => {
+      const id = findControlId(e.target);
+      if (id) setHoveredControl(id);
+    },
+    [findControlId],
+  );
+
+  const onMouseLeave = useCallback(
+    (e: React.MouseEvent) => {
+      const related = findControlId(e.relatedTarget);
+      if (!related) setHoveredControl(null);
+    },
+    [findControlId],
+  );
+
+  const onMouseOver = useCallback(
+    (e: React.MouseEvent) => {
+      const id = findControlId(e.target);
+      setHoveredControl(id);
+    },
+    [findControlId],
+  );
 
   // Helper to render a knob
   function K(id: string, x: number, y: number, large: boolean, label: string) {
@@ -249,11 +289,14 @@ function EvolverPanelInner({
   }
 
   return (
+    <div className={clsx('relative', className)}>
     <svg
+      ref={svgRef}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1200 520"
       width="100%"
-      className={className}
+      onMouseOver={onMouseOver}
+      onMouseLeave={onMouseLeave}
     >
       <defs>
         {/* Glow filters for highlights */}
@@ -709,6 +752,12 @@ function EvolverPanelInner({
         </g>
       </g>
     </svg>
+    <PanelTooltip
+      controlId={hoveredControl}
+      svgRef={svgRef}
+      knobValues={effectiveValues}
+    />
+    </div>
   );
 }
 

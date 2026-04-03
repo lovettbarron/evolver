@@ -123,9 +123,9 @@ Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 1
 
 - [ ] **EPANEL-01**: Evolver panel renders as inline JSX SVG with all ~110 control IDs preserved, responsive scaling, and Feedback section layout fix (Frequency top, Level large, Grunge as switch)
 - [ ] **EPANEL-02**: Knob indicators rotate from -135deg (value 0) to +135deg (value 127) and support vertical drag interaction with onChange callback; switches and LEDs are display-only
-- [ ] **EPANEL-03**: Curriculum annotation overlays: colored glow rings (blue/amber) around highlighted controls via SVG filters, and subtle section tint rectangles for active signal chain areas
-- [ ] **EPANEL-04**: Hover tooltip shows control name, current MIDI value, and NRPN parameter number, positioned above the control via getBoundingClientRect
-- [ ] **EPANEL-05**: Static control metadata map covers all ~110 SVG controls with human-readable names, NRPN numbers, section membership, and control type
+- [x] **EPANEL-03**: Curriculum annotation overlays: colored glow rings (blue/amber) around highlighted controls via SVG filters, and subtle section tint rectangles for active signal chain areas
+- [x] **EPANEL-04**: Hover tooltip shows control name, current MIDI value, and NRPN parameter number, positioned above the control via getBoundingClientRect
+- [x] **EPANEL-05**: Static control metadata map covers all ~110 SVG controls with human-readable names, NRPN numbers, section membership, and control type
 - [ ] **EPANEL-06**: Panel integrated into four contexts: session detail (collapsible sidebar), patch detail (inline), quick-ref panel (compact tab), and standalone route (/instruments/evolver/panel)
 
 ## v2 Requirements
@@ -229,9 +229,9 @@ Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 1
 | CDEMO-03 | Phase 11 | Pending |
 | EPANEL-01 | Phase 12 | Pending |
 | EPANEL-02 | Phase 12 | Pending |
-| EPANEL-03 | Phase 12 | Pending |
-| EPANEL-04 | Phase 12 | Pending |
-| EPANEL-05 | Phase 12 | Pending |
+| EPANEL-03 | Phase 12 | Complete |
+| EPANEL-04 | Phase 12 | Complete |
+| EPANEL-05 | Phase 12 | Complete |
 | EPANEL-06 | Phase 12 | Pending |
 
 **Coverage:**
