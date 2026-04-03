@@ -58,9 +58,11 @@ Phase-specific additions:
 
 | Role | Size | Weight | Line Height | Usage |
 |------|------|--------|-------------|-------|
-| Tooltip title | 13px | 600 | 1.3 | Control name in hover tooltip |
+| Tooltip title | 13px | 700 | 1.3 | Control name in hover tooltip |
 | Tooltip value | 13px (mono) | 400 | 1.3 | MIDI value and NRPN number |
 | Panel section label | Inherited from SVG (7px in viewBox) | 700 | n/a | Section headers within SVG, not changed |
+
+Weights used: 400 (regular), 700 (bold). Two weights only.
 
 Source: globals.css `.prose` rules, knob-settings-table.tsx patterns.
 
@@ -92,6 +94,7 @@ These colors live inside the SVG component and do not override the app theme. Th
 | Tooltip border | `#333333` | Subtle border to separate from dark panel |
 | Tooltip text | `#e8e8e8` (--color-text) | Primary tooltip text |
 | Tooltip value | `#a3e635` (--color-param) | MIDI value display in tooltip (matches param-table convention) |
+| Tooltip muted | `#737373` | NRPN label text in tooltip (secondary hierarchy) |
 
 Source: D-04 (glow rings), D-05 (tooltips), D-06 (section highlighting) from CONTEXT.md. Colors derived from existing SVG palette and app theme tokens.
 
@@ -168,11 +171,11 @@ Source: D-07, D-08, D-09 from CONTEXT.md.
 | Delay | 200ms enter, 0ms leave |
 | Position | Centered above the control, 8px gap. Flip below if near top edge of SVG. |
 | Size | Auto-width, max-width 200px |
-| Background | `#161616` with 1px `#333333` border, 6px border-radius |
-| Padding | 8px horizontal, 6px vertical |
-| Content line 1 | Control name in 13px Inter semibold, `#e8e8e8` |
-| Content line 2 | Value (if set) in 13px JetBrains Mono, `#a3e635` |
-| Content line 3 | NRPN number in 11px Inter, `#737373` |
+| Background | `#161616` with 1px `#333333` border, 8px border-radius |
+| Padding | 8px horizontal, 8px vertical |
+| Content line 1 | Control name in 13px Inter bold (700), `#e8e8e8` |
+| Content line 2 | Value (if set) in 13px JetBrains Mono regular (400), `#a3e635` |
+| Content line 3 | NRPN number in 13px Inter regular (400), `#737373` |
 | Z-index | Above SVG content, below app-level modals (z-30) |
 | Pointer events | none (tooltip does not block interaction) |
 
@@ -218,6 +221,8 @@ Source: D-07, D-08, D-09 from CONTEXT.md.
 ---
 
 ## Layout Contract
+
+Primary visual anchor: the EvolverPanel SVG. All layout contexts orient around the panel as the focal point of this phase.
 
 ### Session Detail with Panel Sidebar
 
