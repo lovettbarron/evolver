@@ -52,17 +52,16 @@ Source: `src/app/globals.css` lines 11-17. Pre-existing, no changes.
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
 | Body | 16px | 400 (regular) | 1.6 |
-| Label / Table header | 13px | 600 (semibold) | 1.5 |
+| Small (label, table header, code, table cell, card subtitle) | 14px | 400 (regular) | 1.5 |
 | Heading (h3) | 20px | 700 (bold) | 1.2 |
 | Display (h1) | 36px | 700 (bold) | 1.2 |
 
-Additional roles used in this phase:
+Font sizes: exactly 4 (14 / 16 / 20 / 36). Font weights: exactly 2 (400 / 700).
 
-| Role | Size | Weight | Line Height | Context |
-|------|------|--------|-------------|---------|
-| Code / param values | 14px | 400 | 1.5 | Inline code, parameter values in mono font |
-| Table cell | 14px | 400 | 1.5 | Markdown table content |
-| Card subtitle | 14px | 400 | 1.5 | InstrumentCard session/patch counts |
+Small role details:
+- Labels and table headers use 14px at weight 700 for visual hierarchy within the small size.
+- Code and parameter values use 14px at weight 400 in JetBrains Mono.
+- Table cells and card subtitles use 14px at weight 400 in Inter.
 
 Source: `src/app/globals.css` lines 38-49, 98-99. Pre-existing, no changes.
 
@@ -81,6 +80,8 @@ Source: `src/app/globals.css` lines 38-49, 98-99. Pre-existing, no changes.
 | Destructive | not applicable | No destructive actions in this phase |
 
 Accent reserved for: callout borders, challenge callout titles, link hover states, card hover borders, checkbox accents, "Explore" CTA text.
+
+Focal point: inherited — InstrumentCard accent hover border is the primary visual anchor on the landing page.
 
 Source: `src/app/globals.css` lines 4-9. Pre-existing, no changes.
 
