@@ -175,6 +175,17 @@ Plans:
   5. Landing page and instrument selector show both instruments with content in demo mode
 **Plans**: TBD
 
+### Phase 12: Evolver Panel Visualizer Component
+**Goal**: Interactive React component rendering the Evolver panel as inline JSX SVG with draggable knobs, curriculum annotation overlays, tooltips, and integration into session detail, patch detail, quick-ref panel, and standalone route
+**Depends on**: Phase 11
+**Requirements**: EPANEL-01, EPANEL-02, EPANEL-03, EPANEL-04, EPANEL-05, EPANEL-06
+**Plans**: 3 plans
+
+Plans:
+- [ ] 12-01-PLAN.md -- Core EvolverPanel component: metadata map, inline JSX SVG, knob drag interaction, test stubs
+- [ ] 12-02-PLAN.md -- Tooltip overlay system: PanelTooltip component, hover state wiring
+- [ ] 12-03-PLAN.md -- Page integrations: session sidebar, patch inline, quick-ref tab, standalone route, human verification
+
 ## Progress
 
 **Execution Order:**
@@ -193,13 +204,4 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 9. Patch Documentation + Demo Patches | v1.1 | 0/3 | Planning | - |
 | 10. Curriculum Modules 1-3 | v1.1 | 3/3 | Complete    | 2026-04-01 |
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 0/? | Not started | - |
-
-### Phase 12: Evolver Panel Visualizer Component
-
-**Goal:** [To be planned]
-**Requirements**: TBD
-**Depends on:** Phase 11
-**Plans:** 3/3 plans complete
-
-Plans:
-- [ ] TBD (run /gsd:plan-phase 12 to break down)
+| 12. Evolver Panel Visualizer Component | v1.2 | 0/3 | Planning | - |

@@ -1,7 +1,7 @@
 # Requirements: Instrument Deep Learning
 
 **Defined:** 2026-03-29
-**Updated:** 2026-03-30 (v1.1 roadmap created)
+**Updated:** 2026-04-03 (v1.2 Evolver Panel Visualizer requirements added)
 **Core Value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
 
 ## v1.0 Requirements (Complete)
@@ -115,6 +115,19 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 - [ ] **CDEMO-02**: Synthetic Cascadia learner journey showing ~50% progress (separate from Evolver journey)
 - [ ] **CDEMO-03**: Landing page and instrument selector show both instruments in demo mode
 
+## v1.2 Requirements
+
+Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 12.
+
+### Evolver Panel Visualizer
+
+- [ ] **EPANEL-01**: Evolver panel renders as inline JSX SVG with all ~110 control IDs preserved, responsive scaling, and Feedback section layout fix (Frequency top, Level large, Grunge as switch)
+- [ ] **EPANEL-02**: Knob indicators rotate from -135deg (value 0) to +135deg (value 127) and support vertical drag interaction with onChange callback; switches and LEDs are display-only
+- [ ] **EPANEL-03**: Curriculum annotation overlays: colored glow rings (blue/amber) around highlighted controls via SVG filters, and subtle section tint rectangles for active signal chain areas
+- [ ] **EPANEL-04**: Hover tooltip shows control name, current MIDI value, and NRPN parameter number, positioned above the control via getBoundingClientRect
+- [ ] **EPANEL-05**: Static control metadata map covers all ~110 SVG controls with human-readable names, NRPN numbers, section membership, and control type
+- [ ] **EPANEL-06**: Panel integrated into four contexts: session detail (collapsible sidebar), patch detail (inline), quick-ref panel (compact tab), and standalone route (/instruments/evolver/panel)
+
 ## v2 Requirements
 
 ### Audio Integration
@@ -214,13 +227,20 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 | CDEMO-01 | Phase 11 | Pending |
 | CDEMO-02 | Phase 11 | Pending |
 | CDEMO-03 | Phase 11 | Pending |
+| EPANEL-01 | Phase 12 | Pending |
+| EPANEL-02 | Phase 12 | Pending |
+| EPANEL-03 | Phase 12 | Pending |
+| EPANEL-04 | Phase 12 | Pending |
+| EPANEL-05 | Phase 12 | Pending |
+| EPANEL-06 | Phase 12 | Pending |
 
 **Coverage:**
 - v1.0 requirements: 40 total (39 complete, 1 pending)
 - v1.1 requirements: 19 total (all mapped to phases 7-11)
-- Mapped to phases: 59 (40 v1.0 + 19 v1.1)
+- v1.2 requirements: 6 total (all mapped to phase 12)
+- Mapped to phases: 65 (40 v1.0 + 19 v1.1 + 6 v1.2)
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-29*
-*Last updated: 2026-03-30 after v1.1 roadmap creation*
+*Last updated: 2026-04-03 after Phase 12 Evolver Panel Visualizer requirements added*
