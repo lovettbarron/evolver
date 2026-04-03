@@ -3,6 +3,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { X } from 'lucide-react';
+import { EvolverPanel } from '@/components/evolver-panel';
 
 const MermaidRenderer = dynamic(
   () => import('@/components/mermaid-renderer').then((m) => ({ default: m.MermaidRenderer })),
@@ -13,10 +14,13 @@ interface QuickRefPanelProps {
   content: { label: string; html: string }[];
   isOpen: boolean;
   onClose: () => void;
+  instrumentSlug?: string;
 }
 
-export function QuickRefPanel({ content, isOpen, onClose }: QuickRefPanelProps) {
+export function QuickRefPanel({ content, isOpen, onClose, instrumentSlug }: QuickRefPanelProps) {
   const [activeTab, setActiveTab] = useState(0);
+  const showPanelTab = instrumentSlug === 'evolver';
+  const isPanelTab = showPanelTab && activeTab === content.length;
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -66,15 +70,15 @@ export function QuickRefPanel({ content, isOpen, onClose }: QuickRefPanelProps) 
         </div>
 
         {/* Tabs */}
-        {content.length > 1 && (
-          <div className="flex gap-sm px-lg pt-md">
+        {(content.length > 1 || showPanelTab) && (
+          <div className="flex gap-sm px-lg pt-md flex-wrap">
             {content.map((item, index) => (
               <button
                 key={item.label}
                 type="button"
                 onClick={() => setActiveTab(index)}
                 className={`text-sm px-md py-xs rounded transition-colors ${
-                  activeTab === index
+                  activeTab === index && !isPanelTab
                     ? 'bg-bg text-text'
                     : 'text-muted hover:text-text'
                 }`}
@@ -82,18 +86,39 @@ export function QuickRefPanel({ content, isOpen, onClose }: QuickRefPanelProps) 
                 {item.label}
               </button>
             ))}
+            {showPanelTab && (
+              <button
+                type="button"
+                onClick={() => setActiveTab(content.length)}
+                className={`text-sm px-md py-xs rounded transition-colors ${
+                  isPanelTab
+                    ? 'bg-bg text-text'
+                    : 'text-muted hover:text-text'
+                }`}
+              >
+                Evolver Panel
+              </button>
+            )}
           </div>
         )}
 
         {/* Content */}
         <div className="p-lg overflow-y-auto h-[calc(100%-120px)]">
-          {content.length > 0 && (
-            <div
-              className="prose quick-ref-prose"
-              dangerouslySetInnerHTML={{ __html: content[activeTab]?.html ?? '' }}
-            />
+          {isPanelTab ? (
+            <div className="py-sm">
+              <EvolverPanel className="w-full" />
+            </div>
+          ) : (
+            <>
+              {content.length > 0 && (
+                <div
+                  className="prose quick-ref-prose"
+                  dangerouslySetInnerHTML={{ __html: content[activeTab]?.html ?? '' }}
+                />
+              )}
+              <MermaidRenderer />
+            </>
           )}
-          <MermaidRenderer />
         </div>
       </div>
     </>

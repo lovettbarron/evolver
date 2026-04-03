@@ -42,6 +42,7 @@ export function SessionDetail({
         backHref={`/instruments/${instrumentSlug}/sessions`}
         sessionIdentifier={`Session ${session.session_number}`}
         quickRefContent={quickRefContent}
+        instrumentSlug={instrumentSlug}
       />
       <div className={isEvolver ? 'flex justify-center' : ''}>
         <div

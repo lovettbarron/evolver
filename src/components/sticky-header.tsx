@@ -9,12 +9,14 @@ interface StickyHeaderProps {
   backHref: string;
   sessionIdentifier: string;
   quickRefContent: { label: string; html: string }[];
+  instrumentSlug?: string;
 }
 
 export function StickyHeader({
   backHref,
   sessionIdentifier,
   quickRefContent,
+  instrumentSlug,
 }: StickyHeaderProps) {
   const [isQuickRefOpen, setIsQuickRefOpen] = useState(false);
 
@@ -46,6 +48,7 @@ export function StickyHeader({
         content={quickRefContent}
         isOpen={isQuickRefOpen}
         onClose={() => setIsQuickRefOpen(false)}
+        instrumentSlug={instrumentSlug}
       />
     </>
   );
