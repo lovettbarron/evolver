@@ -188,8 +188,8 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 12-01-PLAN.md -- Core EvolverPanel component: metadata map, inline JSX SVG, knob drag interaction, test stubs
-- [ ] 12-02-PLAN.md -- Tooltip overlay system: PanelTooltip component, hover state wiring
+- [x] 12-01-PLAN.md -- Core EvolverPanel component: metadata map, inline JSX SVG, knob drag interaction, test stubs
+- [x] 12-02-PLAN.md -- Tooltip overlay system: PanelTooltip component, hover state wiring
 - [ ] 12-03-PLAN.md -- Page integrations: session sidebar, patch inline, quick-ref tab, standalone route, human verification
 
 ## Progress
@@ -210,4 +210,4 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 9. Patch Documentation + Demo Patches | v1.1 | 0/3 | Planning | - |
 | 10. Curriculum Modules 1-3 | v1.1 | 3/3 | Complete    | 2026-04-01 |
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 0/4 | Planning | - |
-| 12. Evolver Panel Visualizer Component | v1.2 | 0/3 | Planning | - |
+| 12. Evolver Panel Visualizer Component | v1.2 | 2/3 | In Progress|  |
