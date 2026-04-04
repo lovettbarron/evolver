@@ -30,6 +30,8 @@ From the basic patch:
 - Set **Osc 1 Shape** to `Saw`
 - Verify both oscillators are at Frequency `C0`
 
+<div data-evolver-panel data-knobs="knob-osc-frequency:0,knob-osc-shapepw:64,knob-osc-level:0" data-highlights="knob-osc-level:blue,switch-sync:amber" data-sections="oscillators" data-zoom="oscillators"></div>
+
 ## Exercises
 
 ### Exercise 1: What Sync Does (5 min)
@@ -75,6 +77,8 @@ Now set up **ENV 3** to sweep Osc 1's frequency:
 9. Set **Release** to `0`
 10. Set **Amount** to `67`
 11. Set **Destination** to `O1F` (Osc 1 Frequency)
+
+<div data-evolver-panel data-knobs="knob-osc-frequency:24,knob-osc-shapepw:50,knob-osc-level:0,knob-env3-attack:15,knob-env3-decay:87,knob-env3-sustain:0,knob-env3-release:0,knob-env3-amount:67" data-highlights="knob-osc-frequency:amber,knob-env3-amount:amber,switch-sync:amber" data-sections="oscillators,envelope3"></div>
 
 Play a note. You should hear an aggressive, biting lead tone with a pronounced attack sweep.
 

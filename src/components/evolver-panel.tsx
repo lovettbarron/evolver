@@ -11,6 +11,7 @@ interface EvolverPanelProps {
   knobValues?: Record<string, number>;
   highlights?: Array<{ controlId: string; color: 'blue' | 'amber' }>;
   activeSections?: string[];
+  zoomSections?: string[];
   onKnobChange?: (controlId: string, value: number) => void;
   className?: string;
 }
@@ -70,54 +71,54 @@ function useKnobDrag(
 // ===== Styles (from SVG <style> block, converted to React CSSProperties) =====
 
 const styles = {
-  panelBg: { fill: '#0d1a2e' } as React.CSSProperties,
-  panelBorder: { fill: 'none', stroke: '#1a2a44', strokeWidth: 1 } as React.CSSProperties,
-  wood: { fill: '#8b5e3c' } as React.CSSProperties,
+  panelBg: { fill: '#111' } as React.CSSProperties,
+  panelBorder: { fill: 'none', stroke: '#333', strokeWidth: 1 } as React.CSSProperties,
+  wood: { fill: '#222' } as React.CSSProperties,
   sectionLabel: {
-    fill: '#7799bb', fontFamily: "'Helvetica Neue', Arial, sans-serif",
+    fill: '#999', fontFamily: "'Helvetica Neue', Arial, sans-serif",
     fontSize: '7px', fontWeight: 700, textTransform: 'uppercase' as const,
     letterSpacing: '1px', textAnchor: 'middle' as const,
   } as React.CSSProperties,
   subLabel: {
-    fill: '#5577aa', fontFamily: "'Helvetica Neue', Arial, sans-serif",
+    fill: '#777', fontFamily: "'Helvetica Neue', Arial, sans-serif",
     fontSize: '5px', textAnchor: 'middle' as const, letterSpacing: '0.5px',
   } as React.CSSProperties,
-  knobLarge: { fill: '#111', stroke: '#444', strokeWidth: 1.2 } as React.CSSProperties,
-  knobSmall: { fill: '#111', stroke: '#3a3a3a', strokeWidth: 1 } as React.CSSProperties,
-  knobIndicator: { fill: 'none', stroke: '#ccc', strokeWidth: 1.5, strokeLinecap: 'round' as const } as React.CSSProperties,
-  knobIndicatorSm: { fill: 'none', stroke: '#bbb', strokeWidth: 1.2, strokeLinecap: 'round' as const } as React.CSSProperties,
+  knobLarge: { fill: '#1a1a1a', stroke: '#555', strokeWidth: 1.2 } as React.CSSProperties,
+  knobSmall: { fill: '#1a1a1a', stroke: '#444', strokeWidth: 1 } as React.CSSProperties,
+  knobIndicator: { fill: 'none', stroke: '#ddd', strokeWidth: 1.5, strokeLinecap: 'round' as const } as React.CSSProperties,
+  knobIndicatorSm: { fill: 'none', stroke: '#ccc', strokeWidth: 1.2, strokeLinecap: 'round' as const } as React.CSSProperties,
   knobLabel: {
-    fill: '#99aabb', fontFamily: "'Helvetica Neue', Arial, sans-serif",
+    fill: '#aaa', fontFamily: "'Helvetica Neue', Arial, sans-serif",
     fontSize: '5.5px', textAnchor: 'middle' as const,
   } as React.CSSProperties,
-  switchRect: { fill: '#222', stroke: '#444', strokeWidth: 0.8, rx: 1.5 } as React.CSSProperties,
+  switchRect: { fill: '#222', stroke: '#555', strokeWidth: 0.8, rx: 1.5 } as React.CSSProperties,
   switchLabel: {
-    fill: '#7799bb', fontFamily: "'Helvetica Neue', Arial, sans-serif",
+    fill: '#999', fontFamily: "'Helvetica Neue', Arial, sans-serif",
     fontSize: '5px', textAnchor: 'middle' as const,
   } as React.CSSProperties,
-  ledBlue: { fill: '#1144aa', stroke: '#2266dd', strokeWidth: 0.5 } as React.CSSProperties,
-  ledRed: { fill: '#661122', stroke: '#aa2244', strokeWidth: 0.5 } as React.CSSProperties,
-  ledOff: { fill: '#1a1a2a', stroke: '#333', strokeWidth: 0.5 } as React.CSSProperties,
-  lcd: { fill: '#0a2a1a', stroke: '#2a5a3a', strokeWidth: 1 } as React.CSSProperties,
+  ledBlue: { fill: '#333', stroke: '#555', strokeWidth: 0.5 } as React.CSSProperties,
+  ledRed: { fill: '#333', stroke: '#555', strokeWidth: 0.5 } as React.CSSProperties,
+  ledOff: { fill: '#222', stroke: '#444', strokeWidth: 0.5 } as React.CSSProperties,
+  lcd: { fill: '#1a1a1a', stroke: '#444', strokeWidth: 1 } as React.CSSProperties,
   lcdText: {
-    fill: '#33bb66', fontFamily: "'Courier New', monospace",
+    fill: '#888', fontFamily: "'Courier New', monospace",
     fontSize: '9px', textAnchor: 'middle' as const,
   } as React.CSSProperties,
   logoText: {
-    fill: '#6699cc', fontFamily: "'Helvetica Neue', Arial, sans-serif",
+    fill: '#888', fontFamily: "'Helvetica Neue', Arial, sans-serif",
     fontSize: '16px', fontWeight: 700, fontStyle: 'italic', letterSpacing: '2px',
   } as React.CSSProperties,
   brandText: {
-    fill: '#8899aa', fontFamily: "'Helvetica Neue', Arial, sans-serif",
+    fill: '#666', fontFamily: "'Helvetica Neue', Arial, sans-serif",
     fontSize: '8px', fontWeight: 300, letterSpacing: '1.5px',
   } as React.CSSProperties,
-  divider: { stroke: '#1a2a44', strokeWidth: 0.5, strokeDasharray: '2,2' } as React.CSSProperties,
-  keyWhite: { fill: '#f0ece4', stroke: '#bbb', strokeWidth: 0.5 } as React.CSSProperties,
-  keyBlack: { fill: '#1a1a1a', stroke: '#111', strokeWidth: 0.5 } as React.CSSProperties,
-  wheelBg: { fill: '#111', stroke: '#333', strokeWidth: 0.8 } as React.CSSProperties,
-  wheel: { fill: '#222', stroke: '#555', strokeWidth: 0.8 } as React.CSSProperties,
+  divider: { stroke: '#333', strokeWidth: 0.5, strokeDasharray: '2,2' } as React.CSSProperties,
+  keyWhite: { fill: '#ddd', stroke: '#aaa', strokeWidth: 0.5 } as React.CSSProperties,
+  keyBlack: { fill: '#222', stroke: '#111', strokeWidth: 0.5 } as React.CSSProperties,
+  wheelBg: { fill: '#1a1a1a', stroke: '#444', strokeWidth: 0.8 } as React.CSSProperties,
+  wheel: { fill: '#2a2a2a', stroke: '#555', strokeWidth: 0.8 } as React.CSSProperties,
   paramText: {
-    fill: '#556677', fontFamily: "'Helvetica Neue', Arial, sans-serif",
+    fill: '#666', fontFamily: "'Helvetica Neue', Arial, sans-serif",
     fontSize: '4.5px', textAnchor: 'start' as const,
   } as React.CSSProperties,
 } as const;
@@ -215,10 +216,26 @@ function InteractiveKnob({
 
 // ===== Main Component =====
 
+function computeZoomViewBox(sections: string[]): string | null {
+  const padding = 20;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const name of sections) {
+    const b = SECTION_BOUNDS[name];
+    if (!b) continue;
+    minX = Math.min(minX, b.x);
+    minY = Math.min(minY, b.y);
+    maxX = Math.max(maxX, b.x + b.width);
+    maxY = Math.max(maxY, b.y + b.height);
+  }
+  if (minX === Infinity) return null;
+  return `${minX - padding} ${minY - padding} ${maxX - minX + padding * 2} ${maxY - minY + padding * 2}`;
+}
+
 function EvolverPanelInner({
   knobValues,
   highlights,
   activeSections,
+  zoomSections,
   onKnobChange,
   className,
 }: EvolverPanelProps) {
@@ -234,6 +251,7 @@ function EvolverPanelInner({
   const getVal = (id: string) => effectiveValues[id] ?? 64;
   const isHighlighted = (id: string) => highlights?.some(h => h.controlId === id) ?? false;
   const getHighlightColor = (id: string) => highlights?.find(h => h.controlId === id)?.color;
+  const viewBox = (zoomSections?.length ? computeZoomViewBox(zoomSections) : null) ?? '0 0 1200 520';
 
   // Event delegation: find the closest control element from any hover target
   const findControlId = useCallback((target: EventTarget | null): string | null => {
@@ -293,7 +311,7 @@ function EvolverPanelInner({
     <svg
       ref={svgRef}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1200 520"
+      viewBox={viewBox}
       width="100%"
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
@@ -334,7 +352,7 @@ function EvolverPanelInner({
             height={bounds.height}
             rx={4}
             fill="#3388ff"
-            fillOpacity={0.08}
+            fillOpacity={0.15}
             style={{ transition: 'opacity 150ms ease-out' }}
           />
         );
