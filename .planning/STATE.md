@@ -106,6 +106,7 @@ Recent decisions affecting current work:
 ### Roadmap Evolution
 
 - Phase 12 added: Evolver Panel Visualizer Component — React component rendering panel SVG with interactive patch state, knob positions, and curriculum annotation overlays
+- Phase 13 added: Cascadia Panel Visualizer — SVG panel, control metadata, React component, inline session embedding for all 25 Cascadia lessons
 
 ### Pending Todos
 

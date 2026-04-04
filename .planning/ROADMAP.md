@@ -211,3 +211,13 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 10. Curriculum Modules 1-3 | v1.1 | 3/3 | Complete    | 2026-04-01 |
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 4/4 | Complete    | 2026-04-04 |
 | 12. Evolver Panel Visualizer Component | v1.2 | 2/3 | Complete    | 2026-04-04 |
+
+### Phase 13: Cascadia Panel Visualizer
+
+**Goal:** Create an interactive Cascadia panel SVG, control metadata map, React component, and embed inline panel diagrams across all 25 Cascadia sessions — mirroring the Evolver panel approach from Phase 12.
+**Requirements**: TBD
+**Depends on:** Phase 12
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 13 to break down)
