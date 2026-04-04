@@ -2,11 +2,23 @@ import { notFound } from 'next/navigation';
 import { StickyHeader } from '@/components/sticky-header';
 import { StandalonePanelClient } from './standalone-panel-client';
 
+const PANEL_CONFIG: Record<string, { title: string; description: string; maxWidth: string }> = {
+  evolver: {
+    title: 'Evolver Panel',
+    description: 'Interactive panel reference. Drag knobs to explore parameter ranges.',
+    maxWidth: 'max-w-[1200px]',
+  },
+  cascadia: {
+    title: 'Cascadia Panel',
+    description: 'Interactive panel reference. Drag knobs and sliders to explore. Patch jacks show cable connection points.',
+    maxWidth: 'max-w-[1800px]',
+  },
+};
+
 export default async function PanelPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-
-  // Only Evolver has a panel visualizer
-  if (slug !== 'evolver') return notFound();
+  const config = PANEL_CONFIG[slug];
+  if (!config) return notFound();
 
   return (
     <div>
@@ -15,12 +27,10 @@ export default async function PanelPage({ params }: { params: Promise<{ slug: st
         sessionIdentifier="Panel"
         quickRefContent={[]}
       />
-      <div className="max-w-[1200px] mx-auto px-lg py-2xl">
-        <h1 className="text-2xl font-bold mb-lg">Evolver Panel</h1>
-        <p className="text-muted mb-xl">
-          Interactive panel reference. Drag knobs to explore parameter ranges.
-        </p>
-        <StandalonePanelClient />
+      <div className={`${config.maxWidth} mx-auto px-lg py-2xl`}>
+        <h1 className="text-2xl font-bold mb-lg">{config.title}</h1>
+        <p className="text-muted mb-xl">{config.description}</p>
+        <StandalonePanelClient instrumentSlug={slug} />
       </div>
     </div>
   );

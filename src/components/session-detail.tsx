@@ -6,7 +6,9 @@ import { StickyHeader } from '@/components/sticky-header';
 import { PrevNextNav } from '@/components/prev-next-nav';
 import { SourceRef } from '@/components/source-ref';
 import { EvolverPanel } from '@/components/evolver-panel';
+import { CascadiaPanel } from '@/components/cascadia-panel';
 import { CONTROL_METADATA } from '@/lib/evolver-panel-data';
+import { CONTROL_METADATA as CASCADIA_METADATA } from '@/lib/cascadia-panel-data';
 import dynamic from 'next/dynamic';
 
 const MermaidRenderer = dynamic(
@@ -18,6 +20,7 @@ const MermaidRenderer = dynamic(
 );
 
 const PANEL_MARKER_RE = /<div data-evolver-panel([^>]*)>\s*<\/div>/g;
+const CASCADIA_PANEL_RE = /<div data-cascadia-panel([^>]*)>\s*<\/div>/g;
 
 function parsePanelProps(attrString: string) {
   const knobValues: Record<string, number> = {};
@@ -70,6 +73,70 @@ function parsePanelProps(attrString: string) {
   };
 }
 
+function parseCascadiaPanelProps(attrString: string) {
+  const knobValues: Record<string, number> = {};
+  const highlights: Array<{ controlId: string; color: 'blue' | 'amber' }> = [];
+  const activeSections: string[] = [];
+  const cables: Array<{ sourceId: string; destId: string; signalType: 'audio' | 'cv' | 'modulation' | 'default'; purpose?: string }> = [];
+
+  const knobsMatch = attrString.match(/data-knobs="([^"]*)"/);
+  if (knobsMatch) {
+    for (const pair of knobsMatch[1].split(',')) {
+      const [id, val] = pair.split(':');
+      if (id && val !== undefined) {
+        const meta = CASCADIA_METADATA[id.trim()];
+        if (meta) knobValues[id.trim()] = Number(val);
+      }
+    }
+  }
+
+  const highlightsMatch = attrString.match(/data-highlights="([^"]*)"/);
+  if (highlightsMatch) {
+    for (const pair of highlightsMatch[1].split(',')) {
+      const [id, color] = pair.split(':');
+      if (id && (color === 'blue' || color === 'amber')) {
+        highlights.push({ controlId: id.trim(), color });
+      }
+    }
+  }
+
+  const sectionsMatch = attrString.match(/data-sections="([^"]*)"/);
+  if (sectionsMatch) {
+    activeSections.push(...sectionsMatch[1].split(',').map((s) => s.trim()));
+  }
+
+  const zoomMatch = attrString.match(/data-zoom="([^"]*)"/);
+  const hasExplicitZoom = !!zoomMatch;
+  const explicitZoom = zoomMatch && zoomMatch[1] !== 'false'
+    ? zoomMatch[1].split(',').map((s) => s.trim())
+    : [];
+  const zoomSections = hasExplicitZoom ? explicitZoom : activeSections;
+
+  // data-cables parsing: "sourceJackId>destJackId:signalType,sourceJackId>destJackId:signalType"
+  const cablesMatch = attrString.match(/data-cables="([^"]*)"/);
+  if (cablesMatch) {
+    for (const entry of cablesMatch[1].split(',')) {
+      const [connection, signalType] = entry.split(':');
+      const [source, dest] = (connection || '').split('>');
+      if (source && dest) {
+        cables.push({
+          sourceId: source.trim(),
+          destId: dest.trim(),
+          signalType: (signalType?.trim() as 'audio' | 'cv' | 'modulation') || 'default',
+        });
+      }
+    }
+  }
+
+  return {
+    knobValues: Object.keys(knobValues).length > 0 ? knobValues : undefined,
+    highlights: highlights.length > 0 ? highlights : undefined,
+    activeSections: activeSections.length > 0 ? activeSections : undefined,
+    zoomSections: zoomSections.length > 0 ? zoomSections : undefined,
+    cables: cables.length > 0 ? cables : undefined,
+  };
+}
+
 interface SessionDetailProps {
   session: Session;
   html: string;
@@ -89,20 +156,25 @@ export function SessionDetail({
   quickRefContent,
   reference,
 }: SessionDetailProps) {
-  const hasPanel =
+  const hasEvolverPanel =
     instrumentSlug === 'evolver' && html.includes('data-evolver-panel');
+  const hasCascadiaPanel =
+    instrumentSlug === 'cascadia' && html.includes('data-cascadia-panel');
+  const hasPanel = hasEvolverPanel || hasCascadiaPanel;
 
   // Split HTML at panel markers and collect marker attributes
-  const segments = hasPanel ? html.split(PANEL_MARKER_RE) : [html];
+  const panelRe = hasEvolverPanel ? PANEL_MARKER_RE : CASCADIA_PANEL_RE;
+  const parseProps = hasEvolverPanel ? parsePanelProps : parseCascadiaPanelProps;
+  const segments = hasPanel ? html.split(panelRe) : [html];
   // regex with one capture group: split produces [before, attrs1, between, attrs2, after, ...]
   // odd indices are the captured attribute strings
   const htmlParts: string[] = [];
-  const panelProps: ReturnType<typeof parsePanelProps>[] = [];
+  const panelPropsArray: ReturnType<typeof parseCascadiaPanelProps>[] = [];
   for (let i = 0; i < segments.length; i++) {
     if (i % 2 === 0) {
       htmlParts.push(segments[i]);
     } else {
-      panelProps.push(parsePanelProps(segments[i]));
+      panelPropsArray.push(parseProps(segments[i]));
     }
   }
 
@@ -135,14 +207,24 @@ export function SessionDetail({
             {htmlParts.map((part, i) => (
               <Fragment key={i}>
                 <div dangerouslySetInnerHTML={{ __html: part }} />
-                {panelProps[i] && (
+                {panelPropsArray[i] && (
                   <div className="not-prose my-lg">
-                    <EvolverPanel
-                      knobValues={panelProps[i].knobValues}
-                      highlights={panelProps[i].highlights}
-                      activeSections={panelProps[i].activeSections}
-                      zoomSections={panelProps[i].zoomSections}
-                    />
+                    {hasEvolverPanel ? (
+                      <EvolverPanel
+                        knobValues={panelPropsArray[i].knobValues}
+                        highlights={panelPropsArray[i].highlights}
+                        activeSections={panelPropsArray[i].activeSections}
+                        zoomSections={panelPropsArray[i].zoomSections}
+                      />
+                    ) : (
+                      <CascadiaPanel
+                        knobValues={panelPropsArray[i].knobValues}
+                        highlights={panelPropsArray[i].highlights}
+                        activeSections={panelPropsArray[i].activeSections}
+                        zoomSections={panelPropsArray[i].zoomSections}
+                        cables={panelPropsArray[i].cables}
+                      />
+                    )}
                   </div>
                 )}
               </Fragment>

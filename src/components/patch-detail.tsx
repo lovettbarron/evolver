@@ -8,6 +8,7 @@ import { CableRoutingDiagram } from './cable-routing-diagram';
 import { KnobSettingsTable } from './knob-settings-table';
 import { AudioPreviewPlaceholder } from './audio-preview-placeholder';
 import { EvolverPanel } from './evolver-panel';
+import { CascadiaPanel } from './cascadia-panel';
 import type { CableConnection, KnobSetting } from '@/lib/content/schemas';
 
 interface PatchDetailProps {
@@ -115,6 +116,22 @@ export function PatchDetail({
           <div className="mt-xl">
             <h2 className="text-lg font-bold mb-md">Panel View</h2>
             <EvolverPanel />
+          </div>
+        )}
+
+        {instrumentSlug === 'cascadia' && (
+          <div className="mt-xl">
+            <h3 className="text-lg font-semibold mb-md">Panel View</h3>
+            <CascadiaPanel
+              cables={hasCableRouting
+                ? (patch.cable_routing as CableConnection[]).map((c) => ({
+                    sourceId: `jack-${c.source.toLowerCase().replace(/\s+/g, '-')}`,
+                    destId: `jack-${c.destination.toLowerCase().replace(/\s+/g, '-')}`,
+                    signalType: 'default' as const,
+                  }))
+                : undefined
+              }
+            />
           </div>
         )}
       </div>
