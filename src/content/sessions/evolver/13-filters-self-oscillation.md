@@ -37,6 +37,9 @@ When resonance is high enough in 4-pole mode, the filter's feedback becomes so s
 1. Set **all Osc Levels** to `0` (Osc 1, 2, 3, 4 all at 0) -- no sound sources
 2. Set **Resonance** to `100`
 3. Set **LPF Frequency** to `80`
+
+<div data-evolver-panel data-knobs="knob-osc-level:0,knob-filter-frequency:80,knob-filter-resonance:100" data-highlights="knob-filter-resonance:amber,knob-filter-frequency:amber,switch-4pole:amber,knob-osc-level:blue" data-sections="filter"></div>
+
 4. Take your hands off the keyboard. You should hear the filter singing by itself -- a pure, sweet sine tone at the filter's cutoff frequency
 5. Slowly sweep **Filter Frequency** from `0` to `164` -- you should hear the pitch rise and fall. You are playing the filter like an oscillator
 6. Notice the slight chorusing or beating in the tone -- that is evidence that the two analog filters (left and right) are behaving slightly differently. "Because they're both analog filters, they always behave a little differently" (Anu Kirk p.48)
@@ -89,6 +92,8 @@ Create a usable patch combining self-oscillation with oscillators:
 3. Set **LPF Frequency** to `60`
 4. Set **Key Amount** to `72` (filter tracks keyboard)
 5. Set **Distortion** to `80` -- "turn the distortion on and crank it up to around 80... now you're getting something that almost sounds like a square wave" (Anu Kirk p.48)
+
+<div data-evolver-panel data-knobs="knob-osc-level:40,knob-filter-frequency:60,knob-filter-resonance:90,knob-filter-keyamount:72,knob-distortion-amount:80" data-highlights="knob-filter-resonance:amber,knob-filter-keyamount:amber,knob-distortion-amount:amber,knob-filter-frequency:blue" data-sections="filter,distortion"></div>
 
 Play some notes. You should hear an aggressive, singing, almost vocal quality with the high resonance adding a sharp harmonic peak to each note.
 
