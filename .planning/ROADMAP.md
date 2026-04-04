@@ -98,7 +98,7 @@ Plans:
 - [ ] **Phase 8: Cascadia Instrument Data** - Overview page, normalled signal path, module documentation for all Cascadia modules
 - [ ] **Phase 9: Patch Documentation + Demo Patches** - Cable routing schema, knob settings, audio previews, Mermaid rendering, 12-16 documented demo patches
 - [x] **Phase 10: Curriculum Modules 1-3** - Sessions 1-9 covering Foundations, Oscillators, and Envelopes/Amplitude with ADHD-paced design (completed 2026-04-01)
-- [ ] **Phase 11: Curriculum Modules 4-7 + Demo Mode** - Sessions 10-25 completing the full curriculum, recipe patches, and Cascadia demo mode with synthetic learner data
+- [x] **Phase 11: Curriculum Modules 4-7 + Demo Mode** - Sessions 10-25 completing the full curriculum, recipe patches, and Cascadia demo mode with synthetic learner data (completed 2026-04-04)
 
 ## Phase Details
 
@@ -179,7 +179,7 @@ Plans:
 - [x] 11-01-PLAN.md -- Modules 4-5: Sessions 10-15 (Filters & LPG, Modulation & Utilities)
 - [x] 11-02-PLAN.md -- Module 6: Sessions 16-19 (Advanced Patching: FM chains, feedback, FX, audio-rate modulation)
 - [x] 11-03-PLAN.md -- Module 7: Sessions 20-25 (Sound Design recipes) + 6 named recipe patches
-- [ ] 11-04-PLAN.md -- Demo mode: synthetic Cascadia journey, instrument-aware progress, content bundling
+- [x] 11-04-PLAN.md -- Demo mode: synthetic Cascadia journey, instrument-aware progress, content bundling
 
 ### Phase 12: Evolver Panel Visualizer Component
 **Goal**: Interactive React component rendering the Evolver panel as inline JSX SVG with draggable knobs, curriculum annotation overlays, tooltips, and integration into session detail, patch detail, quick-ref panel, and standalone route
@@ -209,5 +209,5 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 8. Cascadia Instrument Data | v1.1 | 2/3 | In Progress|  |
 | 9. Patch Documentation + Demo Patches | v1.1 | 0/3 | Planning | - |
 | 10. Curriculum Modules 1-3 | v1.1 | 3/3 | Complete    | 2026-04-01 |
-| 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 3/4 | In Progress|  |
+| 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 4/4 | Complete   | 2026-04-04 |
 | 12. Evolver Panel Visualizer Component | v1.2 | 2/3 | Complete    | 2026-04-04 |
