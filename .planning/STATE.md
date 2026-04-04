@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Cascadia Instrument Support
-status: Defining requirements
-stopped_at: Completed 13-01-PLAN.md
-last_updated: "2026-04-04T17:40:59.859Z"
-last_activity: 2026-04-04 — Milestone v1.2 started
+status: executing
+stopped_at: Completed 13-02-PLAN.md
+last_updated: "2026-04-04T17:49:38.158Z"
+last_activity: 2026-04-04 — Phase 13 plan 02 complete
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 23
-  completed_plans: 20
-  percent: 0
+  completed_plans: 21
+  percent: 91
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-04)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-04-04 — Milestone v1.2 started
+Phase: 13
+Plan: 2 of 4 complete
+Status: Executing Phase 13
+Last activity: 2026-04-04 — Phase 13 plan 02 complete
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█████████░] 91%
 
 ## Performance Metrics
 
@@ -106,6 +106,8 @@ Recent decisions affecting current work:
 - [Phase 13]: Cascadia control ID convention: {type}-{module}-{name-kebab} for all 179 controls
 - [Phase 13]: Jack signal types: audio/cv/gate/modulation classified from module documentation context
 - [Phase 13]: SECTION_BOUNDS uses proportional widths based on control density in 1800x350 viewBox
+- [Phase 13]: Control positions computed algorithmically from SECTION_BOUNDS rather than hand-placed
+- [Phase 13]: Cable bezier droop scales with distance: min(80, 30 + dx * 0.15)
 
 ### Roadmap Evolution
 
@@ -129,6 +131,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-04T17:40:59.854Z
-Stopped at: Completed 13-01-PLAN.md
+Last session: 2026-04-04T17:49:38.155Z
+Stopped at: Completed 13-02-PLAN.md
 Resume file: None
