@@ -1,476 +1,497 @@
-# Architecture Patterns: Cascadia Integration
+# Architecture: Learner Experience Features
 
-**Domain:** Multi-instrument synth learning platform -- adding CV-only semi-modular to existing SysEx-capable instrument
-**Researched:** 2026-03-30
-**Confidence:** HIGH -- based on direct inspection of existing codebase, all integration points identified from source
+**Domain:** Learner UX layer on server-component + filesystem architecture
+**Researched:** 2026-04-03
+**Confidence:** HIGH (patterns well-understood, no novel infrastructure)
 
-## Recommended Architecture
+## Executive Summary
 
-The existing architecture is well-structured for multi-instrument support. The `[slug]` routing, content reader, and instrument discovery already abstract over instrument identity. The primary challenge is that the current schemas and components assume MIDI SysEx capabilities that Cascadia does not have, and the navigation/home page hard-codes "evolver" in several places.
+The v1.2 learner experience features require solving one core architectural problem: **where does mutable user state live in a read-only filesystem architecture?** The answer is localStorage, managed through a React Context provider that bridges the server-component world (which computes content and prerequisites) with client-side persistence (which tracks completions, last session, and streaks).
 
-**Guiding principle:** Cascadia integration should add new content and extend schemas -- not fork components. Use instrument "capabilities" metadata so components adapt their rendering based on what an instrument supports.
+The existing architecture is clean: server components read filesystem content, validate with Zod, and pass data down. The new features layer on top without disrupting this. Content indexing for search happens via an API route (server reads content, returns JSON, client indexes it). Prerequisite visualization is purely computed from existing `prerequisite` fields in session frontmatter plus completion state. No database, no mutation API routes, no new server infrastructure.
 
-### Integration Summary
-
-```
-NEW FILES (content only)             MODIFIED FILES (code changes)
--------------------------------      -----------------------------------
-src/content/instruments/cascadia/    src/lib/content/schemas.ts
-  overview.md                        src/components/nav.tsx
-  signal-flow.md                     src/components/app-shell.tsx
-  modules.md                         src/app/instruments/[slug]/page.tsx
-  basic-patch.md                     src/app/instruments/[slug]/midi/page.tsx
-src/content/sessions/cascadia/       src/app/page.tsx
-  01-*.md ... (initial sessions)     src/components/instrument-overview.tsx
-src/content/patches/cascadia/        src/components/patch-detail.tsx
-  *.md (cable-routing format)
-```
-
-### Component Boundaries
-
-| Component | Responsibility | Changes Needed |
-|-----------|---------------|----------------|
-| `reader.ts` | Content discovery and parsing | **NONE** -- already instrument-parameterized via slug |
-| `schemas.ts` | Zod validation of frontmatter | **EXTEND** -- add optional CV/cable fields, capability flags |
-| `nav.tsx` | Navigation links | **MODIFY** -- dynamic instrument list, not hard-coded Evolver links |
-| `app-shell.tsx` | Layout wrapper with footer | **MINOR** -- change "Evolver Deep Learning" to generic name |
-| `instrument-overview.tsx` | Instrument landing page | **MINOR** -- "10 modules" text must be dynamic |
-| `[slug]/page.tsx` | Instrument route handler | **MODIFY** -- references array from frontmatter, not hard-coded |
-| `[slug]/midi/page.tsx` | MIDI workspace route | **MODIFY** -- gate behind instrument capability flag |
-| `midi-page.tsx` | SysEx capture/send/diff | **NONE** -- only rendered for SysEx-capable instruments |
-| `session-detail.tsx` | Session view | **NONE** -- already instrument-agnostic |
-| `patch-detail.tsx` | Patch view | **MINOR** -- render cable routing section when present |
-| `patch-grid.tsx` / `patch-card.tsx` | Patch listing | **MINOR** -- show patch format indicator |
-| `page.tsx` (home) | Landing page | **MODIFY** -- multi-instrument awareness |
-
-### Data Flow
+## Current Architecture (As-Is)
 
 ```
-Content filesystem (vault or bundled):
-  src/content/instruments/{slug}/        <-- instrument discovery (EXISTING, unchanged)
-  src/content/sessions/{slug}/*.md       <-- session listing (EXISTING, unchanged)
-  src/content/patches/{slug}/*.md        <-- patch listing (EXISTING, unchanged)
-  src/content/patches/{slug}/*.sysex.json  <-- SysEx sidecars (Evolver only)
-
-                    |
-                    v
-         reader.ts (UNCHANGED -- all functions parameterized by instrument slug)
-         schemas.ts (EXTENDED with optional cable/capability fields)
-                    |
-                    v
-         Server components (page.tsx routes)
-         Read instrument capabilities from overview.md frontmatter
-         Conditional rendering decisions made here
-                    |
-                    v
-         Client components render based on data shape
-         (patch_cables present? show cable routing table)
-         (sysexData present? show parameter dump)
-         (capabilities.midi_sysex? show MIDI nav link)
+                    evolver.config.json
+                         |
+                    loadConfig()
+                         |
+              +----------+-----------+
+              |                      |
+         vaultPath set?         no vaultPath
+              |                      |
+     ~/song vault (local)    src/content/ (demo)
+              |                      |
+              +----------+-----------+
+                         |
+                   reader.ts (Zod validation)
+                         |
+              +----------+-----------+
+              |          |           |
+         listSessions  listPatches  listModules
+              |          |           |
+              +----------+-----------+
+                         |
+                Server Components (pages)
+                         |
+                Client Components (presentational only)
 ```
 
-## Detailed Integration Plan
+**Key characteristics:**
+- All data flows top-down from filesystem through server components
+- No mutable state anywhere -- progress is computed from daily note scanning or synthetic data
+- Client components are purely presentational (SessionRow, ModuleJourney, etc.)
+- The `prerequisite` field exists in SessionSchema but is not used in the UI yet
+- Server components load config, read content, compute progress, pass props to client components
 
-### 1. Content Structure (NEW files only -- no code changes)
+## Proposed Architecture (To-Be)
 
-Create the Cascadia content directory mirroring the Evolver structure exactly:
+### New Layer: Client-Side Learner State
 
 ```
-src/content/instruments/cascadia/
-  overview.md          # type: overview, instrument: cascadia, manufacturer: Intellijel
-  signal-flow.md       # Mermaid diagram of Cascadia signal routing
-  modules.md           # Module reference (VCOs, VCF, VCA, Wavefolder, etc.)
-  basic-patch.md       # "Init patch" = normalized knob positions, all cables unplugged
-
-src/content/sessions/cascadia/
-  01-getting-oriented.md
-  02-vco-fundamentals.md
-  03-vcf-and-subtractive.md
-  ... (initial 5-10 sessions)
-
-src/content/patches/cascadia/
-  warm-drone.md
-  wavefold-bass.md
-  ... (initial demo patches with cable routing format)
+                  Server Components (unchanged)
+                         |
+                   props with content data
+                         |
+              LearnerStateProvider (client context)
+                    |           |
+              localStorage    React state
+              (persistent)    (reactive)
+                    |           |
+              +-----+-----+----+----+
+              |           |         |
+         CompletionState  LastSession  StreakData
+              |           |         |
+         SessionList    ContinueBar  ProgressPage
+         (enhanced)     (new)        (enhanced)
 ```
 
-**Key differences from Evolver content:**
+### Component Classification
 
-| Aspect | Evolver | Cascadia |
-|--------|---------|----------|
-| basic-patch.md | Has `.sysex.json` sidecar with program data | No sidecar -- describes physical knob positions |
-| Patches | Parameter value tables (numbers reproduce the sound) | Cable routing + knob positions (physical setup) |
-| Patch reproducibility | Exact -- load SysEx and get identical sound | Approximate -- knob % positions, not exact values |
-| Module taxonomy | digital-oscillators, analog-filters, sequencer, etc. | vco, vcf, vca, wavefolder, noise, sample-hold, etc. |
-| References | Evolver Manual, Definitive Guide | Cascadia Manual v1.1 (already in references/) |
+| Component | Current | v1.2 Change | Server/Client |
+|-----------|---------|-------------|---------------|
+| `SessionList` | Server component, presentational | Receives completion map, passes to enhanced rows | Server (wrapper) |
+| `SessionRow` | Server component, link only | Add completion badge + prerequisite lock icon | Client (needs state) |
+| `ModuleJourney` | Server component, dots only | Add click-through to module detail, "you are here" marker | Client (needs state) |
+| `ProgressPage` | Server component | Merge server-computed + client completion data | Server (data) + Client (merge) |
+| `ContinueBar` | Does not exist | "Continue: Session 22 - Sequencer Basics" banner | Client (reads last session) |
+| `SearchOverlay` | Does not exist | Cmd+K full-text search dialog | Client (search index) |
+| `CompletionToggle` | Does not exist | Checkbox on session detail page | Client (writes state) |
+| `StreakDisplay` | Does not exist | Current streak + best streak on progress page | Client (computed from timestamps) |
 
-### 2. Schema Evolution
+## Feature Architecture Details
 
-#### PatchSchema -- extend with optional cable routing fields
+### 1. Learner State Provider
 
-The existing schema uses `.passthrough()` so extra frontmatter fields are silently allowed. But for proper validation and TypeScript types, add explicit optional fields:
+**Pattern:** React Context + localStorage + custom hook
+
+This is the central new abstraction. A single `'use client'` context provider wraps the app (inside `AppShell`) and manages all mutable learner state.
 
 ```typescript
-export const PatchSchema = z.object({
-  name: z.string(),
-  type: z.enum(['bass', 'lead', 'pad', 'drum', 'texture', 'sequence', 'drone', 'effect']),
-  //                                                                    ^^^^^^^^^^^^
-  //                                                      NEW enum values for Cascadia patch types
-  session_origin: z.union([z.number(), z.null()]),
-  description: z.string(),
-  tags: z.array(z.string()),
-  instrument: z.string(),
-  created: z.string(),
+// src/lib/learner-state.tsx
+'use client';
 
-  // SysEx fields (Evolver-specific, all already optional)
-  source: z.enum(['manual', 'sysex']).optional(),
-  capture_date: z.string().optional(),
-  program_number: z.number().int().min(0).max(127).optional(),
-  challenge_id: z.string().optional(),
+interface LearnerState {
+  // Completion tracking
+  completions: Record<string, CompletionRecord>;  // keyed by "{instrument}:{session_number}"
 
-  // Cable routing fields (Cascadia-specific, NEW, optional)
-  patch_cables: z.array(z.object({
-    from: z.string(),              // e.g., "LFO 1 Triangle Out"
-    to: z.string(),                // e.g., "VCO 1 FM In"
-    cable_color: z.string().optional(),
-    note: z.string().optional(),   // what this connection does
-  })).optional(),
-  audio_url: z.string().optional(),  // audio preview reference
-}).passthrough();
-```
+  // Last session visited (for "continue where you left off")
+  lastSession: { instrument: string; slug: string; title: string; number: number } | null;
 
-**Why `patch_cables` array:** This is the Cascadia equivalent of SysEx parameter dumps. It captures the physical cable connections that define a patch. Keeping it optional means Evolver patches are completely unaffected. The `audio_url` field is useful for both instruments but especially Cascadia, where you cannot recreate a patch from text alone -- hearing it matters.
-
-#### InstrumentFileSchema -- add capability flags and reference list
-
-```typescript
-export const InstrumentFileSchema = z.object({
-  type: z.enum(['overview', 'signal-flow', 'basic-patch', 'modules', 'patch-points']),
-  //                                                                  ^^^^^^^^^^^^
-  //                                               NEW type for Cascadia's 100+ patch points reference
-  instrument: z.string(),
-  title: z.string(),
-  manufacturer: z.string(),
-
-  // NEW: instrument capabilities for conditional UI (on overview.md only)
-  capabilities: z.object({
-    midi_sysex: z.boolean(),       // Evolver: true, Cascadia: false
-    patch_memory: z.boolean(),     // Evolver: true (512 programs), Cascadia: false
-    cv_patching: z.boolean(),      // Evolver: false, Cascadia: true
-  }).optional(),
-
-  // NEW: reference documents (replaces hard-coded array in page.tsx)
-  references: z.array(z.object({
-    label: z.string(),
-    pdf: z.string(),               // filename in src/content/references/
-  })).optional(),
-}).passthrough();
-```
-
-**Capabilities go in `overview.md` frontmatter only** -- not repeated in every instrument file. The instrument page already reads overview, so extract capabilities there and pass down.
-
-#### SessionSchema -- NO CHANGES NEEDED
-
-The existing schema is already instrument-agnostic:
-- `module` is a free-form string (accommodates different module taxonomies)
-- `output_type` enum covers Cascadia outputs (patch, technique, recording)
-- `reference` can point to Cascadia manual pages
-- `instrument` field already exists
-
-### 3. MIDI Workspace Handling
-
-The `MidiPage` component directly imports `basic-patch.sysex.json` and is deeply Evolver-specific (SysEx capture, send, parse, diff). Do NOT generalize it.
-
-**Approach: Gate the route by instrument capability**
-
-In `src/app/instruments/[slug]/midi/page.tsx`:
-
-```typescript
-// Read instrument overview to check capabilities
-const config = await loadConfig();
-const files = await listInstrumentFiles(slug, config);
-const overview = files.find(f => f.data.type === 'overview');
-const hasSysex = overview?.data.capabilities?.midi_sysex ?? false;
-
-if (!hasSysex) {
-  return (
-    <div className="max-w-[720px] mx-auto px-lg py-2xl text-center">
-      <h1 className="text-2xl font-bold mb-md">No MIDI SysEx</h1>
-      <p className="text-muted">
-        {overview?.data.title ?? slug} uses CV patching instead of MIDI program memory.
-        Patches are documented as cable routing diagrams.
-      </p>
-      <Link href={`/instruments/${slug}/patches`}>Browse Patches</Link>
-    </div>
-  );
+  // Streak data
+  streakDays: string[];  // ISO date strings of days with completions
 }
 
-// Existing MidiPage component renders only for SysEx-capable instruments
-return <MidiPage instrumentSlug={slug} />;
+interface CompletionRecord {
+  completedAt: string;   // ISO timestamp
+  source: 'manual' | 'vault';  // manual = toggle, vault = daily note scan
+}
 ```
 
-In `nav.tsx`, the MIDI link should be conditionally shown based on capabilities (see section 5).
+**Why a single provider, not per-feature hooks:**
+- All features share the same localStorage backing store
+- Prevents multiple competing `useEffect` syncs
+- Single hydration boundary simplifies SSR handling
+- One place to handle the demo-mode vs local-mode branching
 
-**Future (v1.2+):** A Cascadia-specific workspace could show a patch cable visualizer or interactive module diagram. But this is out of scope for v1.1.
+**Hydration strategy:**
+- Provider initializes with `null` state (matches server render)
+- `useEffect` loads from localStorage on mount
+- Components show a neutral state (no badge, no streak) until hydrated
+- No layout shift because completion badges and streak numbers are additive, not replacing content
 
-### 4. Patch Documentation Format
+**localStorage schema:**
 
-This is the most architecturally significant difference between instruments.
-
-**Evolver patch example** (existing -- `acid-bass.md`):
-```markdown
-## Key Parameters
-### Oscillators
-| Parameter | Value |
-|-----------|-------|
-| Osc 1 Shape | Saw |
-| Osc 1 Level | 55 |
+```json
+{
+  "version": 1,
+  "completions": {
+    "evolver:1": { "completedAt": "2026-04-03T10:30:00Z", "source": "manual" },
+    "evolver:2": { "completedAt": "2026-04-03T11:00:00Z", "source": "manual" }
+  },
+  "lastSession": {
+    "instrument": "evolver",
+    "slug": "22-sequencer-basics",
+    "title": "Sequencer Basics",
+    "number": 22
+  },
+  "streakDays": ["2026-04-01", "2026-04-02", "2026-04-03"]
+}
 ```
 
-**Cascadia patch format** (proposed):
-```markdown
----
-name: "Warm Drone"
-type: drone
-session_origin: 3
-description: "Self-generating evolving drone using wavefolder feedback"
-tags: [drone, wavefolder, ambient]
-instrument: cascadia
-created: "2026-04-15"
-patch_cables:
-  - from: "LFO 1 Triangle"
-    to: "VCO 1 FM"
-    note: "Slow pitch drift"
-  - from: "Noise Out"
-    to: "VCF CV In"
-    note: "Subtle random filter movement"
-  - from: "VCA Out"
-    to: "Wavefolder In"
-    note: "Feedback loop -- start with WF Amount at 0"
-audio_url: "/audio/cascadia/warm-drone.mp3"
----
+**Why version field:** Future schema migrations. Parse with Zod on load, reset to defaults if validation fails.
 
-# Warm Drone
+### 2. Completion Tracking (Manual Mark-Complete)
 
-> [!tip] Setup
-> Start with all cables unplugged (internal normalling active).
-> Set VCO 1 to ~200Hz, VCF fully open, VCA to manual gate.
+**Data flow:**
 
-## Cable Routing
-
-| # | From | To | Purpose |
-|---|------|----|---------|
-| 1 | LFO 1 Triangle | VCO 1 FM | Slow pitch drift (~0.1 Hz) |
-| 2 | Noise Out | VCF CV In | Random filter movement |
-| 3 | VCA Out | Wavefolder In | Feedback -- careful with amount |
-
-## Knob Positions
-
-| Module | Control | Position | Notes |
-|--------|---------|----------|-------|
-| VCO 1 | Frequency | ~200 Hz | Fundamental pitch |
-| LFO 1 | Rate | ~0.1 Hz | Very slow |
-| VCF | Cutoff | 75% | Mostly open |
-| Wavefolder | Amount | 0 -> 30% | BRING UP SLOWLY |
+```
+Session Detail Page (server)
+  |
+  renders session content + CompletionToggle (client)
+  |
+CompletionToggle reads/writes LearnerStateProvider
+  |
+  writes to localStorage key: "evolver-learner-state"
+  |
+  updates completions["{instrument}:{session_number}"]
 ```
 
-**Why this works without code changes to markdown processing:** The Cascadia patch body uses the same markdown table format as Evolver patches. The existing `param-table` rehype plugin and standard table rendering handle both formats identically. The difference is structural (cable routing tables vs parameter value tables) but the rendering is the same.
+**Merging with vault-scanned completions:**
 
-**Cable data lives in both frontmatter AND body:** Frontmatter `patch_cables` enables programmatic access (filtering, visualization). Body tables provide human-readable documentation with notes and ordering. This is intentional duplication -- the frontmatter is machine-readable, the body is the learning content.
-
-### 5. Component Adaptations (Detailed)
-
-#### nav.tsx -- Dynamic instrument navigation (CRITICAL change)
-
-Current state: Hard-coded `navLinks` array with Evolver-specific paths.
+The progress page currently gets completed sessions from either vault scanning or synthetic data (server-side). Manual completions live in localStorage (client-side). These must merge:
 
 ```typescript
-// CURRENT (broken for multi-instrument):
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/instruments/evolver', label: 'Evolver' },
-  { href: '/instruments/evolver/sessions', label: 'Sessions' },
-  { href: '/instruments/evolver/patches', label: 'Patches' },
-  { href: '/instruments/evolver/midi', label: 'MIDI' },
-  { href: '/instruments/evolver/progress', label: 'Progress' },
-];
+// In a client wrapper component:
+// Server provides: vaultCompletedSessions (Set<number>) as serialized array via props
+// Client provides: manualCompletions from LearnerStateProvider
+// Merged set = union of both, displayed in progress UI
 ```
 
-**Proposed approach:** Nav receives instrument data from a server component wrapper. Show instrument tabs at the top level, and instrument-specific sub-links for the active instrument.
+**Important constraint:** Manual completions NEVER write back to the vault. They are a client-only convenience for users who do not use Obsidian or who want quick tracking. The vault remains the source of truth for users who have it configured.
+
+### 3. Search
+
+**Architecture: API route + client-side MiniSearch**
+
+Use **MiniSearch** (8KB gzipped, zero dependencies) because:
+- The corpus is small (35 sessions + ~20 patches per instrument = well under 1000 documents)
+- Full-text with fuzzy matching and field boosting covers all needs
+- No server infrastructure needed beyond a read-only JSON endpoint
+- Loads fast, searches instantly after first fetch
+
+**Index serving via API route (recommended):**
+
+Create `src/app/api/search-index/[instrument]/route.ts` that reads content server-side and returns JSON. This is the first API route in the project but it is strictly read-only -- no state mutation. It aligns with the filesystem-read pattern and keeps page payload small.
 
 ```typescript
-interface NavProps {
-  isDemoMode?: boolean;
-  instruments: Array<{
-    slug: string;
-    name: string;
-    capabilities: { midi_sysex: boolean; patch_memory: boolean; cv_patching: boolean };
-  }>;
+// src/app/api/search-index/[instrument]/route.ts
+import { NextResponse } from 'next/server';
+import { loadConfig } from '@/lib/config';
+import { listSessions, listPatches } from '@/lib/content/reader';
+
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ instrument: string }> }
+) {
+  const { instrument } = await params;
+  const config = await loadConfig();
+  const [sessions, patches] = await Promise.all([
+    listSessions(instrument, config),
+    listPatches(instrument, config),
+  ]);
+
+  const documents = [
+    ...sessions.map(s => ({
+      id: `session:${s.slug}`,
+      type: 'session' as const,
+      title: s.data.title,
+      module: s.data.module,
+      tags: s.data.tags.join(' '),
+      body: s.content.slice(0, 2000),
+      href: `/instruments/${instrument}/sessions/${s.slug}`,
+    })),
+    ...patches.map(p => ({
+      id: `patch:${p.slug}`,
+      type: 'patch' as const,
+      title: p.data.name,
+      tags: p.data.tags.join(' '),
+      body: p.data.description,
+      href: `/instruments/${instrument}/patches/${p.slug}`,
+    })),
+  ];
+
+  return NextResponse.json(documents);
+}
+```
+
+**Why API route over build-time index:** When `vaultPath` is set, content comes from the live vault (which changes between sessions). A build-time index would be stale. The API route reads fresh content at request time and benefits from Next.js request deduplication.
+
+**Search UI flow:**
+
+```
+Cmd+K (or search icon in nav)
+  |
+  opens SearchOverlay (dialog/modal, client component)
+  |
+  fetches /api/search-index/{instrument} once (cached in component state)
+  |
+  MiniSearch indexes documents on first open
+  |
+  user types -> miniSearch.search(query) -> results grouped by type
+  |
+  keyboard navigation (up/down/enter)
+  |
+  selecting a result navigates via Next.js router.push()
+```
+
+### 4. Prerequisite Visualization
+
+**Entirely computed from existing data, no new state needed.**
+
+The `SessionSchema` already has `prerequisite: z.union([z.number(), z.null()])` -- a session number that must be completed before this session is available.
+
+**State derivation:**
+
+```typescript
+type SessionAvailability = 'completed' | 'available' | 'locked';
+
+function getAvailability(
+  session: Session,
+  completedSessions: Set<number>
+): SessionAvailability {
+  if (completedSessions.has(session.session_number)) return 'completed';
+  if (session.prerequisite === null) return 'available';
+  if (completedSessions.has(session.prerequisite)) return 'available';
+  return 'locked';
+}
+```
+
+**UI treatment in SessionRow:**
+
+| State | Visual | Interaction |
+|-------|--------|-------------|
+| `completed` | Green checkmark badge | Normal link |
+| `available` | No badge (default) | Normal link |
+| `locked` | Lock icon, muted text | Link still works (soft lock, not hard block) |
+
+**Why soft lock:** Hard blocking creates frustration for ADHD users who might want to peek ahead. The lock is informational ("you should do session 7 first") not prohibitive.
+
+**Data flow:**
+
+```
+SessionListPage (server)
+  |
+  loads sessions + vault completions (as serialized number array)
+  |
+  passes as props to SessionListWithState (new client wrapper)
+  |
+  SessionListWithState merges vault completions + manual completions from LearnerStateProvider
+  |
+  computes availability per session
+  |
+  renders SessionRow with availability prop
+```
+
+### 5. "Continue Where You Left Off"
+
+**Track last-visited session in LearnerStateProvider.**
+
+```
+SessionDetailPage (server) renders SessionDetail (client)
+  |
+  useEffect on mount: update lastSession in LearnerStateProvider
+  |
+  LearnerStateProvider persists to localStorage
+
+InstrumentPage reads lastSession from LearnerStateProvider
+  |
+  renders ContinueBar: "Continue: Session 22 - Sequencer Basics"
+  |
+  only shows if lastSession.instrument matches current instrument
+```
+
+**ContinueBar component:** A prominent banner shown at the top of the instrument overview page. Shows session title, module context, and a direct link. Not dismissable -- it is the primary navigation mechanism for returning learners.
+
+### 6. Progress Streaks
+
+**Computed from completion timestamps in localStorage.**
+
+```typescript
+interface StreakInfo {
+  currentStreak: number;   // consecutive days ending today (or yesterday)
+  bestStreak: number;      // all-time best
+  lastActiveDate: string;  // ISO date
 }
 
-// Derive current instrument from pathname
-// Show: Home | Evolver | Cascadia
-// Under active instrument: Sessions | Patches | MIDI (if capable) | Progress
+function computeStreak(streakDays: string[]): StreakInfo {
+  // Sort dates, walk backwards from today
+  // Count consecutive days (allowing yesterday as "still active")
+  // Track best streak seen during walk
+}
 ```
 
-This requires `discoverInstruments()` + `listInstrumentFiles()` to be called in the layout or a server component that wraps Nav. Since `layout.tsx` is a server component, this is straightforward.
+**ADHD-friendly streak design:** A streak is not broken until TWO days pass without activity. One day off is normal and expected per the project's design principles. This prevents guilt spirals.
 
-#### app-shell.tsx -- Generic branding
+**Data source:** When a completion is recorded (manual toggle), add today's date to `streakDays` array. Vault-scanned completions currently lack timestamps, so they do not feed streaks.
 
-Change footer from `"Evolver Deep Learning"` to `"Instrument Deep Learning"` or derive from the active instrument context.
+**Future enhancement:** Since Obsidian daily note filenames ARE dates (e.g., `2026-04-03.md`), vault scanning could extract dates and feed streaks. Flag this for a later phase.
 
-#### instrument-overview.tsx -- Dynamic module count
+### 7. Clickable Progress Counts
 
-Line 87: `{sessionCount} sessions across 10 modules` -- the "10 modules" is hard-coded for Evolver.
+**Enhancement to existing CountCard component.**
 
-Fix: Either count unique modules from sessions data and pass as a prop, or remove the specific number:
-```typescript
-<p className="text-muted text-sm">
-  {sessionCount} sessions{moduleCount ? ` across ${moduleCount} modules` : ''}
-</p>
-```
-
-#### [slug]/page.tsx -- References from frontmatter
-
-Current state: `references` array is hard-coded as a const with Evolver-specific PDFs.
-
-Fix: Read references from the overview.md frontmatter (after schema extension):
-```typescript
-const references = overview.data.references?.map(ref => ({
-  label: ref.label,
-  pdfPath: `/api/references/${ref.pdf}`,
-})) ?? [];
-```
-
-The Cascadia manual PDF (`cascadia_manual_v1.1.pdf`) is already in `src/content/references/`.
-
-#### patch-detail.tsx -- Cable routing rendering
-
-When the patch data includes `patch_cables`, render a structured cable routing section. This can be as simple as checking for the field and rendering an additional section before the markdown body:
+Currently `CountCard` shows a number and label. Add an optional `href` prop to make it a link:
 
 ```typescript
-{patch.patch_cables && patch.patch_cables.length > 0 && (
-  <section className="mb-xl">
-    <h2 className="text-lg font-bold mb-md">Patch Cables</h2>
-    <div className="bg-surface rounded p-md">
-      {patch.patch_cables.map((cable, i) => (
-        <div key={i} className="flex items-center gap-md py-xs border-b border-muted/10 last:border-0">
-          <span className="text-accent font-mono text-sm">{cable.from}</span>
-          <span className="text-muted">-></span>
-          <span className="text-accent font-mono text-sm">{cable.to}</span>
-          {cable.note && <span className="text-muted text-sm ml-auto">{cable.note}</span>}
-        </div>
-      ))}
-    </div>
-  </section>
-)}
+interface CountCardProps {
+  count: number;
+  label: string;
+  href?: string;  // NEW: optional link destination
+}
 ```
 
-The markdown body's own cable routing table provides the detailed version with ordering and setup instructions. The frontmatter-driven section above provides a quick visual summary.
+- "Sessions Completed" links to session list
+- "Patches Created" links to patch library
+- "Modules Done" links to module index
+- Pure UI enhancement, no architecture change needed
 
-### 6. What Does NOT Need to Change
+## Component Dependency Graph and Build Order
 
-| Component/File | Why It Is Already Fine |
-|----------------|----------------------|
-| `reader.ts` | All functions parameterized by instrument slug -- add `cascadia/` dir and it works |
-| `discoverInstruments()` | Scans directories -- new dir = new instrument automatically |
-| `listSessions()` | Reads `sessions/{instrument}/*.md` -- works for any slug |
-| `listPatches()` | Reads `patches/{instrument}/*.md` + sysex sidecars -- sidecars are optional |
-| `listInstrumentFiles()` | Reads `instruments/{instrument}/*.md` -- works for any slug |
-| `session-detail.tsx` | Renders generic session data -- no instrument-specific assumptions |
-| `session-list.tsx` | Groups by module string -- module names come from content |
-| `markdown/processor.ts` | Renders any markdown -- parameter tables work for cable routing tables too |
-| `progress.ts` | Already instrument-scoped |
-| All `[slug]` App Router routes | Parameterized -- `/instruments/cascadia/sessions` works immediately |
-| `patch-grid.tsx` | Displays patches from data -- no instrument assumptions |
-| `source-ref.tsx` | Reference link component -- works for any manual reference |
+Build order matters because features share the LearnerStateProvider:
+
+```
+Phase 1: Foundation
+  LearnerStateProvider (context + localStorage + Zod schema for stored data)
+    |
+Phase 2: Core Features (can parallelize after Phase 1)
+    |
+    +-- CompletionToggle (depends on: LearnerStateProvider)
+    |
+    +-- ContinueBar (depends on: LearnerStateProvider)
+    |
+    +-- SessionRow enhancement with prereq viz (depends on: LearnerStateProvider)
+    |
+Phase 3: Computed Features (depend on completion data existing)
+    |
+    +-- StreakDisplay (depends on: CompletionToggle populating timestamp data)
+    |
+    +-- Progress page merge (depends on: LearnerStateProvider + existing progress.ts)
+    |
+    +-- Clickable CountCard (independent, can go anywhere)
+    |
+Phase 4: Independent Feature (no dependency on LearnerStateProvider)
+    |
+    +-- SearchOverlay + API route + MiniSearch integration
+```
+
+**Phase 4 (Search) can be built in parallel with Phases 1-3.** It has no dependency on the learner state system.
+
+## New Files (Predicted)
+
+| File | Type | Purpose |
+|------|------|---------|
+| `src/lib/learner-state.tsx` | Client context provider | Central mutable state management with localStorage persistence |
+| `src/lib/learner-state-schema.ts` | Zod schema | Validate localStorage data shape on load, handle migrations |
+| `src/hooks/use-learner-state.ts` | Custom hook | Convenience wrapper: `const { completions, markComplete, lastSession } = useLearnerState()` |
+| `src/lib/availability.ts` | Pure function | `getAvailability(session, completedSessions)` -- testable without React |
+| `src/lib/streaks.ts` | Pure function | `computeStreak(streakDays)` -- testable without React |
+| `src/app/api/search-index/[instrument]/route.ts` | API route (read-only) | Serve search document JSON for client-side indexing |
+| `src/components/search-overlay.tsx` | Client component | Cmd+K search dialog with MiniSearch |
+| `src/components/completion-toggle.tsx` | Client component | Manual mark-complete checkbox on session detail |
+| `src/components/continue-bar.tsx` | Client component | "Continue where you left off" banner |
+| `src/components/streak-display.tsx` | Client component | Current streak + best streak counters |
+| `src/components/session-list-with-state.tsx` | Client component | Wrapper that merges vault + manual completions, computes availability |
+
+## Modified Files (Predicted)
+
+| File | Change |
+|------|--------|
+| `src/components/app-shell.tsx` | Wrap children in `LearnerStateProvider` |
+| `src/components/session-row.tsx` | Add completion badge, prerequisite lock icon, `availability` prop |
+| `src/components/session-list.tsx` | Accept vault completion data, delegate to `SessionListWithState` |
+| `src/components/module-journey.tsx` | Add `'use client'`, "you are here" marker based on completions, click-through links |
+| `src/components/count-card.tsx` | Add optional `href` prop for navigation |
+| `src/components/session-detail.tsx` | Add CompletionToggle, track lastSession on mount |
+| `src/components/nav.tsx` | Add search trigger button (magnifying glass / Cmd+K hint) |
+| `src/app/instruments/[slug]/sessions/page.tsx` | Load vault completions, pass to enhanced session list |
+| `src/app/instruments/[slug]/progress/page.tsx` | Serialize vault completions as props for client-side merge |
+| `src/app/instruments/[slug]/page.tsx` | Add ContinueBar component |
+| `package.json` | Add `minisearch` dependency |
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Instrument-Specific Component Forks
-**What:** Creating `CascadiaPatchDetail`, `EvolverPatchDetail`, etc.
-**Why bad:** Duplicates layout and styling logic. Maintenance burden scales linearly with instruments.
-**Instead:** Single `PatchDetail` that conditionally renders sections based on data shape. If `patch_cables` exists, show cable routing. If `sysexData` exists, show SysEx info. Data shape drives rendering, not instrument identity.
+### Anti-Pattern 1: Server-Side Mutation for Completions
+**What:** Creating API routes that write completion state to a JSON file or SQLite database.
+**Why bad:** Breaks the read-only filesystem contract. Introduces write concurrency. Diverges from vault-as-source-of-truth. Adds deployment complexity on Vercel.
+**Instead:** localStorage for manual completions. The vault handles "real" tracking via daily notes.
 
-### Anti-Pattern 2: String-Matching Instrument Slugs in Components
-**What:** `if (instrument === 'cascadia') { hideMidi(); }` scattered through components.
-**Why bad:** Every new instrument requires touching every component with these checks.
-**Instead:** Use capability flags from instrument metadata. Components check `capabilities.midi_sysex`, not `slug === 'evolver'`.
+### Anti-Pattern 2: Lifting All Components to Client
+**What:** Making SessionListPage, ProgressPage etc. fully `'use client'` to access learner state.
+**Why bad:** Loses server-side rendering benefits. Session content does not need client rendering.
+**Instead:** Keep page-level data loading in server components. Create thin client wrappers that receive server data as props AND access learner state from context.
 
-### Anti-Pattern 3: Generalizing MIDI Workspace Prematurely
-**What:** Building an abstract "instrument workspace" that handles both SysEx and CV patching.
-**Why bad:** SysEx and CV patching are fundamentally different paradigms. No useful shared abstraction exists. A "cable visualizer" is a large-scope standalone feature.
-**Instead:** Gate MIDI workspace by capability flag. Show informational message for CV instruments. Build a dedicated Cascadia workspace only if/when it proves needed (v1.2+).
+### Anti-Pattern 3: Pre-Building Search Index at Build Time
+**What:** Running a build script to generate `search-index.json` as a static asset.
+**Why bad:** When `vaultPath` is set, content comes from the live vault (which changes). A build-time index would be stale. Having two code paths (build-time for demo, runtime for vault) is fragile.
+**Instead:** API route that reads content at request time. Works identically in both modes.
 
-### Anti-Pattern 4: Changing Existing Content Directory Structure
-**What:** Reorganizing `src/content/` paths or adding nesting for "instrument types."
-**Why bad:** Breaks existing Evolver content paths, vault reader expectations, and any Obsidian vault symlinks.
-**Instead:** Mirror the exact same flat structure. `instruments/cascadia/` parallels `instruments/evolver/`. The reader already handles this.
+### Anti-Pattern 4: Hard Prerequisite Locks
+**What:** Returning 404 or blocking navigation to sessions with unmet prerequisites.
+**Why bad:** ADHD users explore non-linearly. Hard blocks create frustration and may trigger abandonment.
+**Instead:** Visual indicators (lock icon, muted styling) with a tooltip explaining recommended order. Navigation always works.
 
-### Anti-Pattern 5: Building Cascadia-Only UI Before Content Exists
-**What:** Building a cable visualizer or patch point reference UI before having real Cascadia curriculum content.
-**Why bad:** You will build the wrong abstractions. The content structure should inform the UI, not the other way around.
-**Instead:** Content first. Write 5 sessions and 3 patches. See what the natural documentation format looks like. Then build UI to match.
+### Anti-Pattern 5: Multiple localStorage Keys
+**What:** Separate keys for completions, last-session, streaks, search-history.
+**Why bad:** Fragmented state, no single migration path, race conditions between independent writes.
+**Instead:** Single `evolver-learner-state` key with versioned JSON. One read on mount, one write per mutation.
 
-## Build Order (Fastest Path to Value)
+## Demo Mode Considerations
+
+| Feature | Local Mode | Demo Mode |
+|---------|-----------|-----------|
+| Completions source | Vault scan + manual (localStorage) | Synthetic set + manual (localStorage) |
+| Search index | API route reads vault content | API route reads src/content/ |
+| Continue bar | localStorage (persists between visits) | localStorage (persists between visits) |
+| Streaks | Manual completions only (no vault timestamps) | Manual completions only |
+| Prerequisites | Computed from vault + manual completions | Computed from synthetic + manual |
+
+**Key insight:** localStorage works identically in both modes. Demo visitors can mark sessions complete, see streaks, and use "continue." This makes the demo genuinely interactive rather than purely passive.
+
+## Data Flow Summary
 
 ```
-Phase 1: Content Foundation (NO code changes)
-├── Create src/content/instruments/cascadia/ (overview, signal-flow, modules, basic-patch)
-├── Create src/content/sessions/cascadia/ (3-5 initial sessions)
-└── Create src/content/patches/cascadia/ (2-3 demo patches with cable routing)
-
-    VALUE: Cascadia appears in discoverInstruments(). Browsable at /instruments/cascadia
-    with current code (references will be missing, but overview + sessions render fine).
-    RISK: Minimal -- content-only, cannot break existing functionality.
-
-Phase 2: Schema Extension (small code changes, ~30 min)
-├── Extend PatchSchema with optional patch_cables, audio_url fields
-├── Add capabilities and references to InstrumentFileSchema
-├── Add 'drone', 'effect' to PatchSchema type enum
-├── Add 'patch-points' to InstrumentFileSchema type enum
-└── Update Patch type exports
-
-    VALUE: Cascadia patches validate correctly. Type safety for cable routing data.
-    DEPENDS ON: Phase 1 content for testing validation.
-
-Phase 3: Navigation + Routing (medium code changes, ~2 hrs)
-├── Make nav.tsx instrument-aware (dynamic links from discoverInstruments)
-├── Pass instrument capabilities to nav from layout server component
-├── Gate MIDI link visibility by capabilities.midi_sysex
-├── Gate /instruments/[slug]/midi/page.tsx with capability check
-├── Update app-shell.tsx footer to generic branding
-└── Fix hard-coded "10 modules" in instrument-overview.tsx
-
-    VALUE: Users can switch between instruments. MIDI workspace hidden for Cascadia.
-    DEPENDS ON: Phase 2 for capability flags in schema.
-    CAN PARALLEL WITH: Phase 2 (capabilities can be hard-coded initially, then read from content).
-
-Phase 4: References + Patch Detail (small code changes, ~1 hr)
-├── Move references from hard-coded array to overview.md frontmatter
-├── Update [slug]/page.tsx to read references from frontmatter
-├── Add cable routing rendering to patch-detail.tsx
-├── Add audio preview player if audio_url present
-└── Show patch format indicator on patch-card.tsx
-
-    VALUE: Cascadia patches display cable routing. References work for any instrument.
-    DEPENDS ON: Phase 2 for schema fields.
-
-Phase 5: Demo Data + Polish (~1 hr)
-├── Generate synthetic demo data for Cascadia learner journey
-├── Verify demo mode works with both instruments
-├── Test all routes with both instrument slugs
-└── Verify no Evolver functionality is broken
+Filesystem (vault or bundled)
+    |
+    | (server-side read, Zod validated)
+    v
+Server Components (pages)
+    |
+    | (props: sessions, patches, vault completions as number[])
+    v
+LearnerStateProvider (client context, wraps app in AppShell)
+    |
+    | (merges vault completions + localStorage manual completions)
+    v
+Client Components
+    |
+    +-- SessionRow: shows completed/available/locked via availability prop
+    +-- CompletionToggle: writes to localStorage via context
+    +-- ContinueBar: reads lastSession from context
+    +-- StreakDisplay: computed from streakDays in context
+    +-- SearchOverlay: fetches index from API route, searches client-side with MiniSearch
+    +-- ModuleJourney: shows "you are here" based on merged completions
 ```
 
-**Dependency chain:** Phase 1 is fully independent. Phase 2 depends on Phase 1 content for testing. Phase 3 and Phase 4 depend on Phase 2 schemas but are independent of each other. Phase 5 depends on all prior phases.
+## Scalability Notes
 
-**Total estimated effort:** ~5 hours of code changes + content authoring time for Cascadia curriculum.
+This architecture handles the current scale (35 sessions, 20 patches, 2 instruments) comfortably. At 10 instruments with 50 sessions each (500 total), the search index would be ~500KB JSON -- still fine for client-side search. localStorage has a 5-10MB limit; completion records for 500 sessions would use ~50KB. No scaling concerns for the foreseeable multi-instrument roadmap.
 
 ## Sources
 
-- Existing codebase: `src/lib/content/schemas.ts`, `reader.ts`, all component files -- direct inspection (HIGH confidence)
-- Existing Evolver content: `src/content/instruments/evolver/`, patches, sessions -- structural reference (HIGH confidence)
-- `PROJECT.md` milestone v1.1 requirements -- defines scope and constraints (HIGH confidence)
-- Cascadia manual v1.1 (`src/content/references/cascadia_manual_v1.1.pdf`) -- instrument capabilities reference (HIGH confidence)
-- Baratatronix.com (referenced in PROJECT.md) -- inspiration for cable routing patch documentation format (MEDIUM confidence -- referenced but not directly verified)
+- Existing codebase: `src/lib/progress.ts`, `src/lib/content/reader.ts`, `src/lib/content/schemas.ts` -- direct inspection (HIGH confidence)
+- Session schema `prerequisite` field already defined in `schemas.ts` line 8 -- unused in UI (HIGH confidence)
+- [MiniSearch](https://github.com/lucaong/minisearch) -- 8KB client-side full-text search, zero dependencies (HIGH confidence)
+- [Next.js App Router localStorage patterns](https://app.studyraid.com/en/read/1903/31004/persisting-state-on-the-client-side) (MEDIUM confidence)
+- [FlexSearch](https://github.com/nextapps-de/flexsearch) -- considered, rejected for simpler MiniSearch API (MEDIUM confidence)

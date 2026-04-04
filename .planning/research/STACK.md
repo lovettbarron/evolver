@@ -1,259 +1,171 @@
-# Stack Research: Cascadia Instrument Support
+# Technology Stack: v1.2 Learner Experience & Discovery
 
-**Domain:** Semi-modular synth learning platform (CV-only instrument addition)
-**Researched:** 2026-03-30
+**Project:** Evolver Deep Learning
+**Milestone:** v1.2 Learner Experience & Discovery
+**Researched:** 2026-04-03
 **Confidence:** HIGH
 
 ## Executive Summary
 
-The Cascadia milestone requires zero new npm dependencies. The existing stack (Next.js 15, Zod 3, markdown pipeline, Mermaid 11) covers all needs. The primary challenge is representational: how to document CV patch cable routings without SysEx or digital patch memory. The answer is a Patchbook-inspired YAML convention rendered with Mermaid (already installed) and custom React components using Tailwind (already installed).
+This milestone needs two new dependencies: MiniSearch for client-side full-text search, and Zustand for persistent learner state (completion tracking, streaks, "continue where you left off"). Everything else -- prerequisite visualization, progress streaks UI, filtering -- builds on existing Tailwind + Lucide + React patterns with zero new packages.
+
+The key architectural insight: the current app is heavily server-component based with zero client state management. This milestone introduces the first persistent client state (localStorage-backed completion tracking), which requires a deliberate boundary between server-rendered content and client-owned learner state.
 
 ## Recommended Stack Additions
 
 ### New Dependencies
 
-None. The existing `package.json` covers all Cascadia requirements.
+| Technology | Version | Purpose | Why This One |
+|------------|---------|---------|-------------|
+| `minisearch` | ^7.2.0 | Client-side full-text search across sessions and patches | 7KB gzipped, zero dependencies, native TypeScript, built-in prefix/fuzzy search. The content corpus is small (~35 sessions + patches) so the index loads instantly. MiniSearch's API is simpler than FlexSearch while being fast enough for datasets 100x this size. |
+| `zustand` | ^5.0.0 | Persistent learner state (completion, streaks, last session) | 1.2KB gzipped core. Built-in `persist` middleware handles localStorage with SSR-safe hydration out of the box. Uses React 19's `useSyncExternalStore` internally. No providers, no boilerplate -- just hooks. The app currently has zero client state management; Zustand is the minimal viable solution. |
 
-### Existing Dependencies That Cover Cascadia Needs
+### Why These and Not Alternatives
 
-| Existing Dependency | Version (installed) | Cascadia Use |
-|---------------------|---------------------|-------------|
-| `mermaid` | ^11.13.0 | Signal flow diagrams for Cascadia architecture, auto-generated patch routing diagrams from YAML frontmatter |
-| `zod` | ^3.23.0 | Extended PatchSchema with `connections` and `settings` fields for CV patch documentation |
-| `gray-matter` | ^4.0.3 | Parse Cascadia patch YAML frontmatter (same pipeline as Evolver) |
-| `remark-*` / `rehype-*` pipeline | various | Render Cascadia session and patch markdown identically to Evolver |
-| `lucide-react` | ^1.7.0 | Icons for patch point types (audio out, CV in, gate, trigger) and module indicators |
-| `react-pdf` | ^10.4.1 | Cascadia manual reference (already at `/content/references/cascadia_manual_v1.1.pdf`) |
-| `clsx` | ^2.1.1 | Conditional styling for instrument-specific UI states (hide MIDI workspace, show patch diagram) |
+**Search: MiniSearch over FlexSearch**
+FlexSearch is faster on benchmarks but has a complex, poorly-typed API and its v0.8 has incomplete documentation. MiniSearch is written in TypeScript, has excellent docs, and for ~35-100 documents the performance difference is immeasurable. FlexSearch's "contextual index" optimization matters at 100K+ documents, not 35.
 
-## The Patch Documentation Problem
+**Search: MiniSearch over Fuse.js**
+Fuse.js is fuzzy-only (no full-text indexing) and iterates the entire collection on every query. MiniSearch builds an inverted index, enabling prefix search, field boosting, and ranked results. For searching session bodies + frontmatter, we need actual full-text search, not just fuzzy matching of short strings.
 
-### Problem
+**State: Zustand over raw localStorage hooks**
+A custom `useLocalStorage` hook would work for a single value, but this milestone needs: session completion set, streak data, last-visited session, and potentially filter preferences. Managing multiple localStorage keys with hydration-safe hooks, cross-tab sync, and typed access is exactly what Zustand's persist middleware solves. Adding a 1.2KB dependency avoids ~200 lines of error-prone custom hook code.
 
-The Evolver stores patches as SysEx parameter dumps -- every knob position is an exact integer in a data structure. The Cascadia has no patch memory and no SysEx. A "patch" is a physical cable configuration plus knob/slider positions. How do we represent this in markdown?
+**State: Zustand over Jotai**
+Jotai is atom-based (bottom-up), Zustand is store-based (top-down). Learner state is a single coherent object (completions + streaks + preferences), not independent atoms. Zustand's `persist` middleware is more mature than Jotai's `atomWithStorage`.
 
-### Solution: Patchbook-Inspired YAML Convention
+**State: Zustand over React Context**
+Context re-renders all consumers on any change. The completion store will be read by session rows, module cards, progress dashboard, and the "continue" banner -- all at different granularities. Zustand's selector-based subscriptions prevent unnecessary re-renders.
 
-Use a structured YAML frontmatter format inspired by [Patchbook](https://github.com/SpektroAudio/Patchbook), a markup language for modular synth patches by Spektro Audio. We adopt its conventions as YAML parsed by existing Zod schemas. No new dependency needed -- Patchbook itself is a Python parser we do not want.
+## Existing Dependencies That Cover v1.2 Needs
 
-**Why not Patchbook directly:** Python tool, wrong runtime. We already have markdown + YAML + Zod. Adopting its notation ideas into our existing format is simpler.
+| Existing Dependency | v1.2 Use |
+|---------------------|----------|
+| `lucide-react` ^1.7.0 | Icons for completion checkmarks, lock/unlock states, streak flame, search magnifier |
+| `clsx` ^2.1.1 | Conditional classes for completed/locked/available session states |
+| `tailwindcss` ^4.2.2 | All new UI (progress bars, streak counters, search results, prerequisite badges) |
+| `zod` ^3.23.0 | Validate search index shape if pre-built at build time |
 
-**Why not React Flow (@xyflow/react v12.10.2):** 200KB+ interactive node graph editor designed for drag-and-drop UIs. We need static, read-only patch documentation. Mermaid flowcharts handle this and are already installed.
+## Integration Architecture
 
-**Why not d3:** Massive general-purpose visualization library. Overkill for labeled connection diagrams between named modules.
+### Search: Build-Time Index, Client-Side Query
 
-### Proposed Cascadia Patch Frontmatter
+```
+build time (bundle-content.ts):
+  sessions + patches markdown -> extract searchable fields -> JSON index file
 
-```yaml
----
-name: "Acid Bass with LPF Sweep"
-type: bass
-session_origin: 3
-description: "303-inspired acid bass using VCO A through the multimode VCF"
-tags: [bass, acid, lpf, vcf]
-instrument: cascadia
-created: "2026-04-15"
-patch_format: cv  # distinguishes from Evolver 'sysex' format
-
-# Cable connections (Patchbook-inspired)
-connections:
-  - from: "VCO A (Triangle)"
-    to: "Mixer (Ch 1)"
-    type: audio
-  - from: "MIDI (Pitch Out)"
-    to: "VCO A (1V/Oct)"
-    type: pitch
-  - from: "EG 1 (Out)"
-    to: "VCF (FM 2)"
-    type: cv
-  - from: "LFO 1 (Triangle)"
-    to: "VCO A (FM 1)"
-    type: cv
-
-# Knob/slider positions (percentages, not exact values)
-settings:
-  VCO A:
-    frequency: "C2"
-    wave_shape: "Triangle"
-    pulse_width: "50%"
-  VCF:
-    cutoff: "30%"
-    resonance: "70%"
-    mode: "LP"
-  EG 1:
-    attack: "0%"
-    decay: "45%"
-    sustain: "5%"
-    release: "15%"
----
+runtime (client component):
+  load JSON index -> hydrate MiniSearch instance -> query on keystroke
 ```
 
-### Connection Type Taxonomy
+**Why build-time indexing:** The content is static (markdown files bundled at build). Building the search index at build time means zero indexing cost at runtime. MiniSearch supports `loadJSON()` for exactly this pattern.
 
-Adopted from Patchbook's signal type notation:
+**Server/client boundary:** The index is generated in `bundle-content.ts` (server/build), saved as a JSON file in `src/content/`, and loaded by a `'use client'` search component. The server never runs search queries.
 
-| Type | Meaning | Color Hint (for diagrams) |
-|------|---------|--------------------------|
-| `audio` | Audio signal path | Blue |
-| `cv` | Control voltage modulation | Orange |
-| `pitch` | 1V/Oct pitch tracking | Green |
-| `gate` | Gate/trigger signal | Red |
-| `clock` | Clock signal | Purple |
-
-### Rendering Strategy
-
-Two render modes from the same YAML data, no new dependencies:
-
-1. **Connection table** (default): Structured "From -> To (Type)" table. Works everywhere including Obsidian.
-2. **Mermaid diagram** (enhanced): Auto-generate a Mermaid flowchart from the `connections` array at render time. New component transforms YAML into Mermaid graph definition string, passes to existing `MermaidRenderer`.
-
-Example generated Mermaid:
-```
-graph LR
-    VCOA[VCO A] -->|Triangle| Mixer
-    MIDI -->|Pitch Out| VCOA
-    EG1[EG 1] -->|CV| VCF
-    LFO1[LFO 1] -->|CV| VCOA
-    Mixer --> VCF --> VCA --> Output
-```
-
-## Schema Changes Required
-
-### Extended PatchSchema
+### State: Zustand Store with localStorage Persist
 
 ```typescript
-const ConnectionSchema = z.object({
-  from: z.string(),   // "Module (Output Label)"
-  to: z.string(),     // "Module (Input Label)"
-  type: z.enum(['audio', 'cv', 'pitch', 'gate', 'clock']),
-});
+// src/lib/learner-store.ts
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-const SettingValueSchema = z.record(z.string(), z.string());
+interface LearnerState {
+  // Session completion (replaces Obsidian daily note scanning for web-only users)
+  completedSessions: Record<string, number[]>; // instrument -> session numbers
 
-// Add to existing PatchSchema:
-patch_format: z.enum(['sysex', 'cv']).optional(),
-connections: z.array(ConnectionSchema).optional(),
-settings: z.record(z.string(), SettingValueSchema).optional(),
+  // Continue where you left off
+  lastVisited: Record<string, string>; // instrument -> session slug
+
+  // Streak tracking
+  practiceDates: string[]; // ISO date strings of days with activity
+
+  // Actions
+  toggleComplete: (instrument: string, sessionNumber: number) => void;
+  setLastVisited: (instrument: string, slug: string) => void;
+  recordPractice: () => void;
+}
 ```
 
-The existing `.passthrough()` on PatchSchema means these new fields will pass validation even before the schema is formally updated, but they should be added explicitly for type inference.
+**Hydration safety:** Zustand's `persist` middleware with `skipHydration: true` option allows server-rendering with empty state, then hydrating from localStorage on the client. This avoids the hydration mismatch that raw `useState` + `useEffect` + localStorage creates.
 
-### Extended InstrumentFileSchema
+**Coexistence with Obsidian scanning:** The current `scanDailyNotes()` in `progress.ts` reads completion from Obsidian vault files (server-side). The new Zustand store provides a parallel client-side completion path for users without an Obsidian vault (demo mode, web-only). The progress computation should merge both sources: `obsidianCompleted UNION zustandCompleted`.
 
-```typescript
-// Add 'patch-points' to the type enum:
-type: z.enum([
-  'overview', 'signal-flow', 'basic-patch', 'modules',
-  'patch-points',  // NEW: Cascadia's 101 patch points reference
-]),
-```
+### Prerequisite Visualization: Pure Derived State
 
-## New Components (Zero New Dependencies)
+No new dependency. Prerequisite data already exists in session frontmatter (`prerequisite: number | null`). Visualization is computed from:
+- Session list (server component provides all sessions)
+- Completion state (Zustand store, client component)
+- Prerequisite field (session frontmatter)
 
-| Component | Purpose | Built With |
-|-----------|---------|------------|
-| `PatchConnectionDiagram` | Transform `connections` YAML into Mermaid flowchart, render via existing `MermaidRenderer` | `mermaid` (installed) |
-| `PatchConnectionTable` | Render connections as structured table with type icons | React + Tailwind + `lucide-react` (installed) |
-| `KnobSettings` | Render `settings` YAML as module-grouped parameter tables | React + Tailwind (installed) |
-| `PatchPointReference` | Quick-reference of Cascadia's 101 patch points by module | React + Tailwind + `lucide-react` (installed) |
-| `InstrumentMidiGuard` | Conditionally hide MIDI/SysEx workspace for CV-only instruments | React conditional rendering |
+States: `completed` | `available` (prerequisites met) | `locked` (prerequisites not met)
 
-## Cascadia Module Taxonomy
+This is a pure client-side derivation, no library needed.
 
-The Cascadia has a fixed set of modules that patch content must reference consistently. This should be a TypeScript const object, not a dependency:
+### Streak Calculation: Pure TypeScript
 
-```typescript
-export const CASCADIA_MODULES = {
-  'VCO A': { type: 'oscillator', patchPoints: 8 },
-  'VCO B': { type: 'oscillator', patchPoints: 6 },
-  'Noise': { type: 'source', patchPoints: 2 },
-  'Sub Osc': { type: 'source', patchPoints: 1 },
-  'Mixer': { type: 'mixer', patchPoints: 8 },
-  'VCF': { type: 'filter', patchPoints: 10 },
-  'Wave Folder': { type: 'waveshaper', patchPoints: 4 },
-  'Ring Mod': { type: 'modulator', patchPoints: 3 },
-  'VCA': { type: 'amplifier', patchPoints: 4 },
-  'EG 1': { type: 'envelope', patchPoints: 4 },
-  'EG 2': { type: 'envelope', patchPoints: 4 },
-  'LFO 1': { type: 'modulation', patchPoints: 6 },
-  'LFO 2': { type: 'modulation', patchPoints: 4 },
-  'S&H': { type: 'utility', patchPoints: 4 },
-  'Slew': { type: 'utility', patchPoints: 3 },
-  'FX Send/Return': { type: 'effects', patchPoints: 4 },
-  'Attenuators': { type: 'utility', patchPoints: 8 },
-  'Mult': { type: 'utility', patchPoints: 6 },
-  'MIDI': { type: 'interface', patchPoints: 6 },
-  'Output': { type: 'output', patchPoints: 4 },
-} as const;
-```
+No library needed. A streak is consecutive days in `practiceDates`. The calculation is:
+1. Sort dates descending
+2. Walk backward from today counting consecutive days
+3. Display count + flame icon
 
-## Alternatives Considered
-
-| Recommended | Alternative | Why Not |
-|-------------|-------------|---------|
-| Mermaid flowcharts for patch routing | @xyflow/react (React Flow) v12 | 200KB+ interactive library for read-only static diagrams. Mermaid already installed, works in Obsidian too |
-| Patchbook-inspired YAML | Patchbook Python parser | Wrong runtime. We only need the notation conventions, not the Python tool |
-| YAML frontmatter for connections | Separate `.patch` file format | Breaks content pipeline. YAML in frontmatter keeps everything in one markdown file |
-| Percentage-based knob settings | Free-text parameter tables (like Evolver) | Evolver tables work because SysEx gives exact integers. Cascadia knobs are analog -- percentages need structure to be searchable |
-| Mermaid auto-generation from YAML | Hand-written Mermaid in markdown body | Error-prone, duplicates connection data, hard to keep in sync with frontmatter |
-| Static SVG panel diagram (future) | Interactive canvas-based patch visualizer | Good long-term differentiator but large design effort. Start with tables + Mermaid |
+This is ~20 lines of TypeScript, not a dependency.
 
 ## What NOT to Add
 
 | Avoid | Why | Use Instead |
 |-------|-----|-------------|
-| `@xyflow/react` | 200KB+, interactive features unused, client-only rendering | Mermaid (installed) |
-| `reactflow` | Deprecated package name for @xyflow/react | N/A |
-| `d3` / `d3-*` | Massive general-purpose viz library, steep API | Mermaid for graphs, Tailwind for custom UI |
-| `tone.js` / Web Audio | This is documentation, not a synth emulator | Out of scope |
-| Any new MIDI library | Cascadia has no SysEx. MIDI is input-only (note data) | Existing MIDI code stays Evolver-specific |
-| `canvas` / `konva` / `fabric.js` | Canvas-based rendering for what is fundamentally text data | HTML tables + Mermaid SVG |
-| `graphviz` / `viz.js` | Patchbook uses GraphViz but we already have Mermaid | Mermaid (installed) |
-
-## Stack Patterns by Instrument Type
-
-**If instrument has SysEx (like Evolver):**
-- `patch_format: 'sysex'` in frontmatter
-- Show MIDI workspace components
-- Render parameter tables with exact numeric values
-- Enable SysEx capture/send/diff features
-
-**If instrument is CV-only (like Cascadia):**
-- `patch_format: 'cv'` in frontmatter
-- Hide MIDI workspace via `InstrumentMidiGuard`
-- Render Mermaid signal flow from `connections` array
-- Show knob settings as percentage/descriptive values
-- Add "Patch Points Used" summary from connections data
-- Link to Baratatronix for patch inspiration format reference
+| `fuse.js` | Fuzzy-only, no inverted index, slow on full-text search of markdown bodies | MiniSearch |
+| `flexsearch` | Complex API, poor TypeScript support, overkill for small corpus | MiniSearch |
+| `lunr` | Unmaintained since 2020, larger bundle, no TypeScript | MiniSearch |
+| `@tanstack/react-query` | No async data fetching needed -- content is static, state is local | Zustand for state, static imports for content |
+| `jotai` | Atom model wrong fit for single coherent learner state object | Zustand |
+| `redux` / `@reduxjs/toolkit` | Massive boilerplate for a simple persistent store | Zustand |
+| `idb` / `dexie` (IndexedDB) | Overkill for ~100 keys of learner state. localStorage is sufficient | Zustand persist with localStorage (default) |
+| `date-fns` / `dayjs` | Streak calculation needs only date string comparison, not a date library | Native `Date` + ISO strings |
+| `framer-motion` | Animations are nice-to-have, not in scope for this milestone | CSS transitions via Tailwind |
+| `chart.js` / `recharts` | Progress visualization is counters and bars, not charts | Tailwind + custom CSS |
 
 ## Installation
 
 ```bash
-# No new packages needed.
-# Existing dependencies cover all Cascadia requirements.
+# New dependencies for v1.2
+npm install minisearch@^7.2.0 zustand@^5.0.0
 ```
+
+That is it. Two packages, ~8KB gzipped combined.
 
 ## Version Compatibility
 
-No new packages means no new compatibility concerns.
+| Package | Version | Requires | Compatible With |
+|---------|---------|----------|-----------------|
+| `minisearch` | ^7.2.0 | No framework dependency | Any environment (browser + Node) |
+| `zustand` | ^5.0.0 | React 18+ (uses `useSyncExternalStore`) | React 19.2.4 (installed), Next.js 15 App Router |
 
-| Package | Installed | Cascadia Impact |
-|---------|-----------|-----------------|
-| mermaid | ^11.13.0 | Flowchart diagram type handles all patch routing visualization needed |
-| zod | ^3.23.0 | `.passthrough()` on schemas means new YAML fields work immediately; formal schema update needed for type inference |
-| next | ^15.5.14 | App Router conditional rendering handles instrument-specific UI |
-| lucide-react | ^1.7.0 | Has cable/plug/signal icons suitable for patch point type indicators |
+Both packages are ESM-compatible and tree-shakeable.
+
+## New Files to Create
+
+| File | Type | Purpose |
+|------|------|---------|
+| `src/lib/learner-store.ts` | Module | Zustand store with persist middleware for completion, streaks, last-visited |
+| `src/lib/search-index.ts` | Module | MiniSearch configuration, field definitions, search helper functions |
+| `scripts/build-search-index.ts` | Build script | Extract searchable fields from sessions/patches, serialize MiniSearch index to JSON |
+| `src/components/search-bar.tsx` | Client component | Search input with results dropdown, uses MiniSearch |
+| `src/components/session-complete-toggle.tsx` | Client component | Checkbox/toggle to mark session complete, writes to Zustand store |
+| `src/components/continue-banner.tsx` | Client component | "Continue where you left off" banner reading from Zustand store |
+| `src/components/streak-counter.tsx` | Client component | Streak display with flame icon, reads from Zustand store |
+| `src/components/prerequisite-badge.tsx` | Client component | Lock/check/circle icon showing session availability state |
 
 ## Sources
 
-- [Baratatronix Cascadia Patches](https://www.baratatronix.com/cascadia-patches) -- Patch documentation format with audio previews, visual diagrams, tag categorization (MEDIUM confidence)
-- [Baratatronix Ageispolis Pad](https://www.baratatronix.com/cascadia/cascadia-ageispolis-pad) -- Individual patch: visual diagram + patching instructions + dual-mono setup (MEDIUM confidence)
-- [Intellijel Cascadia Patch Sheet](https://intellijel.com/downloads/manuals/cascadia_patch_sheet.pdf) -- Official blank template for documenting cable connections (HIGH confidence)
-- [Intellijel Cascadia Manual v1.1](https://intellijel.com/downloads/manuals/cascadia_manual_v1.1_2023.04.18.pdf) -- 101 patch points, module architecture, default signal flow (HIGH confidence)
-- [Patchbook by SpektroAudio](https://github.com/SpektroAudio/Patchbook) -- Markup language for modular patches: connection syntax, type taxonomy, parameter notation (HIGH confidence)
-- [PATCH & TWEAK Symbols](https://www.patchandtweak.com/symbols/) -- Free CC-licensed symbol system for modular patch documentation (MEDIUM confidence)
-- [@xyflow/react on npm](https://www.npmjs.com/package/@xyflow/react) -- v12.10.2, evaluated and rejected as overkill (HIGH confidence)
+- [MiniSearch GitHub](https://github.com/lucaong/minisearch) -- TypeScript source, API docs, v7.2.0 (HIGH confidence)
+- [MiniSearch npm](https://www.npmjs.com/package/minisearch) -- 556K weekly downloads, actively maintained (HIGH confidence)
+- [Zustand docs](https://zustand.docs.pmnd.rs/reference/integrations/persisting-store-data) -- Persist middleware documentation (HIGH confidence)
+- [npm-compare: MiniSearch vs FlexSearch vs Fuse.js](https://npm-compare.com/elasticlunr,flexsearch,fuse.js,minisearch) -- Feature and popularity comparison (MEDIUM confidence)
+- [npm trends: search libraries](https://npmtrends.com/flexsearch-vs-fuse.js-vs-fuzzysort-vs-match-sorter-vs-minisearch) -- Download trends (MEDIUM confidence)
+- [Next.js Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components) -- Server/client boundary patterns (HIGH confidence)
+- [useSyncExternalStore and localStorage](https://dev.to/muhammed_fayazts_e35676/usesyncexternalstore-the-right-way-to-sync-react-with-localstorage-3c5f) -- Hydration safety patterns (MEDIUM confidence)
 
 ---
-*Stack research for: Cascadia instrument support in Evolver learning platform*
-*Researched: 2026-03-30*
+*Stack research for: v1.2 Learner Experience & Discovery*
+*Researched: 2026-04-03*

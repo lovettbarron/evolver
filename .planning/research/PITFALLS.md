@@ -1,368 +1,382 @@
-# Pitfalls Research: v1.1 Cascadia Multi-Instrument Support
+# Pitfalls Research: v1.2 Learner Experience & Discovery
 
-**Domain:** Adding a second instrument (Intellijel Cascadia) to an existing single-instrument learning platform
-**Researched:** 2026-03-30
-**Confidence:** HIGH (based on direct codebase audit of 98 files with Evolver/SysEx references, schema analysis, and component inspection)
+**Domain:** Adding search, client-side persistent state, gamification, prerequisite gating, and manual completion to an ADHD-focused learning app built on Next.js 15 server components
+**Researched:** 2026-04-03
+**Confidence:** HIGH (based on codebase audit, ADHD design principles doc, Next.js hydration documentation, and ADHD gamification research)
 
 ## Critical Pitfalls
 
-### Pitfall 1: Hardcoded Evolver References in Navigation and UI Chrome
+### Pitfall 1: Streak Counter Creates ADHD Guilt Spirals
 
 **What goes wrong:**
-The nav component (`src/components/nav.tsx`) hardcodes all links to `/instruments/evolver/*` and displays "evolver" as the app title. The send-panel success message reads "Patch loaded on Evolver". The confirm dialog title reads "Send Patch to Evolver". Adding Cascadia without touching these means the nav only shows Evolver links, the brand text is instrument-specific, and UI copy references the wrong instrument.
+The app adds a "practice streak" (consecutive days) counter to the progress dashboard. The user misses two days because of ADHD executive function challenges. The streak resets to zero. The user feels the same shame spiral that calendar-based tracking was explicitly designed to prevent (see `framework/adhd-design.md` principle #8: "Forgiveness is Built In" and the anti-pattern table: "Calendar-based schedules -> Missed dates -> guilt spiral"). The streak feature directly contradicts the project's foundational ADHD design document, which states: "The curriculum doesn't have dates, only sequence."
 
 **Why it happens:**
-v1.0 was explicitly single-instrument. Hardcoding was the correct decision then -- it avoided premature abstraction. But these assumptions are now load-bearing in the nav, the home page (`config.instrument || 'evolver'`), the instrument overview page (hardcoded `references` array for Evolver PDFs), and multiple component strings.
+Streaks are the default gamification pattern. Every learning app (Duolingo, etc.) uses them. They feel like an obvious add. But research on ADHD users specifically shows that streak features "create the opposite effect: anxiety, avoidance, and eventually, app abandonment" because "people with ADHD often experience heightened perfectionism, anxiety around performance, and resistance to external pressure." The PROJECT.md itself lists "Sequence-based not calendar-based" as a key decision with the rationale "Missed days create guilt spirals with ADHD."
 
-**How to avoid:**
-1. Make `Nav` dynamically build links from `discoverInstruments()` results passed as props
-2. Replace hardcoded "evolver" branding with the active instrument name or a generic app name
-3. Audit all string literals containing "Evolver" in components -- there are at least 4 files with hardcoded instrument text (`nav.tsx`, `send-panel.tsx`, `app/instruments/[slug]/page.tsx`, `config.ts`)
-4. The instrument overview page hardcodes `references` for Evolver PDFs -- this must become data-driven (from frontmatter or a per-instrument config)
+**Consequences:**
+- User avoids opening the app after missing a day (activation energy increases)
+- "Zero streak" becomes a visible failure marker every time the app loads
+- The app becomes a source of shame rather than motivation -- the exact opposite of its purpose
+- User abandons the app entirely (the Duolingo churn pattern)
 
-**Warning signs:**
-- `grep -r "evolver" src/components/` returns hits in non-content files
-- Nav links don't change when navigating to `/instruments/cascadia`
-- Instrument overview shows Evolver reference PDFs when viewing Cascadia
+**Prevention:**
+1. **Never implement consecutive-day streaks.** This is a hard rule, not a preference.
+2. Use **cumulative metrics only**: "12 sessions completed," "5 patches created," "3 modules done." These only go up. They match the existing `ProgressData` interface which already tracks `sessionsCompleted`, `patchesCreated`, `modulesDone` -- all additive, never decreasing.
+3. If any time-based engagement metric is desired, use **"sessions this month"** or **"active weeks"** (non-consecutive) -- never consecutive-day counting.
+4. Show **"you are here" in the module journey** (already planned) -- this is intrinsic progress visualization, not extrinsic pressure.
+5. If streak-like motivation is wanted, use **"total sessions" milestones** ("You've completed 10 sessions!") which cannot be lost.
+
+**Detection:**
+- Any field in the codebase tracking consecutive days
+- Any UI element that resets to zero based on inactivity
+- Any notification or visual indicator that implies "you should have practiced yesterday"
 
 **Phase to address:**
-Phase 1 (UI abstraction) -- must happen before any Cascadia content is added, otherwise the app is visually broken for the second instrument.
+Progress enhancements phase. This pitfall must be addressed in the design specification before any progress UI work begins. The existing `ProgressData` interface is already correctly designed (additive only) -- the pitfall is adding new fields that violate this.
 
 ---
 
-### Pitfall 2: PatchSchema Assumes SysEx-Based Workflow
+### Pitfall 2: localStorage State Causes Hydration Mismatches in Server-Component-First App
 
 **What goes wrong:**
-The `PatchSchema` in `schemas.ts` includes `source: z.enum(['manual', 'sysex'])`, `capture_date`, and `program_number` fields. The content reader (`reader.ts`) looks for `.sysex.json` sidecar files for every patch. The patch writer (`writer.ts`) always creates a `.sysex.json` sidecar with `raw_byte_count: 192` and Evolver-specific sequencer fields (`seq1_steps` through `seq4_steps`). Cascadia is CV-only with no SysEx, no program numbers, and no patch memory. Patches are documented as cable routing descriptions, not parameter dumps.
+The app needs client-side persistent state for "continue where you left off" (last session visited), manual completion toggles, and search preferences. A developer reads localStorage during component render to show the user's last session. The server renders the page with no localStorage (it does not exist on the server). The client hydrates with a different value from localStorage. React throws a hydration mismatch error. In Next.js 15, this manifests as either a console error (development) or silent UI corruption (production).
+
+This app is currently 100% server components -- there are zero `"use client"` directives in `src/components/`. Adding localStorage is the first introduction of client-side state, making every pattern decision here foundational.
 
 **Why it happens:**
-The SysEx integration was a v1.0 feature built specifically for the Evolver. The `CapturedPatchInput` interface in `writer.ts` requires `parameters: Record<string, number>` and `sequencer` with four 16-step tracks -- these are Evolver-specific data structures. The `ParsedPatch` type (`types.ts`) assumes 128 program parameters and a 4-track sequencer. None of this maps to Cascadia.
+The current architecture has no client components at all. Every component renders on the server via `async function` patterns (see `layout.tsx`, progress `page.tsx`). Developers unfamiliar with this codebase may not realize that adding `"use client"` to an existing component converts its entire subtree to client rendering, potentially breaking server-side data fetching that components rely on.
 
-**How to avoid:**
-1. The existing `PatchSchema` uses `.passthrough()` -- this is the escape hatch. Cascadia patches can include extra frontmatter fields (like `patch_connections`, `module_settings`) without breaking validation. Do NOT try to force Cascadia patch data into the existing parameter/sequencer structure.
-2. Make `source` optional or add a `'documented'` variant for manually documented patches without SysEx origin.
-3. The `.sysex.json` sidecar pattern should be treated as Evolver-specific. The reader already handles missing sidecar files gracefully (`sysexData: null`). Cascadia patches simply won't have sidecars.
-4. Do NOT create a unified "instrument patch data format" that tries to represent both SysEx dumps and cable routings -- they are fundamentally different. Keep them as separate optional data structures.
+**Consequences:**
+- Hydration mismatch errors in development (React error overlay)
+- Silent UI bugs in production (wrong session shown, completion state flickering)
+- If `"use client"` is added to a component that currently does `async` server work, that component breaks entirely (client components cannot be async in React)
+- Performance regression if large component subtrees become client-rendered unnecessarily
 
-**Warning signs:**
-- Attempting to define a Cascadia `parameters.ts` file that mirrors the Evolver's 128-parameter structure
-- Creating `.sysex.json` files for Cascadia patches
-- Patch detail UI crashes when `sysexData` is null and a component assumes it exists
+**Prevention:**
+1. **Create dedicated client component wrappers** for localStorage access. Never add `"use client"` to existing server components. Instead, create new leaf components: `<LastSessionBanner />`, `<CompletionToggle />`, `<SearchInput />`.
+2. **Always use the `useEffect` pattern** for localStorage reads:
+   ```tsx
+   const [value, setValue] = useState<string | null>(null); // null = loading
+   useEffect(() => {
+     setValue(localStorage.getItem('key'));
+   }, []);
+   ```
+   This ensures the server render and initial client render both produce `null`, avoiding mismatch.
+3. **Render a loading/skeleton state** for localStorage-dependent UI during the first render. Never conditionally render different DOM structures based on localStorage during SSR.
+4. **Keep the client boundary as narrow as possible.** The `<SessionDetail />` component should remain a server component; only the `<CompletionToggle />` child within it should be a client component.
+5. **Create a `useLocalStorage` hook** early that encapsulates the hydration-safe pattern. Every feature that needs localStorage should use this single hook rather than implementing the pattern independently.
+
+**Detection:**
+- React hydration mismatch warnings in browser console
+- UI elements that flash/flicker on page load (showing server state then switching to client state)
+- `"use client"` added to files that contain `async function` components
+- `localStorage.getItem()` called outside of `useEffect`
 
 **Phase to address:**
-Phase 1 (schema evolution) -- extend schemas before creating Cascadia content, otherwise content creation is blocked by validation errors.
+Must be the first technical task -- the `useLocalStorage` hook and client component boundary pattern must be established before any feature uses localStorage. Every subsequent feature (search, completion, "continue where you left off") depends on this pattern being correct.
 
 ---
 
-### Pitfall 3: MIDI Workspace Renders Broken UI for Non-SysEx Instruments
+### Pitfall 3: Dual Completion Sources Create Contradictory State
 
 **What goes wrong:**
-The MIDI page (`midi/page.tsx`) renders for any instrument slug, but the entire page is Evolver-specific: it imports `basic-patch.sysex.json` from the Evolver content directory, uses `findEvolverPorts()` for MIDI auto-detection, and all four panels (Connection, Capture, Send, Compare) assume SysEx communication. Navigating to `/instruments/cascadia/midi` shows a page that looks functional but does nothing useful -- the capture button sends Evolver SysEx requests, the send panel filters for `.sysex.json` sidecars that Cascadia patches don't have, and the diff view references Evolver parameters.
+The app currently tracks completion via Obsidian vault scanning (`scanDailyNotes()` in `progress.ts`). v1.2 adds manual completion toggles (localStorage) for users without Obsidian. Now there are two sources of truth: the vault says session 5 is not completed, but localStorage says it is (or vice versa). The progress dashboard shows inconsistent numbers. The prerequisite gate blocks a session the user has manually marked complete because the vault scan does not find it. The "continue where you left off" feature points to the wrong session.
 
 **Why it happens:**
-The `MidiPage` component directly imports Evolver-specific modules (`@/content/instruments/evolver/basic-patch.sysex.json`) and uses Evolver-specific MIDI functions. There's no instrument capability system that would tell the UI "this instrument doesn't support SysEx."
+These are genuinely different user modes (vault user vs. non-vault user) but the `computeProgress()` function currently only accepts `completedSessionNumbers: Set<number>` from a single source. There is no merge strategy defined for when both sources have data.
 
-**How to avoid:**
-1. Add an instrument capability model: each instrument declares what it supports (e.g., `{ sysex: boolean, midi: boolean, cv: boolean }`). This can live in the instrument's `overview.md` frontmatter or a separate config file.
-2. For Cascadia: hide the MIDI workspace entirely, or replace it with a CV reference page (patch point documentation, voltage ranges).
-3. Do NOT try to make the MIDI workspace "work" for CV instruments by mapping CV concepts to SysEx metaphors -- they are different paradigms.
-4. The nav link "MIDI" should conditionally appear based on instrument capabilities.
+**Consequences:**
+- User marks session complete manually, navigates to progress page, sees it as incomplete (vault scan overrides)
+- Prerequisite gating blocks advancement when manual completion should allow it
+- Module completion flags disagree between progress dashboard and session list
+- In demo mode, synthetic data, manual toggles, and vault data could all conflict
 
-**Warning signs:**
-- `/instruments/cascadia/midi` is accessible and shows Connection/Capture/Send panels
-- Tests for MIDI page pass because they use Evolver mocks and never test non-SysEx instruments
-- Users reach a broken MIDI page via nav and think the app is bugged
+**Prevention:**
+1. **Define a clear precedence rule**: manual completion is additive to vault scanning, never subtractive. If either source says "complete," the session is complete. This is a union merge: `completedSessions = vaultSessions UNION manualSessions`.
+2. **Store manual completions per-instrument**: localStorage key should be `evolver:manual-completions` not `manual-completions`, because completion is instrument-scoped.
+3. **The merge must happen at a single point** -- modify `computeProgress()` to accept an optional second `Set<number>` for manual completions, or merge before calling it. Do not merge in UI components.
+4. **Show completion source in the UI** when possible: a small indicator showing whether completion was detected via vault or manually marked. This prevents confusion when sources disagree.
+5. **In demo mode, manual completions should layer on top of synthetic data**, not replace it. A user toggling completions in demo mode should see their changes persist but not lose the synthetic baseline.
+
+**Detection:**
+- Progress numbers change when navigating between pages (one page reads vault, another reads localStorage)
+- "Mark complete" toggle does not affect the prerequisite gate for the next session
+- Module shows as incomplete despite all sessions being manually marked complete
 
 **Phase to address:**
-Phase 2 (instrument capability system) -- after schema work, before Cascadia content goes live.
+Must be designed before either manual completion or prerequisite gating is implemented. The merge strategy is a prerequisite for both features.
 
 ---
 
-### Pitfall 4: Config Defaults to Evolver, Breaking Multi-Instrument Discovery
+### Pitfall 4: Prerequisite Gating Frustrates Instead of Guiding
 
 **What goes wrong:**
-The `ConfigSchema` defaults `instrument` to `'evolver'`. The home page uses `config.instrument || 'evolver'` to determine which sessions to show. The config file is named `evolver.config.json`. This means:
-- The app always boots to the Evolver view
-- There's no concept of browsing multiple instruments from the home page
-- The config filename itself is instrument-specific
+Sessions are locked behind prerequisite completion. The user sees a padlock icon on session 12 because sessions 1-11 are not all marked complete. But the user has actually done sessions 1-8, skipped session 9 (which covers a topic they already know from experience), and wants to try session 12. The gate blocks them. This violates ADHD design principle #8 ("Forgiveness is Built In": "Repeating sessions is encouraged" and "Skipping days/weeks is expected"). The app now feels like a rigid course, not a flexible learning tool.
 
 **Why it happens:**
-The config was designed for a single-instrument app. The `instrument` field was a forward-looking concession but the implementation treats it as "the one instrument."
+Prerequisite gating is borrowed from LMS (Learning Management System) design where strict ordering ensures pedagogical integrity. But this app's ADHD design principles explicitly reject rigidity. The anti-pattern table warns against "Perfectionism gates: 'Master this before moving on' -> stalling."
 
-**How to avoid:**
-1. Home page should show an instrument picker when multiple instruments exist (use `discoverInstruments()`)
-2. Rename config file to something generic (`instruments.config.json` or `app.config.json`) -- or better, keep `evolver.config.json` but document that it's the app config, not instrument-specific
-3. Remove the default `instrument: 'evolver'` from ConfigSchema, or make it `instrument: z.string().optional()` and have the home page handle the no-default case by showing all instruments
-4. The `discoverInstruments()` function already exists in `reader.ts` and works correctly -- it scans for subdirectories. The infrastructure is there, just not wired to the UI.
+**Consequences:**
+- User feels punished for non-linear learning
+- Activation energy increases ("I need to go back and mark 3 sessions complete before I can do what I want")
+- User stops using the app because it feels controlling rather than supportive
+- Advanced users (who already know some synth concepts) are forced through beginner sessions
 
-**Warning signs:**
-- Home page always shows Evolver sessions even after Cascadia content is added
-- No way to navigate to Cascadia without typing the URL manually
-- Config schema still defaults to `'evolver'`
+**Prevention:**
+1. **Use soft gating, not hard gating.** Show prerequisites as recommendations, not locks. Visual states should be: "completed" (check), "recommended next" (highlighted), "available" (normal), "has prerequisites" (dimmed with tooltip showing what they are). Never "locked" (disabled/unclickable).
+2. **All sessions must remain accessible regardless of completion state.** The user can always click any session and start it.
+3. **Show prerequisite context, not barriers**: "This session builds on: [Session 9: Filter Basics]. If you haven't done it, the warm-up might feel unfamiliar." This is guidance, not enforcement.
+4. **Module boundaries, not session boundaries**, are the natural gates. Suggest completing Module 1 before Module 3, but within a module, let the user jump around.
+5. **The "you are here" journey view** is the positive version of gating -- it shows where you are and what is recommended next without blocking anything.
 
-**Phase to address:**
-Phase 1 (routing/navigation) -- must be addressed alongside nav changes.
-
----
-
-### Pitfall 5: Cascadia Patch Documentation Format Mismatch
-
-**What goes wrong:**
-Evolver patches are documented as parameter tables (Osc 1 Shape: Saw, Filter Freq: 45, etc.) because the Evolver has numbered parameters that can be entered via front-panel controls. Cascadia patches must be documented as cable routings (e.g., "VCO 1 Saw -> VCF Input, LFO 1 Triangle -> VCF Cutoff CV") because the instrument is semi-modular with 100+ patch points. Trying to use the same markdown format produces documentation that doesn't help the user actually recreate the patch.
-
-**Why it happens:**
-The Evolver patch documentation format was designed around the question "what values do I enter?" The Cascadia patch documentation must answer "what cables do I plug in and what knob positions do I set?" These are fundamentally different instructional paradigms. The existing patch markdown template (parameter tables with Value columns) doesn't have a way to represent patch cable connections.
-
-**How to avoid:**
-1. Define a Cascadia-specific patch documentation template that includes: cable connections (from -> to), module knob positions (with visual/descriptive values, not MIDI numbers), and audio signal flow description
-2. Use the [baratatronix.com](https://www.baratatronix.com/) patch library format as reference -- it documents Cascadia patches with connection lists and audio previews
-3. The `PatchSchema` already uses `.passthrough()`, so extra frontmatter fields won't break validation. Add Cascadia-specific frontmatter like `connections: [{from: "VCO1 Saw Out", to: "VCF Audio In"}]` alongside the universal fields
-4. The patch detail component (`patch-detail.tsx`) renders markdown HTML -- this is format-agnostic. The different documentation structure lives in the markdown body, not the schema. This is actually safe.
-5. Do NOT try to normalize Cascadia cable routings into the Evolver parameter table format
-
-**Warning signs:**
-- Cascadia patch files look like Evolver patches with different parameter names
-- No mention of cable connections in Cascadia patch documentation
-- Patch detail page looks empty because Cascadia patches lack parameter tables
+**Detection:**
+- Any session URL that returns a redirect or error based on completion state
+- Any disabled/unclickable session in the UI
+- Click handlers that check prerequisites before navigation
+- Test scenarios where an incomplete prerequisite prevents session access
 
 **Phase to address:**
-Phase 3 (content creation) -- but the documentation template should be designed in Phase 1 alongside schema work.
-
----
-
-### Pitfall 6: Curriculum Pacing Assumes Preset-Based Workflow
-
-**What goes wrong:**
-The Evolver curriculum is structured around progressive parameter exploration: Session 1 navigates programs, Session 3 explores oscillator waveshapes, Session 11 introduces filters. Each session says "set parameter X to value Y" and produces a saved patch. Cascadia sessions can't follow this pattern because:
-- There are no programs to navigate (no patch memory)
-- You can't "set parameter X to value Y" -- you patch cables and turn knobs with visual/tactile feedback
-- Sessions must include setup time for cable patching that Evolver sessions don't need
-- The ADHD "zero activation energy" principle is harder with semi-modular: you need cables, you need to build from scratch each time
-
-**Why it happens:**
-The 35-session Evolver curriculum was designed for a specific learning modality: menu-based parameter entry on a fixed-architecture synth. Cascadia's learning modality is exploratory patching on a modular architecture. The session template assumes `output_type: 'patch'` means "save a preset" but for Cascadia it means "document a cable configuration."
-
-**How to avoid:**
-1. Design Cascadia sessions around "patch recipes" not "parameter entry" -- each session provides a cable routing to follow, then encourages variations
-2. Respect that Cascadia sessions need different time allocations: 5 min setup (finding cables, understanding the starting patch point), 15 min exploration, 5 min documentation
-3. Start with fewer sessions: 15-20 instead of 35. Semi-modular has a steeper initial learning curve but faster skill compounding. The modules are the curriculum -- VCO, VCF, VCA, LFO, ENV, then combined
-4. The `duration: z.number().int().min(5).max(30)` constraint still works -- Cascadia sessions fit in 15-30 minutes
-5. Session output types need a new option or reinterpretation: `output_type: 'patch'` for Cascadia means "documented cable routing + photo" not "saved preset"
-6. Consider adding `output_type: 'routing'` to the enum for clarity
-
-**Warning signs:**
-- Cascadia sessions read like Evolver sessions with different parameter names
-- Sessions say "save your patch" but Cascadia has no save function
-- No mention of cable connections in session exercises
-- Session count matches Evolver (35) without pedagogical justification
-
-**Phase to address:**
-Phase 3 (content creation) -- but the session template and `output_type` enum should be updated in Phase 1.
-
----
-
-### Pitfall 7: Entire `src/lib/midi/` Directory is Evolver-Specific
-
-**What goes wrong:**
-The MIDI library (`connection.ts`, `sysex.ts`, `parser.ts`, `encoder.ts`, `parameters.ts`, `types.ts`, `diff.ts`) is 100% Evolver-specific. Every function, constant, and type assumes the Evolver's SysEx protocol. The function is literally named `findEvolverPorts()`. The parameter map is the Evolver's 128 parameters. The SysEx validation checks for DSI manufacturer ID `0x01` and Evolver device ID `0x20`. This entire directory cannot be reused for Cascadia and should not be refactored to accommodate it.
-
-**Why it happens:**
-This is correct engineering for v1.0 -- the MIDI library does exactly what it should for one instrument. The pitfall is attempting to "generalize" it. Abstracting SysEx protocol handling into an instrument-agnostic framework is unnecessary complexity when only one instrument uses SysEx.
-
-**How to avoid:**
-1. Leave `src/lib/midi/` exactly as it is. It works for Evolver. Don't touch it.
-2. Do NOT create an abstract `InstrumentProtocol` interface that the Evolver and Cascadia both implement -- Cascadia has no digital protocol to implement
-3. If a future instrument needs SysEx (e.g., a Moog or another DSI synth), create `src/lib/midi/instruments/evolver.ts` and `src/lib/midi/instruments/[other].ts` at that point -- not now
-4. The MIDI page visibility is the only thing that needs to change: hide it for instruments that don't support SysEx (see Pitfall 3)
-
-**Warning signs:**
-- Creating abstract MIDI/protocol interfaces "for future extensibility"
-- Renaming `findEvolverPorts` to `findInstrumentPorts` and adding instrument-switching logic
-- Spending more than 0 hours modifying `src/lib/midi/` for Cascadia support
-
-**Phase to address:**
-No phase -- this is an anti-pitfall. The correct action is to NOT refactor the MIDI library.
+Prerequisite visualization phase. The design must specify "soft gating only" before implementation begins. This is a UX decision, not a technical one, but if the wrong decision is made the technical implementation will enforce frustration.
 
 ---
 
 ## Moderate Pitfalls
 
-### Pitfall 8: Test Fixtures Assume Evolver Content Structure
+### Pitfall 5: Client-Side Search Index Grows Beyond Reasonable Bundle Size
 
 **What goes wrong:**
-Test fixtures in `src/lib/content/__tests__/__fixtures__/` contain Evolver-specific content (sessions with `instrument: 'evolver'`, patches with Evolver parameters, instrument files for Evolver). The schema tests all use `instrument: 'evolver'` in their test data. The MIDI tests (`connection.test.ts`, `parser.test.ts`, `diff.test.ts`) test Evolver SysEx protocol. Adding Cascadia doesn't break these tests -- but it also means zero test coverage for Cascadia content paths.
+The app pre-builds a search index from all session and patch content (~125 markdown files currently, growing to 200+ with Cascadia). The full-text index is serialized as JSON and shipped to the client. With full markdown body content, this could be 500KB-1MB+ of JSON, adding significantly to page load time -- especially on mobile or slower connections.
 
 **Why it happens:**
-Tests were written for the only instrument that existed. They pass, so there's no signal that Cascadia needs its own test fixtures.
+Client-side search (Flexsearch/Fuse.js) requires the index to be available in the browser. The naive approach is to index the full body content of every session and patch. With 35 Evolver sessions, 35+ Cascadia sessions, 40+ patches, and full markdown content per file, the index grows quickly.
 
-**How to avoid:**
-1. Add Cascadia test fixtures: at minimum, a session with `instrument: 'cascadia'`, a patch without sysex data, and an instrument overview
-2. Test that `listPatches('cascadia', config)` returns patches with `sysexData: null` correctly
-3. Test that `discoverInstruments()` returns both `['cascadia', 'evolver']`
-4. Do NOT modify existing Evolver tests -- they verify Evolver behavior and should continue to do so
-5. Schema tests should add cases with `instrument: 'cascadia'` to verify passthrough fields work for Cascadia-specific frontmatter
+**Prevention:**
+1. **Index metadata only for the initial implementation**: title, module, tags, objective, instrument. This keeps the index under 50KB for 200+ items.
+2. **If full-text search is needed later**, build the index at build time and **lazy-load it** on first search interaction, not on page load. Use dynamic `import()` triggered by the search input receiving focus.
+3. **Flexsearch over Fuse.js** for this use case -- Flexsearch is significantly more memory-efficient and faster for the kind of structured content this app has.
+4. **Set a budget**: if the serialized index exceeds 100KB, split into metadata index (always loaded) and body index (loaded on demand).
+5. **Use the server-component pattern for initial results**: the search page server component can pre-render results from URL search params, while the client component handles real-time filtering. This is the pattern from the Next.js tutorial -- `useSearchParams` on client updates URL, server component fetches matching results.
 
-**Warning signs:**
-- `npm test` passes with 100% success but no test mentions "cascadia"
-- Cascadia content is added but never validated by automated tests
-- A schema change breaks Cascadia content silently because no test catches it
+**Detection:**
+- Search index JSON file exceeds 100KB
+- Lighthouse reports increased bundle size after search feature is added
+- Search input causes visible page jank when the index is first loaded
 
 **Phase to address:**
-Phase 2 (test infrastructure) -- add Cascadia fixtures before content creation begins.
+Search & filtering phase. Size budget should be defined before index generation is built.
 
 ---
 
-### Pitfall 9: Demo Mode Needs Cascadia Synthetic Data
+### Pitfall 6: `"use client"` Boundary Creep Degrades Server-Component Architecture
 
 **What goes wrong:**
-Demo mode uses bundled content from `src/content/`. For Cascadia to appear in demo mode, there must be content at `src/content/instruments/cascadia/`, `src/content/sessions/cascadia/`, and `src/content/patches/cascadia/`. If Cascadia content only exists in the Obsidian vault (local mode), the demo deployment on Vercel shows only Evolver -- making the multi-instrument feature invisible to anyone visiting the demo.
+Multiple features need client interactivity: search input, completion toggles, "continue where you left off" banner, streak display, prerequisite tooltips. Each one needs `"use client"`. Without discipline, developers add `"use client"` to progressively larger components. Eventually, `session-detail.tsx` or `module-card.tsx` becomes a client component, pulling its entire subtree (including data-fetching children) to the client. The app loses the server-component performance benefits it was built on.
 
 **Why it happens:**
-Demo mode is content-driven via filesystem discovery (`discoverInstruments()` scans directories). No Cascadia directory = no Cascadia in demo mode. Developers working locally with vault content may not notice the demo mode gap.
+The current codebase has zero client components. There is no established pattern for where the client boundary should go. The first developer to add `"use client"` sets the precedent. If they add it to `session-detail.tsx` (because it needs a completion toggle), every child of that component becomes client-rendered.
 
-**How to avoid:**
-1. Create bundled Cascadia demo content alongside real content: at minimum 3-5 sessions, 3-5 patches, and the instrument overview files
-2. Verify demo mode shows both instruments before considering the milestone done
-3. The synthetic data for Cascadia should include example cable routing documentation (not just repurposed Evolver parameter tables)
+**Prevention:**
+1. **Establish a component architecture rule**: interactive features are always in dedicated leaf components that wrap around server-rendered content, never the other way around.
+2. **Create a `src/components/client/` directory** (or similar convention) to make client components visually distinct in the codebase.
+3. **Pattern**: Server component renders content and passes it as `children` to a client wrapper. The client wrapper adds interactivity (toggle, tooltip) without converting the content itself to client rendering.
+   ```
+   <SessionDetail>           <!-- server: fetches data, renders markdown -->
+     <CompletionToggle />    <!-- client: manages localStorage state -->
+   </SessionDetail>
+   ```
+4. **Never add `"use client"` to existing component files.** Always create a new file for the client version.
+5. **Code review check**: any PR adding `"use client"` should verify that the file does not import server-only modules (`fs`, `path`, `glob`) and that the component is a leaf node, not a subtree root.
 
-**Warning signs:**
-- Demo deployment only shows Evolver in the nav/instrument picker
-- `src/content/instruments/` only contains `evolver/` directory
-- Cascadia content exists only in the Obsidian vault
+**Detection:**
+- `"use client"` in a file that also imports from `@/lib/content/reader` or `@/lib/progress`
+- A component file with both `"use client"` and `async function`
+- More than 5-6 client components in `src/components/` (initial features should need only 3-4)
 
 **Phase to address:**
-Phase 4 (demo data + deployment verification) -- after content is created.
+First phase of v1.2 implementation. The client component convention must be established before any feature work begins.
 
 ---
 
-### Pitfall 10: InstrumentFileSchema Type Enum is Too Narrow
+### Pitfall 7: Manual Completion Toggle Has No Undo / Confirmation
 
 **What goes wrong:**
-`InstrumentFileSchema` restricts `type` to `['overview', 'signal-flow', 'basic-patch', 'modules']`. Cascadia may need additional types: `'patch-points'` (listing all 100+ I/O jacks), `'normalled-connections'` (internal routings when no cable is plugged in), `'voltage-specs'` (CV ranges for each input). These files fail schema validation.
+User accidentally taps the completion toggle on a session they have not actually completed. The session is now marked complete, the prerequisite visualization updates, and the "next session" pointer advances. There is no undo. The user must find the session again and un-toggle it, but they may not remember which session was accidentally toggled, especially across multiple visits.
 
 **Why it happens:**
-The four types map directly to the Evolver's documentation structure. Cascadia has a different documentation taxonomy because semi-modular instruments need different reference material.
+Toggle buttons are ergonomically convenient but error-prone on touch devices. A single tap with no confirmation permanently changes state. Since manual completions are stored in localStorage and affect the progress dashboard, module completion, and prerequisite visualization, the blast radius of an accidental toggle is wide.
 
-**How to avoid:**
-1. Expand the `type` enum to include Cascadia-relevant types: at minimum add `'patch-points'` and `'normalled-connections'`
-2. Alternatively, use `.passthrough()` more aggressively and make `type` a `z.string()` instead of a strict enum -- the enum doesn't provide much safety since these are author-controlled content files, not user input
-3. Consider making the enum extensible per-instrument rather than global
+**Prevention:**
+1. **Allow easy undo**: the toggle should be bidirectional (mark complete / mark incomplete) with no confirmation dialog for either direction. Friction-free correction is better than friction-full prevention.
+2. **Show a brief toast/snackbar** on completion: "Session 5 marked complete. [Undo]" with a 5-second undo window.
+3. **Do NOT require confirmation dialogs** -- they add activation energy to a legitimate action (marking complete), violating ADHD design principle #1 (Zero Activation Energy).
+4. **Visual feedback must be immediate** -- the toggle state should change instantly (optimistic UI), not wait for any async operation.
 
-**Warning signs:**
-- Cascadia instrument documentation uses `type: 'overview'` for everything because the other types don't fit
-- Schema validation errors when creating Cascadia instrument files with new type values
+**Detection:**
+- Completion toggle has a confirmation dialog
+- No visual way to un-mark a completed session
+- Toggling completion requires navigating to a different page
 
 **Phase to address:**
-Phase 1 (schema evolution) -- must be resolved before Cascadia instrument content is created.
+Manual completion phase. Design the toggle with undo from the start.
 
 ---
 
-### Pitfall 11: Instrument Overview Hardcodes "10 modules" Text
+### Pitfall 8: Troubleshooting Content Becomes Stale as Sessions Evolve
 
 **What goes wrong:**
-The `InstrumentOverview` component (`instrument-overview.tsx` line 85) displays `"{sessionCount} sessions across 10 modules"`. The Evolver curriculum has 10 modules. Cascadia will have a different number of modules. This text will be factually wrong for any non-Evolver instrument.
+The "I hear nothing" troubleshooting guide references specific session numbers or patch names. Sessions are renumbered, patches are renamed, or new sessions are inserted between existing ones. The troubleshooting guide now points to the wrong session or a non-existent patch. Users follow stale instructions and get more confused.
 
 **Why it happens:**
-Hardcoded string that was true for the only instrument. Easy to miss in a UI review because it looks correct when viewing Evolver content.
+Troubleshooting content is written as static markdown that references dynamic content (session numbers, patch names). There is no automated validation that cross-references remain valid. The content validation script (`validate-content.ts`) likely does not check troubleshooting docs for broken internal references.
 
-**How to avoid:**
-1. Compute module count from session data: `new Set(sessions.map(s => s.data.module)).size`
-2. Pass module count as a prop to `InstrumentOverview` alongside `sessionCount`
-3. Or remove the "across N modules" text entirely -- it adds minimal value
+**Prevention:**
+1. **Reference sessions by slug, not by number**, in troubleshooting content. Session slugs are more stable than numbers.
+2. **Keep troubleshooting content generic** where possible: "If you hear nothing after loading a patch, check: [MIDI channel, audio routing, volume]" rather than "After Session 3, if you..."
+3. **Organize troubleshooting by symptom, not by session**: "No audio output," "Unexpected pitch," "Filter not responding" -- these are instrument-level issues, not session-level.
+4. **Add troubleshooting references to content validation**: if a troubleshooting doc mentions `session-XX`, verify that session exists.
 
-**Warning signs:**
-- Cascadia overview page says "15 sessions across 10 modules" when Cascadia has 6 modules
-- Any hardcoded number in a component that should be data-driven
+**Detection:**
+- Troubleshooting doc references a session number that has been renumbered
+- User reports following troubleshooting steps that do not match their current session
+- Content validation passes but troubleshooting docs have dead references
 
 **Phase to address:**
-Phase 1 (UI abstraction) -- quick fix, include in the nav/chrome cleanup pass.
+Troubleshooting content phase. Design the reference strategy before writing content.
 
 ---
 
-## Technical Debt Patterns
+## Minor Pitfalls
 
-| Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
-|----------|-------------------|----------------|-----------------|
-| Keep MIDI library Evolver-only | Zero refactoring effort, no regression risk | Third instrument with SysEx requires restructuring | Always -- abstract when needed, not before |
-| Cascadia patches without `.sysex.json` sidecars | Clean separation, no fake data | Two different patch data patterns to maintain | Always -- these are genuinely different data models |
-| Hardcoded `evolver.config.json` filename | No migration needed for existing users | Confusing when the app supports multiple instruments | Until v1.2 -- rename when adding a third instrument |
-| Fewer Cascadia sessions (15-20 vs 35) | Faster delivery, honest scope | Users may want deeper Cascadia curriculum later | For v1.1 -- validate the framework first, expand content in v1.2 |
-| Using `passthrough()` for Cascadia-specific fields | No schema migration, backward compatible | Type safety is weaker for instrument-specific fields | For v1.1 -- formalize discriminated union schemas in v1.2 if needed |
+### Pitfall 9: Search Highlights Break Markdown Rendering
 
-## Integration Gotchas
+**What goes wrong:**
+Search results show matched text with highlighting (e.g., wrapping matches in `<mark>` tags). But the matched text is from raw markdown source. Inserting highlight tags into markdown content breaks the rendering pipeline: a highlight inside a code block, a YAML frontmatter value, or a markdown link produces corrupted output.
 
-| Integration | Common Mistake | Correct Approach |
-|-------------|----------------|------------------|
-| Content reader + Cascadia patches | Assuming every patch has `sysexData` in components/templates | Always check `sysexData !== null` before rendering SysEx-related UI (reader already returns null, components must handle it) |
-| Instrument discovery + Nav | Building nav links before `discoverInstruments()` returns | Pass discovered instruments as props to Nav, or use a layout-level data fetch |
-| Patch writer + non-SysEx patches | Using `saveCapturedPatch()` for Cascadia patches | Create a separate `saveDocumentedPatch()` function that doesn't require `parameters` or `sequencer` fields |
-| Progress tracking + Cascadia | Assuming progress = "patches with sysex captures" | Progress for Cascadia = sessions completed + patches documented (as markdown, not as SysEx captures) |
-| Demo mode + instrument discovery | Forgetting to add Cascadia to `src/content/instruments/` | Run `discoverInstruments()` in demo mode and verify both instruments appear before deploying |
+**Prevention:**
+1. Search results should show **plain text excerpts**, not highlighted markdown source.
+2. If highlighting is desired, apply it to **rendered text** (post-markdown-processing), not to source markdown.
+3. Simpler and safer: show the matched field name ("Found in: objective") and the surrounding sentence as plain text, without inline highlighting.
 
-## UX Pitfalls
+**Phase to address:** Search phase, UI design stage.
 
-| Pitfall | User Impact | Better Approach |
-|---------|-------------|-----------------|
-| Showing MIDI workspace for Cascadia | User sees Connection/Capture/Send panels that do nothing for their instrument | Hide MIDI nav link for instruments without SysEx; show CV reference page instead |
-| Same session format for both instruments | Cascadia sessions feel like translated Evolver sessions, not native to the instrument | Design Cascadia sessions around cable patching: "Connect VCO Saw to VCF, patch LFO to Cutoff" |
-| Parameter table UI for Cascadia patches | Shows empty parameter table or irrelevant fields | Render cable routing list for Cascadia; keep parameter table for Evolver |
-| "Save your patch" language in Cascadia sessions | User can't save patches on Cascadia -- creates confusion | Use "Document your patch" or "Photograph your patch" for Cascadia |
-| Single instrument default on home page | Cascadia users always land on Evolver content | Show instrument picker when multiple instruments exist |
+---
+
+### Pitfall 10: "Continue Where You Left Off" Stale After Content Updates
+
+**What goes wrong:**
+localStorage stores the last-visited session slug (e.g., `evolver/07-oscillators-fm-synthesis`). A content update renames or removes that session. The "continue" banner links to a 404 page.
+
+**Prevention:**
+1. The "continue" feature must verify the stored session slug still resolves to valid content before displaying the banner.
+2. If the session no longer exists, fall back to the first incomplete session or clear the stored value.
+3. Store both the slug and the session number -- if the slug fails, try to find the session by number as a fallback.
+
+**Phase to address:** "Continue where you left off" feature implementation.
+
+---
+
+### Pitfall 11: localStorage Keys Collide Across Instruments
+
+**What goes wrong:**
+Manual completions are stored under a generic key like `completedSessions`. The user completes Evolver session 5 and Cascadia session 5. Both are stored in the same Set. The app cannot distinguish which instrument's session 5 was completed. Progress is inflated or crossed between instruments.
+
+**Prevention:**
+1. **Namespace all localStorage keys by instrument**: `evolver:completedSessions`, `cascadia:completedSessions`, `evolver:lastSession`, etc.
+2. Define the key naming convention once in a shared utility, not ad-hoc in each component.
+3. The existing `computeProgress()` function is already per-instrument (takes `instrument: string` parameter) -- the localStorage layer must match this scoping.
+
+**Phase to address:** First localStorage implementation. Must be correct from the start; migrating keys later requires data migration code.
+
+---
+
+## ADHD-Specific Anti-Patterns for Gamification
+
+These are patterns that work well for neurotypical users but actively harm ADHD users in this context. Derived from the project's `framework/adhd-design.md` and ADHD gamification research.
+
+| Anti-Pattern | Why It Harms ADHD Users | What to Do Instead |
+|-------------|------------------------|-------------------|
+| Consecutive-day streaks | Missed days create shame spirals; ADHD users cannot reliably maintain daily habits | Cumulative counts only: "12 sessions done" (never resets) |
+| Daily practice reminders | External pressure triggers avoidance in ADHD; the "wall of awful" grows | No notifications. The app is a tool you reach for, not a nag |
+| Leaderboards / social comparison | ADHD perfectionism + comparison = paralysis | Personal progress only. No other users exist |
+| "You missed X days" messaging | Directly triggers guilt about time-blindness, a core ADHD trait | Show only positive: "Welcome back! Your next session is..." |
+| XP / points with levels | Creates external motivation that ADHD brains eventually habituate to, then ignore | Real artifacts (patches, techniques) are the reward -- they have intrinsic value |
+| Loss aversion mechanics | "Your streak will reset!" exploits anxiety. ADHD users have elevated anxiety comorbidity | Nothing in the app should ever decrease or reset. Progress only goes forward |
+| Badges for consistency | Rewards the thing ADHD users struggle with most (consistency), highlighting their weakness | Badges for milestones if at all: "Completed Module 1" (achievement, not habit) |
+| Completion percentages | "73% complete" creates anxiety about the remaining 27% and pressure to reach 100% | Show completed items as a growing list, not as a fraction of a total |
+
+**The safe gamification elements for this app:**
+- Additive session/patch/module counts (already in `ProgressData`)
+- "You are here" position in module journey (planned)
+- Patch library as tangible evidence of learning (already exists)
+- Module completion celebrations (one-time, not recurring)
+- "Welcome back" messaging that references what was last learned (not how long ago)
+
+---
+
+## Phase-Specific Warnings
+
+| Phase Topic | Likely Pitfall | Mitigation |
+|-------------|---------------|------------|
+| localStorage foundation | Hydration mismatch (P2), key collision (P11) | Build `useLocalStorage` hook first with hydration-safe pattern; namespace keys by instrument |
+| Client-side search | Bundle size (P5), boundary creep (P6) | Index metadata only; search input is a leaf client component |
+| Manual completion | Dual source conflict (P3), no undo (P7) | Union merge strategy; bidirectional toggle with undo toast |
+| Prerequisite visualization | Hard gating (P4) | Soft gating only -- visual recommendations, never locks |
+| Progress enhancements / streaks | Guilt spiral (P1) | Additive metrics only. Zero consecutive-day tracking. Hard rule |
+| Troubleshooting content | Stale references (P8) | Reference by slug, organize by symptom not session |
+| "Continue where you left off" | Stale slug (P10) | Verify slug resolves before displaying |
+
+---
 
 ## "Looks Done But Isn't" Checklist
 
-- [ ] **Navigation:** All instrument nav links are dynamic, not hardcoded to Evolver
-- [ ] **Home page:** Shows instrument picker or respects active instrument, not hardcoded to Evolver
-- [ ] **Instrument overview:** Module count is computed, not "10 modules"
-- [ ] **Instrument overview:** References/PDFs are per-instrument, not hardcoded Evolver manuals
-- [ ] **MIDI page:** Hidden or replaced for instruments without SysEx capability
-- [ ] **Patch detail:** Renders correctly when `sysexData` is null (no parameter table, no diff option)
-- [ ] **Send panel:** Success text says instrument name, not "Evolver"
-- [ ] **Schema:** `InstrumentFileSchema.type` enum includes Cascadia-relevant types
-- [ ] **Schema:** `PatchSchema.source` handles non-SysEx patches
-- [ ] **Demo mode:** `src/content/instruments/cascadia/` exists with overview, signal-flow, and at least basic content
-- [ ] **Demo mode:** `src/content/sessions/cascadia/` has 3+ sessions
-- [ ] **Demo mode:** `src/content/patches/cascadia/` has 3+ patches with cable routing documentation
-- [ ] **Tests:** At least one test uses `instrument: 'cascadia'` fixtures
-- [ ] **Tests:** `discoverInstruments()` returns both instruments in test environment
-- [ ] **Config:** Home page works without `instrument` default or handles multi-instrument gracefully
-- [ ] **Session output_type:** Accommodates Cascadia's "documented routing" output type
+- [ ] **Hydration**: No `localStorage.getItem()` calls outside `useEffect` hooks
+- [ ] **Client boundary**: All `"use client"` files are leaf components, not subtree roots
+- [ ] **Client boundary**: No `"use client"` file imports from `@/lib/content/reader` or `@/lib/progress`
+- [ ] **Completion merge**: `computeProgress()` accepts both vault and manual completion sources
+- [ ] **Completion merge**: Manual completion + vault completion = union, not override
+- [ ] **Prerequisite gating**: Every session is clickable regardless of completion state
+- [ ] **Prerequisite gating**: No HTTP redirects based on prerequisite completion
+- [ ] **Streaks**: No field in codebase tracks consecutive days
+- [ ] **Streaks**: No UI element that resets to zero based on inactivity
+- [ ] **Streaks**: No messaging about missed days or time since last session
+- [ ] **Search index**: Serialized index is under 100KB
+- [ ] **Search input**: Is a leaf client component, not embedded in a server component
+- [ ] **localStorage keys**: All namespaced by instrument slug
+- [ ] **Manual toggle**: Bidirectional (can mark incomplete after marking complete)
+- [ ] **"Continue" banner**: Validates stored session slug before rendering link
+- [ ] **Troubleshooting**: References sessions by slug, not by number
+- [ ] **Gamification**: All metrics are additive (only increase, never decrease or reset)
+
+---
 
 ## Recovery Strategies
 
 | Pitfall | Recovery Cost | Recovery Steps |
 |---------|---------------|----------------|
-| Hardcoded nav/UI strings | LOW | Find-and-replace "evolver"/"Evolver" in component files, make dynamic |
-| Schema too narrow for Cascadia content | LOW | Extend enums, add optional fields -- `.passthrough()` prevents breaking changes |
-| MIDI page renders for Cascadia | LOW | Add instrument capability check, conditionally render or redirect |
-| Curriculum uses Evolver pedagogy for Cascadia | MEDIUM | Rewrite affected sessions -- content rewrite, not code change |
-| Premature MIDI library abstraction | HIGH | Undo abstraction, restore Evolver-specific code, write new tests -- this is why the recommendation is "don't do it" |
-| Demo mode missing Cascadia content | LOW | Create 3-5 demo sessions/patches, add instrument files -- just content creation |
-| Config defaults break multi-instrument | LOW | Remove default, add instrument picker to home page |
+| Streak feature shipped | LOW | Remove streak counter, replace with cumulative count. No data migration needed |
+| Hydration mismatches | MEDIUM | Refactor localStorage reads into `useEffect`, add loading states. May require restructuring component tree |
+| Hard prerequisite gating | LOW | Change locked states to dimmed-with-tooltip. Remove redirect logic. UI-only change |
+| Dual completion conflict | MEDIUM | Implement union merge in `computeProgress()`. Requires touching progress data flow |
+| Client boundary creep | HIGH | Must decompose bloated client components back into server+client pairs. Extensive refactoring |
+| Search index too large | LOW | Reduce indexed fields to metadata only. Rebuild index at build time |
+| localStorage key collision | MEDIUM | Add instrument namespace prefix, write migration to move existing keys |
 
-## Pitfall-to-Phase Mapping
-
-| Pitfall | Prevention Phase | Verification |
-|---------|------------------|--------------|
-| Hardcoded Evolver nav/UI (P1) | Phase 1: UI Abstraction | `grep -r "evolver" src/components/` returns zero non-content hits |
-| PatchSchema SysEx coupling (P2) | Phase 1: Schema Evolution | Cascadia patch frontmatter validates without SysEx fields |
-| MIDI page for non-SysEx instruments (P3) | Phase 2: Instrument Capabilities | `/instruments/cascadia/midi` returns 404 or capability-appropriate page |
-| Config defaults to Evolver (P4) | Phase 1: Routing/Navigation | Home page shows instrument picker with 2+ instruments |
-| Patch documentation format (P5) | Phase 1: Template Design + Phase 3: Content | Cascadia patches include cable routing documentation |
-| Curriculum pacing (P6) | Phase 3: Content Creation | Cascadia sessions reference cable connections, not menu navigation |
-| MIDI library over-abstraction (P7) | No phase (anti-pitfall) | `src/lib/midi/` is unchanged from v1.0 |
-| Test fixtures Evolver-only (P8) | Phase 2: Test Infrastructure | Test suite includes `instrument: 'cascadia'` assertions |
-| Demo mode missing Cascadia (P9) | Phase 4: Demo Data | `discoverInstruments()` returns `['cascadia', 'evolver']` in demo mode |
-| InstrumentFileSchema too narrow (P10) | Phase 1: Schema Evolution | Cascadia instrument files use appropriate type values without validation errors |
-| Hardcoded "10 modules" (P11) | Phase 1: UI Abstraction | Module count is computed from session data |
+---
 
 ## Sources
 
-- Direct codebase audit: `src/components/nav.tsx` (hardcoded links), `src/lib/content/schemas.ts` (schema definitions), `src/lib/midi/` (entire directory), `src/components/midi-page.tsx` (SysEx workflow), `src/components/send-panel.tsx` (hardcoded strings), `src/app/instruments/[slug]/page.tsx` (hardcoded references), `src/lib/config.ts` (default instrument), `src/components/instrument-overview.tsx` (hardcoded module count)
-- Content audit: `src/content/patches/evolver/acid-bass.md` (parameter table format), `src/content/sessions/evolver/01-foundations-navigation.md` (session structure)
-- Test audit: `src/lib/content/__tests__/schemas.test.ts`, `src/lib/midi/__tests__/connection.test.ts`, `src/app/__tests__/routing.test.tsx` (all Evolver-only fixtures)
-- Cascadia reference: `cascadia_manual_v1.1.pdf` per PROJECT.md, [baratatronix.com](https://www.baratatronix.com/) for patch documentation format inspiration
+- Codebase audit: `src/lib/progress.ts` (current completion model), `src/app/layout.tsx` (server component architecture), `src/components/` (zero client components), `src/app/instruments/[slug]/progress/page.tsx` (vault scanning integration)
+- [ADHD design principles](/Users/albair/src/evolver/framework/adhd-design.md) -- project's own ADHD design document, anti-patterns table, forgiveness principle
+- [PROJECT.md](/Users/albair/src/evolver/.planning/PROJECT.md) -- key decision: "Sequence-based not calendar-based: Missed days create guilt spirals with ADHD"
+- [Next.js hydration error documentation](https://nextjs.org/docs/messages/react-hydration-error) -- official guidance on hydration mismatch causes and fixes
+- [Fix hydration mismatch errors in Next.js](https://oneuptime.com/blog/post/2026-01-24-fix-hydration-mismatch-errors-nextjs/view) -- 2026 guide on App Router hydration patterns
+- [Next.js App Router search tutorial](https://nextjs.org/learn/dashboard-app/adding-search-and-pagination) -- official server/client search pattern with useSearchParams
+- [Breaking the Chain: Why Streak Features Fail ADHD Users](https://www.helloklarity.com/post/breaking-the-chain-why-streak-features-fail-adhd-users-and-how-to-design-better-alternatives/) -- ADHD-specific research on streak harm and alternatives
+- [Duolingo's Shallow Learning Trap](https://dev.to/yaptech/duolingos-shallow-learning-trap-gamified-streaks-harmful-habits-4134) -- streak anxiety and harmful gamification patterns
+- [Flexsearch GitHub](https://github.com/nextapps-de/flexsearch) -- client-side search library performance and memory characteristics
+- [Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components) -- Next.js component boundary documentation
 
 ---
-*Pitfalls research for: v1.1 Cascadia multi-instrument support*
-*Researched: 2026-03-30*
+*Pitfalls research for: v1.2 Learner Experience & Discovery*
+*Researched: 2026-04-03*
