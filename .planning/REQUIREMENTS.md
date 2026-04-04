@@ -130,7 +130,7 @@ Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 1
 
 ## v1.2 Requirements
 
-Requirements for Learner Experience & Discovery. Phases 13+.
+Requirements for Learner Experience & Discovery. Phases 14-17.
 
 ### Learner State
 
@@ -150,7 +150,7 @@ Requirements for Learner Experience & Discovery. Phases 13+.
 
 - [ ] **PROG-10**: Count cards on progress page are clickable, navigating to the relevant content list
 - [ ] **PROG-11**: Module journey visualization shows a "you are here" marker at the learner's current position
-- [ ] **PROG-12**: Progress page shows cumulative practice metrics (sessions this month, total active weeks) — additive only, never guilt-inducing
+- [ ] **PROG-12**: Progress page shows cumulative practice metrics (sessions this month, total active weeks) -- additive only, never guilt-inducing
 
 ### Content & Pedagogy
 
@@ -262,14 +262,27 @@ Requirements for Learner Experience & Discovery. Phases 13+.
 | EPANEL-04 | Phase 12 | Complete |
 | EPANEL-05 | Phase 12 | Complete |
 | EPANEL-06 | Phase 12 | Complete |
+| LSTATE-01 | Phase 14 | Pending |
+| LSTATE-02 | Phase 14 | Pending |
+| LSTATE-03 | Phase 14 | Pending |
+| LSTATE-04 | Phase 14 | Pending |
+| NAV-01 | Phase 14 | Pending |
+| NAV-02 | Phase 15 | Pending |
+| NAV-03 | Phase 16 | Pending |
+| NAV-04 | Phase 16 | Pending |
+| PROG-10 | Phase 15 | Pending |
+| PROG-11 | Phase 15 | Pending |
+| PROG-12 | Phase 15 | Pending |
+| CONTENT-01 | Phase 17 | Pending |
+| CONTENT-02 | Phase 17 | Pending |
 
 **Coverage:**
 - v1.0 requirements: 40 total (39 complete, 1 pending)
-- v1.1 requirements: 25 total (19 Cascadia + 6 Evolver Panel — mapped to phases 7-12)
-- v1.2 requirements: 13 total (awaiting roadmap phase mapping)
-- Mapped to phases: 65 (40 v1.0 + 25 v1.1)
-- Unmapped: 13 (v1.2 — roadmap pending)
+- v1.1 requirements: 25 total (19 Cascadia + 6 Evolver Panel -- mapped to phases 7-12)
+- v1.2 requirements: 13 total (mapped to phases 14-17)
+- Mapped to phases: 78 (40 v1.0 + 25 v1.1 + 13 v1.2)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-29*
-*Last updated: 2026-04-04 after v1.2 Learner Experience & Discovery requirements added*
+*Last updated: 2026-04-04 after v1.2 roadmap phase mapping*

@@ -3,7 +3,8 @@
 ## Milestones
 
 - ✅ **v1.0 Evolver Learning Platform** - Phases 1-6 (shipped 2026-03-30)
-- 🚧 **v1.1 Cascadia Instrument Support** - Phases 7-11 (in progress)
+- 🚧 **v1.1 Cascadia Instrument Support** - Phases 7-13 (in progress)
+- 📋 **v1.2 Learner Experience & Discovery** - Phases 14-17 (planned)
 
 ## Phases
 
@@ -192,10 +193,76 @@ Plans:
 - [x] 12-02-PLAN.md -- Tooltip overlay system: PanelTooltip component, hover state wiring
 - [ ] 12-03-PLAN.md -- Page integrations: session sidebar, patch inline, quick-ref tab, standalone route, human verification
 
+### Phase 13: Cascadia Panel Visualizer
+
+**Goal:** Create an interactive Cascadia panel SVG, control metadata map, React component, and embed inline panel diagrams across all 25 Cascadia sessions -- mirroring the Evolver panel approach from Phase 12.
+**Requirements**: TBD
+**Depends on:** Phase 12
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 13 to break down)
+
+---
+
+### v1.2 Learner Experience & Discovery (Planned)
+
+**Milestone Goal:** Remove key UX friction points -- making the app genuinely usable for day-to-day practice rather than just browsable as a demo. Persistent session state, search, prerequisite visualization, and progress enhancements.
+
+- [ ] **Phase 14: Learner State Foundation** - Zustand store with persist middleware, completion toggle, last-visited tracking, vault+manual merge, resume bar
+- [ ] **Phase 15: Navigation & Progress Enhancements** - Prerequisite state badges, clickable count cards, module journey "you are here" marker, cumulative practice metrics
+- [ ] **Phase 16: Search & Filtering** - Full-text search across sessions and patches, tag/type filtering with sort options
+- [ ] **Phase 17: Content & Pedagogy** - Troubleshooting guides and transitional "partial recipe" sessions
+
+### Phase 14: Learner State Foundation
+**Goal**: Users have persistent learning state that survives browser restarts -- they can mark sessions complete, and the app remembers where they left off
+**Depends on**: Phase 13
+**Requirements**: LSTATE-01, LSTATE-02, LSTATE-03, LSTATE-04, NAV-01
+**Success Criteria** (what must be TRUE):
+  1. User can toggle a session as complete from the session detail page, and the completion persists after closing and reopening the browser
+  2. User's last-visited session is automatically tracked and persisted across browser sessions without manual action
+  3. Completion data from vault scanning (server) and manual toggles (client localStorage) are merged using union semantics -- if either source says complete, it is complete
+  4. A "continue where you left off" resume bar appears showing the user's next recommended session based on last-visited and completion state
+  5. Zustand store with persist middleware provides the single client-side state layer consumed by all learner-facing components
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 15: Navigation & Progress Enhancements
+**Goal**: Users can see their position in the curriculum at a glance -- which sessions are available, where they are in the module journey, and what their cumulative practice looks like
+**Depends on**: Phase 14
+**Requirements**: NAV-02, PROG-10, PROG-11, PROG-12
+**Success Criteria** (what must be TRUE):
+  1. Session list shows prerequisite state for each session (locked, available, or completed) with soft visual gating that informs but does not block navigation
+  2. Count cards on the progress page are clickable, navigating to the relevant content list (sessions, patches, modules)
+  3. Module journey visualization shows a "you are here" marker at the learner's current position in the module sequence
+  4. Progress page displays cumulative practice metrics (sessions this month, total active weeks) that are additive-only and never guilt-inducing
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 16: Search & Filtering
+**Goal**: Users can quickly find any session or patch by searching across titles, descriptions, and tags, and can refine patch browsing with filters and sort options
+**Depends on**: Phase 13 (no dependency on Phase 14 -- can parallelize with Phases 15)
+**Requirements**: NAV-03, NAV-04
+**Success Criteria** (what must be TRUE):
+  1. User can type a search query and see matching sessions and patches from across the entire curriculum, searched by title, description, and tags
+  2. User can filter patches by type (bass, lead, pad, drum, texture, FX) and by tags, with filters combinable
+  3. User can sort patch results by date, name, or type
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 17: Content & Pedagogy
+**Goal**: Users have troubleshooting support when stuck and transitional sessions that scaffold the move from guided to freeform practice
+**Depends on**: Phase 13 (pure content, no code dependencies on Phases 14-16)
+**Requirements**: CONTENT-01, CONTENT-02
+**Success Criteria** (what must be TRUE):
+  1. Each instrument has a troubleshooting guide accessible from the instrument pages, addressing common issues like "I hear nothing", "filter sounds wrong", or "no output from patch point"
+  2. At least one transitional "partial recipe" session exists per instrument that gives incomplete instructions, requiring the learner to fill gaps using knowledge from prior sessions
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
+Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independent content work.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -210,14 +277,9 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10 -> 11
 | 9. Patch Documentation + Demo Patches | v1.1 | 0/3 | Planning | - |
 | 10. Curriculum Modules 1-3 | v1.1 | 3/3 | Complete    | 2026-04-01 |
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 4/4 | Complete    | 2026-04-04 |
-| 12. Evolver Panel Visualizer Component | v1.2 | 2/3 | Complete    | 2026-04-04 |
-
-### Phase 13: Cascadia Panel Visualizer
-
-**Goal:** Create an interactive Cascadia panel SVG, control metadata map, React component, and embed inline panel diagrams across all 25 Cascadia sessions — mirroring the Evolver panel approach from Phase 12.
-**Requirements**: TBD
-**Depends on:** Phase 12
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (run /gsd:plan-phase 13 to break down)
+| 12. Evolver Panel Visualizer Component | v1.1 | 2/3 | In progress | - |
+| 13. Cascadia Panel Visualizer | v1.1 | 0/0 | Not started | - |
+| 14. Learner State Foundation | v1.2 | 0/0 | Not started | - |
+| 15. Navigation & Progress Enhancements | v1.2 | 0/0 | Not started | - |
+| 16. Search & Filtering | v1.2 | 0/0 | Not started | - |
+| 17. Content & Pedagogy | v1.2 | 0/0 | Not started | - |
