@@ -46,6 +46,8 @@ See DSI Manual p.3 ("About the Programs") -- Banks 1 and 2 are classic keyboard 
 
 Bank 3 programs are sequencer-based. They do not play from the keyboard.
 
+<div data-evolver-panel data-highlights="switch-startstop:amber,switch-program:blue,knob-param2:blue" data-sections="sequencer,lcd"></div>
+
 1. Switch to **Bank 3, Program 1**
 2. Press **START/STOP** to hear the sequence play -- you should hear a rhythmic pattern
 3. Let each run for 10-15 seconds before pressing +/YES to advance

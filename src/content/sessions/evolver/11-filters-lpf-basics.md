@@ -34,6 +34,8 @@ From the basic patch:
 
 The cutoff frequency determines where the filter starts removing harmonics. Frequency range is 0-164, covering over 13 octaves (DSI Manual p.17).
 
+<div data-evolver-panel data-knobs="knob-osc-level:50,knob-filter-frequency:127,knob-filter-resonance:0" data-highlights="knob-filter-frequency:amber,knob-filter-resonance:blue" data-sections="filter"></div>
+
 1. Hold a low note (around C2) and slowly sweep **Filter Frequency** from `164` down to `0`
    - **164-100**: You should hear barely any change -- you are above most of the harmonics
    - **100-60**: You should hear noticeable darkening, losing brightness and presence
@@ -66,6 +68,8 @@ Resonance feeds the filter's output back into its input, creating a peak at the 
 See Anu Kirk p.44 ("Exercise 2: Resonance")
 
 ### Exercise 3: 2-Pole vs 4-Pole (5 min)
+
+<div data-evolver-panel data-knobs="knob-filter-frequency:47,knob-filter-resonance:50" data-highlights="knob-filter-frequency:blue,knob-filter-resonance:blue,switch-4pole:amber" data-sections="filter"></div>
 
 Set **Filter Frequency** to `60`, **Resonance** to `50`.
 

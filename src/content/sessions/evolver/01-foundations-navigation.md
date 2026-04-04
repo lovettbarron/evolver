@@ -30,6 +30,8 @@ Turn on your Evolver. Make sure audio outputs are connected to your monitors or 
 
 ### Exercise 1: Navigate Programs and Banks (5 min)
 
+<div data-evolver-panel data-highlights="switch-program:amber,knob-param1:amber,knob-param2:amber,switch-yes:blue,switch-no:blue" data-sections="lcd,sequencer"></div>
+
 1. Press the **PROGRAM** switch so the LCD shows the program number and name
 2. Turn the **PARAM 1** knob to scroll through programs -- you should hear different sounds as you move through them
 3. Turn the **PARAM 2** knob to change banks (1-4) -- Bank 3 programs are sequencer-based (hit Start/Stop to hear them), Bank 4 programs 1-19 are drones (always playing)
@@ -68,11 +70,15 @@ Enter these values by selecting each oscillator/section and turning the correspo
 15. Set all 4 **LFOs**: Amount `0`, Destination `OFF`
 16. Set all 4 **Mod Slots**: Source `OFF`, Amount `0`, Destination `OFF`
 
+<div data-evolver-panel data-knobs="knob-osc-frequency:0,knob-osc-fine:0,knob-osc-shapepw:0,knob-osc-level:50,knob-filter-frequency:127,knob-filter-resonance:0,knob-filter-envamount:0,knob-amp-vcalevel:0,knob-amp-envamount:100,knob-noise-level:0,knob-hpf-frequency:0,knob-distortion-amount:0,knob-feedback-amount:0" data-highlights="knob-osc-frequency:amber,knob-osc-level:amber,knob-filter-frequency:blue,knob-amp-envamount:blue" data-zoom="false"></div>
+
 Now play middle C. You should hear a bright, buzzy, sustained sawtooth tone in stereo. If you hear modulation, filtering, echo, or distortion, something is still set wrong.
 
 See Anu Kirk p.7-8 ("The Basic Patch"), DSI Manual p.14-26 (all parameter definitions)
 
 ### Exercise 3: Save Your Patch (3 min)
+
+<div data-evolver-panel data-highlights="switch-write:amber,knob-param1:blue,knob-param2:blue,switch-yes:amber" data-sections="lcd,sequencer"></div>
 
 1. Press the **WRITE** switch -- the LCD shows "Write? P:xxx B:x"
 2. Use PARAM 1 to select **Program 128**, PARAM 2 to select **Bank 1**

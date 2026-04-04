@@ -52,6 +52,8 @@ The filter envelope (ENV 1) shapes the brightness of every note. With the filter
 1. Set **LPF Frequency** to `0` (closed), **Resonance** to `30`
 2. Set **Env Amount** to `99` (full positive envelope amount)
 3. Set ENV 1: **Attack** = `0`, **Decay** = `29`, **Sustain** = `10`, **Release** = `0`
+<div data-evolver-panel data-knobs="knob-filter-frequency:0,knob-filter-resonance:30,knob-filter-envamount:99,knob-filter-attack:0,knob-filter-decay:29,knob-filter-sustain:10,knob-filter-release:0" data-highlights="knob-filter-envamount:amber,knob-filter-decay:amber,knob-filter-sustain:amber,knob-filter-resonance:blue" data-sections="filter"></div>
+
 4. Play a note -- you should hear a punchy, plucky sound. The filter opens instantly on the attack, then closes quickly during the decay, letting only a small amount of brightness sustain
 
 Now try variations:
@@ -70,6 +72,8 @@ Create a pad that slowly brightens:
 1. Set ENV 1: **Attack** = `98`, **Decay** = `0`, **Sustain** = `100`, **Release** = `50`
 2. Set **Env Amount** to `99`, **LPF Frequency** to `0`, **Resonance** to `20`
 3. Set ENV 2 (VCA): **Attack** = `50`, **Decay** = `0`, **Sustain** = `100`, **Release** = `50`
+<div data-evolver-panel data-knobs="knob-filter-frequency:0,knob-filter-resonance:20,knob-filter-envamount:99,knob-filter-attack:98,knob-filter-sustain:100,knob-filter-release:50,knob-amp-attack:50,knob-amp-sustain:100,knob-amp-release:50" data-highlights="knob-filter-attack:amber,knob-filter-envamount:amber,knob-amp-attack:amber,knob-amp-release:blue" data-sections="filter,amp"></div>
+
 4. Play a sustained note -- you should hear the volume and brightness both swell in slowly. The filter envelope and VCA envelope working together create the pad character (Anu Kirk p.46-47)
 
 ### Exercise 4: Inverted Envelope (5 min)

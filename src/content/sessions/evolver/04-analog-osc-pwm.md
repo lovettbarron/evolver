@@ -51,6 +51,8 @@ This is the classic analog string sound. Enter these values exactly as specified
 9. Set **Attack** to `61` (slow fade in for string character)
 10. Set **Release** to `34` (gentle fade out)
 
+<div data-evolver-panel data-knobs="knob-osc-shapepw:66,knob-osc-level:50,knob-lfo-frequency:42,knob-lfo-amount:30,knob-lfo-shape:32,knob-amp-attack:61,knob-amp-release:34" data-highlights="knob-osc-shapepw:blue,knob-lfo-frequency:amber,knob-lfo-amount:amber,knob-lfo-shape:amber,switch-lfo1:amber,switch-lfo2:blue" data-sections="oscillators,lfos,amp"></div>
+
 Now play a sustained note in the middle of the keyboard. Hold it for at least 10 seconds. You should hear the sound swirl and breathe -- the two LFOs at slightly different speeds create an ever-shifting, organic texture that never quite repeats.
 
 "A classic analog string sound comes from modulating the pulse width" -- Anu Kirk p.13
@@ -103,6 +105,8 @@ Load the basic patch again. Set Osc 3 and 4 Level to `0`. Now enter:
 7. Set **Release** to `83`
 8. Set **Amount** to `61`
 9. Set **Destination** to `OAP` (Osc ALL Pulse Width)
+
+<div data-evolver-panel data-knobs="knob-osc-shapepw:1,knob-env3-attack:26,knob-env3-decay:78,knob-env3-sustain:7,knob-env3-release:83,knob-env3-amount:61" data-highlights="knob-osc-shapepw:blue,knob-env3-attack:amber,knob-env3-decay:amber,knob-env3-sustain:amber,knob-env3-amount:amber" data-sections="oscillators,envelope3"></div>
 
 Play some staccato notes. You should hear a "bwaaah" attack -- the envelope sweeps the pulse width from narrow to wide and back, giving each note a shaped timbral contour. Instead of continuous LFO modulation, you get a single shaped sweep per note.
 

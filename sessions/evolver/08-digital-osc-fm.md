@@ -33,6 +33,8 @@ From the basic patch:
 
 ### Exercise 1: Basic FM -- Sine on Sine (5 min)
 
+<div data-evolver-panel data-knobs="knob-osc-level:50,knob-osc-shapepw:1,knob-osc-frequency:0,knob-osc-fm:0" data-highlights="switch-osc3:amber,switch-osc4:blue,knob-osc-fm:amber" data-sections="oscillators"></div>
+
 1. Play a few notes to hear the pure sine wave from Osc 3 -- you should hear a simple, clean tone
 2. Set **FM 4->3** to `5` -- you should hear the sine start to develop harmonics, becoming slightly brighter
 3. Increase **FM 4->3** to `12` -- you should hear a noticeably metallic, bell-like quality. "That is not a sine wave anymore, is it?" (Anu Kirk p.27)
@@ -89,6 +91,8 @@ Combine what you have learned to create a classic FM bell:
 3. **FM 4->3** = `18`
 4. **VCA Envelope (ENV 2)**: Attack = `0`, Decay = `70`, Sustain = `0`, Release = `45`
 5. **Filter Envelope (ENV 1)**: Attack = `0`, Decay = `55`, Sustain = `20`, Release = `30`, **Env Amount** = `60`, **LPF Frequency** = `80`
+
+<div data-evolver-panel data-knobs="knob-osc-shapepw:1,knob-osc-frequency:0,knob-osc-fm:18,knob-amp-attack:0,knob-amp-decay:70,knob-amp-sustain:0,knob-amp-release:45,knob-filter-frequency:80,knob-filter-envamount:60,knob-filter-attack:0,knob-filter-decay:55,knob-filter-sustain:20,knob-filter-release:30" data-highlights="knob-osc-fm:amber,knob-amp-decay:amber,knob-filter-envamount:amber,knob-filter-decay:blue" data-sections="oscillators,amp,filter"></div>
 
 Play a note. You should hear a bell-like tone that rings and decays naturally. Play in the mid to upper range for the most bell-like quality. Lower notes will sound more like a marimba.
 
