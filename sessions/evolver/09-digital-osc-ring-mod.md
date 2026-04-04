@@ -33,6 +33,8 @@ From the basic patch:
 
 ### Exercise 1: Basic Ring Mod (5 min)
 
+<div data-evolver-panel data-knobs="knob-osc-level:0,knob-osc-ringmod:100,knob-osc-frequency:0,knob-osc-shapepw:1" data-highlights="switch-osc3:blue,switch-osc4:blue,knob-osc-ringmod:amber" data-sections="oscillators"></div>
+
 1. Set **Ring Mod 4->3** to `100` -- "Use OSC 4 to modulate OSC 3" (Anu Kirk p.33)
 2. Play notes up and down the keyboard -- you should hear sound even though all oscillator levels are at 0. "You will get output from the Oscillator even if the Oscillator Level is set to zero" (DSI Manual p.16)
 3. Notice the sound has a metallic, bell-like quality -- this is where "ring modulation" gets its name
@@ -75,6 +77,8 @@ Create a usable ring mod texture by combining with other elements:
 4. Bring back analog warmth: **Osc 1 Level** = `30`, **Osc 1 Shape** = `Saw`
 5. **VCA Envelope**: Attack = `35`, Decay = `0`, Sustain = `100`, Release = `50`
 6. **LPF Frequency** = `100`, **Resonance** = `30`
+
+<div data-evolver-panel data-knobs="knob-osc-ringmod:100,knob-osc-level:30,knob-osc-shapepw:0,knob-amp-attack:35,knob-amp-sustain:100,knob-amp-release:50,knob-filter-frequency:100,knob-filter-resonance:30" data-highlights="knob-osc-ringmod:amber,knob-osc-level:amber,knob-filter-frequency:blue,knob-filter-resonance:blue" data-sections="oscillators,filter,amp"></div>
 
 Play some notes. You should hear a metallic texture with analog warmth underneath and a slow attack envelope. The ring mod creates the shimmer while the analog saw grounds it.
 

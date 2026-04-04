@@ -40,6 +40,8 @@ Build a hybrid patch step by step, listening to how each layer changes the chara
 6. Set **Osc 4 Shape** to `15`, **Level** to `25` -- you should hear stereo digital detail on both sides
 7. The analog oscillators provide the warm foundation; the digital add complexity on top. Adjust **Osc 3+4 Level** between `15` and `40` to find the right balance -- you should hear the blend shift from analog-dominant to more digital
 
+<div data-evolver-panel data-knobs="knob-osc-level:45,knob-osc-fine:2,knob-osc-shapepw:0" data-highlights="switch-osc1:amber,switch-osc2:amber,switch-osc3:amber,switch-osc4:amber,knob-osc-level:amber,knob-osc-fine:blue" data-sections="oscillators"></div>
+
 "Remember that you can use the analog oscillators at the same time! You can use them to subtly fatten up a primarily digital/FM sound" -- Anu Kirk p.36
 
 ### Exercise 2: Hybrid with FM (5 min)
@@ -81,6 +83,8 @@ Create a final hybrid patch combining the best of what you have learned:
 5. **FM 4->3** = `8`
 6. **Osc Slop** = `2` (subtle analog drift)
 7. **VCA Envelope**: Attack = `20`, Decay = `0`, Sustain = `100`, Release = `30`
+
+<div data-evolver-panel data-knobs="knob-osc-frequency:0,knob-osc-fine:3,knob-osc-level:40,knob-osc-shapepw:0,knob-osc-fm:8,knob-amp-attack:20,knob-amp-sustain:100,knob-amp-release:30" data-highlights="knob-osc-level:amber,knob-osc-fm:amber,knob-osc-fine:amber,knob-amp-attack:blue" data-zoom="false"></div>
 
 Play a sustained note. You should hear warm analog oscillators with subtle detuning and drift, topped with harmonically complex digital oscillators enhanced by light FM. The sum of four oscillators across both stereo channels should be wide and full.
 

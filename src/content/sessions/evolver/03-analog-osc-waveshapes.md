@@ -30,6 +30,8 @@ From the basic patch:
 
 ## Exercises
 
+<div data-evolver-panel data-knobs="knob-osc-level:50,knob-osc-frequency:0,knob-osc-shapepw:0" data-highlights="switch-osc1:amber,switch-osc2:blue,knob-osc-level:blue,knob-osc-shapepw:amber" data-sections="oscillators"></div>
+
 ### Exercise 1: The Four Shapes (5 min)
 
 Solo **Osc 1** (hold the OSC 1 button). Hold down a note around middle C and change the **Shape** parameter through each option. Listen carefully to each for at least 5 seconds:
@@ -65,6 +67,8 @@ Release the Osc 1 solo. Now you hear both Osc 1 (left) and Osc 2 (right) in ster
 1. Set both to **Saw**. Play a sustained note -- you should hear a full, classic synth sound in stereo
 2. Set Osc 1 to **Saw**, Osc 2 to **Tri** -- you should hear the saw dominate but the triangle adds warmth and body underneath
 3. Set both to **P-50** -- you should hear a very hollow, organ-like quality
+<div data-evolver-panel data-knobs="knob-osc-shapepw:64,knob-osc-fine:0,knob-osc-level:50" data-highlights="switch-osc1:amber,switch-osc2:amber,knob-osc-shapepw:amber,knob-osc-fine:amber" data-sections="oscillators"></div>
+
 4. Set Osc 1 to **P-48**, Osc 2 to **P-52** -- slightly different pulse widths. You should hear subtle movement because the tiny difference creates timbral interaction between the channels
 5. Now set Osc 1 **Fine** to `+3` cents, keeping both as slightly different pulses -- you should hear a slow beating/chorus effect from the detuning
 6. Set Osc 2 **Fine** to `-3` cents (so they detune in opposite directions) -- the beating should be richer now

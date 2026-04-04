@@ -33,6 +33,8 @@ From the basic patch:
 
 ### Exercise 1: Waveshape Survey (8 min)
 
+<div data-evolver-panel data-knobs="knob-osc-level:50,knob-osc-frequency:0,knob-osc-shapepw:1" data-highlights="switch-osc3:amber,knob-osc-shapepw:amber,knob-osc-level:blue" data-sections="oscillators"></div>
+
 Hold a note around middle C and step through the digital waveshapes:
 
 1. **Shape 1** -- this is a sine wave. You should hear a pure, simple tone with no harmonics
@@ -53,6 +55,8 @@ See Anu Kirk p.22-25 ("Exploring the Digital Difference"), DSI Manual p.16
 ### Exercise 2: Digital vs Analog Character (5 min)
 
 Compare the digital and analog sound directly:
+
+<div data-evolver-panel data-knobs="knob-osc-level:50,knob-osc-shapepw:2" data-highlights="switch-osc1:amber,switch-osc3:amber,knob-osc-shapepw:blue" data-sections="oscillators"></div>
 
 1. Set **Osc 3 Shape** to `2` (digital sawtooth), **Level** to `50`
 2. Set **Osc 1 Level** to `50`, **Shape** to `Saw` (analog sawtooth)

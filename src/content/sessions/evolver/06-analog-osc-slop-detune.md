@@ -34,6 +34,8 @@ From the basic patch:
 
 Detuning means setting oscillators to slightly different pitches so they beat against each other, creating thickness and movement.
 
+<div data-evolver-panel data-knobs="knob-osc-frequency:0,knob-osc-shapepw:0,knob-osc-level:50,knob-osc-fine:0" data-highlights="switch-osc1:amber,switch-osc2:amber,knob-osc-fine:amber" data-sections="oscillators"></div>
+
 1. Play a sustained note and listen -- you should hear two sawtooth waves in stereo, clean and static
 2. Set **Osc 1 Fine** to `+3` -- you should hear a slow, gentle beating as the oscillators drift in and out of phase
 3. Set **Osc 2 Fine** to `-3` -- you should hear the beating become richer, with a wider chorus-like quality (total detuning is now 6 cents)
@@ -78,6 +80,8 @@ Now bring in the digital oscillators to create a hybrid layered sound:
 5. Set **Osc 3 Shape** to `1` (sine wave), **Osc 4 Shape** to `1` -- you should hear a subtle warmth added underneath the analog brightness
 6. Try **Osc 3 Shape** to `4`, **Osc 4 Shape** to `4` -- you should hear more harmonic complexity blended in
 7. Adjust digital levels: try `15` for subtle support, `50` for equal presence -- find a balance where the analog warmth and digital detail complement each other
+
+<div data-evolver-panel data-knobs="knob-osc-frequency:0,knob-osc-fine:3,knob-osc-shapepw:0,knob-osc-level:45" data-highlights="switch-osc1:amber,switch-osc2:amber,switch-osc3:amber,switch-osc4:amber,knob-osc-fine:amber,knob-osc-level:amber" data-zoom="false"></div>
 
 **Save this patch** as your "Fat Detuned" patch.
 
