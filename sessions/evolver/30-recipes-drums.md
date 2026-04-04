@@ -43,6 +43,8 @@ Using self-oscillating filter for a deep, thumpy kick (Anu Kirk p.95-96). The Ev
    - The filter starts high (click/punch) and decays down to the base frequency (the thump)
 3. VCA -- very short:
    - ENV 2: **Attack** = `0`, **Decay** = `20`, **Sustain** = `0`, **Release** = `5`
+<div data-evolver-panel data-knobs="knob-osc-level:0,knob-noise-level:0,knob-filter-frequency:40,knob-filter-resonance:90,knob-filter-envamount:99,knob-filter-attack:0,knob-filter-decay:25,knob-filter-sustain:0,knob-filter-release:5,knob-amp-attack:0,knob-amp-decay:20,knob-amp-sustain:0,knob-amp-release:5" data-highlights="knob-filter-resonance:amber,knob-filter-envamount:amber,knob-filter-frequency:amber,switch-4pole:amber" data-sections="filter,amp"></div>
+
 4. Play a key. You should hear a deep thump with a punchy attack. Adjust:
    - **LPF Frequency** lower (30-35) for deeper kick
    - **ENV 1 Decay** shorter (15-20) for tighter kick, longer (30-35) for boomy kick
@@ -70,6 +72,8 @@ Noise body with FM transient for a sharp, metallic snare attack (Anu Kirk p.96-9
 4. FM decay for the transient snap:
    - **ENV 3**: Destination = `FM4` (FM 4->3 Amount), Amount = `70`, Attack = `0`, Decay = `15`, Sustain = `0`, Release = `5`
    - The FM is strongest at the very start (the "crack") and decays quickly, leaving the noise tail
+<div data-evolver-panel data-knobs="knob-osc-level:35,knob-osc-fm:60,knob-noise-level:55,knob-filter-frequency:75,knob-filter-resonance:10,knob-filter-envamount:40,knob-filter-attack:0,knob-filter-decay:30,knob-filter-sustain:0,knob-filter-release:10,knob-amp-attack:0,knob-amp-decay:25,knob-amp-sustain:0,knob-amp-release:10,knob-env3-amount:70,knob-env3-attack:0,knob-env3-decay:15,knob-env3-sustain:0,knob-env3-release:5" data-highlights="knob-osc-fm:amber,knob-noise-level:amber,knob-env3-amount:amber,switch-osc3:amber,switch-osc4:amber" data-sections="oscillators,noise,filter,envelope3"></div>
+
 5. Play a key. You should hear a sharp transient followed by a noisy tail. Adjust:
    - **Noise Volume** higher for more body, lower for more crack
    - **Osc 4 Frequency** to different intervals for different metallic characters
@@ -90,6 +94,8 @@ Short noise bursts shaped by the highpass filter for bright, metallic percussion
    - **Env Amount** = `15`, ENV 1: **Attack** = `0`, **Decay** = `12`, **Sustain** = `0`, **Release** = `5`
 3. VCA -- extremely short for closed hat:
    - ENV 2: **Attack** = `0`, **Decay** = `8`, **Sustain** = `0`, **Release** = `3`
+<div data-evolver-panel data-knobs="knob-osc-level:0,knob-noise-level:70,knob-filter-frequency:95,knob-filter-resonance:5,knob-filter-envamount:15,knob-filter-attack:0,knob-filter-decay:12,knob-filter-sustain:0,knob-filter-release:5,knob-hpf-frequency:60,knob-amp-attack:0,knob-amp-decay:8,knob-amp-sustain:0,knob-amp-release:3" data-highlights="knob-noise-level:amber,knob-hpf-frequency:amber,knob-amp-decay:amber" data-sections="noise,filter,hp-filter,amp"></div>
+
 4. Play a key. You should hear a short, bright "tick" -- a closed hi-hat
 5. For an open hi-hat variation: increase **ENV 2 Decay** to `35` and **Release** to `20`. The longer decay lets the noise sustain, creating the open hat "tssssh"
 6. Add **Osc 3 Level** = `15`, **FM 4->3** = `45` for metallic ring on top of the noise
@@ -128,6 +134,8 @@ Now combine all three drum sounds into a single sequenced patch. The sequencer m
    - Step 9 = `10`, Step 10 = `60`, Step 11 = `60`, Step 12 = `80`
    - Step 13 = `10`, Step 14 = `oFF`, Step 15 = `60`, Step 16 = `80`
    - Step 17 = `rST`
+<div data-evolver-panel data-knobs="knob-osc-level:30,knob-osc-fm:20,knob-noise-level:40,knob-filter-frequency:60,knob-filter-resonance:50,knob-hpf-frequency:20,knob-filter-envamount:70,knob-filter-attack:0,knob-filter-decay:20,knob-filter-sustain:0,knob-filter-release:5,knob-amp-attack:0,knob-amp-decay:18,knob-amp-sustain:0,knob-amp-release:5" data-highlights="switch-seq1:amber,switch-seq2:amber,switch-seq3:amber,switch-startstop:amber,knob-filter-frequency:blue,knob-noise-level:blue" data-sections="sequencer,filter,noise" data-zoom="false"></div>
+
 5. Set **Trigger Select** = `Seq Only` and press **START/STOP**
 6. You should hear a recognizable drum pattern: kicks on beats 1, 9, 13 (low filter, high resonance, low noise), snares on 5, 12, 16 (mid filter, some noise), and hats filling in between
 7. Add **Distortion** = `12` for weight and **Delay 1 Time** = `3 Steps`, **Level** = `15` for space

@@ -37,6 +37,8 @@ From the basic patch:
 - ENV 2: **Attack** = `0`, **Decay** = `0`, **Sustain** = `100`, **Release** = `0`
 - Set the VCA to always pass audio (the external signal should be heard without pressing keys)
 
+<div data-evolver-panel data-knobs="knob-osc-level:0,knob-noise-level:0,knob-extin-level:80,knob-amp-attack:0,knob-amp-decay:0,knob-amp-sustain:100,knob-amp-release:0" data-highlights="knob-extin-level:amber,knob-osc-level:blue,knob-noise-level:blue" data-sections="ext-in,oscillators,amp"></div>
+
 **Important:** You may need to set **Trigger Select** to `Seq Only` and start the sequencer with a single held note, OR set **VCA Level** = `100` (bypasses the envelope). Check DSI Manual p.19 for the VCA Level parameter -- at `100`, the VCA stays open regardless of envelope state.
 
 ## Exercises
@@ -67,6 +69,8 @@ Add the Evolver's delay and feedback to the filtered external audio.
 4. Add **Tuned Feedback**: **Level** = `25`, **Frequency** = `24` (C2)
    - This adds a pitched resonance to the signal -- the external audio gains a tonal character at the feedback frequency
    - Try different Feedback Frequency values to find pitches that complement your source material
+<div data-evolver-panel data-knobs="knob-extin-level:80,knob-filter-frequency:70,knob-filter-resonance:55,knob-delay-time:30,knob-delay-level:45,knob-delay-feedback1:50,knob-delay-feedback2:30,knob-feedback-amount:25,knob-feedback-frequency:24,knob-hpf-frequency:30" data-highlights="knob-filter-frequency:amber,knob-delay-feedback1:amber,knob-delay-feedback2:amber,knob-feedback-amount:amber,knob-hpf-frequency:blue" data-sections="filter,delay,feedback,hp-filter" data-zoom="false"></div>
+
 5. For dub-style effects: sweep the filter cutoff while the delay feeds back. The combination of analog filter sweep + delay feedback is the classic dub sound
 
 ### Exercise 3: Distortion and Destruction (4 min)

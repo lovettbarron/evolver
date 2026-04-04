@@ -40,6 +40,8 @@ From the basic patch:
 
 This creates a warm, hybrid sound with delay and moderate filter activity -- a good canvas for generative sequencing.
 
+<div data-evolver-panel data-knobs="knob-osc-shapepw:0,knob-osc-level:40,knob-osc-fine:66,knob-filter-frequency:55,knob-filter-resonance:50,knob-filter-envamount:45,knob-filter-keyamount:72,knob-filter-attack:5,knob-filter-decay:55,knob-filter-sustain:20,knob-filter-release:25,knob-amp-attack:3,knob-amp-decay:50,knob-amp-sustain:60,knob-amp-release:30,knob-delay-time:30,knob-delay-level:40,knob-delay-feedback1:35" data-highlights="knob-filter-frequency:blue,knob-delay-level:blue,switch-seq-edit:amber,switch-startstop:amber" data-zoom="false"></div>
+
 ## Exercises
 
 ### Exercise 1: Track 1 -- Melodic Foundation (5 min)
@@ -98,6 +100,8 @@ Layer slower LFO modulation on top of the sequencer for organic movement.
 5. Add **Feedback Level** = `30`, **Feedback Frequency** to `24` -- adds a subtle resonant undertone
 6. Adjust **Delay Feedback 2** to `20` -- delay echoes pass through the filter, adding depth
 7. Listen to the complete patch for 1-2 minutes. It should sound like a complete piece of music that constantly shifts and evolves
+
+<div data-evolver-panel data-knobs="knob-osc-level:40,knob-filter-frequency:55,knob-filter-resonance:50,knob-lfo-frequency:4,knob-lfo-amount:10,knob-delay-level:40,knob-delay-feedback1:35,knob-delay-feedback2:20,knob-feedback-amount:30,knob-feedback-frequency:24" data-highlights="switch-seq1:amber,switch-seq2:amber,switch-seq3:amber,switch-seq4:amber,switch-lfo1:amber,switch-lfo2:amber,switch-lfo3:amber,knob-feedback-amount:amber" data-zoom="false"></div>
 
 **Save this patch** as your "Generative Sequence" patch. This is a landmark patch in the curriculum -- the Evolver playing itself.
 

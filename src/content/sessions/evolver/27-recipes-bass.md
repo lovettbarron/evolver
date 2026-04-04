@@ -43,6 +43,8 @@ Deep, fundamental low end. Minimal harmonics, tight envelope, mono output.
 3. VCA for tight bass envelope:
    - ENV 2: **Attack** = `0`, **Decay** = `30`, **Sustain** = `80`, **Release** = `10`
 4. Output: **Pan** = `Mono` (bass should be centered for mix compatibility)
+<div data-evolver-panel data-knobs="knob-osc-shapepw:0,knob-osc-level:55,knob-osc-fine:65,knob-filter-frequency:35,knob-filter-resonance:0,knob-filter-envamount:25,knob-filter-keyamount:72,knob-filter-attack:0,knob-filter-decay:40,knob-filter-sustain:60,knob-filter-release:15,knob-amp-attack:0,knob-amp-decay:30,knob-amp-sustain:80,knob-amp-release:10" data-highlights="knob-osc-level:amber,knob-filter-frequency:amber,knob-filter-resonance:blue,switch-4pole:amber" data-sections="oscillators,filter,amp"></div>
+
 5. Play notes in the C1-C3 range. You should hear a deep, round sub bass with a gentle filter pluck on attack
 6. Add **Osc Slop** = `1` for subtle analog warmth
 
@@ -67,6 +69,8 @@ Resonant filter sweep, glide between notes, aggressive character. The classic 30
 4. Acid character:
    - **Glide** (Osc 1 and 2) = `30` (fingered glide for slides between notes)
    - **Distortion** = `15` (subtle edge)
+<div data-evolver-panel data-knobs="knob-osc-shapepw:0,knob-osc-level:55,knob-osc-fine:67,knob-osc-glide:30,knob-filter-frequency:45,knob-filter-resonance:70,knob-filter-envamount:80,knob-filter-keyamount:72,knob-filter-attack:0,knob-filter-decay:45,knob-filter-sustain:5,knob-filter-release:15,knob-amp-attack:0,knob-amp-decay:35,knob-amp-sustain:70,knob-amp-release:12,knob-distortion-amount:15" data-highlights="knob-filter-resonance:amber,knob-filter-envamount:amber,knob-osc-glide:amber,knob-distortion-amount:amber,switch-4pole:amber" data-sections="oscillators,filter,amp,distortion"></div>
+
 5. Play legato notes in the C1-C2 range. You should hear the classic acid squelch: resonant filter sweep on each note, glide between held notes
 6. For extra acid: add **Velocity** on filter = `40` -- harder playing opens the filter more
 7. Try it with a sequence: Seq 1 Dest = `OAF`, program `36, 36, 48, 48, 43, oFF, 46, 36`, Step 9 = `rST`, BPM = `130`, Clock Divide = `16th`
@@ -91,6 +95,8 @@ Metallic, punchy low end using FM between digital oscillators. Modern bass sound
    - ENV 2: **Attack** = `0`, **Decay** = `35`, **Sustain** = `65`, **Release** = `15`
 4. FM envelope for punch -- the FM amount decreases over time for a metallic attack:
    - **ENV 3**: Destination = `FM4` (FM 4->3 Amount), Amount = `55`, Attack = `0`, Decay = `40`, Sustain = `10`, Release = `15`
+<div data-evolver-panel data-knobs="knob-osc-level:55,knob-osc-fm:45,knob-filter-frequency:55,knob-filter-resonance:20,knob-filter-envamount:40,knob-filter-keyamount:72,knob-filter-attack:0,knob-filter-decay:50,knob-filter-sustain:15,knob-filter-release:15,knob-amp-attack:0,knob-amp-decay:35,knob-amp-sustain:65,knob-amp-release:15,knob-env3-destination:33,knob-env3-amount:55,knob-env3-attack:0,knob-env3-decay:40,knob-env3-sustain:10,knob-env3-release:15" data-highlights="knob-osc-fm:amber,knob-env3-amount:amber,knob-env3-destination:amber,switch-osc3:amber,switch-osc4:amber" data-sections="oscillators,filter,envelope3"></div>
+
 5. Play notes in the C1-C3 range. You should hear a metallic, complex bass that is punchy on the attack (high FM) and settles to a simpler tone (low FM) as the note sustains
 6. Try different Osc 4 Frequency ratios: set Osc 4 to `C1` (one octave up from Osc 3) for a different harmonic series. `G0` creates a 3:2 ratio -- experiment with intervals
 7. Add **Distortion** = `10` for extra grit

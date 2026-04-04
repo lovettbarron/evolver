@@ -37,6 +37,8 @@ From the basic patch, build a versatile performance sound:
 
 This creates a warm sound with a moderate filter envelope -- a good canvas for expression.
 
+<div data-evolver-panel data-knobs="knob-osc-shapepw:0,knob-osc-level:50,knob-osc-fine:68,knob-filter-frequency:50,knob-filter-resonance:40,knob-filter-envamount:55,knob-filter-keyamount:72,knob-filter-attack:5,knob-filter-decay:55,knob-filter-sustain:35,knob-filter-release:30,knob-amp-attack:3,knob-amp-sustain:100,knob-amp-release:30" data-highlights="knob-filter-frequency:blue,knob-filter-resonance:blue,knob-filter-envamount:blue" data-sections="oscillators,filter,amp"></div>
+
 ## Exercises
 
 ### Exercise 1: Velocity Mappings (5 min)
@@ -106,6 +108,8 @@ If you have an expression pedal or breath controller connected, map them. If not
    - Mod wheel controls overall brightness
    - Aftertouch adds vibrato and filter intensity
    - Pedal (if available) adds another filter layer
+
+<div data-evolver-panel data-knobs="knob-osc-level:50,knob-osc-fine:68,knob-osc-fm:10,knob-filter-frequency:50,knob-filter-resonance:40,knob-filter-envamount:55,knob-filter-velocity:45,knob-filter-keyamount:72,knob-lfo-frequency:50,knob-lfo-amount:0,knob-mod-amount:20" data-highlights="knob-filter-velocity:amber,knob-lfo-frequency:amber,knob-mod-amount:amber,switch-mod1:amber" data-sections="filter,lfos,modulators" data-zoom="false"></div>
 
 **Save as "Performance Patch"**.
 

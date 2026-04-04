@@ -49,6 +49,8 @@ Lush, chorus-like pad using pulse width modulation on both analog oscillators (f
    - ENV 2: **Attack** = `40`, **Decay** = `0`, **Sustain** = `100`, **Release** = `45`
 5. Add subtle stereo delay:
    - **Delay 1 Time** = `3 Steps`, **Level** = `20`, **Feedback 1** = `25`
+<div data-evolver-panel data-knobs="knob-osc-shapepw:64,knob-osc-level:50,knob-osc-fine:69,knob-lfo-frequency:6,knob-lfo-amount:35,knob-filter-frequency:65,knob-filter-resonance:15,knob-filter-envamount:20,knob-filter-keyamount:72,knob-filter-attack:30,knob-filter-decay:50,knob-filter-sustain:60,knob-filter-release:45,knob-amp-attack:40,knob-amp-sustain:100,knob-amp-release:45,knob-delay-time:40,knob-delay-level:20,knob-delay-feedback1:25" data-highlights="knob-lfo-frequency:amber,knob-lfo-amount:amber,switch-lfo1:amber,switch-lfo2:amber,knob-amp-attack:amber,knob-amp-release:amber" data-sections="oscillators,lfos,filter,amp"></div>
+
 6. Hold a chord (or single notes -- the Evolver is mono, but the patch should sound full). The PWM creates a natural chorus effect without any chorus processor. You should hear the tone width constantly shifting
 
 **Save as "PWM Pad"**.
@@ -75,6 +77,8 @@ Evolving digital pad using waveshape morphing and detuning between digital and a
    - ENV 2: **Attack** = `45`, **Decay** = `0`, **Sustain** = `100`, **Release** = `50`
 5. Add **Filter Split** = `15` for subtle stereo separation between the L and R filter cutoffs
 6. Add delay for space: **Delay 1 Time** = `4 Steps`, **Level** = `25`, **Feedback 1** = `30`
+<div data-evolver-panel data-knobs="knob-osc-level:30,knob-osc-fine:67,knob-lfo-frequency:3,knob-lfo-amount:20,knob-filter-frequency:70,knob-filter-resonance:20,knob-filter-envamount:15,knob-filter-keyamount:72,knob-filter-attack:35,knob-filter-decay:60,knob-filter-sustain:55,knob-filter-release:50,knob-filter-lrsplit:15,knob-amp-attack:45,knob-amp-sustain:100,knob-amp-release:50,knob-delay-time:50,knob-delay-level:25,knob-delay-feedback1:30" data-highlights="knob-lfo-frequency:amber,knob-lfo-amount:amber,switch-lfo1:amber,switch-lfo2:amber,knob-filter-lrsplit:amber,switch-osc3:amber,switch-osc4:amber" data-zoom="false"></div>
+
 7. Hold a note and listen for 20 seconds. The tone character slowly morphs as the waveshapes change underneath the analog layer
 
 **Save as "Waveshape Pad"**.
@@ -107,6 +111,8 @@ Dense, evolving texture using multiple modulation sources stacked together -- LF
 6. Add effects for depth:
    - **Delay 1 Time** = `3 Steps`, **Level** = `30`, **Feedback 1** = `35`, **Feedback 2** = `15`
    - **Feedback Level** = `20`, **Feedback Frequency** = `24`
+<div data-evolver-panel data-knobs="knob-osc-level:35,knob-osc-fine:72,knob-osc-fm:15,knob-lfo-frequency:4,knob-lfo-amount:15,knob-filter-frequency:60,knob-filter-resonance:35,knob-filter-envamount:25,knob-filter-keyamount:72,knob-filter-attack:50,knob-filter-decay:70,knob-filter-sustain:40,knob-filter-release:55,knob-amp-attack:55,knob-amp-sustain:100,knob-amp-release:55,knob-delay-time:40,knob-delay-level:30,knob-delay-feedback1:35,knob-delay-feedback2:15,knob-feedback-amount:20,knob-feedback-frequency:24,knob-mod-amount:8" data-highlights="knob-lfo-frequency:amber,switch-lfo1:amber,switch-lfo2:amber,switch-lfo3:amber,switch-lfo4:amber,knob-osc-fm:amber,knob-mod-amount:amber,knob-feedback-amount:amber" data-zoom="false"></div>
+
 7. Hold a note and listen for 30+ seconds. The patch should constantly evolve -- filter moving, FM shifting, pulse width changing, stereo image drifting. No two moments sound identical
 
 **Save as "Modulated Texture"**.
