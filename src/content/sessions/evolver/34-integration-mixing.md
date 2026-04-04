@@ -48,6 +48,8 @@ Every sound occupies a frequency range. Two sounds in the same range fight for s
    - Set **HPF Frequency** = `25` -- remove sub-bass content that would clash with the bass part
    - Set **Output Pan** = `St2` (moderate stereo) -- the lead should have presence but not be fully wide
    - Record a melody over the bass
+<div data-evolver-panel data-knobs="knob-osc-level:50,knob-filter-frequency:55,knob-hpf-frequency:25,knob-amp-outputpan:72" data-highlights="knob-hpf-frequency:amber,knob-amp-outputpan:amber,knob-filter-frequency:blue" data-sections="hp-filter,amp,filter"></div>
+
 4. Listen back. The bass and lead should occupy different spaces without competing. If they clash:
    - Lower the lead's LPF Frequency slightly to remove harsh upper harmonics
    - Or raise the bass's LPF Frequency to let the lead's low mids through
@@ -65,6 +67,8 @@ Use the Evolver's stereo architecture to create width without muddiness.
    - **Center:** bass (mono, low)
    - **Moderate width:** lead (slight stereo, mid)
    - **Wide:** pad (full stereo, mid-high)
+<div data-evolver-panel data-knobs="knob-amp-outputpan:0,knob-hpf-frequency:35,knob-filter-lrsplit:20" data-highlights="knob-amp-outputpan:amber,knob-hpf-frequency:amber,knob-filter-lrsplit:amber" data-sections="amp,hp-filter,filter"></div>
+
 3. Evolver Output Pan options and their mix roles (DSI Manual p.19):
    - `Mono` = centered, for bass and elements that need focus
    - `St1` = full stereo (L hard left, R hard right), for pads and wide textures

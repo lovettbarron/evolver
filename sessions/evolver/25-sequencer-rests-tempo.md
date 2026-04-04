@@ -32,6 +32,8 @@ From the basic patch:
 - Set ENV 2 (VCA): **Decay** = `40`, **Sustain** = `70`, **Release** = `15`
 - Set **BPM** to `115`, **Clock Divide** to `16th`
 
+<div data-evolver-panel data-knobs="knob-osc-level:45,knob-osc-fine:66,knob-filter-frequency:75,knob-filter-resonance:45,knob-filter-envamount:55,knob-filter-decay:40,knob-filter-sustain:20,knob-amp-decay:40,knob-amp-sustain:70,knob-amp-release:15" data-highlights="knob-filter-frequency:blue,knob-filter-resonance:blue,switch-startstop:amber,switch-seq-edit:amber" data-sections="filter,sequencer"></div>
+
 ## Exercises
 
 ### Exercise 1: Rests for Syncopation (6 min)
@@ -85,6 +87,8 @@ When tracks have different lengths, the patterns shift against each other, creat
 4. Set **Seq 4 Destination** to `RES` (Resonance)
 5. Program Seq 4 with a 3-step loop: `10, 60, 90`, Step 4 = `rST`
 6. Press **START/STOP** -- Seq 1 cycles every 8 steps, Seq 3 every 5 steps, Seq 4 every 3 steps. The combined pattern does not repeat until step 120 (LCM of 8, 5, 3). It sounds like it is constantly evolving
+
+<div data-evolver-panel data-knobs="knob-osc-level:45,knob-osc-fine:66,knob-filter-frequency:75,knob-filter-resonance:45" data-highlights="switch-seq1:amber,switch-seq2:amber,switch-seq3:amber,switch-seq4:amber,switch-startstop:amber" data-sections="sequencer" data-zoom="false"></div>
 
 **Save this patch** as your "Complex Rhythm" patch.
 

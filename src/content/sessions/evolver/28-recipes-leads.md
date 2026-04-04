@@ -49,6 +49,8 @@ The classic Prophet sync sound -- hard sync creates aggressive, harmonically ric
    - **Pressure Destination** = `LF1A` (LFO 1 Amount), **Amount** = `30`
    - **LFO 1**: Shape = `Tri`, Frequency = `50`, Amount = `0`, Destination = `OAF` (vibrato via aftertouch)
    - **Filter Velocity** = `35`
+<div data-evolver-panel data-knobs="knob-osc-shapepw:64,knob-osc-level:55,knob-osc-frequency:24,knob-filter-frequency:85,knob-filter-resonance:25,knob-filter-envamount:30,knob-filter-velocity:35,knob-filter-decay:60,knob-filter-sustain:40,knob-amp-attack:5,knob-amp-sustain:100,knob-amp-release:25,knob-env3-destination:33,knob-env3-amount:67,knob-env3-attack:15,knob-env3-decay:87,knob-env3-sustain:0,knob-env3-release:20" data-highlights="switch-sync:amber,knob-env3-amount:amber,knob-env3-destination:amber,knob-osc-frequency:amber" data-sections="oscillators,filter,envelope3"></div>
+
 6. Play melodic lines. The sync creates a biting, aggressive tone that cuts through any mix
 
 **Save as "Sync Lead"**.
@@ -75,6 +77,8 @@ Bright, bell-like lead using FM synthesis between digital oscillators (from Sess
    - **Mod Wheel Destination** = `FM4`, **Amount** = `50` (mod wheel adds FM complexity)
    - **Pressure Destination** = `OAF` (pitch vibrato), **Amount** = `15`
    - **LFO 1**: Shape = `Tri`, Frequency = `50`, Amount = `8`, Destination = `OAF`
+<div data-evolver-panel data-knobs="knob-osc-level:55,knob-osc-fm:35,knob-filter-frequency:90,knob-filter-resonance:15,knob-filter-envamount:25,knob-filter-keyamount:72,knob-filter-decay:55,knob-filter-sustain:50,knob-amp-attack:3,knob-amp-sustain:100,knob-amp-release:30,knob-lfo-frequency:50,knob-lfo-amount:8" data-highlights="knob-osc-fm:amber,switch-osc3:amber,switch-osc4:amber,knob-mod-source:amber,knob-mod-dest:amber,knob-mod-amount:amber" data-sections="oscillators,filter,modulators"></div>
+
 6. Play melodic lines. Soft playing produces a warm, simple tone; hard playing produces a bright, complex FM character. The mod wheel adds more complexity on demand
 
 **Save as "FM Lead"**.
@@ -102,6 +106,8 @@ Warm, expressive lead using resonant filter sweep and mod wheel control (classic
    - **Pressure Destination** = `LF1A`, **Amount** = `25`
    - **LFO 1**: Shape = `Tri`, Frequency = `48`, Amount = `0`, Destination = `OAF`
 5. Add slight delay: **Delay 1 Time** = `2 Steps`, **Level** = `30`, **Feedback 1** = `25`
+<div data-evolver-panel data-knobs="knob-osc-shapepw:0,knob-osc-level:50,knob-osc-fine:69,knob-filter-frequency:55,knob-filter-resonance:55,knob-filter-envamount:65,knob-filter-velocity:45,knob-filter-keyamount:72,knob-filter-attack:5,knob-filter-decay:60,knob-filter-sustain:35,knob-filter-release:30,knob-amp-attack:5,knob-amp-sustain:100,knob-amp-release:35,knob-delay-time:30,knob-delay-level:30,knob-delay-feedback1:25" data-highlights="knob-filter-frequency:amber,knob-filter-resonance:amber,knob-filter-envamount:amber,knob-filter-velocity:amber,knob-delay-level:blue" data-sections="oscillators,filter,delay"></div>
+
 6. Play with the mod wheel at zero: dark, subdued. Push the wheel up: bright, singing, resonant. This lead responds to your playing style
 
 **Save as "Filtered Lead"**.
