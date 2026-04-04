@@ -34,6 +34,8 @@ From the basic patch:
 
 This creates a resonant filter sound ideal for bass sequences.
 
+<div data-evolver-panel data-knobs="knob-filter-frequency:70,knob-filter-resonance:55,knob-filter-envamount:60,knob-filter-decay:50,knob-filter-sustain:10" data-highlights="knob-filter-frequency:blue,knob-filter-resonance:amber,switch-4pole:blue" data-sections="filter,sequencer" data-zoom="false"></div>
+
 ## Exercises
 
 ### Exercise 1: The Note Value System (5 min)
@@ -63,6 +65,8 @@ Build a proper bass sequence with rhythmic interest using rests.
 3. Press **START/STOP** -- you should hear a rhythmic bass pattern with the oFF steps creating syncopation
 4. Adjust **LPF Frequency** between `50` and `90` while the sequence plays -- hear how the filter changes the bass character from deep and dark to bright and acid
 5. Increase **Resonance** to `70` -- the classic acid squelch appears on the filter sweeps
+
+<div data-evolver-panel data-knobs="knob-filter-frequency:70,knob-filter-resonance:70,knob-filter-envamount:60" data-highlights="switch-seq1:amber,knob-filter-resonance:amber,switch-startstop:blue,led-seq-1:blue,led-seq-2:blue,led-seq-3:blue,led-seq-4:blue,led-seq-5:blue,led-seq-6:blue,led-seq-7:blue,led-seq-8:blue,led-seq-9:blue,led-seq-10:blue,led-seq-11:blue,led-seq-12:blue,led-seq-13:blue,led-seq-14:blue,led-seq-15:blue,led-seq-16:blue" data-sections="sequencer,filter" data-zoom="false"></div>
 
 **Save this** as your "Acid Bass Sequence" patch.
 

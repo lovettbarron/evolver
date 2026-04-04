@@ -35,6 +35,8 @@ From the basic patch:
 
 This gives a resonant, sustained sound that will clearly show filter modulation from the sequencer.
 
+<div data-evolver-panel data-knobs="knob-osc-shapepw:0,knob-osc-level:50,knob-filter-frequency:50,knob-filter-resonance:60,knob-filter-keyamount:72" data-highlights="knob-filter-frequency:amber,knob-filter-resonance:amber,switch-4pole:blue" data-sections="filter,sequencer" data-zoom="false"></div>
+
 ## Exercises
 
 ### Exercise 1: Filter Cutoff Sequence (5 min)
@@ -69,6 +71,8 @@ Use all 4 tracks for maximum animation.
 5. Select **Seq 4**, set Destination to `OAP` (All Osc Pulse Width)
 6. Program Seq 4: `20, 30, 40, 50, 60, 70, 80, 90`, Step 9 = `rST` -- gradual pulse width sweep
 7. Hold a note -- you now have 4 parameters changing simultaneously per step. The sound has rhythmic filter movement, variable resonance, delay that appears and disappears, and evolving pulse width
+
+<div data-evolver-panel data-knobs="knob-filter-frequency:50,knob-filter-resonance:60,knob-delay-time:100,knob-delay-feedback1:30" data-highlights="switch-seq1:amber,switch-seq2:amber,switch-seq3:amber,switch-seq4:amber,knob-filter-frequency:blue,knob-delay-time:blue" data-sections="sequencer,filter,delay" data-zoom="false"></div>
 
 **Save this patch** as your "Rhythmic Filter Sequence" patch.
 

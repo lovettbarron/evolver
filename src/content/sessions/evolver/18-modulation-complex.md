@@ -37,6 +37,8 @@ From the basic patch:
 
 This gives us a warm, hybrid pad with some filter envelope movement as a foundation.
 
+<div data-evolver-panel data-knobs="knob-osc-level:45,knob-osc-fine:66,knob-filter-frequency:50,knob-filter-resonance:35,knob-filter-keyamount:72,knob-filter-envamount:70,knob-filter-attack:20,knob-filter-decay:60,knob-filter-sustain:40,knob-amp-attack:30,knob-amp-sustain:100" data-highlights="knob-filter-frequency:blue,knob-filter-resonance:blue,knob-osc-level:blue" data-sections="oscillators,filter" data-zoom="false"></div>
+
 ## Exercises
 
 ### Exercise 1: Modulation of Modulation (8 min)
@@ -88,6 +90,8 @@ Pull everything together into a final complex modulation patch:
 8. **Mod Slot 2**: Source = `MWl` (Mod Wheel), Amount = `-40`, Destination = `FiL` -- mod wheel darkens
 9. **Pressure Destination** = `LF4A` (LFO 4 Amount), **Pressure Amount** = `30` -- aftertouch adds vibrato depth
 10. **Filter Velocity** = `45`, **VCA Velocity** = `25`
+
+<div data-evolver-panel data-knobs="knob-lfo-frequency:20,knob-lfo-amount:35,knob-filter-frequency:50,knob-filter-resonance:35,knob-filter-velocity:45,knob-amp-velocity:25,knob-mod-amount:8" data-highlights="knob-lfo-amount:amber,knob-lfo-frequency:amber,knob-mod-amount:amber,knob-filter-velocity:amber" data-sections="lfos,modulators,filter" data-zoom="false"></div>
 
 Play this patch. Hold notes for 30+ seconds. You should hear:
 - The filter sweep evolving in depth and character over time

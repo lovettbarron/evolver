@@ -40,6 +40,8 @@ Vibrato is the most fundamental LFO application: a small, regular pitch variatio
 3. Set **Amount** to `8` (subtle -- too much and it sounds out of tune)
 4. Set **Destination** to `O1F` (Osc 1 Frequency)
 
+<div data-evolver-panel data-knobs="knob-lfo-shape:32,knob-lfo-frequency:50,knob-lfo-amount:8,knob-lfo-destination:10" data-highlights="knob-lfo-shape:amber,knob-lfo-frequency:amber,knob-lfo-amount:amber,knob-lfo-destination:amber,switch-lfo1:blue" data-sections="lfos"></div>
+
 Play a sustained note. You should hear a gentle pitch wobble -- classic vibrato.
 
 5. Increase **Amount** to `15` -- you should hear wider, more dramatic vibrato
@@ -89,6 +91,8 @@ Modulating the filter cutoff with an LFO creates the "wah" and sweeping effects 
 Now save a combined vibrato + filter animation patch:
 8. Re-enable LFO 1: Amount `6`, Destination `OAF` (All Osc Frequency) for subtle vibrato
 9. Keep LFO 3 on filter. Set **LPF Frequency** to `40`, **Resonance** to `45`
+
+<div data-evolver-panel data-knobs="knob-filter-frequency:40,knob-filter-resonance:45,knob-lfo-frequency:30,knob-lfo-amount:40" data-highlights="knob-lfo-amount:amber,knob-filter-frequency:amber,knob-filter-resonance:blue" data-sections="lfos,filter" data-zoom="false"></div>
 
 **Save this patch** as your "Vibrato + Filter LFO" patch.
 

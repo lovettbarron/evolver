@@ -37,6 +37,8 @@ From the basic patch:
 
 The sequencer is 4 rows of 16 steps. Each row (track) has a destination parameter it modulates. Step values range from 0-100 (Anu Kirk p.75-79).
 
+<div data-evolver-panel data-knobs="" data-highlights="switch-seq-edit:amber,switch-seq1:amber,switch-startstop:blue,switch-reset:blue" data-sections="sequencer"></div>
+
 1. Press **SEQ EDIT** to enter sequencer mode (the shared knobs now control step values)
 2. Press **Seq 1** to select Track 1
 3. Set **Seq 1 Destination** to `OAF` (Osc All Freq) -- the sequencer will control the pitch of all oscillators
@@ -77,6 +79,8 @@ You can program sequences from the keyboard, which is faster than turning knobs 
 4. Press **START/STOP** to hear your keyboard-entered sequence
 5. Now add rests: in Seq 1 only, set **Step 4** past Reset to `oFF`. Set **Step 8** to `oFF`
 6. Play the sequence -- steps 4 and 8 are silent. Rests in Sequence 1 affect all four tracks (DSI Manual p.27-28)
+
+<div data-evolver-panel data-knobs="" data-highlights="switch-seq-edit:amber,switch-seq1:amber,switch-startstop:amber,led-seq-1:blue,led-seq-2:blue,led-seq-3:blue,led-seq-4:blue,led-seq-5:blue,led-seq-6:blue,led-seq-7:blue,led-seq-8:blue" data-sections="sequencer"></div>
 
 **Save this patch** as your "First Sequence" patch.
 

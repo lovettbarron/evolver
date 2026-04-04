@@ -34,6 +34,8 @@ From the basic patch:
 
 The highpass filter removes low frequencies and lets high frequencies pass through. It is digital, 4-pole, and has no resonance control.
 
+<div data-evolver-panel data-knobs="knob-hpf-frequency:0,knob-filter-frequency:127" data-highlights="knob-hpf-frequency:amber,knob-filter-frequency:blue" data-sections="filter,hp-filter"></div>
+
 1. Play a sustained low note (C1 or C2) and slowly increase **Highpass** from `0` to `50` -- you should hear the low end and body disappear, leaving only the bright, thin upper harmonics
 2. Continue to **Highpass** = `80` -- you should hear a very thin, almost empty sound with only the highest frequencies remaining
 3. Set **Highpass** back to `0` -- the full sound returns immediately
@@ -84,6 +86,9 @@ Combine the LPF and HPF to create a bandpass effect that only lets a band of fre
 
 1. Set **LPF Frequency** to `76`, **Resonance** to `0`, **4-Pole** ON
 2. Set **Highpass** to `30`
+
+<div data-evolver-panel data-knobs="knob-filter-frequency:76,knob-filter-resonance:0,knob-hpf-frequency:30,knob-filter-lrsplit:0" data-highlights="knob-hpf-frequency:amber,knob-filter-frequency:amber,switch-4pole:amber" data-sections="filter,hp-filter"></div>
+
 3. Play a note -- you should hear only a narrow band of midrange frequencies. The LPF removes the highs, the HPF removes the lows
 4. Set **Mod Wheel Dest** to `FiL` (LPF Frequency), **Amount** to `99`
 5. Set **Mod Slot 1**: Source = `MWl` (Mod Wheel), Amount = `99`, Destination = `HiP` (Highpass)
