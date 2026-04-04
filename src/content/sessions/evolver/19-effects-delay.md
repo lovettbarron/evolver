@@ -40,6 +40,9 @@ The Evolver's delay sums L+R to mono input, provides up to 1 second at 16-bit 48
 1. Press **Delay 1** to select it
 2. Set **Delay 1 Time** to `144` (long delay, close to 1 second)
 3. Set **Delay 1 Level** to `75`
+
+<div data-evolver-panel data-knobs="knob-delay-time:144,knob-delay-level:75,knob-delay-feedback1:0" data-highlights="knob-delay-time:amber,knob-delay-level:amber,switch-delay1:blue" data-sections="delay"></div>
+
 4. Play a short note -- you should hear a clear echo roughly 1 second later. This is a basic single-tap delay
 5. Change **Delay 1 Time** to `110` -- shorter delay, about 500ms. Play staccato notes and hear the slapback echo
 6. Add **Feedback 1** = `50` -- play a note and hear it repeat multiple times, each echo quieter than the last. Feedback routes the delay output back to the delay input (DSI Manual p.20)
@@ -70,6 +73,9 @@ Three independent taps can create complex rhythmic delay patterns (Anu Kirk p.60
 2. Press **Delay 2** to select it. Set **Delay 2 Time** to `125`, **Level** to `50`
 3. Press **Delay 3** to select it. Set **Delay 3 Time** to `140`, **Level** to `35`
 4. Set **Feedback 1** to `30`
+
+<div data-evolver-panel data-knobs="knob-delay-time:110,knob-delay-level:65,knob-delay-feedback1:30" data-highlights="switch-delay1:amber,switch-delay2:amber,switch-delay3:amber,knob-delay-time:amber,knob-delay-level:amber,knob-delay-feedback1:blue" data-sections="delay"></div>
+
 5. Play a short note -- you should hear three distinct echoes at different time intervals, creating a rhythmic cascade. The levels decrease so the pattern fades naturally
 6. Now change to synced times for a musical pattern: **Delay 1 Time** = `1 Step`, **Delay 2 Time** = `2 Steps`, **Delay 3 Time** = `4 Steps`
 7. Play notes against the sequencer clock -- the three taps create a dotted rhythm pattern

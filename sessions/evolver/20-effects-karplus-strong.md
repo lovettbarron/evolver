@@ -39,6 +39,9 @@ The Evolver has two tuned delay lines (one per channel) that feed back to the fi
 
 1. Set **Feedback Frequency** to `24` (C2)
 2. Set **Feedback Level** to `60`
+
+<div data-evolver-panel data-knobs="knob-osc-level:0,knob-feedback-frequency:24,knob-feedback-amount:60" data-highlights="knob-feedback-frequency:amber,knob-feedback-amount:amber,switch-feedback-grunge:blue" data-sections="feedback"></div>
+
 3. Play a note -- you should hear a pitched tone coming from the feedback loop itself. The feedback delay line is resonating at the frequency you set
 4. Slowly increase **Feedback Level** to `80` -- the tone gets stronger and sustains longer
 5. Change **Feedback Frequency** to `12` (C1) -- lower pitch. Change to `36` (C3) -- higher pitch. Each step is one semitone
@@ -69,6 +72,8 @@ Karplus-Strong synthesis uses a short noise burst ("excitation") fed into a feed
 5. Try different **ENV 3 Decay** values: `8` (very tight pluck, like a harpsichord), `25` (softer pluck, more marimba-like), `40` (breathy attack, more like a bowed string beginning)
 6. Set **LPF Frequency** to `64` with **4-Pole** ON -- the tone gets warmer and more string-like. The filter removes high harmonics from each feedback cycle, just like damping on a real string
 7. Try **Feedback Level** = `50` (note dies quickly like a muted string) vs `80` (note rings long like an open string)
+
+<div data-evolver-panel data-knobs="knob-osc-level:0,knob-feedback-frequency:0,knob-feedback-amount:60,knob-filter-frequency:64,knob-env3-decay:17,knob-env3-amount:99,knob-env3-attack:0,knob-env3-sustain:0" data-highlights="knob-feedback-frequency:amber,knob-feedback-amount:amber,knob-env3-decay:amber,knob-filter-frequency:blue" data-sections="feedback,envelope3,filter" data-zoom="false"></div>
 
 **Save this patch** as your "Plucked String" patch.
 

@@ -34,6 +34,8 @@ From the basic patch:
 
 This gives a mildly filtered sound with some envelope movement as a canvas for destructive effects.
 
+<div data-evolver-panel data-knobs="knob-osc-level:40,knob-filter-frequency:100,knob-filter-resonance:20,knob-filter-envamount:50,knob-filter-decay:70,knob-filter-sustain:30" data-highlights="knob-distortion-amount:amber,knob-filter-frequency:blue,knob-osc-level:blue" data-sections="filter,distortion"></div>
+
 ## Exercises
 
 ### Exercise 1: Distortion Basics (5 min)
@@ -83,6 +85,8 @@ Grunge intensifies the feedback character (Anu Kirk p.56). Combined with distort
 5. Increase **Feedback Level** to `70` -- the grunge character becomes more prominent. At higher feedback levels, grunge "enables nasty feedback" (DSI Manual p.19)
 6. Add some filter envelope: set **Env Amount** to `65` -- the filter sweep through the distortion creates a classic dirty synth lead sound
 7. Set **Osc Slop** to `3` for some analog drift, and **Osc 2 Fine** to `+5` for detuning thickness
+
+<div data-evolver-panel data-knobs="knob-distortion-amount:45,knob-feedback-amount:70,knob-feedback-frequency:24,knob-filter-envamount:65,knob-osc-fine:69" data-highlights="knob-distortion-amount:amber,switch-feedback-grunge:amber,knob-feedback-amount:amber,knob-feedback-frequency:blue" data-sections="distortion,feedback" data-zoom="false"></div>
 
 **Save this patch** as your "Dirty Lead" patch.
 
