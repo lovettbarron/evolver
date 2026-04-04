@@ -50,11 +50,17 @@ function parsePanelProps(attrString: string) {
     activeSections.push(...sectionsMatch[1].split(',').map((s) => s.trim()));
   }
 
-  const zoomSections: string[] = [];
   const zoomMatch = attrString.match(/data-zoom="([^"]*)"/);
-  if (zoomMatch) {
-    zoomSections.push(...zoomMatch[1].split(',').map((s) => s.trim()));
-  }
+  const hasExplicitZoom = !!zoomMatch;
+  const explicitZoom = zoomMatch && zoomMatch[1] !== 'false'
+    ? zoomMatch[1].split(',').map((s) => s.trim())
+    : [];
+
+  // Auto-zoom: if no explicit data-zoom but sections are specified, zoom to those sections
+  // Use data-zoom="false" to disable auto-zoom and show full panel
+  const zoomSections = hasExplicitZoom
+    ? explicitZoom
+    : activeSections;
 
   return {
     knobValues: Object.keys(knobValues).length > 0 ? knobValues : undefined,
