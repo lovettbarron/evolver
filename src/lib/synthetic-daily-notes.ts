@@ -48,3 +48,41 @@ export const SYNTHETIC_JOURNEY_WEEKS = [
   { week: 7, sessions: [15, 16, 17, 18], note: 'Steady pace, 2-3 sessions' },
   { week: 8, sessions: [19, 20, 21], note: 'Current position, modules 1-6 done' },
 ] as const;
+
+/**
+ * Synthetic Cascadia daily note data simulating ~6 weeks of ADHD-paced practice.
+ *
+ * Models a learner who picked up Cascadia after getting into Evolver:
+ * - Starts ~3 weeks after Evolver (reference: 2026-02-22)
+ * - Same ADHD pacing shape but offset and slightly slower
+ * - Week 1: Enthusiastic start (2 sessions)
+ * - Week 2: Still going (3 sessions)
+ * - Week 3: Slowing (2 sessions)
+ * - Week 4: Break (0 sessions)
+ * - Week 5: Return (3 sessions)
+ * - Week 6: Current position (2 sessions)
+ *
+ * Result: Modules 1-4 complete (12 sessions), currently in Module 5
+ * but no Module 5 sessions completed yet. 12/25 = 48% (~50%).
+ *
+ * Module-to-session mapping:
+ *   Module 1 "Foundations": sessions 1-3
+ *   Module 2 "Oscillators": sessions 4-6
+ *   Module 3 "Envelopes & Amplitude": sessions 7-9
+ *   Module 4 "Filters & LPG": sessions 10-12
+ *   Module 5 "Modulation & Utilities": sessions 13-15 (not started)
+ *   Module 6 "Advanced Patching": sessions 16-19 (not started)
+ *   Module 7 "Sound Design": sessions 20-25 (not started)
+ */
+export const SYNTHETIC_CASCADIA_COMPLETED_SESSIONS: Set<number> = new Set([
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+]);
+
+export const SYNTHETIC_CASCADIA_JOURNEY_WEEKS = [
+  { week: 1, sessions: [1, 2], note: 'Enthusiastic start with new instrument' },
+  { week: 2, sessions: [3, 4, 5], note: 'Getting into oscillators' },
+  { week: 3, sessions: [6, 7], note: 'Slowing down, deeper content' },
+  { week: 4, sessions: [], note: 'Break -- juggling two instruments' },
+  { week: 5, sessions: [8, 9, 10], note: 'Back with renewed energy' },
+  { week: 6, sessions: [11, 12], note: 'Current position, modules 1-4 done' },
+] as const;

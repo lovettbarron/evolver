@@ -4,7 +4,7 @@ import { glob } from 'glob';
 import { listSessions, listPatches } from './content/reader';
 import { groupByModule } from './sessions';
 import type { AppConfig } from './content/schemas';
-import { SYNTHETIC_COMPLETED_SESSIONS } from './synthetic-daily-notes';
+import { SYNTHETIC_COMPLETED_SESSIONS, SYNTHETIC_CASCADIA_COMPLETED_SESSIONS } from './synthetic-daily-notes';
 
 export interface ProgressData {
   sessionsCompleted: number;
@@ -84,9 +84,12 @@ export async function computeProgress(
 
 /**
  * Return a synthetic set of completed sessions for demo/dev mode.
- * Simulates ~60% journey: Modules 1-6 complete (sessions 1-21),
- * currently in Module 7.
+ * Accepts optional instrument slug to return instrument-specific journey.
+ * Default (no argument or 'evolver') returns Evolver journey for backward compatibility.
  */
-export function getSyntheticCompletedSessions(): Set<number> {
+export function getSyntheticCompletedSessions(instrument?: string): Set<number> {
+  if (instrument === 'cascadia') {
+    return SYNTHETIC_CASCADIA_COMPLETED_SESSIONS;
+  }
   return SYNTHETIC_COMPLETED_SESSIONS;
 }

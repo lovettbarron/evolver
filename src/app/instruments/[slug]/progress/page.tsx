@@ -18,7 +18,7 @@ export default async function ProgressPage({
 
   const completedSessions = config.vaultPath
     ? (await scanDailyNotes(config.vaultPath)).sessionNumbers
-    : getSyntheticCompletedSessions();
+    : getSyntheticCompletedSessions(slug);
 
   const progress = await computeProgress(slug, config, completedSessions);
 

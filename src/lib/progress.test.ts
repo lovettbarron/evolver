@@ -192,14 +192,47 @@ describe('computeProgress', () => {
 });
 
 describe('getSyntheticCompletedSessions', () => {
-  it('returns a Set containing sessions 1-21 (Modules 1-6 complete)', () => {
+  it('returns a Set containing sessions 1-21 for evolver (Modules 1-6 complete)', () => {
+    const result = getSyntheticCompletedSessions('evolver');
+    expect(result.size).toBe(21);
+    for (let i = 1; i <= 21; i++) {
+      expect(result.has(i)).toBe(true);
+    }
+    expect(result.has(22)).toBe(false);
+  });
+
+  it('returns Evolver sessions by default (backward compatibility)', () => {
     const result = getSyntheticCompletedSessions();
     expect(result.size).toBe(21);
     for (let i = 1; i <= 21; i++) {
       expect(result.has(i)).toBe(true);
     }
-    // Module 7 sessions (22+) should NOT be included
-    expect(result.has(22)).toBe(false);
+  });
+
+  it('returns a Set containing sessions 1-12 for cascadia (Modules 1-4 complete)', () => {
+    const result = getSyntheticCompletedSessions('cascadia');
+    expect(result.size).toBe(12);
+    for (let i = 1; i <= 12; i++) {
+      expect(result.has(i)).toBe(true);
+    }
+    expect(result.has(13)).toBe(false);
+  });
+});
+
+describe('SYNTHETIC_CASCADIA data', () => {
+  it('SYNTHETIC_CASCADIA_COMPLETED_SESSIONS has 12 entries', async () => {
+    const { SYNTHETIC_CASCADIA_COMPLETED_SESSIONS } = await import('./synthetic-daily-notes');
+    expect(SYNTHETIC_CASCADIA_COMPLETED_SESSIONS.size).toBe(12);
+  });
+
+  it('SYNTHETIC_CASCADIA_JOURNEY_WEEKS has 6 entries with 12 total sessions', async () => {
+    const { SYNTHETIC_CASCADIA_JOURNEY_WEEKS } = await import('./synthetic-daily-notes');
+    expect(SYNTHETIC_CASCADIA_JOURNEY_WEEKS).toHaveLength(6);
+    const totalSessions = SYNTHETIC_CASCADIA_JOURNEY_WEEKS.reduce(
+      (sum, week) => sum + week.sessions.length,
+      0,
+    );
+    expect(totalSessions).toBe(12);
   });
 });
 
