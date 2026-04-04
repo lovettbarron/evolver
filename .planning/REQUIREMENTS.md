@@ -126,7 +126,7 @@ Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 1
 - [x] **EPANEL-03**: Curriculum annotation overlays: colored glow rings (blue/amber) around highlighted controls via SVG filters, and subtle section tint rectangles for active signal chain areas
 - [x] **EPANEL-04**: Hover tooltip shows control name, current MIDI value, and NRPN parameter number, positioned above the control via getBoundingClientRect
 - [x] **EPANEL-05**: Static control metadata map covers all ~110 SVG controls with human-readable names, NRPN numbers, section membership, and control type
-- [ ] **EPANEL-06**: Panel integrated into four contexts: session detail (collapsible sidebar), patch detail (inline), quick-ref panel (compact tab), and standalone route (/instruments/evolver/panel)
+- [x] **EPANEL-06**: Panel integrated into four contexts: session detail (inline via `data-evolver-panel` markdown markers with zoom support), patch detail (inline), quick-ref panel (compact tab), and standalone route (/instruments/evolver/panel)
 
 ## v2 Requirements
 
@@ -232,7 +232,7 @@ Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 1
 | EPANEL-03 | Phase 12 | Complete |
 | EPANEL-04 | Phase 12 | Complete |
 | EPANEL-05 | Phase 12 | Complete |
-| EPANEL-06 | Phase 12 | Pending |
+| EPANEL-06 | Phase 12 | Complete |
 
 **Coverage:**
 - v1.0 requirements: 40 total (39 complete, 1 pending)
