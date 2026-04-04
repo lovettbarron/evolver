@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.2
-milestone_name: Learner Experience & Discovery
-status: defining-requirements
-stopped_at: null
-last_updated: "2026-04-04"
-last_activity: 2026-04-04
+milestone: v1.1
+milestone_name: Cascadia Instrument Support
+status: Defining requirements
+stopped_at: Completed 13-01-PLAN.md
+last_updated: "2026-04-04T17:40:59.859Z"
+last_activity: 2026-04-04 — Milestone v1.2 started
 progress:
-  total_phases: 0
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_phases: 7
+  completed_phases: 6
+  total_plans: 23
+  completed_plans: 20
   percent: 0
 ---
 
@@ -68,6 +68,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 10 P03 | 5min | 2 tasks | 5 files |
 | Phase 12 P01 | 5min | 3 tasks | 4 files |
 | Phase 12 P02 | 3min | 2 tasks | 2 files |
+| Phase 13 P01 | 8min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,9 @@ Recent decisions affecting current work:
 - [Phase 12]: D-03 applied: Feedback section fixed - Frequency top, Level large, Grunge as switch
 - [Phase 12]: PointerCapture guarded for jsdom compat in useKnobDrag hook
 - [Phase 12]: Event delegation on SVG root for hover detection instead of per-element handlers
+- [Phase 13]: Cascadia control ID convention: {type}-{module}-{name-kebab} for all 179 controls
+- [Phase 13]: Jack signal types: audio/cv/gate/modulation classified from module documentation context
+- [Phase 13]: SECTION_BOUNDS uses proportional widths based on control density in 1800x350 viewBox
 
 ### Roadmap Evolution
 
@@ -125,6 +129,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-04T12:17:48.010Z
-Stopped at: Phase 13 UI-SPEC approved
-Resume file: .planning/phases/13-cascadia-panel-visualizer/13-UI-SPEC.md
+Last session: 2026-04-04T17:40:59.854Z
+Stopped at: Completed 13-01-PLAN.md
+Resume file: None
