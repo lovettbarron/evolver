@@ -47,6 +47,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="envelope-a,vca-a"
+  data-knobs="slider-envelope-a-attack:6,slider-envelope-a-decay:51,slider-envelope-a-sustain:51,slider-envelope-a-release:38"
+  data-highlights="slider-envelope-a-attack:blue,slider-envelope-a-decay:blue,slider-envelope-a-sustain:blue,slider-envelope-a-release:blue,slider-vca-a-level:amber,slider-vca-a-level-mod:amber"
+></div>
+
 ### Exercise 1: Hear ADSR in Action (6 min)
 
 1. Set VCA A LEVEL to ~0% (minimum) and LEVEL MOD to ~75%. Now Envelope A fully controls the volume -- when the envelope is at zero, you hear nothing; when it peaks, you hear the full signal
@@ -57,6 +63,11 @@ From the normalled default:
 6. Set Sustain back to ~60%. Set Release to ~75% -- release a note and listen to the long fade-out. Now set Release to ~5% -- release a note and it cuts off almost instantly. Release shapes the tail of every note
 
 > [!info] Cascadia's Envelope A ENV OUT is also normalled to VCO A IM IN (FM index modulation). This means the envelope can simultaneously shape both your volume AND your FM brightness -- notes that are louder also have more FM harmonics. For this session, keep VCO A INDEX at 0% to isolate the amplitude effect.
+
+<div data-cascadia-panel
+  data-sections="envelope-a"
+  data-highlights="slider-envelope-a-hold:blue,switch-envelope-a-hold-position:blue,switch-envelope-a-speed:amber,switch-envelope-a-ctrl-source:amber"
+></div>
 
 ### Exercise 2: Explore Hold and Envelope Speed (6 min)
 

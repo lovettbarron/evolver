@@ -44,6 +44,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="lfo-xyz,vco-a"
+  data-knobs="knob-lfo-xyz-rate:38,slider-vco-a-pw-mod:64"
+  data-highlights="knob-lfo-xyz-rate:blue,switch-lfo-xyz-y-divider:amber,switch-lfo-xyz-z-divider:amber,slider-vco-a-pw-mod:blue,jack-lfo-xyz-x-out:amber,jack-lfo-xyz-y-out:amber,jack-lfo-xyz-z-out:amber"
+></div>
+
 ### Exercise 1: LFO Y and Pulse Width Modulation (7 min)
 
 > [!info] Normalled: LFO Y OUT -> VCO A PWM IN. LFO Y is already connected to VCO A's pulse width modulation input. The PW MOD slider controls how much LFO Y affects the pulse width.
@@ -61,6 +67,12 @@ This exercise requires one cable.
 | # | From | To | Purpose | Overrides |
 |---|------|----|---------|-----------|
 | 1 | LFO X OUT | VCF FM 3 IN | Rhythmic filter modulation | Nothing (FM 3 has no normal) |
+
+<div data-cascadia-panel
+  data-sections="lfo-xyz,vcf"
+  data-highlights="jack-lfo-xyz-x-out:amber,jack-vcf-fm-3-in:blue,slider-vcf-fm-3:blue,knob-lfo-xyz-rate:blue,switch-lfo-xyz-y-divider:blue"
+  data-cables="jack-lfo-xyz-x-out>jack-vcf-fm-3-in:mod"
+></div>
 
 1. Patch Cable 1: **LFO X OUT** -> **VCF FM 3 IN**. Set VCF FM 3 to ~30%
 2. Play and hold a note. You should hear the filter cutoff sweeping up and down rhythmically -- the "wah-wah" effect. LFO X sweeps the filter while LFO Y simultaneously modulates pulse width. Two layers of movement from one RATE knob

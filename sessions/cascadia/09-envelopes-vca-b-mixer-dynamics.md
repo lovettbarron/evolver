@@ -43,6 +43,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="mixer,vca-b-lpf,envelope-a"
+  data-highlights="jack-mixer-vco-a-saw-out:amber,jack-vca-b-lpf-in:blue,jack-envelope-a-out:amber,jack-vca-b-lpf-cv-in:blue,switch-vca-b-lpf-vca-control:blue,knob-vca-b-lpf-cv-amount:blue"
+  data-cables="jack-mixer-vco-a-saw-out>jack-vca-b-lpf-in:audio,jack-envelope-a-out>jack-vca-b-lpf-cv-in:mod"
+></div>
+
 ### Exercise 1: Patch the Low Pass Gate (8 min)
 
 This exercise requires two cables. You will route VCO A's sawtooth wave through VCA B/LPF and control it with Envelope A.
@@ -81,6 +87,11 @@ Now refine the LPG sound into the classic Buchla bongo.
 6. Set a final bongo sound you like and note the settings -- this becomes your LPG Bongo patch
 
 > [!info] Cascadia's VCA B/LPF uses a 4-pole ladder diode topology, giving it a different filter character than the main VCF. The ladder filter's natural resonance adds a slight emphasis at the cutoff frequency as it closes, contributing to the LPG's distinctive woody quality. This is different from original Buchla vactrols but produces a similar musical result.
+
+<div data-cascadia-panel
+  data-sections="mixer"
+  data-highlights="slider-mixer-noise:blue,switch-mixer-noise-type:blue,switch-mixer-sub-type:amber"
+></div>
 
 ### Exercise 3: Mixer Dynamics — Noise and Soft Clip (5 min)
 

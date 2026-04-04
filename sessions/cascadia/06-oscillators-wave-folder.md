@@ -43,6 +43,11 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="wave-folder,vcf"
+  data-highlights="slider-wave-folder-fold:blue,slider-wave-folder-mod:amber,jack-wave-folder-in:amber"
+></div>
+
 ### Exercise 1: Hear the Fold Progression (6 min)
 
 > [!info] Normalled: VCF OUT -> Wave Folder IN. The filtered signal from the VCF passes through the wave folder automatically. Even with FOLD at 0%, the signal passes through cleanly to VCA A. Patching into the Wave Folder IN jack overrides this connection.
@@ -66,6 +71,12 @@ This is your first intentional cable patch. You will route VCO A's pulse wave di
 |-------|------|----|-----------|
 | 1 | VCO A PULSE OUT (Mixer section) | Wave Folder IN | VCF OUT -> Wave Folder normalled connection |
 | 2 | LFO X OUT | Wave Folder FOLD MOD IN | Nothing (FOLD MOD IN has no normalled source) |
+
+<div data-cascadia-panel
+  data-sections="mixer,wave-folder,lfo-xyz"
+  data-highlights="jack-mixer-vco-a-pulse-out:amber,jack-wave-folder-in:blue,jack-lfo-xyz-x-out:amber,jack-wave-folder-mod-in:blue"
+  data-cables="jack-mixer-vco-a-pulse-out>jack-wave-folder-in:audio,jack-lfo-xyz-x-out>jack-wave-folder-mod-in:mod"
+></div>
 
 1. Take a patch cable and connect **VCO A PULSE OUT** (the direct output jack in the Mixer section) to **Wave Folder IN** -- you should hear the sound change immediately. The pulse wave is now entering the wave folder directly, bypassing the VCF
 

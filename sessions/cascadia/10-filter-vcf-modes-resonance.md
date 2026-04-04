@@ -43,6 +43,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vcf"
+  data-knobs="slider-vcf-freq:64,slider-vcf-q:0"
+  data-highlights="switch-vcf-mode:blue,slider-vcf-freq:blue,slider-vcf-q:amber,knob-vcf-level:amber"
+></div>
+
 ### Exercise 1: Tour the 8 Filter Modes (8 min)
 
 1. Play and hold a note in the middle of your keyboard. With VCF FREQ at ~50%, you should hear a moderately bright sawtooth -- the LP4 filter is removing some high harmonics
@@ -71,6 +77,12 @@ From the normalled default:
 
 5. With Q still at ~100%, set FREQ to ~50%. Now play MIDI notes -- you should hear both VCO A's sawtooth and the filter's sine tone. The sine does not track your keyboard by default. To make it track, raise VCF FM 2 to ~50% (this uses the normalled MIDI PITCH signal)
 6. Set Q back to ~25% for a musically useful amount of resonance. This is a good starting point for most patches
+
+<div data-cascadia-panel
+  data-sections="vcf"
+  data-knobs="slider-vcf-q:127,slider-vcf-freq:64"
+  data-highlights="slider-vcf-q:blue,slider-vcf-freq:blue,knob-vcf-level:amber,jack-vcf-lp4-out:amber,jack-vcf-hp4-out:amber"
+></div>
 
 ### Exercise 3: LEVEL Pre-Gain Distortion (5 min)
 

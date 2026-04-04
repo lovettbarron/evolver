@@ -39,6 +39,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vcf,envelope-b"
+  data-knobs="slider-vcf-freq:32,slider-vcf-fm-1:76"
+  data-highlights="slider-vcf-freq:blue,slider-vcf-fm-1:blue,slider-envelope-b-rise:blue,slider-envelope-b-fall:blue"
+></div>
+
 ### Exercise 1: The Filter Envelope Sweep (8 min)
 
 > [!info] Normalled: Envelope B -> VCF FM 1. Envelope B's output is pre-wired to the filter's first frequency modulation input. The VCF FM 1 slider controls how much Envelope B affects the cutoff. Patching into VCF FM 1 IN overrides this connection.
@@ -52,6 +58,11 @@ From the normalled default:
 7. Settle on RISE at ~30% and FALL at ~50% for a balanced sweep sound. Keep VCF FM 1 at ~60%
 
 > [!info] Cascadia's Envelope B is actually a triple-mode function generator (Envelope/LFO/Burst), but in this session we use it in its default Envelope mode. You will explore the other modes in Module 3.
+
+<div data-cascadia-panel
+  data-sections="wave-folder,vco-a"
+  data-highlights="slider-wave-folder-fold:blue,slider-vco-a-index:amber"
+></div>
 
 ### Exercise 2: Add Wave Folding (6 min)
 
@@ -74,6 +85,11 @@ From the normalled default:
 3. Raise INDEX to ~60% -- the sound becomes bell-like or clangorous depending on the pitch relationship
 4. Return INDEX to ~25% for a subtle FM flavor. This is just a taste -- you will explore FM in depth in Module 2
 5. Return INDEX to 0%
+
+<div data-cascadia-panel
+  data-sections="fx-send-return"
+  data-highlights="jack-fx-send-return-send:amber,jack-fx-send-return-mix:amber,knob-fx-send-return-dry-wet:blue"
+></div>
 
 ### Exercise 4: FX Send/Return Overview (2 min)
 

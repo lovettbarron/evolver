@@ -51,6 +51,13 @@ From the normalled default:
 
 Patch both cables. Play short staccato notes -- you should hear the LPG bongo from Session 9.
 
+<div data-cascadia-panel
+  data-sections="mixer,vca-b-lpf,envelope-a"
+  data-knobs="slider-envelope-a-attack:0,slider-envelope-a-decay:25,slider-envelope-a-sustain:0,slider-envelope-a-release:13"
+  data-highlights="jack-mixer-vco-a-saw-out:amber,jack-vca-b-lpf-in:blue,jack-envelope-a-out:amber,jack-vca-b-lpf-cv-in:blue,switch-vca-b-lpf-vca-control:blue,knob-vca-b-lpf-cv-amount:blue"
+  data-cables="jack-mixer-vco-a-saw-out>jack-vca-b-lpf-in:audio,jack-envelope-a-out>jack-vca-b-lpf-cv-in:mod"
+></div>
+
 ## Exercises
 
 ### Exercise 1: Source Waveform Tasting (7 min)
@@ -75,6 +82,12 @@ Now vary the envelope to change the percussion feel while keeping the sawtooth s
 3. **Snappy click**: Set Decay to ~10%, keep Sustain at ~0%. Switch ENVELOPE SPEED to Fast if not already. Play notes -- very short, almost a click. The filter barely opens before closing. Good for hi-hat-like transients (especially with noise source)
 4. **Sustained mallet**: Raise Sustain to ~30%, set Decay to ~35%, Release to ~40%. Hold a note -- the tone sustains at a lower brightness level after the initial attack, like a marimba with the note ringing. Release the key and it fades
 5. Try CV AMOUNT at ~50% vs ~100% -- lower CV AMOUNT means the envelope opens the LPG less, producing quieter and darker tones. Higher CV AMOUNT means fully open, bright percussion. Set CV AMOUNT to ~75%
+
+<div data-cascadia-panel
+  data-sections="mixer,vca-b-lpf,envelope-a"
+  data-highlights="jack-mixer-vco-a-saw-out:amber,jack-mixer-vco-a-tri-out:amber,jack-mixer-vco-a-pulse-out:amber,jack-mixer-noise-out:amber,jack-vca-b-lpf-in:blue"
+  data-cables="jack-mixer-vco-a-saw-out>jack-vca-b-lpf-in:audio,jack-envelope-a-out>jack-vca-b-lpf-cv-in:mod"
+></div>
 
 ### Exercise 3: Combining LPG with Main Voice (7 min)
 
