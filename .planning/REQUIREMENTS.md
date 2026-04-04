@@ -1,7 +1,7 @@
 # Requirements: Instrument Deep Learning
 
 **Defined:** 2026-03-29
-**Updated:** 2026-04-03 (v1.2 Evolver Panel Visualizer requirements added)
+**Updated:** 2026-04-04 (v1.2 Learner Experience & Discovery requirements added)
 **Core Value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
 
 ## v1.0 Requirements (Complete)
@@ -115,7 +115,7 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 - [ ] **CDEMO-02**: Synthetic Cascadia learner journey showing ~50% progress (separate from Evolver journey)
 - [ ] **CDEMO-03**: Landing page and instrument selector show both instruments in demo mode
 
-## v1.2 Requirements
+## v1.1 Requirements (continued)
 
 Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 12.
 
@@ -127,6 +127,35 @@ Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 1
 - [x] **EPANEL-04**: Hover tooltip shows control name, current MIDI value, and NRPN parameter number, positioned above the control via getBoundingClientRect
 - [x] **EPANEL-05**: Static control metadata map covers all ~110 SVG controls with human-readable names, NRPN numbers, section membership, and control type
 - [x] **EPANEL-06**: Panel integrated into four contexts: session detail (inline via `data-evolver-panel` markdown markers with zoom support), patch detail (inline), quick-ref panel (compact tab), and standalone route (/instruments/evolver/panel)
+
+## v1.2 Requirements
+
+Requirements for Learner Experience & Discovery. Phases 13+.
+
+### Learner State
+
+- [ ] **LSTATE-01**: User can mark a session as complete via a toggle in the session detail page, persisted in localStorage
+- [ ] **LSTATE-02**: User's last-visited session is tracked automatically and persisted across browser sessions
+- [ ] **LSTATE-03**: Completion data merges vault-scanned and manual sources using union semantics (if either says complete, it is complete)
+- [ ] **LSTATE-04**: Zustand store with persist middleware provides the client-side state layer for all learner data
+
+### Navigation & Discovery
+
+- [ ] **NAV-01**: User sees a "continue where you left off" resume bar showing their next recommended session
+- [ ] **NAV-02**: Session list shows prerequisite state (locked/available/completed) with soft visual gating (informational, not blocking)
+- [ ] **NAV-03**: User can search across all sessions and patches by title, description, and tags via full-text search
+- [ ] **NAV-04**: User can filter patches by type and tags, and sort by date, name, or type
+
+### Progress Enhancements
+
+- [ ] **PROG-10**: Count cards on progress page are clickable, navigating to the relevant content list
+- [ ] **PROG-11**: Module journey visualization shows a "you are here" marker at the learner's current position
+- [ ] **PROG-12**: Progress page shows cumulative practice metrics (sessions this month, total active weeks) — additive only, never guilt-inducing
+
+### Content & Pedagogy
+
+- [ ] **CONTENT-01**: Each instrument has a troubleshooting guide addressing common issues ("I hear nothing", "filter sounds wrong", etc.)
+- [ ] **CONTENT-02**: 1-2 transitional "partial recipe" sessions exist that give incomplete instructions, asking learners to fill gaps using prior knowledge
 
 ## v2 Requirements
 
@@ -236,11 +265,11 @@ Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 1
 
 **Coverage:**
 - v1.0 requirements: 40 total (39 complete, 1 pending)
-- v1.1 requirements: 19 total (all mapped to phases 7-11)
-- v1.2 requirements: 6 total (all mapped to phase 12)
-- Mapped to phases: 65 (40 v1.0 + 19 v1.1 + 6 v1.2)
-- Unmapped: 0
+- v1.1 requirements: 25 total (19 Cascadia + 6 Evolver Panel — mapped to phases 7-12)
+- v1.2 requirements: 13 total (awaiting roadmap phase mapping)
+- Mapped to phases: 65 (40 v1.0 + 25 v1.1)
+- Unmapped: 13 (v1.2 — roadmap pending)
 
 ---
 *Requirements defined: 2026-03-29*
-*Last updated: 2026-04-03 after Phase 12 Evolver Panel Visualizer requirements added*
+*Last updated: 2026-04-04 after v1.2 Learner Experience & Discovery requirements added*
