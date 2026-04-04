@@ -44,6 +44,11 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="utilities,patchbay"
+  data-highlights="knob-utilities-attenuator:blue,switch-utilities-x2:amber,switch-utilities-polarity:blue,jack-utilities-mixuverter-out-a:amber,jack-utilities-mixuverter-out-b:amber"
+></div>
+
 ### Exercise 1: Mixuverter as DC Offset Source (5 min)
 
 > [!info] Normalled: Internal +5V DC -> Mixuverter MAIN INPUT. With no cable patched, the Mixuverter receives a constant +5V. The ATTENUATOR knob scales this voltage from 0V to +5V (UNI mode) or -5V to +5V (-/+ mode). This makes the Mixuverter a controllable voltage source with no input cable needed.
@@ -76,6 +81,12 @@ This exercise requires two cables.
 > [!info] Cascadia's Mixuverter POLARITY switch selects between unipolar (0 to +max) and bipolar (-max to +max) attenuation. In bipolar mode, the center position is zero output, making it easy to dial from inverted through zero to normal polarity in one smooth motion.
 
 5. Return POLARITY to -/+, ATTENUATOR slightly clockwise of center for a moderate, non-inverted filter wobble
+
+<div data-cascadia-panel
+  data-sections="utilities,lfo-xyz,vcf"
+  data-highlights="jack-lfo-xyz-x-out:amber,jack-utilities-main-input:blue,jack-utilities-mixuverter-out-a:amber,jack-vcf-fm-3-in:blue,knob-utilities-attenuator:blue,switch-utilities-polarity:blue"
+  data-cables="jack-lfo-xyz-x-out>jack-utilities-main-input:mod,jack-utilities-mixuverter-out-a>jack-vcf-fm-3-in:cv"
+></div>
 
 ### Exercise 3: Combining Two Modulation Sources (5 min)
 

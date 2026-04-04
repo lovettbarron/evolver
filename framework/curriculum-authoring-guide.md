@@ -349,6 +349,67 @@ Now set up **ENV 3** to sweep the oscillator:
 
 **Don't overuse panels.** One or two per exercise is plenty. Place them at the moment the student needs to verify their setup — typically right before "Play a note" or "you should hear."
 
+### Cascadia Panel Markers
+
+Cascadia sessions use `data-cascadia-panel` markers with the same attribute format as Evolver, plus `data-cables` for visualizing patch cable connections.
+
+#### Basic Format
+
+```html
+<div data-cascadia-panel
+  data-sections="vco-a,mixer"
+  data-knobs="knob-vco-a-pitch:64,slider-mixer-saw:100"
+  data-highlights="knob-vco-a-pitch:blue,jack-mixer-vco-a-saw-out:amber"
+></div>
+```
+
+#### With Cable Connections
+
+```html
+<div data-cascadia-panel
+  data-sections="vco-a,mixer,wave-folder"
+  data-highlights="jack-mixer-vco-a-pulse-out:amber,jack-wave-folder-in:blue"
+  data-cables="jack-mixer-vco-a-pulse-out>jack-wave-folder-in:audio"
+></div>
+```
+
+#### data-cables Format
+
+Comma-separated entries: `sourceJackId>destJackId:signalType`
+- Signal types: `audio`, `cv`, `mod`, `default`
+- Jack IDs match CONTROL_METADATA keys in `src/lib/cascadia-panel-data.ts`
+- Connected jacks automatically receive highlight glow
+- Cable paths render as colored bezier curves on the panel
+
+#### Cascadia Control ID Format
+
+Control IDs follow the convention `{type}-{module}-{name-kebab}`:
+- Knobs: `knob-{module}-{name-kebab}` (e.g., `knob-vco-a-pitch`)
+- Sliders: `slider-{module}-{name-kebab}` (e.g., `slider-vcf-freq`)
+- Switches: `switch-{module}-{name-kebab}` (e.g., `switch-vcf-mode`)
+- Jacks: `jack-{module}-{name-kebab}` (e.g., `jack-vco-a-fm-1-in`)
+- LEDs: `led-{module}-{name-kebab}` (e.g., `led-vco-b-rate`)
+
+#### Section Names
+
+The 17 Cascadia module sections available for `data-sections`:
+
+midi-cv, vco-a, vco-b, envelope-a, envelope-b, line-in, mixer, vcf, wave-folder, vca-a, push-gate, utilities, lfo-xyz, patchbay, vca-b-lpf, fx-send-return, output-control
+
+#### Sound Design Sessions (Full Panel View)
+
+Sound design recipe sessions (20-25) show the complete patch setup with all cables visible. Use `data-zoom="false"` to display the full panel:
+
+```html
+<div data-cascadia-panel
+  data-sections="vco-a,mixer,vcf,envelope-a,vca-a,wave-folder"
+  data-knobs="slider-mixer-saw:89,slider-vcf-freq:32"
+  data-highlights="slider-mixer-saw:blue,slider-vcf-freq:blue"
+  data-cables="jack-lfo-xyz-x-out>jack-vcf-fm-3-in:mod"
+  data-zoom="false"
+></div>
+```
+
 ### Wiring Up the Rendering Pipeline
 
 The inline panel system works through the markdown rendering pipeline:

@@ -52,6 +52,12 @@ If you do not have a pedal, read through the exercises to understand the signal 
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="fx-send-return,vcf,output-control"
+  data-highlights="jack-vcf-lp4-out:amber,jack-fx-send-return-send:blue,jack-fx-send-return-mix:amber,jack-output-control-main-2-in:blue,knob-fx-send-return-send-level:blue,knob-fx-send-return-return-level:blue,knob-fx-send-return-dry-wet:blue"
+  data-cables="jack-vcf-lp4-out>jack-fx-send-return-send:audio,jack-fx-send-return-mix>jack-output-control-main-2-in:audio"
+></div>
+
 ### Exercise 1: Post-Filter Effects Loop (7 min)
 
 This exercise requires two internal cables plus the external pedal connections.
@@ -69,6 +75,12 @@ This exercise requires two internal cables plus the external pedal connections.
 
 4. If the FX RETURN LEVEL LED lights red, lower FX RETURN LEVEL until the LED stays off -- this prevents the return signal from distorting
 5. Try the PHASE switch. If your pedal inverts phase (some do), switching to Inverted corrects it. You will hear the dry and wet signals reinforce each other properly instead of partially canceling. If the sound gets thinner when blending dry and wet, try flipping PHASE
+
+<div data-cascadia-panel
+  data-sections="fx-send-return,mixer,vcf"
+  data-highlights="jack-mixer-vco-a-saw-out:amber,jack-fx-send-return-send:blue,jack-fx-send-return-mix:amber,jack-vcf-in:blue,switch-fx-send-return-level-type:amber,switch-fx-send-return-phase:amber"
+  data-cables="jack-mixer-vco-a-saw-out>jack-fx-send-return-send:audio,jack-fx-send-return-mix>jack-vcf-in:audio"
+></div>
 
 ### Exercise 2: Pre-Filter Effects (5 min)
 

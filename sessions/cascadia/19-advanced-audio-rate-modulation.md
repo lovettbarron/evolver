@@ -43,6 +43,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="lfo-xyz,vco-a"
+  data-highlights="jack-lfo-xyz-x-out:amber,jack-vco-a-fm-1-in:blue,slider-vco-a-fm-1:blue,knob-lfo-xyz-rate:blue"
+  data-cables="jack-lfo-xyz-x-out>jack-vco-a-fm-1-in:mod"
+></div>
+
 ### Exercise 1: The Vibrato-to-FM Continuum (8 min)
 
 This exercise requires one cable.
@@ -61,6 +67,12 @@ This exercise requires one cable.
 > [!info] Cascadia's LFOs reach approximately 75Hz at maximum rate, crossing well into audio territory. This means you can sweep continuously from sub-audio modulation through the transition zone into audio-rate FM using a single LFO and one cable. Most semi-modular LFOs top out before reaching audio rates.
 
 7. Return RATE to ~15%. Remove Cable 1
+
+<div data-cascadia-panel
+  data-sections="vco-b,vcf"
+  data-highlights="jack-vco-b-saw-out:amber,jack-vcf-fm-3-in:blue,slider-vcf-fm-3:blue,switch-vco-b-vco-lfo:blue,switch-vco-b-pitch-source:blue"
+  data-cables="jack-vco-b-saw-out>jack-vcf-fm-3-in:audio"
+></div>
 
 ### Exercise 2: VCO B as Sub-Audio Modulator (7 min)
 

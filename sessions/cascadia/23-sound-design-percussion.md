@@ -98,6 +98,14 @@ Remove all cables. Set all knobs and sliders to noon/center. Play a MIDI note --
 - MAIN DRIVE: noon
 - MAIN LEVEL: ~50%
 
+<div data-cascadia-panel
+  data-sections="vco-a,vco-b,mixer,vcf,envelope-a,envelope-b,vca-a,vca-b-lpf,wave-folder,output-control"
+  data-knobs="slider-mixer-saw:44,slider-mixer-noise:32,slider-mixer-in-1:25,slider-vcf-fm-1:70,slider-envelope-a-attack:0,slider-envelope-a-decay:32,slider-envelope-a-sustain:0,knob-vca-b-lpf-cv-amount:102"
+  data-highlights="jack-mixer-vco-a-saw-out:amber,jack-vca-b-lpf-in:blue,jack-envelope-a-out:amber,jack-vca-b-lpf-cv-in:blue,jack-vca-b-lpf-out:amber,jack-output-control-main-2-in:blue,switch-vca-b-lpf-vca-control:blue"
+  data-cables="jack-mixer-vco-a-saw-out>jack-vca-b-lpf-in:audio,jack-envelope-a-out>jack-vca-b-lpf-cv-in:mod,jack-vca-b-lpf-out>jack-output-control-main-2-in:audio"
+  data-zoom="false"
+></div>
+
 **Step-by-step build:**
 
 1. Set VCO A OCTAVE to 3. Set Mixer SAW to ~35%, NOISE to ~25%, NOISE TYPE to PINK, IN 1 to ~20%

@@ -116,6 +116,14 @@ Remove all cables. Set all knobs and sliders to noon/center. Play a MIDI note --
 - SOFT CLIP: On (warm, rounded output)
 - MAIN LEVEL: ~50%
 
+<div data-cascadia-panel
+  data-sections="vco-a,vco-b,mixer,vcf,envelope-a,envelope-b,vca-a,vca-b-lpf,wave-folder,lfo-xyz,utilities,output-control"
+  data-knobs="slider-mixer-saw:38,slider-mixer-pulse:32,slider-mixer-in-2:32,slider-mixer-noise:13,slider-vcf-freq:44,slider-vcf-fm-1:32,slider-vcf-fm-3:19,slider-vco-a-index:13,slider-envelope-a-attack:64,slider-envelope-a-sustain:102,slider-envelope-a-release:76,slider-wave-folder-fold:19,knob-lfo-xyz-rate:13,knob-utilities-slew-rate:83,knob-vca-b-lpf-cv-amount:70"
+  data-highlights="jack-lfo-xyz-x-out:amber,jack-vcf-fm-3-in:blue,jack-utilities-slew-out:amber,jack-vco-a-fm-1-in:blue,jack-vco-b-triangle-out:amber,jack-mixer-in-2:blue,jack-vca-b-lpf-out:amber,jack-output-control-main-2-in:blue,jack-envelope-a-out:amber,jack-vca-b-lpf-cv-in:blue"
+  data-cables="jack-lfo-xyz-x-out>jack-vcf-fm-3-in:mod,jack-utilities-slew-out>jack-vco-a-fm-1-in:cv,jack-vco-b-triangle-out>jack-mixer-in-2:audio,jack-vca-b-lpf-out>jack-output-control-main-2-in:audio,jack-envelope-a-out>jack-vca-b-lpf-cv-in:mod"
+  data-zoom="false"
+></div>
+
 **Step-by-step build:**
 
 1. Set VCO A OCTAVE to 4. Mixer SAW to ~30%, PULSE to ~25%, NOISE to ~10% (PINK). Play and hold a note -- a warm, harmonically rich tone with a subtle breath of noise
