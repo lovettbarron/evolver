@@ -32,6 +32,8 @@ From the basic patch:
 
 This gives us a basic plucky sound to add expression to.
 
+<div data-evolver-panel data-knobs="knob-filter-frequency:30,knob-filter-resonance:30,knob-filter-envamount:80,knob-filter-attack:0,knob-filter-decay:40,knob-filter-sustain:15,knob-filter-release:20" data-highlights="knob-filter-velocity:amber,knob-filter-frequency:blue,knob-filter-envamount:blue" data-sections="filter"></div>
+
 ## Exercises
 
 ### Exercise 1: Velocity to Filter (5 min)
@@ -99,6 +101,8 @@ Combine all expression sources into one patch:
 9. **Mod Wheel Destination** = `FiL`, **Mod Wheel Amount** = `-55` -- mod wheel darkens the sound
 10. **LFO 1**: Shape = `Tri`, Frequency = `50`, Amount = `0`, Destination = `OAF`
 11. **Mod Slot 1**: Source = `MWl`, Amount = `8`, Destination = `LF1A` (LFO 1 Amount) -- mod wheel also introduces vibrato
+
+<div data-evolver-panel data-knobs="knob-osc-shapepw:0,knob-osc-level:50,knob-osc-fine:64,knob-filter-frequency:25,knob-filter-resonance:35,knob-filter-keyamount:72,knob-filter-envamount:85,knob-filter-velocity:55,knob-amp-velocity:35" data-highlights="knob-filter-velocity:amber,knob-amp-velocity:amber,knob-filter-frequency:blue,knob-filter-envamount:blue" data-sections="filter,amp" data-zoom="false"></div>
 
 Play this patch expressively:
 - Soft notes should sound dark and quiet

@@ -40,6 +40,8 @@ Each mod slot has three parameters: Source, Amount, and Destination. Any source 
 4. Set **Destination** to `FiL` (Filter Frequency)
 5. Set LFO 1: Shape = `Tri`, Frequency = `35`, Amount = `50`, Destination = `O1F` (Osc 1 Freq -- vibrato)
 
+<div data-evolver-panel data-knobs="knob-mod-source:10,knob-mod-amount:40,knob-mod-dest:20,knob-lfo-frequency:35,knob-lfo-amount:50" data-highlights="knob-mod-source:amber,knob-mod-amount:amber,knob-mod-dest:amber,switch-mod1:blue" data-sections="modulators,lfos"></div>
+
 Play a note. You should hear both vibrato (from LFO 1's own destination) AND filter movement (from Mod Slot 1 using LFO 1 as a source). One LFO, two destinations.
 
 See Anu Kirk p.72 ("Modulation Slots 1-4")
@@ -76,6 +78,9 @@ Use ENV 3 as a mod source for more complex behavior:
 1. Set **Mod Slot 1**: Source = `Noi`, Amount = `20`, Destination = `FiL`
 2. Set **LPF Frequency** to `50`, **Resonance** to `60`, **4-Pole** ON
 3. Set ENV 1: Attack = `0`, Decay = `40`, Sustain = `15`, Env Amount = `80`
+
+<div data-evolver-panel data-knobs="knob-mod-amount:20,knob-filter-frequency:50,knob-filter-resonance:60,knob-filter-envamount:80,knob-filter-attack:0,knob-filter-decay:40,knob-filter-sustain:15" data-highlights="knob-mod-amount:amber,knob-filter-frequency:amber,knob-filter-resonance:blue" data-sections="modulators,filter"></div>
+
 4. Play -- you should hear punchy, gritty notes with crackling filter texture
 
 **Save** as your "Noise Filter" patch.
