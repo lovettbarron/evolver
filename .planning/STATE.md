@@ -1,36 +1,36 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Cascadia Instrument Support
-status: executing
-stopped_at: Phase 13 UI-SPEC approved
-last_updated: "2026-04-04T12:17:48.019Z"
+milestone: v1.2
+milestone_name: Learner Experience & Discovery
+status: defining-requirements
+stopped_at: null
+last_updated: "2026-04-04"
 last_activity: 2026-04-04
 progress:
-  total_phases: 7
-  completed_phases: 6
-  total_plans: 19
-  completed_plans: 19
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-30)
+See: .planning/PROJECT.md (updated 2026-04-04)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 11 — curriculum-modules-4-7-demo-mode
+**Current focus:** Defining requirements for v1.2 Learner Experience & Discovery
 
 ## Current Position
 
-Phase: 12
-Plan: Not started
-Status: Executing Phase 11
-Last activity: 2026-04-04
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-04 — Milestone v1.2 started
 
-Progress: [██████████] 100%
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 

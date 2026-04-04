@@ -8,17 +8,18 @@ A structured instrument mastery system with an Obsidian-as-source-of-truth data 
 
 An ADHD-friendly learning curriculum with 15-30 minute sessions that produces tangible output (documented patches, technique guides, audio recordings) and lets you confidently reach for the Evolver when making music — backed by a web app that makes the curriculum browsable, progress visible, and shareable with others.
 
-## Current Milestone: v1.1 Cascadia Instrument Support
+## Current Milestone: v1.2 Learner Experience & Discovery
 
-**Goal:** Add the Intellijel Cascadia as a second instrument — curriculum, patches, instrument data — validating the framework's multi-instrument extensibility.
+**Goal:** Remove key UX friction points from the pedagogy audit — making the app genuinely usable for day-to-day practice rather than just browsable as a demo.
 
 **Target features:**
-- Cascadia instrument data files (overview, architecture, signal flow, module docs)
-- Cascadia-specific curriculum sessions adapted to semi-modular workflow
-- Demo patches documented as markdown (no SysEx — Cascadia is CV-only)
-- UI adaptations for instruments without MIDI SysEx (hide/adapt MIDI workspace)
-- Baratatronix-inspired patch documentation with audio preview references
-- Synthetic demo data for Cascadia learner journey
+- Continue where you left off — persistent "next session" across visits
+- Search & filtering — full-text search across sessions/patches, type/tag filtering
+- Session completion without Obsidian — manual mark-complete toggle
+- Prerequisite visualization — locked/available/completed states in session list
+- Progress enhancements — streaks, clickable counts, "you are here" in module journey
+- Troubleshooting content — per-instrument "I hear nothing" guides
+- Transitional pedagogy — partial recipe sessions bridging guided to freeform
 
 ## Requirements
 
@@ -106,4 +107,22 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 | Framework in-repo | Framework ships with curriculum, single source of truth for methodology | — Pending |
 
 ---
-*Last updated: 2026-04-04 after Phase 11 complete — Full 25-session Cascadia curriculum published, 6 recipe patches, Vercel demo mode shows both instruments with synthetic learner progress*
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd:transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd:complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
+---
+*Last updated: 2026-04-04 — Milestone v1.2 Learner Experience & Discovery started*
