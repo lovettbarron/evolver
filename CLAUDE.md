@@ -19,6 +19,10 @@ A structured instrument mastery system, starting with the Dave Smith Mono Evolve
 - **Patches**: Documented in `patches/<instrument>/` with full parameter dumps
 - **Progress**: Tracked in Obsidian via templates in `obsidian/`
 
+## Skills
+
+- **synth-panel-builder** (`.claude/skills/synth-panel-builder/SKILL.md`): Use this skill whenever adding a new instrument, creating or modifying panel SVG components, or fixing panel layout issues. It contains all the design principles and control type conventions learned from building the Evolver and Cascadia panels.
+
 ## Guardrails — Push Back If Asked To
 
 1. **Skip the basic patch** — The "basic patch" (from Anu Kirk's guide) is the foundation. Always start sessions from a known state
@@ -27,6 +31,7 @@ A structured instrument mastery system, starting with the Dave Smith Mono Evolve
 4. **Create sessions longer than 30 minutes** — ADHD constraint is non-negotiable. Split into multiple sessions
 5. **Disconnect from Obsidian** — Progress tracking in ~/song is the accountability mechanism
 6. **Make patches without documenting them** — Undocumented patches are lost patches
+7. **Build a panel without the reference image** — Read the synth-panel-builder skill first. Every control must be hand-placed from the physical panel, never algorithmically computed
 
 ## Key References
 
