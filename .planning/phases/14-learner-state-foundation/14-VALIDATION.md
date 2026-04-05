@@ -38,23 +38,21 @@ created: 2026-04-05
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 14-01-01 | 01 | 1 | LSTATE-01 | unit | `npx vitest run src/lib/__tests__/learner-store.test.ts` | ❌ W0 | ⬜ pending |
-| 14-01-02 | 01 | 1 | LSTATE-02 | unit | `npx vitest run src/lib/__tests__/learner-store.test.ts` | ❌ W0 | ⬜ pending |
-| 14-01-03 | 01 | 1 | LSTATE-03 | unit | `npx vitest run src/lib/__tests__/learner-store.test.ts` | ❌ W0 | ⬜ pending |
-| 14-02-01 | 02 | 2 | LSTATE-04 | unit | `npx vitest run src/components/__tests__/resume-bar.test.tsx` | ❌ W0 | ⬜ pending |
-| 14-02-02 | 02 | 2 | NAV-01 | unit | `npx vitest run src/components/__tests__/session-completion.test.tsx` | ❌ W0 | ⬜ pending |
+| 14-01-01 | 01 | 1 | LSTATE-04 | unit | `npx vitest run src/stores/learner-store.test.ts` | W0 | pending |
+| 14-01-02 | 01 | 1 | LSTATE-03 | unit | `npx vitest run src/lib/learner-utils.test.ts` | W0 | pending |
+| 14-02-01 | 02 | 2 | LSTATE-01 | unit+tsc | `npx vitest run src/components/completion-toggle.test.tsx && npx tsc --noEmit` | W0 | pending |
+| 14-03-01 | 03 | 2 | NAV-01 | unit+tsc | `npx vitest run src/components/resume-bar.test.tsx && npx tsc --noEmit` | W0 | pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+*Status: pending / green / red / flaky*
 
 ---
 
 ## Wave 0 Requirements
 
-- [ ] `src/lib/__tests__/learner-store.test.ts` — Zustand store unit tests for completions, last-visited, merge logic
-- [ ] `src/components/__tests__/resume-bar.test.tsx` — Resume bar component rendering tests
-- [ ] `src/components/__tests__/session-completion.test.tsx` — Completion toggle component tests
-
-*If none: "Existing infrastructure covers all phase requirements."*
+- [ ] `src/stores/learner-store.test.ts` — Zustand store unit tests for completions, last-visited (created by Plan 14-01 Task 1)
+- [ ] `src/lib/learner-utils.test.ts` — Merge and next-session computation tests (created by Plan 14-01 Task 2)
+- [ ] `src/components/completion-toggle.test.tsx` — Completion toggle component tests (created by Plan 14-02 Task 2)
+- [ ] `src/components/resume-bar.test.tsx` — Resume bar component rendering tests (created by Plan 14-03 Task 2)
 
 ---
 
