@@ -9,6 +9,7 @@ import { KnobSettingsTable } from './knob-settings-table';
 import { AudioPreviewPlaceholder } from './audio-preview-placeholder';
 import { EvolverPanel } from './evolver-panel';
 import { CascadiaPanel } from './cascadia-panel';
+import { resolveCascadiaCableId, getCascadiaCableSignalType } from '@/lib/cascadia-cable-lookup';
 import type { CableConnection, KnobSetting } from '@/lib/content/schemas';
 
 interface PatchDetailProps {
@@ -125,9 +126,9 @@ export function PatchDetail({
             <CascadiaPanel
               cables={hasCableRouting
                 ? (patch.cable_routing as CableConnection[]).map((c) => ({
-                    sourceId: `jack-${c.source.toLowerCase().replace(/\s+/g, '-')}`,
-                    destId: `jack-${c.destination.toLowerCase().replace(/\s+/g, '-')}`,
-                    signalType: 'default' as const,
+                    sourceId: resolveCascadiaCableId(c.source),
+                    destId: resolveCascadiaCableId(c.destination),
+                    signalType: getCascadiaCableSignalType(resolveCascadiaCableId(c.source)),
                   }))
                 : undefined
               }
