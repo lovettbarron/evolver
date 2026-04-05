@@ -8,16 +8,26 @@ A structured instrument mastery system with an Obsidian-as-source-of-truth data 
 
 An ADHD-friendly learning curriculum with 15-30 minute sessions that produces tangible output (documented patches, technique guides, audio recordings) and lets you confidently reach for the Evolver when making music — backed by a web app that makes the curriculum browsable, progress visible, and shareable with others.
 
-## Current Milestone: v1.2 Learner Experience & Discovery
+## Current State
 
-**Goal:** Remove key UX friction points from the pedagogy audit — making the app genuinely usable for day-to-day practice rather than just browsable as a demo.
+**Shipped:** v1.1 Cascadia Instrument Support (2026-04-05)
+- Two instruments fully supported: Evolver (35 sessions) and Cascadia (25 sessions)
+- Interactive panel visualizers for both instruments with 289 total controls
+- 36 documented patches (23 Evolver + 13 Cascadia) across all categories
+- MIDI SysEx integration (Evolver only — Cascadia is CV-only)
+- Demo mode with synthetic learner journeys for both instruments
+- Tech stack: Next.js 15, React 19, Tailwind v4, TypeScript, Zod, ~43K LOC
+
+## Next Milestone: v1.2 Learner Experience & Discovery
+
+**Goal:** Remove key UX friction points — making the app genuinely usable for day-to-day practice rather than just browsable as a demo.
 
 **Target features:**
 - Continue where you left off — persistent "next session" across visits
 - Search & filtering — full-text search across sessions/patches, type/tag filtering
 - Session completion without Obsidian — manual mark-complete toggle
 - Prerequisite visualization — locked/available/completed states in session list
-- Progress enhancements — streaks, clickable counts, "you are here" in module journey
+- Progress enhancements — clickable counts, "you are here" in module journey
 - Troubleshooting content — per-instrument "I hear nothing" guides
 - Transitional pedagogy — partial recipe sessions bridging guided to freeform
 
@@ -34,6 +44,13 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - ✓ Multi-instrument routing foundation — v1.0
 - ✓ Demo mode with synthetic data — v1.0
 - ✓ Instrument filesystem discovery — v1.0
+- ✓ Multi-instrument UI (dynamic nav, capability-gated routes, instrument selector) — v1.1
+- ✓ Cascadia instrument data (17 modules, normalled signal path, architecture) — v1.1
+- ✓ Cascadia patch system (cable routing + knob settings schemas, 13 demo patches) — v1.1
+- ✓ 25-session Cascadia curriculum across 7 modules — v1.1
+- ✓ Cascadia demo mode (synthetic journey, content bundling, both instruments) — v1.1
+- ✓ Evolver panel visualizer (110 controls, drag interaction, tooltips, 4 integration contexts) — v1.1
+- ✓ Cascadia panel visualizer (179 controls, cable rendering, session annotations) — v1.1
 
 ### Active
 
@@ -103,8 +120,13 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 | Next.js App Router with vault reader | Proven pattern from PM Toolkit, server components for file I/O | — Pending |
 | 15-30 min session hard limit | ADHD constraint — consistency over intensity | — Pending |
 | Sequence-based not calendar-based | Missed days create guilt spirals with ADHD. Sequence eliminates this | — Pending |
-| Demo mode with synthetic data | Share curriculum publicly without exposing personal practice data | — Pending |
-| Framework in-repo | Framework ships with curriculum, single source of truth for methodology | — Pending |
+| Demo mode with synthetic data | Share curriculum publicly without exposing personal practice data | ✓ Good |
+| Framework in-repo | Framework ships with curriculum, single source of truth for methodology | ✓ Good |
+| Data-driven conditional rendering | Check cable_routing/knob_settings presence, not instrument name | ✓ Good |
+| Alias table for cable label resolution | Explicit mappings more reliable than regex heuristics | ✓ Good |
+| Cascadia control ID: {type}-{module}-{name-kebab} | Consistent naming across 179 controls | ✓ Good |
+| Section tint opacity 0.08 cross-panel standard | Subtle enough to not obscure controls | ✓ Good |
+| Cable bezier droop: min(80, 30 + dx * 0.15) | Natural droop that scales with distance | ✓ Good |
 
 ---
 ## Evolution
@@ -125,4 +147,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-05 — Phase 13.1 complete: Panel Visualizer Gap Closure (cable rendering, tint opacity, requirements)*
+*Last updated: 2026-04-05 after v1.1 milestone*
