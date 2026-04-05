@@ -24,20 +24,27 @@ Then open [http://localhost:3000](http://localhost:3000).
 ```
 ├── framework/                    # Reusable learning methodology
 │   ├── README.md                 # Framework overview & principles
-│   └── adhd-design.md            # Session design decisions
-├── instruments/evolver/          # Evolver-specific reference
-│   ├── overview.md               # Architecture, capabilities, identity
-│   ├── signal-flow.md            # Audio path diagram
-│   ├── basic-patch.md            # Home base patch (full parameter dump)
-│   └── modules.md                # 10-module curriculum map
-├── sessions/evolver/             # The actual learning sessions
-├── patches/evolver/              # Documented patches with full values
+│   ├── adhd-design.md            # Session design decisions
+│   ├── curriculum-authoring-guide.md  # How to write sessions with panel markers
+│   └── adding-an-instrument.md   # Complete guide for adding new instruments
+├── instruments/                  # Per-instrument reference data
+│   ├── evolver/                  # Dave Smith Mono Evolver
+│   └── cascadia/                 # Intellijel Cascadia
+├── sessions/                     # Structured learning sessions
+│   ├── evolver/                  # 35 Evolver sessions
+│   └── cascadia/                 # 25 Cascadia sessions
+├── patches/                      # Documented patches with full values
+│   ├── evolver/
+│   └── cascadia/
 ├── obsidian/                     # Templates for Obsidian vault integration
 ├── references/                   # Source manuals (PDFs)
 ├── src/                          # Next.js web application
 │   ├── app/                      # App router pages
-│   ├── components/               # UI components
-│   └── lib/                      # Data helpers and utilities
+│   ├── components/               # UI components (including panel SVGs)
+│   ├── content/                  # Bundled content (mirrors sessions/ for Vercel)
+│   └── lib/                      # Data helpers, panel metadata, utilities
+├── .claude/skills/               # Claude Code skills
+│   └── synth-panel-builder/      # Interactive panel SVG building guide
 └── CLAUDE.md                     # Project context for AI sessions
 ```
 
@@ -71,12 +78,17 @@ Every session follows these rules:
 
 ## Extending to Other Instruments
 
-This framework is designed to be reused. To add a new instrument:
+This framework is designed to be reused. See [framework/adding-an-instrument.md](framework/adding-an-instrument.md) for the complete guide covering content, web app integration, and interactive panel building.
+
+Quick overview:
 
 1. Create `instruments/<name>/` with overview, signal flow, basic patch, and module map
 2. Map the instrument's features to the [Module Taxonomy](framework/README.md#module-taxonomy)
 3. Write sessions following the [session template](framework/README.md#session-template)
-4. Add an instrument tracker to your Obsidian vault
+4. Build an interactive SVG panel component (see `.claude/skills/synth-panel-builder/`)
+5. Wire the panel into session pages, standalone route, quick-ref, and patch detail
+6. Add panel markers to session files and sync across content locations
+7. Add an instrument tracker to your Obsidian vault
 
 ## Key References
 
