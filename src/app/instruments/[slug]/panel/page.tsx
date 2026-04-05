@@ -26,6 +26,7 @@ export default async function PanelPage({ params }: { params: Promise<{ slug: st
         backHref={`/instruments/${slug}`}
         sessionIdentifier="Panel"
         quickRefContent={[]}
+        instrumentSlug={slug}
       />
       <div className={`${config.maxWidth} mx-auto px-lg py-2xl`}>
         <h1 className="text-2xl font-bold mb-lg">{config.title}</h1>

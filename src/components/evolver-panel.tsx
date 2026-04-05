@@ -352,7 +352,7 @@ function EvolverPanelInner({
             height={bounds.height}
             rx={4}
             fill="#3388ff"
-            fillOpacity={0.15}
+            fillOpacity={0.08}
             style={{ transition: 'opacity 150ms ease-out' }}
           />
         );

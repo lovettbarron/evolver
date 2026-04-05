@@ -220,7 +220,7 @@ Plans:
 
 Plans:
 - [x] 13.1-01-PLAN.md -- Cascadia cable ID resolution and signalType lookup for patch detail Panel View
-- [ ] 13.1-02-PLAN.md -- Evolver section tint opacity fix, standalone route StickyHeader prop, requirement status updates
+- [x] 13.1-02-PLAN.md -- Evolver section tint opacity fix, standalone route StickyHeader prop, requirement status updates
 
 ---
 
