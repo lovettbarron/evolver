@@ -19,8 +19,9 @@ const MermaidRenderer = dynamic(
   { ssr: false },
 );
 
-const PANEL_MARKER_RE = /<div data-evolver-panel([^>]*)>\s*<\/div>/g;
-const CASCADIA_PANEL_RE = /<div data-cascadia-panel([^>]*)>\s*<\/div>/g;
+// Regex allows > inside quoted attribute values (e.g., data-cables="jack-a>jack-b:audio")
+const PANEL_MARKER_RE = /<div data-evolver-panel((?:[^>"]|"[^"]*")*)>\s*<\/div>/g;
+const CASCADIA_PANEL_RE = /<div data-cascadia-panel((?:[^>"]|"[^"]*")*)>\s*<\/div>/g;
 
 function parsePanelProps(attrString: string) {
   const knobValues: Record<string, number> = {};

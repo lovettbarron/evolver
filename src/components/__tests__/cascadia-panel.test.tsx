@@ -12,7 +12,7 @@ describe('CascadiaPanel', () => {
   test('renders SVG with correct default viewBox', () => {
     const { container } = render(<CascadiaPanel />);
     const svg = container.querySelector('svg');
-    expect(svg?.getAttribute('viewBox')).toContain('0 0 1000 640');
+    expect(svg?.getAttribute('viewBox')).toContain('0 0 1000 580');
   });
 
   test('renders cable paths for provided cables', () => {
