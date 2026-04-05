@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 Evolver Learning Platform** - Phases 1-6 (shipped 2026-03-30)
-- 🚧 **v1.1 Cascadia Instrument Support** - Phases 7-13 (in progress)
+- 🚧 **v1.1 Cascadia Instrument Support** - Phases 7-13.1 (in progress)
 - 📋 **v1.2 Learner Experience & Discovery** - Phases 14-17 (planned)
 
 ## Phases
@@ -203,6 +203,21 @@ Plans:
 Plans:
 - [x] TBD (run /gsd:plan-phase 13 to break down) (completed 2026-04-04)
 
+### Phase 13.1: Panel Visualizer Gap Closure
+**Goal**: Close all v1.1 audit gaps — fix broken Cascadia cable rendering, complete Evolver panel section tints, remove orphaned code, and align requirement text with delivered implementation
+**Depends on**: Phase 13
+**Requirements**: EPANEL-03, EPANEL-06, MULTI-04
+**Gap Closure**: Closes gaps from v1.1 milestone audit
+**Success Criteria** (what must be TRUE):
+  1. Cascadia patch Panel View renders cable bezier paths correctly (cable IDs resolve to CONTROL_METADATA keys)
+  2. envelope3 section has a SECTION_BOUNDS entry and section tint renders for all 9 Evolver panel sections
+  3. Section tint opacity test passes (implementation and test values match)
+  4. SessionPanelSidebar orphaned component removed
+  5. EPANEL-06 requirement text updated to reflect inline embedding (not collapsible sidebar)
+  6. Standalone panel route passes instrumentSlug to StickyHeader
+  7. Cascadia cable signalType resolves from cable_routing data instead of hardcoded 'default'
+**Plans**: TBD
+
 ---
 
 ### v1.2 Learner Experience & Discovery (Planned)
@@ -279,6 +294,7 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 4/4 | Complete    | 2026-04-04 |
 | 12. Evolver Panel Visualizer Component | v1.1 | 2/3 | In progress | - |
 | 13. Cascadia Panel Visualizer | v1.1 | 3/4 | Complete    | 2026-04-04 |
+| 13.1 Panel Visualizer Gap Closure | v1.1 | 0/0 | Not started | - |
 | 14. Learner State Foundation | v1.2 | 0/0 | Not started | - |
 | 15. Navigation & Progress Enhancements | v1.2 | 0/0 | Not started | - |
 | 16. Search & Filtering | v1.2 | 0/0 | Not started | - |

@@ -107,13 +107,13 @@ Requirements for Cascadia instrument support. Each maps to roadmap phases 7-11.
 - [x] **CCURR-03**: Each session highlights what is unique to Cascadia's implementation of the concept (e.g., Envelope B triple-mode, specific normalling choices, mixuverter design)
 - [x] **CCURR-04**: Sessions document which normalled connections are active and what patching a cable overrides
 - [x] **CCURR-05**: Module 1 (Foundations) follows the manual's "Make a Sound" progression: basic sound -> PWM -> sub -> filter envelope -> wave folding -> FM -> FX pedal
-- [ ] **CCURR-06**: Recipe sessions produce named patches with full cable routing and knob settings documented
+- [x] **CCURR-06**: Recipe sessions produce named patches with full cable routing and knob settings documented
 
 ### Cascadia Demo Mode
 
-- [ ] **CDEMO-01**: Cascadia content bundled in src/content/ for Vercel demo mode
-- [ ] **CDEMO-02**: Synthetic Cascadia learner journey showing ~50% progress (separate from Evolver journey)
-- [ ] **CDEMO-03**: Landing page and instrument selector show both instruments in demo mode
+- [x] **CDEMO-01**: Cascadia content bundled in src/content/ for Vercel demo mode
+- [x] **CDEMO-02**: Synthetic Cascadia learner journey showing ~50% progress (separate from Evolver journey)
+- [x] **CDEMO-03**: Landing page and instrument selector show both instruments in demo mode
 
 ## v1.1 Requirements (continued)
 
@@ -121,12 +121,12 @@ Requirements for the Evolver Panel Visualizer component. Maps to roadmap phase 1
 
 ### Evolver Panel Visualizer
 
-- [ ] **EPANEL-01**: Evolver panel renders as inline JSX SVG with all ~110 control IDs preserved, responsive scaling, and Feedback section layout fix (Frequency top, Level large, Grunge as switch)
-- [ ] **EPANEL-02**: Knob indicators rotate from -135deg (value 0) to +135deg (value 127) and support vertical drag interaction with onChange callback; switches and LEDs are display-only
-- [x] **EPANEL-03**: Curriculum annotation overlays: colored glow rings (blue/amber) around highlighted controls via SVG filters, and subtle section tint rectangles for active signal chain areas
+- [x] **EPANEL-01**: Evolver panel renders as inline JSX SVG with all ~110 control IDs preserved, responsive scaling, and Feedback section layout fix (Frequency top, Level large, Grunge as switch)
+- [x] **EPANEL-02**: Knob indicators rotate from -135deg (value 0) to +135deg (value 127) and support vertical drag interaction with onChange callback; switches and LEDs are display-only
+- [ ] **EPANEL-03**: Curriculum annotation overlays: colored glow rings (blue/amber) around highlighted controls via SVG filters, and subtle section tint rectangles for active signal chain areas
 - [x] **EPANEL-04**: Hover tooltip shows control name, current MIDI value, and NRPN parameter number, positioned above the control via getBoundingClientRect
 - [x] **EPANEL-05**: Static control metadata map covers all ~110 SVG controls with human-readable names, NRPN numbers, section membership, and control type
-- [x] **EPANEL-06**: Panel integrated into four contexts: session detail (inline via `data-evolver-panel` markdown markers with zoom support), patch detail (inline), quick-ref panel (compact tab), and standalone route (/instruments/evolver/panel)
+- [ ] **EPANEL-06**: Panel integrated into four contexts: session detail (inline via `data-evolver-panel` markdown markers with zoom support), patch detail (inline), quick-ref panel (compact tab), and standalone route (/instruments/evolver/panel)
 
 ## v1.2 Requirements
 
@@ -252,16 +252,16 @@ Requirements for Learner Experience & Discovery. Phases 14-17.
 | CCURR-03 | Phase 10 | Complete |
 | CCURR-04 | Phase 10 | Complete |
 | CCURR-05 | Phase 10 | Complete |
-| CCURR-06 | Phase 11 | Pending |
-| CDEMO-01 | Phase 11 | Pending |
-| CDEMO-02 | Phase 11 | Pending |
-| CDEMO-03 | Phase 11 | Pending |
-| EPANEL-01 | Phase 12 | Pending |
-| EPANEL-02 | Phase 12 | Pending |
-| EPANEL-03 | Phase 12 | Complete |
+| CCURR-06 | Phase 11 | Complete |
+| CDEMO-01 | Phase 11 | Complete |
+| CDEMO-02 | Phase 11 | Complete |
+| CDEMO-03 | Phase 11 | Complete |
+| EPANEL-01 | Phase 12 | Complete |
+| EPANEL-02 | Phase 12 | Complete |
+| EPANEL-03 | Phase 13.1 | Pending |
 | EPANEL-04 | Phase 12 | Complete |
 | EPANEL-05 | Phase 12 | Complete |
-| EPANEL-06 | Phase 12 | Complete |
+| EPANEL-06 | Phase 13.1 | Pending |
 | LSTATE-01 | Phase 14 | Pending |
 | LSTATE-02 | Phase 14 | Pending |
 | LSTATE-03 | Phase 14 | Pending |
@@ -278,7 +278,7 @@ Requirements for Learner Experience & Discovery. Phases 14-17.
 
 **Coverage:**
 - v1.0 requirements: 40 total (39 complete, 1 pending)
-- v1.1 requirements: 25 total (19 Cascadia + 6 Evolver Panel -- mapped to phases 7-12)
+- v1.1 requirements: 25 total (19 Cascadia + 6 Evolver Panel -- mapped to phases 7-13.1)
 - v1.2 requirements: 13 total (mapped to phases 14-17)
 - Mapped to phases: 78 (40 v1.0 + 25 v1.1 + 13 v1.2)
 - Unmapped: 0
