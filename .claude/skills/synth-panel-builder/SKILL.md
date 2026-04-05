@@ -172,6 +172,61 @@ Small indicator dots (r=3-4). Near switches or controls they indicate.
 - **Mod/Pitch Wheels**: Rounded rectangles with track + position indicator
 - **Wood Side Cheeks**: Decorative side panels (`<rect>` with wood-tone fill)
 
+## Cable Rendering (Modular Instruments)
+
+Modular and semi-modular instruments visualize patch cable connections between jacks as colored bezier curves on the panel SVG. This is a key capability for teaching patching — learners see exactly which jacks to connect.
+
+### How it works
+
+1. Session markdown includes `data-cables` attribute on panel markers:
+   ```html
+   <div data-cascadia-panel
+     data-cables="jack-lfo-xyz-x-out>jack-vcf-fm-3-in:audio,jack-env-a-out>jack-vca-a-in:mod"
+   ></div>
+   ```
+
+2. `session-detail.tsx` parses cable entries into `{ sourceId, destId, signalType }` props
+
+3. `CablePath` component looks up both jack positions from `JACK_POSITIONS` (derived from `CONTROL_POSITIONS`) and draws a quadratic bezier curve between them
+
+### Cable path geometry
+- Control point: `midX = (src.x + dst.x) / 2`, `midY = max(src.y, dst.y) + droop`
+- Droop scales with distance: `min(80, 30 + abs(dx) * 0.15)` — short cables hang less, long cables droop more
+- SVG path: `M src.x,src.y Q midX,midY dst.x,dst.y`
+
+### Cable colors by signal type
+| Signal Type | Color | Hex |
+|------------|-------|-----|
+| audio | Orange-red | `#ff6644` |
+| cv | Blue | `#3388ff` |
+| modulation | Amber | `#ffaa33` |
+| default | Gray | `#888888` |
+
+### Cables render last
+Cable `<path>` elements render after all controls in the SVG, giving them highest z-order so they visually sit on top of the panel.
+
+### JACK_POSITIONS lookup
+Built automatically from `CONTROL_POSITIONS` by filtering for `jack-in` and `jack-out` types:
+```typescript
+const JACK_POSITIONS: Record<string, { x: number; y: number }> = {};
+for (const [id, meta] of Object.entries(CONTROL_METADATA)) {
+  if (meta.type === 'jack-in' || meta.type === 'jack-out') {
+    const pos = CONTROL_POSITIONS[id];
+    if (pos) JACK_POSITIONS[id] = pos;
+  }
+}
+```
+
+### Critical regex note
+The `>` character in cable syntax (`jack-source>jack-dest`) breaks naive HTML attribute regexes like `[^>]*`. The panel marker regex MUST allow `>` inside quoted attribute values:
+```typescript
+// WRONG: [^>]* stops at > inside data-cables="jack-a>jack-b:audio"
+/<div data-cascadia-panel([^>]*)>\s*<\/div>/g
+
+// CORRECT: allows > inside quoted values
+/<div data-cascadia-panel((?:[^>"]|"[^"]*")*)>\s*<\/div>/g
+```
+
 ## Layout Rules
 
 ### Row Structure
