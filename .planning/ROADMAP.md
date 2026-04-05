@@ -57,7 +57,11 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
   3. Completion data from vault scanning (server) and manual toggles (client localStorage) are merged using union semantics — if either source says complete, it is complete
   4. A "continue where you left off" resume bar appears showing the user's next recommended session based on last-visited and completion state
   5. Zustand store with persist middleware provides the single client-side state layer consumed by all learner-facing components
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 14-01-PLAN.md — Zustand store, hydration hook, and learner utility functions with tests
+- [ ] 14-02-PLAN.md — Completion toggle sticky bar on session detail page with last-visited tracking
+- [ ] 14-03-PLAN.md — Resume bar on instrument home page with vault+manual merge
 **UI hint**: yes
 
 ### Phase 15: Navigation & Progress Enhancements
@@ -113,7 +117,7 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 12. Evolver Panel Visualizer | v1.1 | 3/3 | Complete | 2026-04-04 |
 | 13. Cascadia Panel Visualizer | v1.1 | 4/4 | Complete | 2026-04-04 |
 | 13.1 Panel Visualizer Gap Closure | v1.1 | 2/2 | Complete | 2026-04-05 |
-| 14. Learner State Foundation | v1.2 | 0/0 | Not started | - |
+| 14. Learner State Foundation | v1.2 | 0/3 | Not started | - |
 | 15. Navigation & Progress Enhancements | v1.2 | 0/0 | Not started | - |
 | 16. Search & Filtering | v1.2 | 0/0 | Not started | - |
 | 17. Content & Pedagogy | v1.2 | 0/0 | Not started | - |
