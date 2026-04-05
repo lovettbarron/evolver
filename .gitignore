@@ -1,5 +1,31 @@
-.next/
+# Dependencies
 node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build artifacts
+tsconfig.tsbuildinfo
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Environment / local config
+.env
+.env.*
+evolver.config.json
+
+# Claude Code (keep skills/, ignore local state)
 .claude/settings.local.json
 .claude/worktrees/
+
+# Editor
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Vercel
+.vercel/
