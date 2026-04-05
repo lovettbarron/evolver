@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: planning
-stopped_at: v1.1 milestone completed
-last_updated: "2026-04-05T19:30:00.000Z"
+stopped_at: Phase 14 context gathered
+last_updated: "2026-04-05T19:46:16.989Z"
 last_activity: 2026-04-05
 progress:
   total_phases: 4
@@ -92,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-05
-Stopped at: v1.1 milestone completed
-Resume file: None
+Last session: 2026-04-05T19:46:16.977Z
+Stopped at: Phase 14 context gathered
+Resume file: .planning/phases/14-learner-state-foundation/14-CONTEXT.md
