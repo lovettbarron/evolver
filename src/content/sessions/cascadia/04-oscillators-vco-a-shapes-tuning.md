@@ -40,6 +40,11 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vco-a,mixer"
+  data-highlights="slider-mixer-saw:blue,slider-mixer-pulse:blue,slider-mixer-in-2:blue,knob-vco-a-pitch:amber,knob-vco-a-octave:amber"
+></div>
+
 ### Exercise 1: Hear Each Waveform (8 min)
 
 > [!info] Normalled: VCO A Saw -> Mixer (direct connection). VCO A's saw output feeds the Mixer's SAW slider without any cable. The Mixer SAW slider controls how much saw wave enters the mix. Patching into the Mixer input does not override this -- the SAW slider is a dedicated VCO A connection.
@@ -60,6 +65,12 @@ From the normalled default:
 2. Set OCTAVE to position 4 or 5 (a comfortable mid-range). Now slowly turn VCO A PITCH knob from noon toward ~75% -- you should hear the pitch rise smoothly up to 6 semitones above the OCTAVE setting
 3. Turn PITCH from noon toward ~25% -- you should hear the pitch drop smoothly up to 6 semitones below the OCTAVE setting
 4. Return PITCH to noon (center = in tune with the OCTAVE setting)
+
+<div data-cascadia-panel
+  data-sections="vco-a"
+  data-knobs="knob-vco-a-pitch:64"
+  data-highlights="knob-vco-a-pitch:blue,knob-vco-a-octave:blue,slider-vco-a-pw:amber,switch-vco-a-pulse-position:amber"
+></div>
 
 ### Exercise 3: Pulse Width and Position (5 min)
 

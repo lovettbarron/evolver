@@ -39,6 +39,11 @@ This is your first session -- no warm-up needed. We will start by connecting the
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vco-a,mixer,vcf,wave-folder,vca-a,output-control"
+  data-highlights="knob-vco-a-pitch:amber,knob-output-control-level:blue,knob-output-control-drive:blue"
+></div>
+
 ### Exercise 1: Hear the Normalled Default (5 min)
 
 Play a note on your MIDI controller. You should hear a bright, buzzy sawtooth tone that responds to the keyboard -- higher notes are higher pitched, lower notes are lower.
@@ -75,6 +80,12 @@ Now that you hear the default sound, let's understand what is making it. The sou
 > [!info] Cascadia's signal path places the Wave Folder *after* the VCF, which is unusual. Most synths filter last. This means you can fold an already-filtered signal, creating timbres that are impossible on a standard subtractive synth. You can also patch the wave folder before the filter if you prefer the conventional order.
 
 5. Return FOLD to 0% and all other knobs to their starting positions
+
+<div data-cascadia-panel
+  data-sections="mixer,vcf,wave-folder"
+  data-knobs="slider-vcf-freq:96,slider-wave-folder-fold:64"
+  data-highlights="slider-mixer-saw:blue,slider-mixer-pulse:blue,slider-vcf-freq:blue,slider-wave-folder-fold:blue"
+></div>
 
 ### Exercise 3: Identify the Modulation (5 min)
 

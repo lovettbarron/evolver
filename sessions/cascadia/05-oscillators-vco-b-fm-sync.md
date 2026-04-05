@@ -47,7 +47,7 @@ From the normalled default:
 
 <div data-cascadia-panel
   data-sections="vco-a,vco-b"
-  data-highlights="slider-vco-a-index:blue,switch-vco-a-tzfm:amber,switch-vco-a-ac-dc:amber,knob-vco-b-pitch:amber,switch-vco-b-octave:amber,switch-vco-b-pitch-source:blue"
+  data-highlights="slider-vco-a-index:blue,switch-vco-a-tzfm:amber,switch-vco-a-ac-dc:amber,knob-vco-b-pitch:amber,knob-vco-b-octave:amber,switch-vco-b-pitch-source:blue"
 ></div>
 
 ### Exercise 1: Dial In FM with VCO B (8 min)
@@ -82,7 +82,7 @@ From the normalled default:
 <div data-cascadia-panel
   data-sections="vco-a,vco-b"
   data-knobs="slider-vco-a-index:76"
-  data-highlights="slider-vco-a-index:blue,switch-vco-a-tzfm:blue,switch-vco-a-ac-dc:blue,switch-vco-b-octave:blue,switch-vco-a-sync-type:amber"
+  data-highlights="slider-vco-a-index:blue,switch-vco-a-tzfm:blue,switch-vco-a-ac-dc:blue,knob-vco-b-octave:blue,switch-vco-a-sync-type:amber"
 ></div>
 
 ### Exercise 4: Oscillator Sync (5 min)

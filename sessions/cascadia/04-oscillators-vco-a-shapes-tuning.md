@@ -42,7 +42,7 @@ From the normalled default:
 
 <div data-cascadia-panel
   data-sections="vco-a,mixer"
-  data-highlights="slider-mixer-saw:blue,slider-mixer-pulse:blue,slider-mixer-in-2:blue,knob-vco-a-pitch:amber,switch-vco-a-octave:amber"
+  data-highlights="slider-mixer-saw:blue,slider-mixer-pulse:blue,slider-mixer-in-2:blue,knob-vco-a-pitch:amber,knob-vco-a-octave:amber"
 ></div>
 
 ### Exercise 1: Hear Each Waveform (8 min)
@@ -69,7 +69,7 @@ From the normalled default:
 <div data-cascadia-panel
   data-sections="vco-a"
   data-knobs="knob-vco-a-pitch:64"
-  data-highlights="knob-vco-a-pitch:blue,switch-vco-a-octave:blue,slider-vco-a-pw:amber,switch-vco-a-pulse-position:amber"
+  data-highlights="knob-vco-a-pitch:blue,knob-vco-a-octave:blue,slider-vco-a-pw:amber,switch-vco-a-pulse-position:amber"
 ></div>
 
 ### Exercise 3: Pulse Width and Position (5 min)

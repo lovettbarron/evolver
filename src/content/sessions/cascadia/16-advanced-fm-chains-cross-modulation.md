@@ -46,6 +46,11 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vco-a,vco-b,mixer"
+  data-highlights="slider-vco-a-index:blue,slider-vco-a-index-mod:amber,switch-vco-a-tzfm:amber,switch-vco-a-ac-dc:amber,knob-vco-b-octave:blue,switch-vco-b-pitch-source:blue,slider-mixer-in-1:amber"
+></div>
+
 ### Exercise 1: Basic FM with VCO B (8 min)
 
 > [!info] Normalled: VCO B SINE OUT -> VCO A FM 2 IN. VCO B's sine wave is already connected to VCO A's second FM input. The INDEX slider controls the FM depth (how much VCO B modulates VCO A's frequency).
@@ -78,6 +83,12 @@ The Ring Mod output is normalled to Mixer IN 1. Instead of patching from the Rin
 3. Try VCO B OCTAVE at 3 (ring mod produces octave-related sum/difference tones) vs 5 (higher, more dissonant ring mod tones). Return to OCTAVE 4
 4. Lower IN 1 back to 0%. Now patch Cable 1: take the VCA B OUT jack and route it -- actually, let us use a simpler approach. Lower INDEX to 0% and raise Mixer SAW to ~60% instead of IN 2 for a richer source
 5. The ring mod is an internal resource you have explored. Understanding that it is always available as a timbral color via Mixer IN 1 is the key takeaway
+
+<div data-cascadia-panel
+  data-sections="vco-a,vco-b,vcf,envelope-b"
+  data-knobs="slider-vco-a-index:45,slider-vcf-fm-1:64"
+  data-highlights="slider-vco-a-index:blue,slider-vco-a-index-mod:blue,slider-vcf-fm-1:blue,slider-mixer-in-1:amber"
+></div>
 
 ### Exercise 3: FM Chain with Filter Envelope (5 min)
 

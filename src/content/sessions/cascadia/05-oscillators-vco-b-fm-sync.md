@@ -45,6 +45,11 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vco-a,vco-b"
+  data-highlights="slider-vco-a-index:blue,switch-vco-a-tzfm:amber,switch-vco-a-ac-dc:amber,knob-vco-b-pitch:amber,knob-vco-b-octave:amber,switch-vco-b-pitch-source:blue"
+></div>
+
 ### Exercise 1: Dial In FM with VCO B (8 min)
 
 > [!info] Normalled: VCO B Sine -> VCO A FM 2 IN. VCO B's sine wave output is pre-wired to VCO A's second frequency modulation input. The INDEX slider on VCO A controls how much VCO B's sine wave affects VCO A's frequency. Patching into VCO A FM 2 IN overrides this connection.
@@ -73,6 +78,12 @@ From the normalled default:
 3. Click VCO B OCTAVE back to match VCO A -- the bell becomes denser and more complex (1:1 ratio)
 4. Now slowly turn VCO B PITCH knob from noon toward ~65% -- you should hear the sidebands become inharmonic and metallic as the ratio departs from an integer. This is the "clangorous" FM territory
 5. Return VCO B PITCH to noon. Set VCO B OCTAVE two clicks above VCO A for the final bell sound
+
+<div data-cascadia-panel
+  data-sections="vco-a,vco-b"
+  data-knobs="slider-vco-a-index:76"
+  data-highlights="slider-vco-a-index:blue,switch-vco-a-tzfm:blue,switch-vco-a-ac-dc:blue,knob-vco-b-octave:blue,switch-vco-a-sync-type:amber"
+></div>
 
 ### Exercise 4: Oscillator Sync (5 min)
 

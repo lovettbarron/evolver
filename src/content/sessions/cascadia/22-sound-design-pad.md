@@ -97,6 +97,14 @@ Remove all cables. Set all knobs and sliders to noon/center. Play a MIDI note --
 - MAIN DRIVE: noon
 - MAIN LEVEL: ~50%
 
+<div data-cascadia-panel
+  data-sections="vco-a,mixer,vcf,envelope-a,envelope-b,vca-a,wave-folder,lfo-xyz,utilities"
+  data-knobs="slider-mixer-saw:51,slider-mixer-pulse:44,slider-vcf-freq:51,slider-vcf-fm-1:38,slider-vcf-fm-3:25,slider-envelope-a-attack:51,slider-envelope-a-release:64,slider-wave-folder-fold:19,knob-lfo-xyz-rate:19,knob-utilities-slew-rate:70"
+  data-highlights="jack-lfo-xyz-x-out:amber,jack-vcf-fm-3-in:blue,jack-utilities-slew-out:amber,jack-vco-a-fm-1-in:blue"
+  data-cables="jack-lfo-xyz-x-out>jack-vcf-fm-3-in:mod,jack-utilities-slew-out>jack-vco-a-fm-1-in:cv"
+  data-zoom="false"
+></div>
+
 **Step-by-step build:**
 
 1. Set VCO A OCTAVE to 4. Mixer SAW to ~40%, PULSE to ~35%. Play a note -- blended saw + pulse gives harmonic richness

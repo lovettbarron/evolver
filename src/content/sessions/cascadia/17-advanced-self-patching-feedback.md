@@ -45,6 +45,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vcf,mixer"
+  data-highlights="jack-vcf-lp4-out:amber,jack-mixer-in-1:blue,slider-mixer-in-1:blue,slider-vcf-freq:amber,slider-vcf-q:amber"
+  data-cables="jack-vcf-lp4-out>jack-mixer-in-1:audio"
+></div>
+
 ### Exercise 1: Simple Filter Feedback (8 min)
 
 This exercise requires one cable.
@@ -72,6 +78,12 @@ This exercise requires one cable.
 3. Raise FOLD to ~40% -- the harmonics multiply. Each pass through the feedback loop adds more folds, creating progressively more complex timbres. The sound becomes buzzy and harmonically dense
 4. With FOLD at ~30% and IN 1 at ~15%, play notes at different pitches. Low notes produce denser, growling feedback. High notes produce thinner, more ring-like feedback. The interaction between pitch, filter feedback, and wave folding creates a wide palette of textures
 5. Lower FOLD back to 0%
+
+<div data-cascadia-panel
+  data-sections="vcf,mixer,utilities,envelope-a"
+  data-highlights="jack-vcf-lp4-out:amber,jack-utilities-main-input:blue,jack-envelope-a-out:amber,jack-utilities-secondary-input:blue,jack-utilities-mixuverter-out-a:amber,jack-mixer-in-1:blue"
+  data-cables="jack-vcf-lp4-out>jack-utilities-main-input:audio,jack-envelope-a-out>jack-utilities-secondary-input:mod,jack-utilities-mixuverter-out-a>jack-mixer-in-1:audio"
+></div>
 
 ### Exercise 3: Envelope-Controlled Feedback via Mixuverter (5 min)
 

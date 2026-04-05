@@ -48,6 +48,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="envelope-b,vcf"
+  data-knobs="slider-vcf-fm-1:64,slider-envelope-b-rise:38,slider-envelope-b-fall:64"
+  data-highlights="switch-envelope-b-mode-select:blue,switch-envelope-b-type-select:blue,slider-envelope-b-rise:blue,slider-envelope-b-fall:blue,slider-envelope-b-shape:amber"
+></div>
+
 ### Exercise 1: Envelope Mode — Three Envelope Types (8 min)
 
 Envelope B starts in its most familiar role: a triggered envelope that sweeps the filter once per note.
@@ -78,6 +84,11 @@ Now switch Envelope B to a completely different function: a continuously running
 > [!info] Cascadia's LFV (Low Frequency Vacillator) mode is unique to this synthesizer. Unlike a standard LFO which repeats the same shape forever, the LFV generates chaotic, non-repeating oscillations. FALL becomes DELTA (how far each cycle can deviate from the previous one) and SHAPE becomes SLEW (smoothing between values). Low DELTA + high SLEW = gentle organic wandering. High DELTA + low SLEW = erratic jumps.
 
 6. In LFV mode, set FALL (DELTA) to ~25% and SHAPE (SLEW) to ~75% -- the filter wanders gently and organically, like a slowly drifting analog circuit. Now set DELTA to ~75% and SLEW to ~25% -- the filter movement becomes erratic and unpredictable, jumping between cutoff frequencies. This is modulation that never repeats -- ideal for evolving ambient textures
+
+<div data-cascadia-panel
+  data-sections="envelope-b"
+  data-highlights="switch-envelope-b-mode-select:blue,switch-envelope-b-type-select:blue,slider-envelope-b-rise:amber,slider-envelope-b-fall:amber,slider-envelope-b-shape:amber"
+></div>
 
 ### Exercise 3: Burst Mode — Ratcheting Envelopes (3 min)
 

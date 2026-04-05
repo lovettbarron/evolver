@@ -111,9 +111,9 @@ describe('cascadia-panel-data', () => {
 
     expect(counts['vco-a']).toBe(17);
     expect(counts['patchbay']).toBe(18);
-    expect(counts['mixer']).toBe(15);
+    expect(counts['mixer']).toBe(16);
     expect(counts['vcf']).toBe(16);
-    expect(counts['midi-cv']).toBe(12);
+    expect(counts['midi-cv']).toBe(11);
     expect(counts['vco-b']).toBe(11);
     expect(counts['envelope-a']).toBe(14);
     expect(counts['envelope-b']).toBe(15);
@@ -121,8 +121,8 @@ describe('cascadia-panel-data', () => {
     expect(counts['wave-folder']).toBe(4);
     expect(counts['vca-a']).toBe(6);
     expect(counts['push-gate']).toBe(2);
-    expect(counts['utilities']).toBe(17);
-    expect(counts['lfo-xyz']).toBe(8);
+    expect(counts['utilities']).toBe(18);
+    expect(counts['lfo-xyz']).toBe(7);
     expect(counts['vca-b-lpf']).toBe(7);
     expect(counts['fx-send-return']).toBe(7);
     expect(counts['output-control']).toBe(8);

@@ -43,6 +43,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="utilities,vcf"
+  data-highlights="jack-utilities-sh-out:amber,jack-vcf-fm-3-in:blue,slider-vcf-fm-3:blue,knob-utilities-slew-rate:amber,jack-utilities-slew-out:amber"
+  data-cables="jack-utilities-sh-out>jack-vcf-fm-3-in:cv"
+></div>
+
 ### Exercise 1: S&H Driving the Filter (8 min)
 
 This exercise requires one cable.
@@ -85,6 +91,12 @@ Remove Cable 1 from VCF FM 3 IN. Patch Cable 2: **SLEW OUT** -> **VCF FM 3 IN**.
 > [!info] Cascadia's Slew Limiter has independent direction control (Rise Only / Both / Fall Only) and a shape switch (Linear / Exponential). Most utility slew limiters offer only a single rate knob. The direction and shape controls give you precise control over how voltages transition.
 
 7. Try SHAPE switch: **EXP** produces curves that start fast and decelerate (exponential approach). **LIN** produces constant-rate slopes. EXP sounds more natural for most musical applications
+
+<div data-cascadia-panel
+  data-sections="utilities,vcf,vco-a"
+  data-highlights="jack-utilities-slew-out:amber,jack-vcf-fm-3-in:blue,jack-vco-a-fm-1-in:blue,knob-utilities-slew-rate:blue,switch-utilities-slew-direction:blue,switch-utilities-slew-shape:amber"
+  data-cables="jack-utilities-slew-out>jack-vcf-fm-3-in:cv,jack-utilities-slew-out>jack-vco-a-fm-1-in:cv"
+></div>
 
 ### Exercise 3: Smoothed Random to Pitch (5 min)
 

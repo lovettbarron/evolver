@@ -70,6 +70,7 @@ function parsePanelProps(attrString: string) {
     highlights: highlights.length > 0 ? highlights : undefined,
     activeSections: activeSections.length > 0 ? activeSections : undefined,
     zoomSections: zoomSections.length > 0 ? zoomSections : undefined,
+    cables: undefined,
   };
 }
 

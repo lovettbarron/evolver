@@ -49,6 +49,45 @@ evolver/
 └── .planning/           # GSD planning artifacts
 ```
 
+## Panel SVG Design Principles
+
+When creating or modifying instrument panel SVG components (`src/components/*-panel.tsx`), follow these hard-won principles:
+
+### Reference-First, Not Algorithmic
+- **Always study the physical panel image** before placing controls. Never compute positions algorithmically from a grid — real synth panels have intentional, non-uniform layouts
+- The manual PDF or panel photo is the source of truth for layout, not the data model
+- Each control needs hand-placed x,y coordinates based on its physical position
+
+### Data Model Must Match the Physical Panel
+- **Control types must match reality**: EXT IN jacks are `jack-in`, not switches. Octave selectors are rotary selector knobs with labeled click positions, not switches. 2-way toggles and 3-way toggles render differently
+- **Don't invent controls** that don't exist on the physical panel (e.g., "Rate Trimmers" knob)
+- When in doubt about a control type, check the manual image
+
+### Layout Can Break the Grid
+- Some panels have sections that span multiple rows (e.g., Cascadia's S&H + VCO B column on the left)
+- Complex modules (Utilities, Patchbay) often contain distinct sub-sections that need their own labels and dividers
+- Separator bars between rows may not span the full width when a column breaks through
+
+### Visual Conventions
+- **Output jacks**: filled white (`#e8e8e8`), no "OUT" in the label — immediately distinguishable from dark input jacks
+- **2-way switches**: 2 circles stacked vertically (selected = filled orange)
+- **3-way switches**: 3 circles stacked vertically (traffic light style, selected = filled orange)
+- **Selector knobs**: rotary knob with labeled click positions arranged in an arc (e.g., VCF Mode: LP1-PHZ, Octave: 0-7)
+- **Section labels**: positioned in the separator bars between rows, never overlapping controls
+- **Switch labels**: above the switch, not below (prevents visual association with the wrong control)
+
+### Spacing and Alignment
+- **Eliminate whitespace aggressively** — tighten controls vertically and horizontally
+- Patch points (jacks) should sit close to their associated sliders/knobs, not far below
+- Align jacks across sections to the same y-coordinate when they're in the same row
+- Align switches vertically with their associated output jacks
+- Switches in a column should be stacked vertically (e.g., Mixer's Sub Type / Noise Type / Soft Clip)
+
+### Content Pipeline
+- The app reads content from `~/song` (via `evolver.config.json` vaultPath), not from `src/content/` or `sessions/`
+- When modifying session markdown (e.g., adding panel markers), update all three locations: `sessions/`, `src/content/sessions/`, and `~/song/sessions/`
+- Control IDs in session `data-cascadia-panel` markers must match `CONTROL_METADATA` keys exactly
+
 ## Session Workflow
 
 1. **Before**: Read session brief (2 min), set up Evolver with basic patch or specified starting state

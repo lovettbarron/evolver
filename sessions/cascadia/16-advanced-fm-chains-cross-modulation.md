@@ -48,7 +48,7 @@ From the normalled default:
 
 <div data-cascadia-panel
   data-sections="vco-a,vco-b,mixer"
-  data-highlights="slider-vco-a-index:blue,slider-vco-a-index-mod:amber,switch-vco-a-tzfm:amber,switch-vco-a-ac-dc:amber,switch-vco-b-octave:blue,switch-vco-b-pitch-source:blue,slider-mixer-in-1:amber"
+  data-highlights="slider-vco-a-index:blue,slider-vco-a-index-mod:amber,switch-vco-a-tzfm:amber,switch-vco-a-ac-dc:amber,knob-vco-b-octave:blue,switch-vco-b-pitch-source:blue,slider-mixer-in-1:amber"
 ></div>
 
 ### Exercise 1: Basic FM with VCO B (8 min)

@@ -42,6 +42,11 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vco-a"
+  data-highlights="slider-vco-a-pw:blue,slider-vco-a-pw-mod:blue,switch-vco-a-pulse-position:amber"
+></div>
+
 ### Exercise 1: Explore Pulse Width (8 min)
 
 1. Raise the Mixer PULSE slider to ~75% and lower the Mixer SAW slider to 0% -- you should hear a hollow, square-wave tone (the default pulse width is ~50%)
@@ -63,6 +68,12 @@ From the normalled default:
 > [!info] Cascadia's LFO X/Y/Z module provides three linked LFOs from a single RATE knob. LFO Y is pre-normalled to PWM, so you get modulation immediately. LFO X and Z are available for other destinations via patching.
 
 5. Set LFO RATE to a slow setting (~25%) for a smooth, evolving PWM effect
+
+<div data-cascadia-panel
+  data-sections="mixer,lfo-xyz"
+  data-knobs="slider-vco-a-pw-mod:96,knob-lfo-xyz-rate:32"
+  data-highlights="slider-vco-a-pw-mod:blue,knob-lfo-xyz-rate:blue,slider-mixer-pulse:amber,switch-mixer-sub-type:amber,slider-mixer-sub:blue"
+></div>
 
 ### Exercise 3: Add the Sub-Oscillator (7 min)
 

@@ -25,23 +25,22 @@ export interface CascadiaControlMeta {
  * 179 entries across 17 modules (84 controls/switches/LEDs + 95 jacks).
  */
 export const CONTROL_METADATA: Record<string, CascadiaControlMeta> = {
-  // ===== MIDI/CV (4 controls + 8 jacks = 12) =====
-  'switch-midi-cv-pitch-button': { id: 'switch-midi-cv-pitch-button', name: 'PITCH Button', module: 'midi-cv', type: 'switch' },
-  'switch-midi-cv-cc-button': { id: 'switch-midi-cv-cc-button', name: 'MIDI CC Button', module: 'midi-cv', type: 'switch' },
-  'switch-midi-cv-lfo-button': { id: 'switch-midi-cv-lfo-button', name: 'MIDI LFO Button', module: 'midi-cv', type: 'switch' },
-  'switch-midi-cv-clk-button': { id: 'switch-midi-cv-clk-button', name: 'MIDI CLK Button', module: 'midi-cv', type: 'switch' },
-  'jack-midi-cv-pitch-out': { id: 'jack-midi-cv-pitch-out', name: 'MIDI PITCH OUT', module: 'midi-cv', type: 'jack-out', signalType: 'cv' },
-  'jack-midi-cv-cc-out': { id: 'jack-midi-cv-cc-out', name: 'MIDI CC OUT', module: 'midi-cv', type: 'jack-out', signalType: 'cv' },
-  'jack-midi-cv-lfo-out': { id: 'jack-midi-cv-lfo-out', name: 'MIDI LFO OUT', module: 'midi-cv', type: 'jack-out', signalType: 'modulation' },
-  'jack-midi-cv-clk-out': { id: 'jack-midi-cv-clk-out', name: 'MIDI CLK OUT', module: 'midi-cv', type: 'jack-out', signalType: 'gate' },
-  'jack-midi-cv-vel-out': { id: 'jack-midi-cv-vel-out', name: 'MIDI VEL OUT', module: 'midi-cv', type: 'jack-out', signalType: 'cv' },
-  'jack-midi-cv-mod-out': { id: 'jack-midi-cv-mod-out', name: 'MIDI MOD OUT', module: 'midi-cv', type: 'jack-out', signalType: 'modulation' },
-  'jack-midi-cv-gate-out': { id: 'jack-midi-cv-gate-out', name: 'MIDI GATE OUT', module: 'midi-cv', type: 'jack-out', signalType: 'gate' },
-  'jack-midi-cv-trig-out': { id: 'jack-midi-cv-trig-out', name: 'MIDI TRIG OUT', module: 'midi-cv', type: 'jack-out', signalType: 'gate' },
+  // ===== MIDI/CV (3 EXT IN jacks + 8 MIDI out jacks = 11) =====
+  'jack-midi-cv-pitch-in': { id: 'jack-midi-cv-pitch-in', name: 'PITCH', module: 'midi-cv', type: 'jack-in', signalType: 'cv' },
+  'jack-midi-cv-gate-in': { id: 'jack-midi-cv-gate-in', name: 'GATE', module: 'midi-cv', type: 'jack-in', signalType: 'gate' },
+  'jack-midi-cv-trig-in': { id: 'jack-midi-cv-trig-in', name: 'TRIG', module: 'midi-cv', type: 'jack-in', signalType: 'gate' },
+  'jack-midi-cv-pitch-out': { id: 'jack-midi-cv-pitch-out', name: 'MIDI PITCH', module: 'midi-cv', type: 'jack-out', signalType: 'cv' },
+  'jack-midi-cv-cc-out': { id: 'jack-midi-cv-cc-out', name: 'MIDI CC', module: 'midi-cv', type: 'jack-out', signalType: 'cv' },
+  'jack-midi-cv-lfo-out': { id: 'jack-midi-cv-lfo-out', name: 'MIDI LFO', module: 'midi-cv', type: 'jack-out', signalType: 'modulation' },
+  'jack-midi-cv-clk-out': { id: 'jack-midi-cv-clk-out', name: 'MIDI CLK', module: 'midi-cv', type: 'jack-out', signalType: 'gate' },
+  'jack-midi-cv-vel-out': { id: 'jack-midi-cv-vel-out', name: 'MIDI VEL', module: 'midi-cv', type: 'jack-out', signalType: 'cv' },
+  'jack-midi-cv-mod-out': { id: 'jack-midi-cv-mod-out', name: 'MIDI MOD', module: 'midi-cv', type: 'jack-out', signalType: 'modulation' },
+  'jack-midi-cv-gate-out': { id: 'jack-midi-cv-gate-out', name: 'MIDI GATE', module: 'midi-cv', type: 'jack-out', signalType: 'gate' },
+  'jack-midi-cv-trig-out': { id: 'jack-midi-cv-trig-out', name: 'MIDI TRIG', module: 'midi-cv', type: 'jack-out', signalType: 'gate' },
 
   // ===== VCO A (11 controls + 6 jacks = 17) =====
   'knob-vco-a-pitch': { id: 'knob-vco-a-pitch', name: 'Pitch', module: 'vco-a', type: 'knob' },
-  'switch-vco-a-octave': { id: 'switch-vco-a-octave', name: 'Octave', module: 'vco-a', type: 'switch' },
+  'knob-vco-a-octave': { id: 'knob-vco-a-octave', name: 'OCTAVE', module: 'vco-a', type: 'knob' },
   'slider-vco-a-pw-mod': { id: 'slider-vco-a-pw-mod', name: 'PW MOD', module: 'vco-a', type: 'slider' },
   'slider-vco-a-pw': { id: 'slider-vco-a-pw', name: 'PW', module: 'vco-a', type: 'slider' },
   'slider-vco-a-fm-1': { id: 'slider-vco-a-fm-1', name: 'FM 1', module: 'vco-a', type: 'slider' },
@@ -59,17 +58,17 @@ export const CONTROL_METADATA: Record<string, CascadiaControlMeta> = {
   'jack-vco-a-sync-in': { id: 'jack-vco-a-sync-in', name: 'SYNC IN', module: 'vco-a', type: 'jack-in', signalType: 'audio' },
 
   // ===== VCO B (5 controls + 6 jacks = 11) =====
-  'switch-vco-b-octave': { id: 'switch-vco-b-octave', name: 'Octave', module: 'vco-b', type: 'switch' },
+  'knob-vco-b-octave': { id: 'knob-vco-b-octave', name: 'OCTAVE', module: 'vco-b', type: 'knob' },
   'knob-vco-b-pitch': { id: 'knob-vco-b-pitch', name: 'Pitch', module: 'vco-b', type: 'knob' },
   'switch-vco-b-vco-lfo': { id: 'switch-vco-b-vco-lfo', name: 'VCO/LFO', module: 'vco-b', type: 'switch' },
   'switch-vco-b-pitch-source': { id: 'switch-vco-b-pitch-source', name: 'Pitch Source', module: 'vco-b', type: 'switch' },
   'led-vco-b-rate': { id: 'led-vco-b-rate', name: 'Rate LED', module: 'vco-b', type: 'led' },
   'jack-vco-b-pitch-in': { id: 'jack-vco-b-pitch-in', name: 'PITCH IN', module: 'vco-b', type: 'jack-in', signalType: 'cv' },
   'jack-vco-b-sync-in': { id: 'jack-vco-b-sync-in', name: 'SYNC IN', module: 'vco-b', type: 'jack-in', signalType: 'audio' },
-  'jack-vco-b-sine-out': { id: 'jack-vco-b-sine-out', name: 'SINE OUT', module: 'vco-b', type: 'jack-out', signalType: 'audio' },
-  'jack-vco-b-triangle-out': { id: 'jack-vco-b-triangle-out', name: 'TRIANGLE OUT', module: 'vco-b', type: 'jack-out', signalType: 'audio' },
-  'jack-vco-b-saw-out': { id: 'jack-vco-b-saw-out', name: 'SAW OUT', module: 'vco-b', type: 'jack-out', signalType: 'audio' },
-  'jack-vco-b-square-out': { id: 'jack-vco-b-square-out', name: 'SQUARE OUT', module: 'vco-b', type: 'jack-out', signalType: 'audio' },
+  'jack-vco-b-sine-out': { id: 'jack-vco-b-sine-out', name: 'SINE', module: 'vco-b', type: 'jack-out', signalType: 'audio' },
+  'jack-vco-b-triangle-out': { id: 'jack-vco-b-triangle-out', name: 'TRIANGLE', module: 'vco-b', type: 'jack-out', signalType: 'audio' },
+  'jack-vco-b-saw-out': { id: 'jack-vco-b-saw-out', name: 'SAW', module: 'vco-b', type: 'jack-out', signalType: 'audio' },
+  'jack-vco-b-square-out': { id: 'jack-vco-b-square-out', name: 'SQUARE', module: 'vco-b', type: 'jack-out', signalType: 'audio' },
 
   // ===== ENVELOPE A (8 controls + 6 jacks = 14) =====
   'slider-envelope-a-hold': { id: 'slider-envelope-a-hold', name: 'Hold', module: 'envelope-a', type: 'slider' },
@@ -83,9 +82,9 @@ export const CONTROL_METADATA: Record<string, CascadiaControlMeta> = {
   'jack-envelope-a-gate-in': { id: 'jack-envelope-a-gate-in', name: 'GATE IN', module: 'envelope-a', type: 'jack-in', signalType: 'gate' },
   'jack-envelope-a-ctrl-in': { id: 'jack-envelope-a-ctrl-in', name: 'CTRL IN', module: 'envelope-a', type: 'jack-in', signalType: 'cv' },
   'jack-envelope-a-retrig-in': { id: 'jack-envelope-a-retrig-in', name: 'RETRIG IN', module: 'envelope-a', type: 'jack-in', signalType: 'gate' },
-  'jack-envelope-a-eoh-out': { id: 'jack-envelope-a-eoh-out', name: 'EOH OUT', module: 'envelope-a', type: 'jack-out', signalType: 'gate' },
-  'jack-envelope-a-eoa-out': { id: 'jack-envelope-a-eoa-out', name: 'EOA OUT', module: 'envelope-a', type: 'jack-out', signalType: 'gate' },
-  'jack-envelope-a-out': { id: 'jack-envelope-a-out', name: 'ENV A OUT', module: 'envelope-a', type: 'jack-out', signalType: 'modulation' },
+  'jack-envelope-a-eoh-out': { id: 'jack-envelope-a-eoh-out', name: 'EOH', module: 'envelope-a', type: 'jack-out', signalType: 'gate' },
+  'jack-envelope-a-eoa-out': { id: 'jack-envelope-a-eoa-out', name: 'EOA', module: 'envelope-a', type: 'jack-out', signalType: 'gate' },
+  'jack-envelope-a-out': { id: 'jack-envelope-a-out', name: 'ENV A', module: 'envelope-a', type: 'jack-out', signalType: 'modulation' },
 
   // ===== ENVELOPE B (9 controls + 6 jacks = 15) =====
   'switch-envelope-b-mode-select': { id: 'switch-envelope-b-mode-select', name: 'Mode Select', module: 'envelope-b', type: 'switch' },
@@ -101,12 +100,12 @@ export const CONTROL_METADATA: Record<string, CascadiaControlMeta> = {
   'jack-envelope-b-fall-mod-in': { id: 'jack-envelope-b-fall-mod-in', name: 'FALL MOD IN', module: 'envelope-b', type: 'jack-in', signalType: 'modulation' },
   'jack-envelope-b-shape-mod-in': { id: 'jack-envelope-b-shape-mod-in', name: 'SHAPE MOD IN', module: 'envelope-b', type: 'jack-in', signalType: 'modulation' },
   'jack-envelope-b-gate-sync-in': { id: 'jack-envelope-b-gate-sync-in', name: 'GATE/SYNC IN', module: 'envelope-b', type: 'jack-in', signalType: 'gate' },
-  'jack-envelope-b-eof-out': { id: 'jack-envelope-b-eof-out', name: 'EOF OUT', module: 'envelope-b', type: 'jack-out', signalType: 'gate' },
-  'jack-envelope-b-out': { id: 'jack-envelope-b-out', name: 'ENV B OUT', module: 'envelope-b', type: 'jack-out', signalType: 'modulation' },
+  'jack-envelope-b-eof-out': { id: 'jack-envelope-b-eof-out', name: 'EOF', module: 'envelope-b', type: 'jack-out', signalType: 'gate' },
+  'jack-envelope-b-out': { id: 'jack-envelope-b-out', name: 'ENV B', module: 'envelope-b', type: 'jack-out', signalType: 'modulation' },
 
   // ===== LINE IN (1 control + 1 jack = 2) =====
   'slider-line-in-level': { id: 'slider-line-in-level', name: 'Level', module: 'line-in', type: 'slider' },
-  'jack-line-in-out': { id: 'jack-line-in-out', name: 'LINE IN OUT', module: 'line-in', type: 'jack-out', signalType: 'audio' },
+  'jack-line-in-out': { id: 'jack-line-in-out', name: 'LINE IN', module: 'line-in', type: 'jack-out', signalType: 'audio' },
 
   // ===== MIXER (8 controls + 7 jacks = 15) =====
   'slider-mixer-in-1': { id: 'slider-mixer-in-1', name: 'IN 1', module: 'mixer', type: 'slider' },
@@ -117,31 +116,32 @@ export const CONTROL_METADATA: Record<string, CascadiaControlMeta> = {
   'slider-mixer-noise': { id: 'slider-mixer-noise', name: 'Noise', module: 'mixer', type: 'slider' },
   'switch-mixer-sub-type': { id: 'switch-mixer-sub-type', name: 'Sub Type', module: 'mixer', type: 'switch' },
   'switch-mixer-noise-type': { id: 'switch-mixer-noise-type', name: 'Noise Type', module: 'mixer', type: 'switch' },
+  'switch-mixer-soft-clip': { id: 'switch-mixer-soft-clip', name: 'Soft Clip', module: 'mixer', type: 'switch' },
   'jack-mixer-in-1': { id: 'jack-mixer-in-1', name: 'MIXER IN 1', module: 'mixer', type: 'jack-in', signalType: 'audio' },
   'jack-mixer-in-2': { id: 'jack-mixer-in-2', name: 'MIXER IN 2', module: 'mixer', type: 'jack-in', signalType: 'audio' },
-  'jack-mixer-vco-a-tri-out': { id: 'jack-mixer-vco-a-tri-out', name: 'VCO A TRI OUT', module: 'mixer', type: 'jack-out', signalType: 'audio' },
-  'jack-mixer-vco-a-saw-out': { id: 'jack-mixer-vco-a-saw-out', name: 'VCO A SAW OUT', module: 'mixer', type: 'jack-out', signalType: 'audio' },
-  'jack-mixer-vco-a-pulse-out': { id: 'jack-mixer-vco-a-pulse-out', name: 'VCO A PULSE OUT', module: 'mixer', type: 'jack-out', signalType: 'audio' },
-  'jack-mixer-noise-out': { id: 'jack-mixer-noise-out', name: 'NOISE OUT', module: 'mixer', type: 'jack-out', signalType: 'audio' },
-  'jack-mixer-out': { id: 'jack-mixer-out', name: 'MIXER OUT', module: 'mixer', type: 'jack-out', signalType: 'audio' },
+  'jack-mixer-vco-a-tri-out': { id: 'jack-mixer-vco-a-tri-out', name: 'VCO A TRI', module: 'mixer', type: 'jack-out', signalType: 'audio' },
+  'jack-mixer-vco-a-saw-out': { id: 'jack-mixer-vco-a-saw-out', name: 'VCO A SAW', module: 'mixer', type: 'jack-out', signalType: 'audio' },
+  'jack-mixer-vco-a-pulse-out': { id: 'jack-mixer-vco-a-pulse-out', name: 'VCO A PULSE', module: 'mixer', type: 'jack-out', signalType: 'audio' },
+  'jack-mixer-noise-out': { id: 'jack-mixer-noise-out', name: 'NOISE', module: 'mixer', type: 'jack-out', signalType: 'audio' },
+  'jack-mixer-out': { id: 'jack-mixer-out', name: 'MIXER', module: 'mixer', type: 'jack-out', signalType: 'audio' },
 
   // ===== VCF (8 controls + 8 jacks = 16) =====
   'slider-vcf-fm-1': { id: 'slider-vcf-fm-1', name: 'FM 1', module: 'vcf', type: 'slider' },
   'slider-vcf-fm-2': { id: 'slider-vcf-fm-2', name: 'FM 2', module: 'vcf', type: 'slider' },
   'slider-vcf-fm-3': { id: 'slider-vcf-fm-3', name: 'FM 3', module: 'vcf', type: 'slider' },
   'slider-vcf-qm': { id: 'slider-vcf-qm', name: 'QM', module: 'vcf', type: 'slider' },
-  'slider-vcf-freq': { id: 'slider-vcf-freq', name: 'Frequency', module: 'vcf', type: 'slider' },
-  'slider-vcf-q': { id: 'slider-vcf-q', name: 'Resonance', module: 'vcf', type: 'slider' },
-  'switch-vcf-mode': { id: 'switch-vcf-mode', name: 'Mode', module: 'vcf', type: 'switch' },
+  'slider-vcf-freq': { id: 'slider-vcf-freq', name: 'FREQ', module: 'vcf', type: 'slider' },
+  'slider-vcf-q': { id: 'slider-vcf-q', name: 'Q', module: 'vcf', type: 'slider' },
+  'knob-vcf-mode': { id: 'knob-vcf-mode', name: 'MODE', module: 'vcf', type: 'knob' },
   'knob-vcf-level': { id: 'knob-vcf-level', name: 'Level', module: 'vcf', type: 'knob' },
   'jack-vcf-fm-1-in': { id: 'jack-vcf-fm-1-in', name: 'FM 1 IN', module: 'vcf', type: 'jack-in', signalType: 'modulation' },
   'jack-vcf-fm-2-in': { id: 'jack-vcf-fm-2-in', name: 'FM 2 IN', module: 'vcf', type: 'jack-in', signalType: 'cv' },
   'jack-vcf-fm-3-in': { id: 'jack-vcf-fm-3-in', name: 'FM 3 IN', module: 'vcf', type: 'jack-in', signalType: 'modulation' },
   'jack-vcf-q-mod-in': { id: 'jack-vcf-q-mod-in', name: 'Q MOD IN', module: 'vcf', type: 'jack-in', signalType: 'modulation' },
   'jack-vcf-in': { id: 'jack-vcf-in', name: 'VCF IN', module: 'vcf', type: 'jack-in', signalType: 'audio' },
-  'jack-vcf-lp4-out': { id: 'jack-vcf-lp4-out', name: 'LP4 OUT', module: 'vcf', type: 'jack-out', signalType: 'audio' },
-  'jack-vcf-hp4-out': { id: 'jack-vcf-hp4-out', name: 'HP4 OUT', module: 'vcf', type: 'jack-out', signalType: 'audio' },
-  'jack-vcf-out': { id: 'jack-vcf-out', name: 'VCF OUT', module: 'vcf', type: 'jack-out', signalType: 'audio' },
+  'jack-vcf-lp4-out': { id: 'jack-vcf-lp4-out', name: 'LP4', module: 'vcf', type: 'jack-out', signalType: 'audio' },
+  'jack-vcf-hp4-out': { id: 'jack-vcf-hp4-out', name: 'HP4', module: 'vcf', type: 'jack-out', signalType: 'audio' },
+  'jack-vcf-out': { id: 'jack-vcf-out', name: 'VCF', module: 'vcf', type: 'jack-out', signalType: 'audio' },
 
   // ===== WAVE FOLDER (2 controls + 2 jacks = 4) =====
   'slider-wave-folder-mod': { id: 'slider-wave-folder-mod', name: 'Mod', module: 'wave-folder', type: 'slider' },
@@ -159,38 +159,38 @@ export const CONTROL_METADATA: Record<string, CascadiaControlMeta> = {
 
   // ===== PUSH GATE (1 control + 1 jack = 2) =====
   'switch-push-gate-manual': { id: 'switch-push-gate-manual', name: 'Manual Gate', module: 'push-gate', type: 'switch' },
-  'jack-push-gate-out': { id: 'jack-push-gate-out', name: 'GATE OUT', module: 'push-gate', type: 'jack-out', signalType: 'gate' },
+  'jack-push-gate-out': { id: 'jack-push-gate-out', name: 'GATE', module: 'push-gate', type: 'jack-out', signalType: 'gate' },
 
   // ===== UTILITIES (8 controls + 9 jacks = 17) =====
   // --- Sample & Hold ---
   'led-utilities-sh': { id: 'led-utilities-sh', name: 'S&H LED', module: 'utilities', type: 'led' },
   'jack-utilities-sh-trig-in': { id: 'jack-utilities-sh-trig-in', name: 'TRIG IN', module: 'utilities', type: 'jack-in', signalType: 'gate' },
   'jack-utilities-sh-in': { id: 'jack-utilities-sh-in', name: 'S&H IN', module: 'utilities', type: 'jack-in', signalType: 'modulation' },
-  'jack-utilities-sh-out': { id: 'jack-utilities-sh-out', name: 'S&H OUT', module: 'utilities', type: 'jack-out', signalType: 'cv' },
+  'jack-utilities-sh-out': { id: 'jack-utilities-sh-out', name: 'S&H', module: 'utilities', type: 'jack-out', signalType: 'cv' },
   // --- Slew Limiter / Envelope Follower ---
   'knob-utilities-slew-rate': { id: 'knob-utilities-slew-rate', name: 'Slew Rate', module: 'utilities', type: 'knob' },
   'switch-utilities-slew-direction': { id: 'switch-utilities-slew-direction', name: 'Slew Direction', module: 'utilities', type: 'switch' },
   'switch-utilities-slew-shape': { id: 'switch-utilities-slew-shape', name: 'Slew Shape', module: 'utilities', type: 'switch' },
   'switch-utilities-env-follow': { id: 'switch-utilities-env-follow', name: 'Env Follow', module: 'utilities', type: 'switch' },
   'jack-utilities-slew-in': { id: 'jack-utilities-slew-in', name: 'SLEW/FOLLOW IN', module: 'utilities', type: 'jack-in', signalType: 'cv' },
-  'jack-utilities-slew-out': { id: 'jack-utilities-slew-out', name: 'SLEW OUT', module: 'utilities', type: 'jack-out', signalType: 'cv' },
+  'jack-utilities-slew-out': { id: 'jack-utilities-slew-out', name: 'SLEW', module: 'utilities', type: 'jack-out', signalType: 'cv' },
   // --- Mixuverter ---
   'knob-utilities-attenuator': { id: 'knob-utilities-attenuator', name: 'Attenuator', module: 'utilities', type: 'knob' },
   'switch-utilities-x2': { id: 'switch-utilities-x2', name: 'x2 Switch', module: 'utilities', type: 'switch' },
   'switch-utilities-polarity': { id: 'switch-utilities-polarity', name: 'Polarity', module: 'utilities', type: 'switch' },
   'jack-utilities-main-input': { id: 'jack-utilities-main-input', name: 'Main Input', module: 'utilities', type: 'jack-in', signalType: 'cv' },
   'jack-utilities-secondary-input': { id: 'jack-utilities-secondary-input', name: 'Secondary Input', module: 'utilities', type: 'jack-in', signalType: 'cv' },
-  'jack-utilities-mixuverter-out-a': { id: 'jack-utilities-mixuverter-out-a', name: 'Mixuverter Out A', module: 'utilities', type: 'jack-out', signalType: 'cv' },
-  'jack-utilities-mixuverter-out-b': { id: 'jack-utilities-mixuverter-out-b', name: 'Mixuverter Out B', module: 'utilities', type: 'jack-out', signalType: 'cv' },
+  'jack-utilities-mixuverter-out-a': { id: 'jack-utilities-mixuverter-out-a', name: 'MIX A', module: 'utilities', type: 'jack-out', signalType: 'cv' },
+  'jack-utilities-mixuverter-out-b': { id: 'jack-utilities-mixuverter-out-b', name: 'MIX B', module: 'utilities', type: 'jack-out', signalType: 'cv' },
+  'jack-utilities-mixuverter-out-c': { id: 'jack-utilities-mixuverter-out-c', name: 'MIX C', module: 'utilities', type: 'jack-out', signalType: 'cv' },
 
   // ===== LFO X/Y/Z (4 controls + 4 jacks = 8) =====
-  'knob-lfo-xyz-rate': { id: 'knob-lfo-xyz-rate', name: 'Rate', module: 'lfo-xyz', type: 'knob' },
-  'switch-lfo-xyz-y-divider': { id: 'switch-lfo-xyz-y-divider', name: 'LFO Y Rate Divider', module: 'lfo-xyz', type: 'switch' },
-  'switch-lfo-xyz-z-divider': { id: 'switch-lfo-xyz-z-divider', name: 'LFO Z Rate Divider', module: 'lfo-xyz', type: 'switch' },
-  'knob-lfo-xyz-trimmers': { id: 'knob-lfo-xyz-trimmers', name: 'Rate Trimmers', module: 'lfo-xyz', type: 'knob' },
-  'jack-lfo-xyz-x-out': { id: 'jack-lfo-xyz-x-out', name: 'LFO X OUT', module: 'lfo-xyz', type: 'jack-out', signalType: 'modulation' },
-  'jack-lfo-xyz-y-out': { id: 'jack-lfo-xyz-y-out', name: 'LFO Y OUT', module: 'lfo-xyz', type: 'jack-out', signalType: 'modulation' },
-  'jack-lfo-xyz-z-out': { id: 'jack-lfo-xyz-z-out', name: 'LFO Z OUT', module: 'lfo-xyz', type: 'jack-out', signalType: 'modulation' },
+  'knob-lfo-xyz-rate': { id: 'knob-lfo-xyz-rate', name: 'RATE', module: 'lfo-xyz', type: 'knob' },
+  'switch-lfo-xyz-y-divider': { id: 'switch-lfo-xyz-y-divider', name: 'Y ÷3/÷4', module: 'lfo-xyz', type: 'switch' },
+  'switch-lfo-xyz-z-divider': { id: 'switch-lfo-xyz-z-divider', name: 'Z ÷5/÷8', module: 'lfo-xyz', type: 'switch' },
+  'jack-lfo-xyz-x-out': { id: 'jack-lfo-xyz-x-out', name: 'LFO X', module: 'lfo-xyz', type: 'jack-out', signalType: 'modulation' },
+  'jack-lfo-xyz-y-out': { id: 'jack-lfo-xyz-y-out', name: 'LFO Y', module: 'lfo-xyz', type: 'jack-out', signalType: 'modulation' },
+  'jack-lfo-xyz-z-out': { id: 'jack-lfo-xyz-z-out', name: 'LFO Z', module: 'lfo-xyz', type: 'jack-out', signalType: 'modulation' },
   'jack-lfo-xyz-rate-cv': { id: 'jack-lfo-xyz-rate-cv', name: 'LFO RATE CV', module: 'lfo-xyz', type: 'jack-in', signalType: 'cv' },
 
   // ===== PATCHBAY (1 control + 17 jacks = 18) =====
@@ -206,35 +206,35 @@ export const CONTROL_METADATA: Record<string, CascadiaControlMeta> = {
   // --- Summing ---
   'jack-patchbay-sum-in-1': { id: 'jack-patchbay-sum-in-1', name: 'SUM IN 1', module: 'patchbay', type: 'jack-in', signalType: 'cv' },
   'jack-patchbay-sum-in-2': { id: 'jack-patchbay-sum-in-2', name: 'SUM IN 2', module: 'patchbay', type: 'jack-in', signalType: 'cv' },
-  'jack-patchbay-sum-out': { id: 'jack-patchbay-sum-out', name: 'SUM OUT', module: 'patchbay', type: 'jack-out', signalType: 'cv' },
+  'jack-patchbay-sum-out': { id: 'jack-patchbay-sum-out', name: 'SUM', module: 'patchbay', type: 'jack-out', signalType: 'cv' },
   // --- Inverter ---
   'jack-patchbay-inverter-in': { id: 'jack-patchbay-inverter-in', name: 'INVERTER IN', module: 'patchbay', type: 'jack-in', signalType: 'modulation' },
-  'jack-patchbay-inverter-out': { id: 'jack-patchbay-inverter-out', name: 'INVERTER OUT', module: 'patchbay', type: 'jack-out', signalType: 'modulation' },
+  'jack-patchbay-inverter-out': { id: 'jack-patchbay-inverter-out', name: 'INVERTER', module: 'patchbay', type: 'jack-out', signalType: 'modulation' },
   // --- Bipolar-to-Unipolar ---
   'jack-patchbay-bi-in': { id: 'jack-patchbay-bi-in', name: 'BI IN', module: 'patchbay', type: 'jack-in', signalType: 'modulation' },
-  'jack-patchbay-uni-out': { id: 'jack-patchbay-uni-out', name: 'UNI OUT', module: 'patchbay', type: 'jack-out', signalType: 'modulation' },
+  'jack-patchbay-uni-out': { id: 'jack-patchbay-uni-out', name: 'UNI', module: 'patchbay', type: 'jack-out', signalType: 'modulation' },
   // --- Exponential Source ---
   'jack-patchbay-exp-src-in': { id: 'jack-patchbay-exp-src-in', name: 'EXP SRC IN', module: 'patchbay', type: 'jack-in', signalType: 'cv' },
   // --- Ring Modulator ---
   'jack-patchbay-ringmod-in-1': { id: 'jack-patchbay-ringmod-in-1', name: 'RINGMOD IN 1', module: 'patchbay', type: 'jack-in', signalType: 'audio' },
   'jack-patchbay-ringmod-in-2': { id: 'jack-patchbay-ringmod-in-2', name: 'RINGMOD IN 2', module: 'patchbay', type: 'jack-in', signalType: 'audio' },
-  'jack-patchbay-ringmod-out': { id: 'jack-patchbay-ringmod-out', name: 'RINGMOD OUT', module: 'patchbay', type: 'jack-out', signalType: 'audio' },
+  'jack-patchbay-ringmod-out': { id: 'jack-patchbay-ringmod-out', name: 'RINGMOD', module: 'patchbay', type: 'jack-out', signalType: 'audio' },
 
   // ===== VCA B / LPF (3 controls + 4 jacks = 7) =====
   'knob-vca-b-lpf-cv-amount': { id: 'knob-vca-b-lpf-cv-amount', name: 'CV Amount', module: 'vca-b-lpf', type: 'knob' },
   'led-vca-b-lpf-cv-level': { id: 'led-vca-b-lpf-cv-level', name: 'CV Level LED', module: 'vca-b-lpf', type: 'led' },
-  'switch-vca-b-lpf-vca-control': { id: 'switch-vca-b-lpf-vca-control', name: 'VCA Control', module: 'vca-b-lpf', type: 'switch' },
-  'jack-vca-b-lpf-in': { id: 'jack-vca-b-lpf-in', name: 'VCA B IN', module: 'vca-b-lpf', type: 'jack-in', signalType: 'audio' },
-  'jack-vca-b-lpf-cv-in': { id: 'jack-vca-b-lpf-cv-in', name: 'VCA/LPF B CV IN', module: 'vca-b-lpf', type: 'jack-in', signalType: 'modulation' },
-  'jack-vca-b-lpf-vca-out': { id: 'jack-vca-b-lpf-vca-out', name: 'VCA B OUT', module: 'vca-b-lpf', type: 'jack-out', signalType: 'audio' },
-  'jack-vca-b-lpf-out': { id: 'jack-vca-b-lpf-out', name: 'LPF B OUT', module: 'vca-b-lpf', type: 'jack-out', signalType: 'audio' },
+  'switch-vca-b-lpf-vca-control': { id: 'switch-vca-b-lpf-vca-control', name: 'VCA/LPF', module: 'vca-b-lpf', type: 'switch' },
+  'jack-vca-b-lpf-in': { id: 'jack-vca-b-lpf-in', name: 'IN', module: 'vca-b-lpf', type: 'jack-in', signalType: 'audio' },
+  'jack-vca-b-lpf-cv-in': { id: 'jack-vca-b-lpf-cv-in', name: 'CV IN', module: 'vca-b-lpf', type: 'jack-in', signalType: 'modulation' },
+  'jack-vca-b-lpf-vca-out': { id: 'jack-vca-b-lpf-vca-out', name: 'VCA B', module: 'vca-b-lpf', type: 'jack-out', signalType: 'audio' },
+  'jack-vca-b-lpf-out': { id: 'jack-vca-b-lpf-out', name: 'LPF B', module: 'vca-b-lpf', type: 'jack-out', signalType: 'audio' },
 
   // ===== FX SEND/RETURN (5 controls + 2 jacks = 7) =====
-  'knob-fx-send-return-send-level': { id: 'knob-fx-send-return-send-level', name: 'FX Send Level', module: 'fx-send-return', type: 'knob' },
-  'switch-fx-send-return-level-type': { id: 'switch-fx-send-return-level-type', name: 'Send Level Type', module: 'fx-send-return', type: 'switch' },
+  'knob-fx-send-return-send-level': { id: 'knob-fx-send-return-send-level', name: 'SEND', module: 'fx-send-return', type: 'knob' },
+  'switch-fx-send-return-level-type': { id: 'switch-fx-send-return-level-type', name: 'FX IN', module: 'fx-send-return', type: 'switch' },
   'switch-fx-send-return-phase': { id: 'switch-fx-send-return-phase', name: 'Phase', module: 'fx-send-return', type: 'switch' },
-  'knob-fx-send-return-return-level': { id: 'knob-fx-send-return-return-level', name: 'FX Return Level', module: 'fx-send-return', type: 'knob' },
-  'knob-fx-send-return-dry-wet': { id: 'knob-fx-send-return-dry-wet', name: 'Dry/Wet FX Mix', module: 'fx-send-return', type: 'knob' },
+  'knob-fx-send-return-return-level': { id: 'knob-fx-send-return-return-level', name: 'RETURN', module: 'fx-send-return', type: 'knob' },
+  'knob-fx-send-return-dry-wet': { id: 'knob-fx-send-return-dry-wet', name: 'FX MIX', module: 'fx-send-return', type: 'knob' },
   'jack-fx-send-return-send': { id: 'jack-fx-send-return-send', name: 'FX SEND', module: 'fx-send-return', type: 'jack-in', signalType: 'audio' },
   'jack-fx-send-return-mix': { id: 'jack-fx-send-return-mix', name: 'FX MIX', module: 'fx-send-return', type: 'jack-out', signalType: 'audio' },
 
@@ -242,36 +242,47 @@ export const CONTROL_METADATA: Record<string, CascadiaControlMeta> = {
   'knob-output-control-drive': { id: 'knob-output-control-drive', name: 'Main Drive', module: 'output-control', type: 'knob' },
   'switch-output-control-soft-clip': { id: 'switch-output-control-soft-clip', name: 'Soft Clip', module: 'output-control', type: 'switch' },
   'knob-output-control-level': { id: 'knob-output-control-level', name: 'Main Level', module: 'output-control', type: 'knob' },
-  'jack-output-control-fold-out': { id: 'jack-output-control-fold-out', name: 'FOLD OUT', module: 'output-control', type: 'jack-out', signalType: 'audio' },
-  'jack-output-control-vca-a-out': { id: 'jack-output-control-vca-a-out', name: 'VCA A OUT', module: 'output-control', type: 'jack-out', signalType: 'audio' },
+  'jack-output-control-fold-out': { id: 'jack-output-control-fold-out', name: 'FOLD', module: 'output-control', type: 'jack-out', signalType: 'audio' },
+  'jack-output-control-vca-a-out': { id: 'jack-output-control-vca-a-out', name: 'VCA A', module: 'output-control', type: 'jack-out', signalType: 'audio' },
   'jack-output-control-main-1-in': { id: 'jack-output-control-main-1-in', name: 'MAIN 1 IN', module: 'output-control', type: 'jack-in', signalType: 'audio' },
   'jack-output-control-main-2-in': { id: 'jack-output-control-main-2-in', name: 'MAIN 2 IN', module: 'output-control', type: 'jack-in', signalType: 'audio' },
-  'jack-output-control-main-out': { id: 'jack-output-control-main-out', name: 'MAIN OUT', module: 'output-control', type: 'jack-out', signalType: 'audio' },
+  'jack-output-control-main-out': { id: 'jack-output-control-main-out', name: 'MAIN', module: 'output-control', type: 'jack-out', signalType: 'audio' },
 };
 
 /**
  * Section bounds for the 17 Cascadia modules.
  * ViewBox: 0 0 1800 350. Modules arranged left-to-right matching physical panel.
- * Widths proportional to control density with ~15px inter-module gaps.
+ * Layout matches the physical Cascadia panel: 4 zones arranged in rows.
+ * ViewBox: 0 0 1000 750
+ *
+ * Top strip (y: 5-55):    FX send/return, Output control
+ * Row 1 (y: 72-290):      MIDI/CV, LINE IN, MIXER, VCF, WAVE FOLDER, VCA A
+ * Row 2 (y: 310-495):     Utilities, LFO XYZ, Patchbay, VCA B/LPF, Push Gate
+ * Row 3 (y: 512-745):     VCO B, VCO A, ENVELOPE A, ENVELOPE B
  */
 export const SECTION_BOUNDS: Record<string, { x: number; y: number; width: number; height: number }> = {
-  'midi-cv':        { x: 10,   y: 10, width: 90,  height: 320 },
-  'vco-a':          { x: 115,  y: 10, width: 130, height: 320 },
-  'vco-b':          { x: 260,  y: 10, width: 90,  height: 320 },
-  'envelope-a':     { x: 365,  y: 10, width: 110, height: 320 },
-  'envelope-b':     { x: 490,  y: 10, width: 110, height: 320 },
-  'line-in':        { x: 615,  y: 10, width: 40,  height: 320 },
-  'mixer':          { x: 670,  y: 10, width: 120, height: 320 },
-  'vcf':            { x: 805,  y: 10, width: 120, height: 320 },
-  'wave-folder':    { x: 940,  y: 10, width: 50,  height: 320 },
-  'vca-a':          { x: 1005, y: 10, width: 60,  height: 320 },
-  'push-gate':      { x: 1080, y: 10, width: 40,  height: 320 },
-  'utilities':      { x: 1135, y: 10, width: 130, height: 320 },
-  'lfo-xyz':        { x: 1280, y: 10, width: 80,  height: 320 },
-  'patchbay':       { x: 1375, y: 10, width: 150, height: 320 },
-  'vca-b-lpf':      { x: 1540, y: 10, width: 70,  height: 320 },
-  'fx-send-return':  { x: 1625, y: 10, width: 80,  height: 320 },
-  'output-control':  { x: 1720, y: 10, width: 80,  height: 320 },
+  // Top strip (starts above mixer pulse slider)
+  'fx-send-return':  { x: 210,  y: 5,   width: 270, height: 55 },
+  'output-control':  { x: 600,  y: 5,   width: 395, height: 55 },
+  // Row 1
+  'midi-cv':         { x: 5,    y: 72,  width: 90,  height: 150 },
+  'line-in':         { x: 100,  y: 72,  width: 55,  height: 150 },
+  'mixer':           { x: 160,  y: 72,  width: 200, height: 150 },
+  'vcf':             { x: 365,  y: 72,  width: 240, height: 150 },
+  'wave-folder':     { x: 615,  y: 72,  width: 95,  height: 150 },
+  'vca-a':           { x: 715,  y: 72,  width: 180, height: 150 },
+  // Left column (S&H breaks grid) + Slew/Mixuverter in Row 2
+  'utilities':       { x: 5,    y: 244, width: 410, height: 165 },
+  'vco-b':           { x: 5,    y: 342, width: 145, height: 200 },
+  // Row 2 (x:155+)
+  'lfo-xyz':         { x: 420,  y: 244, width: 155, height: 165 },
+  'patchbay':        { x: 580,  y: 244, width: 230, height: 165 },
+  'vca-b-lpf':       { x: 895,  y: 244, width: 105, height: 165 },
+  'push-gate':       { x: 965,  y: 400, width: 35,  height: 220 },
+  // Row 3 (x:155+)
+  'vco-a':           { x: 155,  y: 400, width: 310, height: 220 },
+  'envelope-a':      { x: 470,  y: 400, width: 255, height: 220 },
+  'envelope-b':      { x: 730,  y: 400, width: 265, height: 220 },
 };
 
 /**

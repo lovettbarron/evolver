@@ -96,6 +96,13 @@ This bass patch requires zero cables. Everything runs through Cascadia's normall
 - MAIN DRIVE: noon
 - MAIN LEVEL: ~50%
 
+<div data-cascadia-panel
+  data-sections="vco-a,mixer,vcf,envelope-a,envelope-b,vca-a,wave-folder,lfo-xyz,output-control"
+  data-knobs="slider-mixer-saw:89,slider-mixer-sub:57,slider-vcf-freq:32,slider-vcf-q:19,slider-vcf-fm-1:64,slider-envelope-b-rise:0,slider-envelope-b-fall:38,slider-envelope-a-attack:0,slider-envelope-a-decay:32,slider-envelope-a-sustain:76,slider-envelope-a-release:13,slider-wave-folder-fold:13,slider-vco-a-pw-mod:19,knob-lfo-xyz-rate:25"
+  data-highlights="slider-mixer-saw:blue,slider-mixer-sub:blue,switch-mixer-sub-type:blue,slider-vcf-freq:blue,slider-vcf-fm-1:blue,slider-wave-folder-fold:amber"
+  data-zoom="false"
+></div>
+
 **Step-by-step build:**
 
 1. Set VCO A OCTAVE to 2. Play a note -- deep sawtooth

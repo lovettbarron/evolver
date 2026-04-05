@@ -43,6 +43,12 @@ From the normalled default:
 
 ## Exercises
 
+<div data-cascadia-panel
+  data-sections="vcf,envelope-b"
+  data-knobs="slider-vcf-freq:32,slider-vcf-q:25"
+  data-highlights="slider-vcf-fm-1:blue,slider-vcf-fm-2:amber,slider-vcf-fm-3:amber"
+></div>
+
 ### Exercise 1: Envelope-to-Filter Sweep (7 min)
 
 > [!info] Normalled: Envelope B ENV OUT -> VCF FM 1 IN. By default, Envelope B is already connected to the filter's first FM input. The FM 1 slider controls how much envelope reaches the filter.
@@ -60,6 +66,12 @@ This exercise requires one cable.
 | # | From | To | Purpose | Overrides |
 |---|------|----|---------|-----------|
 | 1 | LFO X OUT | VCF FM 3 IN | Rhythmic filter modulation | Nothing (FM 3 has no normal) |
+
+<div data-cascadia-panel
+  data-sections="vcf,lfo-xyz"
+  data-highlights="jack-lfo-xyz-x-out:amber,jack-vcf-fm-3-in:blue,slider-vcf-fm-3:blue,knob-lfo-xyz-rate:blue"
+  data-cables="jack-lfo-xyz-x-out>jack-vcf-fm-3-in:mod"
+></div>
 
 1. Keep FM 1 at ~30% (subtle envelope). Patch Cable 1: **LFO X OUT** -> **VCF FM 3 IN**
 2. Set VCF FM 3 to ~25%. Set LFO RATE to ~30% (slow). You should hear the filter cutoff gently sweeping up and down in a repeating cycle -- the classic filter wobble

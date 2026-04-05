@@ -94,6 +94,14 @@ Remove all cables. Set all knobs and sliders to noon/center. Play a MIDI note --
 - MAIN DRIVE: noon
 - MAIN LEVEL: ~50%
 
+<div data-cascadia-panel
+  data-sections="mixer,vcf,utilities,wave-folder,lfo-xyz,envelope-a,vca-a"
+  data-knobs="slider-mixer-noise:83,slider-mixer-saw:19,slider-vcf-freq:44,slider-vcf-q:51,slider-vcf-fm-3:44,slider-vcf-qm:38,slider-wave-folder-fold:25,slider-wave-folder-mod:51,knob-utilities-slew-rate:51,knob-lfo-xyz-rate:25"
+  data-highlights="jack-utilities-sh-out:amber,jack-vcf-fm-3-in:blue,jack-utilities-slew-out:amber,jack-wave-folder-mod-in:blue,jack-lfo-xyz-x-out:amber,jack-vcf-q-mod-in:blue"
+  data-cables="jack-utilities-sh-out>jack-vcf-fm-3-in:cv,jack-utilities-slew-out>jack-wave-folder-mod-in:cv,jack-lfo-xyz-x-out>jack-vcf-q-mod-in:mod"
+  data-zoom="false"
+></div>
+
 **Step-by-step build:**
 
 1. Set Mixer NOISE to ~65%, NOISE TYPE to WHITE, SAW to ~15%. Set VCF MODE to BP4, FREQ to ~35%, Q to ~40%. Play and hold a note -- you should hear a concentrated band of noise with a resonant, almost tonal character. The bandpass focuses the noise into a narrow frequency range

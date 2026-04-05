@@ -12,7 +12,7 @@ describe('CascadiaPanel', () => {
   test('renders SVG with correct default viewBox', () => {
     const { container } = render(<CascadiaPanel />);
     const svg = container.querySelector('svg');
-    expect(svg?.getAttribute('viewBox')).toContain('0 0 1800');
+    expect(svg?.getAttribute('viewBox')).toContain('0 0 1000 640');
   });
 
   test('renders cable paths for provided cables', () => {
@@ -101,7 +101,7 @@ describe('CascadiaPanel', () => {
     const viewBox = svg?.getAttribute('viewBox');
     expect(viewBox).toBeTruthy();
     // Should NOT be the default full-panel viewBox
-    expect(viewBox).not.toBe('0 0 1800 350');
+    expect(viewBox).not.toBe('0 0 1000 750');
   });
 
   test('renders in uncontrolled mode without knobValues', () => {
