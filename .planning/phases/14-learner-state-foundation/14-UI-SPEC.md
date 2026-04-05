@@ -1,7 +1,8 @@
 ---
 phase: 14
 slug: learner-state-foundation
-status: draft
+status: approved
+reviewed_at: 2026-04-05
 shadcn_initialized: false
 preset: none
 created: 2026-04-05
