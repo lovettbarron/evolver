@@ -136,8 +136,8 @@ Requirements for Learner Experience & Discovery. Phases 14-17.
 
 - [ ] **LSTATE-01**: User can mark a session as complete via a toggle in the session detail page, persisted in localStorage
 - [ ] **LSTATE-02**: User's last-visited session is tracked automatically and persisted across browser sessions
-- [ ] **LSTATE-03**: Completion data merges vault-scanned and manual sources using union semantics (if either says complete, it is complete)
-- [ ] **LSTATE-04**: Zustand store with persist middleware provides the client-side state layer for all learner data
+- [x] **LSTATE-03**: Completion data merges vault-scanned and manual sources using union semantics (if either says complete, it is complete)
+- [x] **LSTATE-04**: Zustand store with persist middleware provides the client-side state layer for all learner data
 
 ### Navigation & Discovery
 
@@ -264,8 +264,8 @@ Requirements for Learner Experience & Discovery. Phases 14-17.
 | EPANEL-06 | Phase 13.1 | Complete |
 | LSTATE-01 | Phase 14 | Pending |
 | LSTATE-02 | Phase 14 | Pending |
-| LSTATE-03 | Phase 14 | Pending |
-| LSTATE-04 | Phase 14 | Pending |
+| LSTATE-03 | Phase 14 | Complete |
+| LSTATE-04 | Phase 14 | Complete |
 | NAV-01 | Phase 14 | Pending |
 | NAV-02 | Phase 15 | Pending |
 | NAV-03 | Phase 16 | Pending |

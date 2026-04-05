@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: planning
-stopped_at: Phase 15 UI-SPEC approved
-last_updated: "2026-04-05T20:57:19.225Z"
+stopped_at: Completed 14-01-PLAN.md
+last_updated: "2026-04-05T21:14:54.720Z"
 last_activity: 2026-04-05
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
+  completed_plans: 1
   percent: 0
 ---
 
@@ -64,6 +64,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 13 P04 | 8min | 2 tasks | 26 files |
 | Phase 13.1 P01 | 3min | 2 tasks | 3 files |
 | Phase 13.1 P02 | 1min | 2 tasks | 3 files |
+| Phase 14 P01 | 2min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,8 @@ Progress: [░░░░░░░░░░] 0%
 
 Decisions are logged in PROJECT.md Key Decisions table.
 v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
+
+- [Phase 14]: Zustand v5 curried form with persist middleware for per-instrument learner state
 
 ### Roadmap Evolution
 
@@ -92,6 +95,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-05T20:57:19.216Z
-Stopped at: Phase 15 UI-SPEC approved
-Resume file: .planning/phases/15-navigation-progress-enhancements/15-UI-SPEC.md
+Last session: 2026-04-05T21:14:54.717Z
+Stopped at: Completed 14-01-PLAN.md
+Resume file: None
