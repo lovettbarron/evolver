@@ -216,7 +216,11 @@ Plans:
   5. EPANEL-06 requirement text updated to reflect inline embedding (not collapsible sidebar)
   6. Standalone panel route passes instrumentSlug to StickyHeader
   7. Cascadia cable signalType resolves from cable_routing data instead of hardcoded 'default'
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 13.1-01-PLAN.md -- Cascadia cable ID resolution and signalType lookup for patch detail Panel View
+- [ ] 13.1-02-PLAN.md -- Evolver section tint opacity fix, standalone route StickyHeader prop, requirement status updates
 
 ---
 
@@ -294,7 +298,7 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 11. Curriculum Modules 4-7 + Demo Mode | v1.1 | 4/4 | Complete    | 2026-04-04 |
 | 12. Evolver Panel Visualizer Component | v1.1 | 2/3 | In progress | - |
 | 13. Cascadia Panel Visualizer | v1.1 | 3/4 | Complete    | 2026-04-04 |
-| 13.1 Panel Visualizer Gap Closure | v1.1 | 0/0 | Not started | - |
+| 13.1 Panel Visualizer Gap Closure | v1.1 | 0/2 | Not started | - |
 | 14. Learner State Foundation | v1.2 | 0/0 | Not started | - |
 | 15. Navigation & Progress Enhancements | v1.2 | 0/0 | Not started | - |
 | 16. Search & Filtering | v1.2 | 0/0 | Not started | - |
