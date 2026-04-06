@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: executing
-stopped_at: Phase 16 plans verified
-last_updated: "2026-04-06T20:05:32.861Z"
+stopped_at: Completed 16-01-PLAN.md
+last_updated: "2026-04-06T20:11:17.975Z"
 last_activity: 2026-04-06
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 9
-  completed_plans: 6
+  completed_plans: 7
   percent: 0
 ---
 
@@ -69,6 +69,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 15 P01 | 8min | 3 tasks | 10 files |
 | Phase 15 P02 | 5min | 3 tasks | 7 files |
 | Phase 15 P03 | 3min | 2 tasks | 4 files |
+| Phase 16 P01 | 2min | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,8 @@ v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 - [Phase 14]: Vault completions serialized as number[] for server-to-client prop passing
 - [Phase 15]: SessionList retains backwards compat by passing default 'available' state to SessionRow
 - [Phase 15]: Second listSessions call in progress page acceptable — computeProgress doesn't expose grouped data
+- [Phase 16]: SearchableSession/SearchablePatch are narrow type projections, keeping search decoupled from content pipeline
+- [Phase 16]: filterPatches: types OR within, tags OR within, type+tag AND between groups
 
 ### Roadmap Evolution
 
@@ -103,6 +106,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-06T20:05:32.853Z
-Stopped at: Phase 16 plans verified
-Resume file: .planning/phases/16-search-filtering/16-01-PLAN.md
+Last session: 2026-04-06T20:11:17.972Z
+Stopped at: Completed 16-01-PLAN.md
+Resume file: None
