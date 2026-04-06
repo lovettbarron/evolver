@@ -16,11 +16,11 @@ vi.mock('@/hooks/use-hydrated', () => ({
 }));
 
 // Mock learner store
-const mockGetCompletedSessions = vi.fn(() => new Set<number>());
+const mockCompletions: Record<string, number[]> = {};
 const mockLastVisited: Record<string, { sessionSlug: string; sessionNumber: number } | undefined> = {};
 vi.mock('@/stores/learner-store', () => ({
-  useLearnerStore: (selector: (state: { getCompletedSessions: typeof mockGetCompletedSessions; lastVisited: typeof mockLastVisited }) => unknown) =>
-    selector({ getCompletedSessions: mockGetCompletedSessions, lastVisited: mockLastVisited }),
+  useLearnerStore: (selector: (state: { completions: typeof mockCompletions; lastVisited: typeof mockLastVisited }) => unknown) =>
+    selector({ completions: mockCompletions, lastVisited: mockLastVisited }),
 }));
 
 // Mock learner-utils
@@ -41,9 +41,9 @@ describe('ResumeBar', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockHydrated.mockReturnValue(true);
-    mockGetCompletedSessions.mockReturnValue(new Set<number>());
     mockMergeCompletions.mockReturnValue(new Set<number>());
-    // Clear lastVisited
+    // Clear mutable mock state
+    Object.keys(mockCompletions).forEach((k) => delete mockCompletions[k]);
     Object.keys(mockLastVisited).forEach((k) => delete mockLastVisited[k]);
   });
 
@@ -82,7 +82,7 @@ describe('ResumeBar', () => {
 
   it('renders "All sessions complete" when computeNextSession returns null', () => {
     mockMergeCompletions.mockReturnValue(new Set([1, 2, 3]));
-    mockGetCompletedSessions.mockReturnValue(new Set([1, 2, 3]));
+    mockCompletions['evolver'] = [1, 2, 3];
     mockLastVisited['evolver'] = { sessionSlug: '03-filters', sessionNumber: 3 };
     mockComputeNextSession.mockReturnValue(null);
 
