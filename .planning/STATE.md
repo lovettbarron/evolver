@@ -70,11 +70,9 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 15 P02 | 5min | 3 tasks | 7 files |
 | Phase 15 P03 | 3min | 2 tasks | 4 files |
 | Phase 16 P01 | 2min | 1 tasks | 2 files |
-<<<<<<< HEAD
 | Phase 16 P02 | 5min | 2 tasks | 6 files |
-=======
 | Phase 16 P03 | 3min | 2 tasks | 3 files |
->>>>>>> worktree-agent-a016c31e
+| Phase 17 P01 | 12min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -91,15 +89,11 @@ v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 - [Phase 16]: SearchableSession/SearchablePatch are narrow type projections, keeping search decoupled from content pipeline
 - [Phase 16]: filterPatches: types OR within, tags OR within, type+tag AND between groups
 
-<<<<<<< HEAD
-
 - [Phase 16]: SearchProvider wraps at AppShell level for global search data access
-
-=======
-
 - [Phase 16]: PatchFilterBar preserves grouped PatchGrid view when unfiltered, flat PatchCard grid when filtered
-
->>>>>>> worktree-agent-a016c31e
+- [Phase 17]: TroubleshootingSchema uses z.literal('troubleshooting') separate from InstrumentFileSchema types
+- [Phase 17]: listInstrumentFiles filters troubleshooting.md before parsing to prevent schema errors
+- [Phase 17]: getTroubleshooting returns null on any error for graceful degradation
 
 ### Roadmap Evolution
 
@@ -121,11 +115,6 @@ None yet.
 
 ## Session Continuity
 
-<<<<<<< HEAD
-Last session: 2026-04-06T20:18:17.903Z
-Stopped at: Completed 16-02-PLAN.md
-=======
-Last session: 2026-04-06T20:16:37.073Z
-Stopped at: Completed 16-03-PLAN.md
->>>>>>> worktree-agent-a016c31e
+Last session: 2026-04-06T20:31:22Z
+Stopped at: Completed 17-01-PLAN.md
 Resume file: None

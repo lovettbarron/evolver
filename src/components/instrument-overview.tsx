@@ -32,6 +32,7 @@ export interface InstrumentOverviewProps {
   slug: string;
   references?: Array<{ label: string; pdfPath: string }>;
   moduleCount?: number;
+  hasTroubleshooting?: boolean;
   vaultCompletions?: number[];
   sessionsForResumeBar?: Array<{ slug: string; data: { session_number: number; title: string; module: string } }>;
   isDemo?: boolean;
@@ -47,6 +48,7 @@ export function InstrumentOverview({
   moduleCount,
   slug,
   references,
+  hasTroubleshooting,
   vaultCompletions,
   sessionsForResumeBar,
   isDemo,
@@ -106,6 +108,14 @@ export function InstrumentOverview({
             className="text-text underline underline-offset-2 hover:text-accent"
           >
             Basic Patch Reference
+          </Link>
+        )}
+        {hasTroubleshooting && (
+          <Link
+            href={`/instruments/${slug}/troubleshooting`}
+            className="text-text underline underline-offset-2 hover:text-accent"
+          >
+            Troubleshooting Guide
           </Link>
         )}
         <p className="text-muted text-sm">
