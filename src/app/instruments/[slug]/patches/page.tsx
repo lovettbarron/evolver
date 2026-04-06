@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { listPatches } from '@/lib/content/reader';
 import { loadConfig } from '@/lib/config';
-import { PatchGrid } from '@/components/patch-grid';
+import { PatchFilterBar } from '@/components/patch-filter-bar';
 import Link from 'next/link';
 
 export default async function PatchListPage({
@@ -36,7 +36,7 @@ export default async function PatchListPage({
         </div>
       ) : (
         <Suspense>
-          <PatchGrid patches={patches} instrumentSlug={slug} />
+          <PatchFilterBar patches={patches} instrumentSlug={slug} />
         </Suspense>
       )}
     </div>
