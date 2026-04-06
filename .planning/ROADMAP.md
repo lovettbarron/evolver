@@ -44,7 +44,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 
 - [x] **Phase 14: Learner State Foundation** — Zustand store with persist middleware, completion toggle, last-visited tracking, vault+manual merge, resume bar (completed 2026-04-06)
 - [x] **Phase 15: Navigation & Progress Enhancements** — Prerequisite state badges, clickable count cards, module journey "you are here" marker, cumulative practice metrics (completed 2026-04-06)
-- [ ] **Phase 16: Search & Filtering** — Full-text search across sessions and patches, tag/type filtering with sort options
+- [x] **Phase 16: Search & Filtering** — Full-text search across sessions and patches, tag/type filtering with sort options (completed 2026-04-06)
 - [ ] **Phase 17: Content & Pedagogy** — Troubleshooting guides and transitional "partial recipe" sessions
 
 ### Phase 14: Learner State Foundation
@@ -89,7 +89,7 @@ Plans:
   1. User can type a search query and see matching sessions and patches from across the entire curriculum, searched by title, description, and tags
   2. User can filter patches by type (bass, lead, pad, drum, texture, FX) and by tags, with filters combinable
   3. User can sort patch results by date, name, or type
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 16-01-PLAN.md — TDD: search, filter, and sort pure functions with unit tests
@@ -134,5 +134,5 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 13.1 Panel Visualizer Gap Closure | v1.1 | 2/2 | Complete | 2026-04-05 |
 | 14. Learner State Foundation | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 15. Navigation & Progress Enhancements | v1.2 | 2/3 | Complete    | 2026-04-06 |
-| 16. Search & Filtering | v1.2 | 2/3 | In Progress|  |
+| 16. Search & Filtering | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 17. Content & Pedagogy | v1.2 | 1/3 | In Progress | - |
