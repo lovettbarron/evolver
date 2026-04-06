@@ -1,8 +1,8 @@
 ---
 phase: 15
 slug: navigation-progress-enhancements
-status: draft
-nyquist_compliant: false
+status: final
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-04-05
 ---
@@ -17,18 +17,18 @@ created: 2026-04-05
 
 | Property | Value |
 |----------|-------|
-| **Framework** | jest 29.x |
-| **Config file** | jest.config.ts |
-| **Quick run command** | `npx jest --testPathPattern='src/' --bail` |
-| **Full suite command** | `npx jest` |
+| **Framework** | Vitest 3.x with jsdom |
+| **Config file** | vitest.config.ts |
+| **Quick run command** | `npx vitest run --reporter=verbose` |
+| **Full suite command** | `npx vitest run` |
 | **Estimated runtime** | ~15 seconds |
 
 ---
 
 ## Sampling Rate
 
-- **After every task commit:** Run `npx jest --testPathPattern='src/' --bail`
-- **After every plan wave:** Run `npx jest`
+- **After every task commit:** Run `npx vitest run --reporter=verbose`
+- **After every plan wave:** Run `npx vitest run`
 - **Before `/gsd:verify-work`:** Full suite must be green
 - **Max feedback latency:** 15 seconds
 
@@ -38,23 +38,30 @@ created: 2026-04-05
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 15-01-01 | 01 | 1 | NAV-02 | unit | `npx jest --testPathPattern='session-state'` | ❌ W0 | ⬜ pending |
-| 15-01-02 | 01 | 1 | NAV-02 | unit | `npx jest --testPathPattern='session-row'` | ❌ W0 | ⬜ pending |
-| 15-02-01 | 02 | 1 | PROG-10 | unit | `npx jest --testPathPattern='count-card'` | ❌ W0 | ⬜ pending |
-| 15-02-02 | 02 | 1 | PROG-11 | unit | `npx jest --testPathPattern='module-journey'` | ❌ W0 | ⬜ pending |
-| 15-03-01 | 03 | 2 | PROG-12 | unit | `npx jest --testPathPattern='practice-metrics'` | ❌ W0 | ⬜ pending |
+| 15-01-01 | 01 | 1 | NAV-02 | unit | `npx vitest run src/lib/__tests__/prerequisite.test.ts -x` | W0 | pending |
+| 15-01-02 | 01 | 1 | NAV-02 | unit | `npx vitest run src/components/__tests__/session-row.test.tsx -x` | W0 | pending |
+| 15-01-03 | 01 | 1 | NAV-02 | unit | `npx vitest run src/components/__tests__/prerequisite-banner.test.tsx -x` | W0 | pending |
+| 15-02-01 | 02 | 1 | PROG-10 | unit | `npx vitest run src/components/__tests__/count-card.test.tsx -x` | W0 | pending |
+| 15-02-02 | 02 | 1 | PROG-12 | unit | `npx vitest run src/lib/__tests__/practice-metrics.test.ts -x` | W0 | pending |
+| 15-02-03 | 02 | 1 | PROG-12 | unit | `npx vitest run src/components/__tests__/cumulative-metrics.test.tsx -x` | W0 | pending |
+| 15-03-01 | 03 | 2 | PROG-11 | unit | `npx vitest run src/components/__tests__/module-journey.test.tsx -x` | W0 | pending |
+| 15-03-02 | 03 | 2 | PROG-11 | build | `npx vitest run --reporter=verbose && npx next build 2>&1 \| tail -5` | n/a | pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+*Status: pending / green / red / flaky*
 
 ---
 
 ## Wave 0 Requirements
 
-- [ ] Test stubs for prerequisite state derivation (getSessionState, getCurrentModule)
-- [ ] Test stubs for cumulative metrics computation (sessionsThisMonth, activeWeeks)
-- [ ] Test stubs for count card navigation targets
+- [ ] `src/lib/__tests__/prerequisite.test.ts` -- covers NAV-02, PROG-11 (getSessionState, getCurrentModule)
+- [ ] `src/components/__tests__/session-row.test.tsx` -- covers NAV-02 (badge rendering)
+- [ ] `src/components/__tests__/prerequisite-banner.test.tsx` -- covers NAV-02 (banner content, dismiss)
+- [ ] `src/components/__tests__/count-card.test.tsx` -- covers PROG-10 (Link wrapping)
+- [ ] `src/lib/__tests__/practice-metrics.test.ts` -- covers PROG-12 (date computations)
+- [ ] `src/components/__tests__/cumulative-metrics.test.tsx` -- covers PROG-12 (render)
+- [ ] `src/components/__tests__/module-journey.test.tsx` -- covers PROG-11 (pulse class)
 
-*Existing test infrastructure (jest.config.ts, test utils) covers framework needs.*
+*Existing test infrastructure (vitest.config.ts, test utils) covers framework needs.*
 
 ---
 
@@ -71,11 +78,11 @@ created: 2026-04-05
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 15s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 15s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved
