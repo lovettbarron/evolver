@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import path from 'path';
 import { ZodError } from 'zod';
-import { readContentFile, discoverInstruments, listSessions, listPatches, listModules, getContentRoot, loadInstrumentConfig } from '../reader.js';
-import { InstrumentFileSchema, SessionSchema, PatchSchema } from '../schemas.js';
+import { readContentFile, discoverInstruments, listSessions, listPatches, listModules, listInstrumentFiles, getContentRoot, loadInstrumentConfig, getTroubleshooting } from '../reader.js';
+import { InstrumentFileSchema, SessionSchema, PatchSchema, TroubleshootingSchema } from '../schemas.js';
 import type { AppConfig } from '../schemas.js';
 
 const FIXTURES_DIR = path.join(import.meta.dirname, '__fixtures__');
@@ -150,5 +150,56 @@ describe('listModules', () => {
     const modules = await listModules('cascadia', config);
     const mixer = modules.find(m => m.slug === 'mixer');
     expect(mixer!.content).toContain('Combines oscillator outputs');
+  });
+});
+
+describe('TroubleshootingSchema', () => {
+  it('parses valid troubleshooting frontmatter', () => {
+    const result = TroubleshootingSchema.parse({
+      type: 'troubleshooting',
+      instrument: 'evolver',
+      title: 'Evolver Troubleshooting Guide',
+    });
+    expect(result.type).toBe('troubleshooting');
+    expect(result.instrument).toBe('evolver');
+    expect(result.title).toBe('Evolver Troubleshooting Guide');
+  });
+
+  it('rejects invalid type value', () => {
+    expect(() =>
+      TroubleshootingSchema.parse({
+        type: 'wrong',
+        instrument: 'evolver',
+        title: 'Test',
+      })
+    ).toThrow(ZodError);
+  });
+});
+
+describe('getTroubleshooting', () => {
+  it('returns troubleshooting content for existing instrument', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const result = await getTroubleshooting('evolver', config);
+    expect(result).not.toBeNull();
+    expect(result!.data.type).toBe('troubleshooting');
+    expect(result!.data.title).toBe('Evolver Troubleshooting Guide');
+    expect(result!.content).toContain('No Audio Output');
+  });
+
+  it('returns null for nonexistent instrument', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const result = await getTroubleshooting('nonexistent', config);
+    expect(result).toBeNull();
+  });
+});
+
+describe('listInstrumentFiles', () => {
+  it('succeeds and excludes troubleshooting.md from results', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const files = await listInstrumentFiles('evolver', config);
+    const slugs = files.map(f => f.slug);
+    expect(slugs).not.toContain('troubleshooting');
+    // Should still include overview and invalid fixtures
+    expect(files.length).toBeGreaterThan(0);
   });
 });
