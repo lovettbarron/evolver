@@ -60,13 +60,8 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 **Plans:** 2/3 plans executed
 Plans:
 - [x] 14-01-PLAN.md — Zustand store, hydration hook, and learner utility functions with tests
-<<<<<<< HEAD
 - [x] 14-02-PLAN.md — Completion toggle sticky bar on session detail page with last-visited tracking
-- [ ] 14-03-PLAN.md — Resume bar on instrument home page with vault+manual merge
-=======
-- [ ] 14-02-PLAN.md — Completion toggle sticky bar on session detail page with last-visited tracking
 - [x] 14-03-PLAN.md — Resume bar on instrument home page with vault+manual merge
->>>>>>> worktree-agent-a8930157
 **UI hint**: yes
 
 ### Phase 15: Navigation & Progress Enhancements
@@ -123,6 +118,6 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 13. Cascadia Panel Visualizer | v1.1 | 4/4 | Complete | 2026-04-04 |
 | 13.1 Panel Visualizer Gap Closure | v1.1 | 2/2 | Complete | 2026-04-05 |
 | 14. Learner State Foundation | v1.2 | 2/3 | In Progress|  |
-| 15. Navigation & Progress Enhancements | v1.2 | 0/0 | Not started | - |
+| 15. Navigation & Progress Enhancements | v1.2 | 1/3 | In Progress | - |
 | 16. Search & Filtering | v1.2 | 0/0 | Not started | - |
 | 17. Content & Pedagogy | v1.2 | 0/0 | Not started | - |
