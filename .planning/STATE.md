@@ -68,6 +68,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 14 P03 | 4min | 3 tasks | 4 files |
 | Phase 15 P01 | 8min | 3 tasks | 10 files |
 | Phase 15 P02 | 5min | 3 tasks | 7 files |
+| Phase 15 P03 | 3min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,7 @@ v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 - [Phase 14]: ResumeBar replaces HeroCard — smarter session recommendation based on actual progress state
 - [Phase 14]: Vault completions serialized as number[] for server-to-client prop passing
 - [Phase 15]: SessionList retains backwards compat by passing default 'available' state to SessionRow
+- [Phase 15]: Second listSessions call in progress page acceptable — computeProgress doesn't expose grouped data
 
 
 ### Roadmap Evolution
@@ -103,6 +105,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-06T08:55:21Z
-Stopped at: Completed 15-01-PLAN.md and 15-02-PLAN.md
-Resume file: .planning/phases/15-navigation-progress-enhancements/15-01-PLAN.md
+Last session: 2026-04-06T17:22:28Z
+Stopped at: Completed 15-03-PLAN.md
+Resume file: None
