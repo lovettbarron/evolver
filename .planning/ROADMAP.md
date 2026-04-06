@@ -78,7 +78,12 @@ Plans:
   2. Count cards on the progress page are clickable, navigating to the relevant content list (sessions, patches, modules)
   3. Module journey visualization shows a "you are here" marker at the learner's current position in the module sequence
   4. Progress page displays cumulative practice metrics (sessions this month, total active weeks) that are additive-only and never guilt-inducing
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [x] 15-01-PLAN.md -- Prerequisite state badges: checkmark/circle/lock icons in session list, PrerequisiteBanner on locked session detail pages
+- [ ] 15-02-PLAN.md -- Clickable count cards and module journey "you are here" marker
+- [ ] 15-03-PLAN.md -- Cumulative practice metrics (sessions this month, active weeks)
 **UI hint**: yes
 
 ### Phase 16: Search & Filtering
@@ -123,6 +128,6 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 13. Cascadia Panel Visualizer | v1.1 | 4/4 | Complete | 2026-04-04 |
 | 13.1 Panel Visualizer Gap Closure | v1.1 | 2/2 | Complete | 2026-04-05 |
 | 14. Learner State Foundation | v1.2 | 2/3 | In Progress|  |
-| 15. Navigation & Progress Enhancements | v1.2 | 0/0 | Not started | - |
+| 15. Navigation & Progress Enhancements | v1.2 | 1/3 | In Progress | - |
 | 16. Search & Filtering | v1.2 | 0/0 | Not started | - |
 | 17. Content & Pedagogy | v1.2 | 0/0 | Not started | - |
