@@ -9,6 +9,7 @@ import { EvolverPanel } from '@/components/evolver-panel';
 import { CascadiaPanel } from '@/components/cascadia-panel';
 import { CONTROL_METADATA } from '@/lib/evolver-panel-data';
 import { CONTROL_METADATA as CASCADIA_METADATA } from '@/lib/cascadia-panel-data';
+import { CompletionToggle } from '@/components/completion-toggle';
 import dynamic from 'next/dynamic';
 
 const MermaidRenderer = dynamic(
@@ -145,8 +146,10 @@ interface SessionDetailProps {
   prev: { slug: string; title: string } | null;
   next: { slug: string; title: string } | null;
   instrumentSlug: string;
+  sessionSlug: string;
   quickRefContent: { label: string; html: string }[];
   reference: string | null;
+  isDemo: boolean;
 }
 
 export function SessionDetail({
@@ -155,8 +158,10 @@ export function SessionDetail({
   prev,
   next,
   instrumentSlug,
+  sessionSlug,
   quickRefContent,
   reference,
+  isDemo,
 }: SessionDetailProps) {
   const hasEvolverPanel =
     instrumentSlug === 'evolver' && html.includes('data-evolver-panel');
@@ -181,7 +186,7 @@ export function SessionDetail({
   }
 
   return (
-    <div>
+    <div className="pb-[72px]">
       <StickyHeader
         backHref={`/instruments/${instrumentSlug}/sessions`}
         sessionIdentifier={`Session ${session.session_number}`}
@@ -247,6 +252,13 @@ export function SessionDetail({
           />
         </div>
       </div>
+      <CompletionToggle
+        instrumentSlug={instrumentSlug}
+        sessionSlug={sessionSlug}
+        sessionNumber={session.session_number}
+        sessionTitle={session.title}
+        isDemo={isDemo}
+      />
     </div>
   );
 }

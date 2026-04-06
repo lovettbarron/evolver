@@ -57,10 +57,10 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
   3. Completion data from vault scanning (server) and manual toggles (client localStorage) are merged using union semantics — if either source says complete, it is complete
   4. A "continue where you left off" resume bar appears showing the user's next recommended session based on last-visited and completion state
   5. Zustand store with persist middleware provides the single client-side state layer consumed by all learner-facing components
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 Plans:
 - [x] 14-01-PLAN.md — Zustand store, hydration hook, and learner utility functions with tests
-- [ ] 14-02-PLAN.md — Completion toggle sticky bar on session detail page with last-visited tracking
+- [x] 14-02-PLAN.md — Completion toggle sticky bar on session detail page with last-visited tracking
 - [ ] 14-03-PLAN.md — Resume bar on instrument home page with vault+manual merge
 **UI hint**: yes
 
@@ -73,11 +73,7 @@ Plans:
   2. Count cards on the progress page are clickable, navigating to the relevant content list (sessions, patches, modules)
   3. Module journey visualization shows a "you are here" marker at the learner's current position in the module sequence
   4. Progress page displays cumulative practice metrics (sessions this month, total active weeks) that are additive-only and never guilt-inducing
-**Plans**: 3 plans
-Plans:
-- [ ] 15-01-PLAN.md — Prerequisite state badges + session list client wrapper (NAV-02)
-- [ ] 15-02-PLAN.md — Clickable count cards + cumulative practice metrics (PROG-10, PROG-12)
-- [ ] 15-03-PLAN.md — Module journey "you are here" pulsing marker (PROG-11)
+**Plans**: TBD
 **UI hint**: yes
 
 ### Phase 16: Search & Filtering
@@ -121,7 +117,7 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 12. Evolver Panel Visualizer | v1.1 | 3/3 | Complete | 2026-04-04 |
 | 13. Cascadia Panel Visualizer | v1.1 | 4/4 | Complete | 2026-04-04 |
 | 13.1 Panel Visualizer Gap Closure | v1.1 | 2/2 | Complete | 2026-04-05 |
-| 14. Learner State Foundation | v1.2 | 1/3 | In Progress|  |
-| 15. Navigation & Progress Enhancements | v1.2 | 0/3 | Not started | - |
+| 14. Learner State Foundation | v1.2 | 2/3 | In Progress|  |
+| 15. Navigation & Progress Enhancements | v1.2 | 0/0 | Not started | - |
 | 16. Search & Filtering | v1.2 | 0/0 | Not started | - |
 | 17. Content & Pedagogy | v1.2 | 0/0 | Not started | - |

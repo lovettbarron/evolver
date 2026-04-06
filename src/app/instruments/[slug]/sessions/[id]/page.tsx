@@ -12,6 +12,7 @@ export default async function SessionPage({
 }) {
   const { slug, id } = await params;
   const config = await loadConfig();
+  const isDemo = !config.vaultPath;
   const allSessions = await listSessions(slug, config);
   const current = allSessions.find((s) => s.slug === id);
 
@@ -48,8 +49,10 @@ export default async function SessionPage({
       prev={prev ? { slug: prev.slug, title: prev.data.title } : null}
       next={next ? { slug: next.slug, title: next.data.title } : null}
       instrumentSlug={slug}
+      sessionSlug={id}
       quickRefContent={quickRefContent}
       reference={current.data.reference ?? null}
+      isDemo={isDemo}
     />
   );
 }
