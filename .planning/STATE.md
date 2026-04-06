@@ -3,8 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: executing
+<<<<<<< HEAD
 stopped_at: Completed 14-02-PLAN.md
 last_updated: "2026-04-06T08:43:05.640Z"
+=======
+stopped_at: "14-03 checkpoint: human-verify resume bar"
+last_updated: "2026-04-06T08:43:57.928Z"
+>>>>>>> worktree-agent-a8930157
 last_activity: 2026-04-06
 progress:
   total_phases: 4
@@ -64,7 +69,11 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 13 P04 | 8min | 2 tasks | 26 files |
 | Phase 13.1 P01 | 3min | 2 tasks | 3 files |
 | Phase 13.1 P02 | 1min | 2 tasks | 3 files |
+<<<<<<< HEAD
 | Phase 14 P02 | 3min | 2 tasks | 5 files |
+=======
+| Phase 14 P03 | 4min | 3 tasks | 4 files |
+>>>>>>> worktree-agent-a8930157
 
 ## Accumulated Context
 
@@ -73,7 +82,12 @@ Progress: [░░░░░░░░░░] 0%
 Decisions are logged in PROJECT.md Key Decisions table.
 v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 
+<<<<<<< HEAD
 - [Phase 14]: isDemo derived from !config.vaultPath, threaded as prop from server page to client components
+=======
+- [Phase 14]: ResumeBar replaces HeroCard — smarter session recommendation based on actual progress state
+- [Phase 14]: Vault completions serialized as number[] for server-to-client prop passing
+>>>>>>> worktree-agent-a8930157
 
 ### Roadmap Evolution
 
@@ -95,6 +109,11 @@ None yet.
 
 ## Session Continuity
 
+<<<<<<< HEAD
 Last session: 2026-04-06T08:43:05.636Z
 Stopped at: Completed 14-02-PLAN.md
+=======
+Last session: 2026-04-06T08:43:57.925Z
+Stopped at: 14-03 checkpoint: human-verify resume bar
+>>>>>>> worktree-agent-a8930157
 Resume file: None

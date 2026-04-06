@@ -2,6 +2,7 @@ import { listInstrumentFiles, listSessions, listModules, loadInstrumentConfig } 
 import { loadConfig } from '@/lib/config';
 import { renderMarkdown } from '@/lib/markdown/processor';
 import { InstrumentOverview } from '@/components/instrument-overview';
+import { scanDailyNotes, getSyntheticCompletedSessions } from '@/lib/progress';
 import { notFound } from 'next/navigation';
 
 export default async function InstrumentPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -28,17 +29,28 @@ export default async function InstrumentPage({ params }: { params: Promise<{ slu
   // Get modules for count
   const modules = await listModules(slug, config);
 
-  // Get sessions for count and hero card
+  // Get sessions for count and resume bar
   const sessions = await listSessions(slug, config);
 
-  const nextSession = sessions[0] || null;
-  const nextSessionData = nextSession ? {
-    moduleName: nextSession.data.module,
-    sessionTitle: nextSession.data.title,
-    objective: nextSession.content.split('\n').filter(l => l.trim() && !l.startsWith('#'))[0]?.trim().slice(0, 120) || nextSession.data.title,
-    duration: nextSession.data.duration,
-    href: `/instruments/${slug}/sessions/${nextSession.slug}`,
-  } : null;
+  const isDemo = !config.vaultPath;
+
+  // Get vault completions for resume bar (D-08: server passes vault data as props)
+  const vaultCompletedSessions = config.vaultPath
+    ? (await scanDailyNotes(config.vaultPath)).sessionNumbers
+    : getSyntheticCompletedSessions(slug);
+
+  // Serialize Set to array for client component props (Sets can't be serialized across server/client boundary)
+  const vaultCompletionsArray = Array.from(vaultCompletedSessions);
+
+  // Minimal session data for resume bar (avoid serializing full content)
+  const sessionsForResumeBar = sessions.map(s => ({
+    slug: s.slug,
+    data: {
+      session_number: s.data.session_number,
+      title: s.data.title,
+      module: s.data.module,
+    },
+  }));
 
   return (
     <InstrumentOverview
@@ -51,7 +63,9 @@ export default async function InstrumentPage({ params }: { params: Promise<{ slu
       moduleCount={modules.length}
       slug={slug}
       references={references}
-      nextSession={nextSessionData}
+      vaultCompletions={vaultCompletionsArray}
+      sessionsForResumeBar={sessionsForResumeBar}
+      isDemo={isDemo}
     />
   );
 }
