@@ -1,62 +1,54 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Cascadia Instrument Support
+milestone: v1.2
+milestone_name: Learner Experience & Discovery
 status: executing
-stopped_at: Completed 13-04-PLAN.md
-last_updated: "2026-04-04T18:15:13.237Z"
-last_activity: 2026-04-04
+stopped_at: Completed 16-02-PLAN.md
+last_updated: "2026-04-06T20:19:22.064Z"
+last_activity: 2026-04-06 -- Phase 16 execution started
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 23
-  completed_plans: 23
-  percent: 91
+  total_phases: 4
+  completed_phases: 3
+  total_plans: 12
+  completed_plans: 9
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-04)
+See: .planning/PROJECT.md (updated 2026-04-05)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Defining requirements for v1.2 Learner Experience & Discovery
+**Current focus:** Phase 16 — search-filtering
 
 ## Current Position
 
-Phase: 13
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-04-04
+Phase: 16 (search-filtering) — EXECUTING
+Plan: 1 of 3
+Status: Executing Phase 16
+Last activity: 2026-04-06 -- Phase 16 execution started
 
-Progress: [█████████░] 91%
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
-**Velocity:**
+**Velocity (v1.0):**
 
-- Total plans completed: 23 (v1.0)
+- Plans completed: 23
 - Average duration: 4min
 - Total execution time: ~93min
 
-**By Phase:**
+**Velocity (v1.1):**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 01 | 6 | 35min | 6min |
-| 02 | 5 | 15min | 3min |
-| 03 | 2 | 12min | 6min |
-| 04 | 4 | 25min | 6min |
-| 05 | 3 | 6min | 2min |
-| 06 | 3 | 5min (est) | 2min |
+- Plans completed: 25
+- Timeline: 6 days (2026-03-31 → 2026-04-05)
 
-**Recent Trend:**
+**By Phase (v1.1):**
 
-- Last 5 plans: 06-01 (3min), 06-02 (2min), 06-03 (est), research (3min), requirements (2min)
-- Trend: Stable
-
-*Updated after each plan completion*
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
 | Phase 07 P01 | 3min | 2 tasks | 10 files |
 | Phase 07 P02 | 4min | 2 tasks | 8 files |
 | Phase 07 P03 | 6min | 2 tasks | 9 files |
@@ -70,51 +62,42 @@ Progress: [█████████░] 91%
 | Phase 12 P02 | 3min | 2 tasks | 2 files |
 | Phase 13 P01 | 8min | 2 tasks | 2 files |
 | Phase 13 P04 | 8min | 2 tasks | 26 files |
+| Phase 13.1 P01 | 3min | 2 tasks | 3 files |
+| Phase 13.1 P02 | 1min | 2 tasks | 3 files |
+| Phase 14 P02 | 3min | 2 tasks | 5 files |
+| Phase 14 P03 | 4min | 3 tasks | 4 files |
+| Phase 15 P01 | 8min | 3 tasks | 10 files |
+| Phase 15 P02 | 5min | 3 tasks | 7 files |
+| Phase 15 P03 | 3min | 2 tasks | 4 files |
+| Phase 16 P01 | 2min | 1 tasks | 2 files |
+| Phase 16 P02 | 5min | 2 tasks | 6 files |
+| Phase 16 P03 | 3min | 2 tasks | 3 files |
+| Phase 17 P01 | 12min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
+v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 
-- v1.1: 5 phases (7-11) derived from 19 requirements at standard granularity
-- v1.1: Schema + UI de-hardcoding first (Phase 7) -- blocks all downstream content
-- v1.1: Instrument data before patches (Phase 8 before 9) -- canonical module names needed for cable routing labels
-- v1.1: Patch format before curriculum (Phase 9 before 10) -- sessions reference patches, format must stabilize first
-- v1.1: Curriculum split into two phases (10, 11) -- validate session format on Modules 1-3 before full commitment
-- v1.1: CCURR-01 (25 sessions) spans Phases 10+11 -- assigned to Phase 10 as primary, Phase 11 completes it
-- v1.1: src/lib/midi/ explicitly excluded from all phases -- Cascadia has no SysEx
-- 07-01: InstrumentConfigSchema uses .passthrough() for future-proofing
-- 07-01: PatchSchema stub fields use z.unknown().optional() until Phase 9 refinement
-- [Phase 07]: InstrumentConfigSchema uses .passthrough() for future-proofing unknown fields
-- 07-02: Nav instrument context derived from URL pathname regex, not React state
-- 07-02: Instrument prop shape simplified in AppShell before passing to Nav (slug/displayName/sysex only)
-- 07-03: Markdown wikilinks without instrumentSlug resolve to root-relative paths (/{permalink})
-- 07-03: Source-ref PDF map extended with static Cascadia entries; data-driven approach deferred to Phase 10
-- [Phase 09]: CableConnectionSchema uses string types for source/destination/purpose - flexible for any CV instrument
-- [Phase 09]: KnobSettingSchema value field is string not number to support non-numeric settings
-- [Phase 09]: extractModuleName sorts canonical modules by length descending and handles slash-separated variants for correct matching
-- [Phase 09]: Data-driven conditional rendering: check cable_routing/knob_settings presence, not instrument name
-- [Phase 09]: FX patches silence oscillators via Mixer sliders rather than breaking normalled connections
-- [Phase 10]: Cascadia session format validated: concept-first structure, normalling callouts, percentage values in sessions, clock positions in patches
-- [Phase 10]: FM Bell patch uses 4:1 ratio (VCO B 2 octaves above VCO A) for musical bell tones
-- [Phase 10]: Session 6 cable table with From/To/Overrides columns establishes pattern for patching sessions
-- [Phase 10]: LPG Bongo uses 2 cables -- most patching in Phase 10 curriculum, progressive complexity validated
-- [Phase 12]: D-03 applied: Feedback section fixed - Frequency top, Level large, Grunge as switch
-- [Phase 12]: PointerCapture guarded for jsdom compat in useKnobDrag hook
-- [Phase 12]: Event delegation on SVG root for hover detection instead of per-element handlers
-- [Phase 13]: Cascadia control ID convention: {type}-{module}-{name-kebab} for all 179 controls
-- [Phase 13]: Jack signal types: audio/cv/gate/modulation classified from module documentation context
-- [Phase 13]: SECTION_BOUNDS uses proportional widths based on control density in 1800x350 viewBox
-- [Phase 13]: Control positions computed algorithmically from SECTION_BOUNDS rather than hand-placed
-- [Phase 13]: Cable bezier droop scales with distance: min(80, 30 + dx * 0.15)
-- [Phase 13]: Cascadia panel markers: blue=adjust, amber=observe, data-zoom=false for sound design recipes
+- [Phase 14]: isDemo derived from !config.vaultPath, threaded as prop from server page to client components
+- [Phase 14]: ResumeBar replaces HeroCard — smarter session recommendation based on actual progress state
+- [Phase 14]: Vault completions serialized as number[] for server-to-client prop passing
+- [Phase 15]: SessionList retains backwards compat by passing default 'available' state to SessionRow
+- [Phase 15]: Second listSessions call in progress page acceptable — computeProgress doesn't expose grouped data
+- [Phase 16]: SearchableSession/SearchablePatch are narrow type projections, keeping search decoupled from content pipeline
+- [Phase 16]: filterPatches: types OR within, tags OR within, type+tag AND between groups
+
+- [Phase 16]: SearchProvider wraps at AppShell level for global search data access
+- [Phase 16]: PatchFilterBar preserves grouped PatchGrid view when unfiltered, flat PatchCard grid when filtered
+- [Phase 17]: TroubleshootingSchema uses z.literal('troubleshooting') separate from InstrumentFileSchema types
+- [Phase 17]: listInstrumentFiles filters troubleshooting.md before parsing to prevent schema errors
+- [Phase 17]: getTroubleshooting returns null on any error for graceful degradation
 
 ### Roadmap Evolution
 
-- Phase 12 added: Evolver Panel Visualizer Component — React component rendering panel SVG with interactive patch state, knob positions, and curriculum annotation overlays
-- Phase 13 added: Cascadia Panel Visualizer — SVG panel, control metadata, React component, inline session embedding for all 25 Cascadia lessons
+None yet for v1.2.
 
 ### Pending Todos
 
@@ -122,8 +105,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- DEPL-02 (Vercel deploy) still pending from v1.0 -- deferred to user action
-- Phase 7 must grep for hardcoded "evolver" strings in src/components/ and fix all before Cascadia content is added
+- DEPL-02 (Vercel deploy) still pending from v1.0 — deferred to user action
 
 ### Quick Tasks Completed
 
@@ -133,6 +115,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-04T18:01:22.575Z
-Stopped at: Completed 13-04-PLAN.md
+Last session: 2026-04-06T20:31:22Z
+Stopped at: Completed 17-01-PLAN.md
 Resume file: None
