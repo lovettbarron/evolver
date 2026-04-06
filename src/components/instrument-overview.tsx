@@ -32,6 +32,7 @@ export interface InstrumentOverviewProps {
   slug: string;
   references?: Array<{ label: string; pdfPath: string }>;
   moduleCount?: number;
+  hasTroubleshooting?: boolean;
   nextSession?: {
     moduleName: string;
     sessionTitle: string;
@@ -51,6 +52,7 @@ export function InstrumentOverview({
   moduleCount,
   slug,
   references,
+  hasTroubleshooting,
   nextSession,
 }: InstrumentOverviewProps) {
   const [openPdf, setOpenPdf] = useState<string | null>(null);
@@ -109,6 +111,14 @@ export function InstrumentOverview({
             className="text-text underline underline-offset-2 hover:text-accent"
           >
             Basic Patch Reference
+          </Link>
+        )}
+        {hasTroubleshooting && (
+          <Link
+            href={`/instruments/${slug}/troubleshooting`}
+            className="text-text underline underline-offset-2 hover:text-accent"
+          >
+            Troubleshooting Guide
           </Link>
         )}
         <p className="text-muted text-sm">
