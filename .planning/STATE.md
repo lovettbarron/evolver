@@ -73,6 +73,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 16 P02 | 5min | 2 tasks | 6 files |
 | Phase 16 P03 | 3min | 2 tasks | 3 files |
 | Phase 17 P01 | 12min | 2 tasks | 7 files |
+| Phase 17 P03 | 8min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,8 @@ v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 - [Phase 17]: TroubleshootingSchema uses z.literal('troubleshooting') separate from InstrumentFileSchema types
 - [Phase 17]: listInstrumentFiles filters troubleshooting.md before parsing to prevent schema errors
 - [Phase 17]: getTroubleshooting returns null on any error for graceful degradation
+- [Phase 17]: Partial recipe blanks use ____ with parenthetical (hint: Session N covered X) format
+- [Phase 17]: Each partial recipe session has exactly 3 blanks targeting distinct prior sessions
 
 ### Roadmap Evolution
 
@@ -116,5 +119,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-06T20:31:22Z
-Stopped at: Completed 17-01-PLAN.md
+Stopped at: Completed 17-03-PLAN.md
 Resume file: None
