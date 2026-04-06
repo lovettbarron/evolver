@@ -80,7 +80,7 @@ export function InstrumentSwitcher({ instruments, currentSlug }: InstrumentSwitc
           role="listbox"
           aria-label="Instruments"
           onKeyDown={handleDropdownKeyDown}
-          className="absolute top-full left-0 mt-xs min-w-[200px] bg-surface border border-[color-mix(in_srgb,var(--color-surface)_50%,var(--color-muted))] rounded-md z-40 animate-[fadeIn_100ms_ease-out]"
+          className="absolute top-full left-0 mt-xs min-w-[200px] bg-surface border border-[color-mix(in_srgb,var(--color-surface)_50%,var(--color-muted))] rounded-md z-50 animate-[fadeIn_100ms_ease-out]"
         >
           {instruments.map((instrument, index) => {
             const isActive = instrument.slug === currentSlug;
