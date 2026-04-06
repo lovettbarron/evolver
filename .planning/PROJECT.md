@@ -18,6 +18,13 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - Demo mode with synthetic learner journeys for both instruments
 - Tech stack: Next.js 15, React 19, Tailwind v4, TypeScript, Zod, ~43K LOC
 
+**Phase 15 complete:** Navigation & Progress Enhancements (2026-04-06)
+- Prerequisite state badges (checkmark/circle/lock) on session list
+- Dismissible prerequisite banner on session detail pages
+- Clickable count cards with hover lift affordance on progress page
+- Cumulative practice metrics (sessions this month, active weeks)
+- "You are here" pulsing dot on module journey visualization
+
 ## Next Milestone: v1.2 Learner Experience & Discovery
 
 **Goal:** Remove key UX friction points — making the app genuinely usable for day-to-day practice rather than just browsable as a demo.
