@@ -5,6 +5,9 @@ import {
   getSyntheticCompletedSessions,
 } from '@/lib/progress';
 import { getSyntheticCompletionDates } from '@/lib/practice-metrics';
+import { getCurrentModule } from '@/lib/prerequisite';
+import { listSessions } from '@/lib/content/reader';
+import { groupByModule } from '@/lib/sessions';
 import { CountCard } from '@/components/count-card';
 import { ModuleJourney } from '@/components/module-journey';
 import { EmptyProgressState } from '@/components/empty-progress';
@@ -32,6 +35,10 @@ export default async function ProgressPage({
 
   const progress = await computeProgress(slug, config, completedSessions);
 
+  const sessions = await listSessions(slug, config);
+  const groups = groupByModule(sessions);
+  const currentModule = getCurrentModule(groups, completedSessions);
+
   if (progress.sessionsCompleted === 0 && progress.patchesCreated === 0) {
     return <EmptyProgressState slug={slug} />;
   }
@@ -46,7 +53,7 @@ export default async function ProgressPage({
         <CountCard count={progress.challengesCompleted} label="Challenges Completed" href={`/instruments/${slug}/sessions`} />
       </div>
       <h2 className="text-[24px] font-bold mt-xl mb-md">Module Journey</h2>
-      <ModuleJourney modules={progress.moduleCompletionMap} />
+      <ModuleJourney modules={progress.moduleCompletionMap} currentModule={currentModule} />
       <CumulativeMetrics completionDates={completionDates} />
     </main>
   );
