@@ -42,7 +42,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 
 **Milestone Goal:** Remove key UX friction points — making the app genuinely usable for day-to-day practice rather than just browsable as a demo. Persistent session state, search, prerequisite visualization, and progress enhancements.
 
-- [ ] **Phase 14: Learner State Foundation** — Zustand store with persist middleware, completion toggle, last-visited tracking, vault+manual merge, resume bar
+- [x] **Phase 14: Learner State Foundation** — Zustand store with persist middleware, completion toggle, last-visited tracking, vault+manual merge, resume bar (completed 2026-04-06)
 - [x] **Phase 15: Navigation & Progress Enhancements** — Prerequisite state badges, clickable count cards, module journey "you are here" marker, cumulative practice metrics (completed 2026-04-06)
 - [ ] **Phase 16: Search & Filtering** — Full-text search across sessions and patches, tag/type filtering with sort options
 - [ ] **Phase 17: Content & Pedagogy** — Troubleshooting guides and transitional "partial recipe" sessions
@@ -57,7 +57,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
   3. Completion data from vault scanning (server) and manual toggles (client localStorage) are merged using union semantics — if either source says complete, it is complete
   4. A "continue where you left off" resume bar appears showing the user's next recommended session based on last-visited and completion state
   5. Zustand store with persist middleware provides the single client-side state layer consumed by all learner-facing components
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 14-01-PLAN.md — Zustand store, hydration hook, and learner utility functions with tests
 - [x] 14-02-PLAN.md — Completion toggle sticky bar on session detail page with last-visited tracking
@@ -122,7 +122,7 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 12. Evolver Panel Visualizer | v1.1 | 3/3 | Complete | 2026-04-04 |
 | 13. Cascadia Panel Visualizer | v1.1 | 4/4 | Complete | 2026-04-04 |
 | 13.1 Panel Visualizer Gap Closure | v1.1 | 2/2 | Complete | 2026-04-05 |
-| 14. Learner State Foundation | v1.2 | 2/3 | In Progress|  |
+| 14. Learner State Foundation | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 15. Navigation & Progress Enhancements | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 16. Search & Filtering | v1.2 | 0/0 | Not started | - |
 | 17. Content & Pedagogy | v1.2 | 0/0 | Not started | - |

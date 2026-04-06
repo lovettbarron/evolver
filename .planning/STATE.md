@@ -4,7 +4,7 @@ milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: executing
 stopped_at: Completed 15-03-PLAN.md
-last_updated: "2026-04-06T09:31:56.396Z"
+last_updated: "2026-04-06T15:58:26.181Z"
 last_activity: 2026-04-06
 progress:
   total_phases: 4
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-04-05)
 
 ## Current Position
 
-Phase: 16
+Phase: 15
 Plan: Not started
 Status: Executing Phase 15
 Last activity: 2026-04-06
