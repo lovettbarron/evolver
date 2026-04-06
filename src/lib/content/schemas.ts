@@ -54,6 +54,14 @@ export const InstrumentFileSchema = z.object({
   has_normals: z.boolean().optional(),
 }).passthrough();
 
+export const TroubleshootingSchema = z.object({
+  type: z.literal('troubleshooting'),
+  instrument: z.string(),
+  title: z.string(),
+}).passthrough();
+
+export type Troubleshooting = z.infer<typeof TroubleshootingSchema>;
+
 // Inferred types
 export type Session = z.infer<typeof SessionSchema>;
 export type Patch = z.infer<typeof PatchSchema>;

@@ -9,11 +9,13 @@ import {
   PatchSchema,
   InstrumentFileSchema,
   InstrumentConfigSchema,
+  TroubleshootingSchema,
   type AppConfig,
   type Session,
   type Patch,
   type InstrumentFile,
   type InstrumentConfig,
+  type Troubleshooting,
 } from './schemas';
 
 /**
@@ -172,9 +174,10 @@ export async function listInstrumentFiles(
   const root = getContentRoot(config);
   const pattern = path.join(root, 'instruments', instrument, '*.md');
   const files = await glob(pattern);
+  const filtered = files.filter(f => !f.endsWith('troubleshooting.md'));
 
   const results = await Promise.all(
-    files.map(async (filePath) => {
+    filtered.map(async (filePath) => {
       const raw = await fs.readFile(filePath, 'utf-8');
       const { data, content } = matter(raw);
       const validated = InstrumentFileSchema.parse(data);
@@ -184,4 +187,23 @@ export async function listInstrumentFiles(
   );
 
   return results;
+}
+
+/**
+ * Get troubleshooting content for an instrument.
+ * Returns null if no troubleshooting.md exists.
+ */
+export async function getTroubleshooting(
+  instrument: string,
+  config: AppConfig,
+): Promise<{ data: Troubleshooting; content: string } | null> {
+  try {
+    return await readContentFile(
+      `instruments/${instrument}/troubleshooting.md`,
+      TroubleshootingSchema,
+      config,
+    );
+  } catch {
+    return null;
+  }
 }
