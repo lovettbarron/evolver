@@ -8,6 +8,14 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: [],
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        maxForks: 3,
+      },
+    },
+    maxConcurrency: 5,
+    exclude: ['**/node_modules/**', '**/.claude/worktrees/**'],
   },
   resolve: {
     alias: {
