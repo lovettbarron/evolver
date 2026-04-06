@@ -60,13 +60,8 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 **Plans:** 2/3 plans executed
 Plans:
 - [x] 14-01-PLAN.md — Zustand store, hydration hook, and learner utility functions with tests
-<<<<<<< HEAD
 - [x] 14-02-PLAN.md — Completion toggle sticky bar on session detail page with last-visited tracking
-- [ ] 14-03-PLAN.md — Resume bar on instrument home page with vault+manual merge
-=======
-- [ ] 14-02-PLAN.md — Completion toggle sticky bar on session detail page with last-visited tracking
 - [x] 14-03-PLAN.md — Resume bar on instrument home page with vault+manual merge
->>>>>>> worktree-agent-a8930157
 **UI hint**: yes
 
 ### Phase 15: Navigation & Progress Enhancements

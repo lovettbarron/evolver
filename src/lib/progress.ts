@@ -17,6 +17,7 @@ export interface ProgressData {
 
 export interface CompletedSessions {
   sessionNumbers: Set<number>;
+  completionDates: Map<number, string>; // session number -> ISO date (YYYY-MM-DD)
 }
 
 /**
@@ -28,15 +29,26 @@ export async function scanDailyNotes(vaultPath: string): Promise<CompletedSessio
   const pattern = path.join(vaultPath, '**/*.md');
   const files = await glob(pattern);
   const sessionNumbers = new Set<number>();
+  const completionDates = new Map<number, string>();
   const sessionTagRegex = /#session-(\d+)/g;
 
   for (const file of files) {
     try {
       const content = await fs.readFile(file, 'utf-8');
       if (!content.includes('#instrument-practice')) continue;
+
+      // Extract date from daily note filename (YYYY-MM-DD.md)
+      const dateMatch = path.basename(file, '.md').match(/^(\d{4}-\d{2}-\d{2})$/);
+      const fileDate = dateMatch ? dateMatch[1] : null;
+
       let match: RegExpExecArray | null;
       while ((match = sessionTagRegex.exec(content)) !== null) {
-        sessionNumbers.add(parseInt(match[1], 10));
+        const sessionNum = parseInt(match[1], 10);
+        sessionNumbers.add(sessionNum);
+        // Keep earliest date for each session
+        if (fileDate && !completionDates.has(sessionNum)) {
+          completionDates.set(sessionNum, fileDate);
+        }
       }
       sessionTagRegex.lastIndex = 0;
     } catch {
@@ -44,7 +56,7 @@ export async function scanDailyNotes(vaultPath: string): Promise<CompletedSessio
     }
   }
 
-  return { sessionNumbers };
+  return { sessionNumbers, completionDates };
 }
 
 /**

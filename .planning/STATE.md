@@ -67,6 +67,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 14 P02 | 3min | 2 tasks | 5 files |
 | Phase 14 P03 | 4min | 3 tasks | 4 files |
 | Phase 15 P01 | 8min | 3 tasks | 10 files |
+| Phase 15 P02 | 5min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -77,7 +78,7 @@ v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 
 
 - [Phase 14]: isDemo derived from !config.vaultPath, threaded as prop from server page to client components
-- [Phase 14]: ResumeBar replaces HeroCard -- smarter session recommendation based on actual progress state
+- [Phase 14]: ResumeBar replaces HeroCard — smarter session recommendation based on actual progress state
 - [Phase 14]: Vault completions serialized as number[] for server-to-client prop passing
 - [Phase 15]: SessionList retains backwards compat by passing default 'available' state to SessionRow
 
@@ -103,5 +104,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-06T08:55:21Z
-Stopped at: Completed 15-01-PLAN.md
+Stopped at: Completed 15-01-PLAN.md and 15-02-PLAN.md
 Resume file: .planning/phases/15-navigation-progress-enhancements/15-01-PLAN.md
