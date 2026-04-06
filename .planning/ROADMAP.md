@@ -89,11 +89,11 @@ Plans:
   1. User can type a search query and see matching sessions and patches from across the entire curriculum, searched by title, description, and tags
   2. User can filter patches by type (bass, lead, pad, drum, texture, FX) and by tags, with filters combinable
   3. User can sort patch results by date, name, or type
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 
 Plans:
 - [x] 16-01-PLAN.md — TDD: search, filter, and sort pure functions with unit tests
-- [ ] 16-02-PLAN.md — Global search bar with dropdown overlay in nav
+- [x] 16-02-PLAN.md — Global search bar with dropdown overlay in nav
 - [ ] 16-03-PLAN.md — Patch filter bar with multi-select type/tag pills and sort dropdown
 **UI hint**: yes
 
@@ -104,12 +104,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. Each instrument has a troubleshooting guide accessible from the instrument pages, addressing common issues like "I hear nothing", "filter sounds wrong", or "no output from patch point"
   2. At least one transitional "partial recipe" session exists per instrument that gives incomplete instructions, requiring the learner to fill gaps using knowledge from prior sessions
-**Plans**: 3 plans
-
-Plans:
-- [ ] 17-01-PLAN.md — Troubleshooting schema, reader, route page, and instrument home card
-- [ ] 17-02-PLAN.md — Troubleshooting content for Evolver and Cascadia
-- [ ] 17-03-PLAN.md — Partial recipe sessions for Evolver and Cascadia
+**Plans**: TBD
 
 ## Progress
 
@@ -134,5 +129,5 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 13.1 Panel Visualizer Gap Closure | v1.1 | 2/2 | Complete | 2026-04-05 |
 | 14. Learner State Foundation | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 15. Navigation & Progress Enhancements | v1.2 | 2/3 | Complete    | 2026-04-06 |
-| 16. Search & Filtering | v1.2 | 1/3 | In Progress|  |
-| 17. Content & Pedagogy | v1.2 | 0/3 | Not started | - |
+| 16. Search & Filtering | v1.2 | 2/3 | In Progress|  |
+| 17. Content & Pedagogy | v1.2 | 0/0 | Not started | - |

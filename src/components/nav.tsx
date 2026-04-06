@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
 import { InstrumentSwitcher } from '@/components/instrument-switcher';
+import { SearchBar } from '@/components/search-bar';
 
 interface NavInstrument {
   slug: string;
@@ -52,6 +53,7 @@ export function Nav({
         )}
       </span>
       <InstrumentSwitcher instruments={instruments} currentSlug={currentSlug} />
+      <SearchBar />
       <div className="flex items-center gap-md overflow-x-auto ml-auto">
         {subLinks.map((link) => {
           const isActive =

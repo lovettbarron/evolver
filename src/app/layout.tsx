@@ -1,7 +1,9 @@
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { AppShell } from '@/components/app-shell';
 import { loadConfig } from '@/lib/config';
-import { discoverInstruments, loadInstrumentConfig } from '@/lib/content/reader';
+import { discoverInstruments, loadInstrumentConfig, listSessions, listPatches } from '@/lib/content/reader';
+import { toSearchableSession, toSearchablePatch } from '@/lib/search';
+import type { SearchableSession, SearchablePatch } from '@/lib/search';
 import './globals.css';
 
 const inter = Inter({
@@ -33,10 +35,27 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     }))
   );
 
+  // Build search index from all instruments
+  const allSearchData = await Promise.all(
+    slugs.map(async (slug) => {
+      const [sessions, patches] = await Promise.all([
+        listSessions(slug, config),
+        listPatches(slug, config),
+      ]);
+      return {
+        sessions: sessions.map(toSearchableSession),
+        patches: patches.map(toSearchablePatch),
+      };
+    })
+  );
+  const searchSessions = allSearchData.flatMap((d) => d.sessions);
+  const searchPatches = allSearchData.flatMap((d) => d.patches);
+
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body>
-        <AppShell isDemoMode={isDemoMode} instruments={instruments}>{children}</AppShell>
+        <AppShell isDemoMode={isDemoMode} instruments={instruments}
+          searchSessions={searchSessions} searchPatches={searchPatches}>{children}</AppShell>
       </body>
     </html>
   );
