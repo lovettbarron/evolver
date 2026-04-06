@@ -18,6 +18,12 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - Demo mode with synthetic learner journeys for both instruments
 - Tech stack: Next.js 15, React 19, Tailwind v4, TypeScript, Zod, ~43K LOC
 
+**Phase 16 complete:** Search & Filtering (2026-04-06)
+- Global search bar in nav with instant results grouped by Sessions and Patches
+- Patch filter bar with multi-select type pills, tag pills, sort dropdown
+- URL param persistence for filter state
+- Pure search/filter/sort engine with 22 unit tests (TDD)
+
 **Phase 15 complete:** Navigation & Progress Enhancements (2026-04-06)
 - Prerequisite state badges (checkmark/circle/lock) on session list
 - Dismissible prerequisite banner on session detail pages
@@ -154,4 +160,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-05 after v1.1 milestone*
+*Last updated: 2026-04-06 after Phase 16*
