@@ -50,9 +50,9 @@ Exceptions: Search input height 36px (matches existing pill `min-h-[36px]` from 
 | Body | 16px | 400 | 1.6 |
 | Label | 14px | 400 | 1.4 |
 | Heading | 20px | 700 | 1.2 |
-| Small | 13px | 600 | 1.4 |
+| Small | 13px | 400 | 1.4 |
 
-Source: Existing `globals.css` — body 16px at 1.6, `.prose h3` at 20px, table headers at 13px/600.
+Source: Existing `globals.css` — body 16px at 1.6, `.prose h3` at 20px, table headers at 13px. Small role relies on size (13px) and color (text-muted) for hierarchy instead of weight.
 
 ---
 
@@ -87,7 +87,7 @@ Destructive color: not needed (no destructive actions in this phase).
 - Search icon (magnifying glass SVG, 16x16): positioned absolute left 12px, `text-muted`, `text-accent` on input focus
 - Placeholder: "Search sessions & patches..." at 14px, `text-muted`
 - Input text: 14px, `text-text`
-- Clear button (x icon, 14x14): appears when query is non-empty, positioned absolute right 12px, `text-muted hover:text-text`
+- Clear button (x icon, 14x14): appears when query is non-empty, positioned absolute right 12px, `text-muted hover:text-text`, `aria-label="Clear search"`
 
 **Keyboard:**
 - `/` global shortcut focuses the search input (only when no other input is focused)
@@ -134,14 +134,14 @@ Destructive color: not needed (no destructive actions in this phase).
 
 **Row 1 — Type pills + Sort:**
 - Layout: `flex flex-wrap items-center gap-sm`
-- Type pills: Exact existing style from PatchGrid (preserved). Active: `bg-accent text-bg font-semibold rounded-full px-md py-xs min-h-[36px] text-sm capitalize`. Inactive: `bg-transparent text-muted border border-muted/30 rounded-full px-md py-xs min-h-[36px] text-sm hover:text-text hover:border-text transition-colors capitalize`
+- Type pills: Exact existing style from PatchGrid (preserved). Active: `bg-accent text-bg rounded-full px-md py-xs min-h-[36px] text-sm capitalize`. Inactive: `bg-transparent text-muted border border-muted/30 rounded-full px-md py-xs min-h-[36px] text-sm hover:text-text hover:border-text transition-colors capitalize`
 - Multi-select behavior: clicking a pill toggles it on/off independently. Multiple types active = OR filter. If all are deselected, show all (same as "All" active). "All" pill deselects all specific types
 - Sort dropdown: right-aligned with `ml-auto`. Trigger: `text-sm text-muted hover:text-text flex items-center gap-xs cursor-pointer`. Label: "Sort: {value}" with chevron-down SVG (12x12). Dropdown: `bg-bg border border-muted/20 rounded-[6px] shadow-md py-xs min-w-[120px]`. Options: `px-md py-xs text-sm hover:bg-surface cursor-pointer`. Active option: `text-accent`
 - Sort options: "Name" (default), "Date", "Type"
 
 **Row 2 — Tag pills (conditional):**
 - Layout: `flex flex-wrap gap-xs mt-sm` (only renders when tags exist in filtered results)
-- Tag pills: smaller than type pills. Active: `bg-accent/20 text-accent border border-accent/40 rounded-full px-sm py-[2px] text-[13px]`. Inactive: `bg-transparent text-muted border border-muted/20 rounded-full px-sm py-[2px] text-[13px] hover:text-text hover:border-muted/40 transition-colors`
+- Tag pills: smaller than type pills. Active: `bg-accent/20 text-accent border border-accent/40 rounded-full px-sm py-[4px] text-[13px]`. Inactive: `bg-transparent text-muted border border-muted/20 rounded-full px-sm py-[4px] text-[13px] hover:text-text hover:border-muted/40 transition-colors`
 - Tag pills prefixed with `#` character
 - Tags shown: only tags present in currently type-filtered results
 
@@ -158,7 +158,7 @@ Destructive color: not needed (no destructive actions in this phase).
 **Anatomy:**
 - Container: `text-center py-3xl`
 - Icon: none
-- Heading: 16px `text-text font-semibold` — contextual message (see Copywriting)
+- Heading: 16px `text-text font-bold` — contextual message (see Copywriting)
 - Body: 14px `text-muted mt-sm`
 - Action: `mt-md` — "Clear filters" button styled as text link: `text-accent hover:underline text-sm cursor-pointer`
 
