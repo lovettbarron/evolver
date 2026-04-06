@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: executing
-stopped_at: Phase 15 plans verified
-last_updated: "2026-04-06T08:52:18.110Z"
+stopped_at: Completed 15-03-PLAN.md
+last_updated: "2026-04-06T09:31:56.396Z"
 last_activity: 2026-04-06
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 3
+  completed_plans: 6
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-05)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 14 — learner-state-foundation
+**Current focus:** Phase 15 — navigation-progress-enhancements
 
 ## Current Position
 
-Phase: 14 (learner-state-foundation) — EXECUTING
-Plan: 2 of 3
-Status: Ready to execute
+Phase: 16
+Plan: Not started
+Status: Executing Phase 15
 Last activity: 2026-04-06
 
 Progress: [░░░░░░░░░░] 0%
@@ -77,13 +77,11 @@ Progress: [░░░░░░░░░░] 0%
 Decisions are logged in PROJECT.md Key Decisions table.
 v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 
-
 - [Phase 14]: isDemo derived from !config.vaultPath, threaded as prop from server page to client components
 - [Phase 14]: ResumeBar replaces HeroCard — smarter session recommendation based on actual progress state
 - [Phase 14]: Vault completions serialized as number[] for server-to-client prop passing
 - [Phase 15]: SessionList retains backwards compat by passing default 'available' state to SessionRow
 - [Phase 15]: Second listSessions call in progress page acceptable — computeProgress doesn't expose grouped data
-
 
 ### Roadmap Evolution
 
