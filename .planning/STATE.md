@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: executing
-stopped_at: Phase 16 UI-SPEC approved
-last_updated: "2026-04-06T16:06:42.073Z"
+stopped_at: Phase 17 context gathered
+last_updated: "2026-04-06T20:02:33.263Z"
 last_activity: 2026-04-06
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 6
+  total_plans: 9
   completed_plans: 6
   percent: 0
 ---
@@ -103,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-06T16:06:42.069Z
-Stopped at: Phase 16 UI-SPEC approved
-Resume file: .planning/phases/16-search-filtering/16-UI-SPEC.md
+Last session: 2026-04-06T20:02:33.253Z
+Stopped at: Phase 17 context gathered
+Resume file: .planning/phases/17-content-pedagogy/17-CONTEXT.md
