@@ -27,8 +27,8 @@ vi.mock('@/stores/learner-store', () => ({
 const mockComputeNextSession = vi.fn();
 const mockMergeCompletions = vi.fn(() => new Set<number>());
 vi.mock('@/lib/learner-utils', () => ({
-  mergeCompletions: (...args: unknown[]) => mockMergeCompletions(...args),
-  computeNextSession: (...args: unknown[]) => mockComputeNextSession(...args),
+  mergeCompletions: (...args: Parameters<typeof mockMergeCompletions>) => mockMergeCompletions(...args),
+  computeNextSession: (...args: Parameters<typeof mockComputeNextSession>) => mockComputeNextSession(...args),
 }));
 
 const mockSessions = [

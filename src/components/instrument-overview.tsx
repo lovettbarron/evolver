@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FileText } from 'lucide-react';
-import { HeroCard } from './hero-card';
+import { ResumeBar } from './resume-bar';
 
 const MermaidRenderer = dynamic(
   () =>
@@ -32,13 +32,9 @@ export interface InstrumentOverviewProps {
   slug: string;
   references?: Array<{ label: string; pdfPath: string }>;
   moduleCount?: number;
-  nextSession?: {
-    moduleName: string;
-    sessionTitle: string;
-    objective: string;
-    duration: number;
-    href: string;
-  } | null;
+  vaultCompletions?: number[];
+  sessionsForResumeBar?: Array<{ slug: string; data: { session_number: number; title: string; module: string } }>;
+  isDemo?: boolean;
 }
 
 export function InstrumentOverview({
@@ -51,7 +47,9 @@ export function InstrumentOverview({
   moduleCount,
   slug,
   references,
-  nextSession,
+  vaultCompletions,
+  sessionsForResumeBar,
+  isDemo,
 }: InstrumentOverviewProps) {
   const [openPdf, setOpenPdf] = useState<string | null>(null);
 
@@ -60,14 +58,13 @@ export function InstrumentOverview({
       <h1 className="text-4xl font-bold leading-[1.1] mb-sm">{title}</h1>
       <p className="text-muted text-sm mb-2xl">{manufacturer}</p>
 
-      {nextSession && (
+      {vaultCompletions && sessionsForResumeBar && (
         <div className="mb-2xl">
-          <HeroCard
-            moduleName={nextSession.moduleName}
-            sessionTitle={nextSession.sessionTitle}
-            objective={nextSession.objective}
-            duration={nextSession.duration}
-            href={nextSession.href}
+          <ResumeBar
+            instrumentSlug={slug}
+            vaultCompletions={vaultCompletions}
+            sessions={sessionsForResumeBar}
+            isDemo={isDemo ?? false}
           />
         </div>
       )}
