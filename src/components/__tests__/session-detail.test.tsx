@@ -19,6 +19,11 @@ vi.mock('next/link', () => ({
   ),
 }));
 
+// Mock CompletionToggle to avoid store dependency
+vi.mock('@/components/completion-toggle', () => ({
+  CompletionToggle: () => null,
+}));
+
 // Mock next/dynamic to render children directly
 vi.mock('next/dynamic', () => ({
   default: () => {
@@ -63,6 +68,9 @@ describe('SessionDetail', () => {
         next={null}
         instrumentSlug="evolver"
         quickRefContent={[]}
+        sessionSlug="01-analog-osc"
+        reference={null}
+        isDemo={false}
       />,
     );
 
@@ -80,6 +88,9 @@ describe('SessionDetail', () => {
         next={null}
         instrumentSlug="evolver"
         quickRefContent={[]}
+        sessionSlug="01-analog-osc"
+        reference={null}
+        isDemo={false}
       />,
     );
 
@@ -97,6 +108,9 @@ describe('SessionDetail', () => {
         next={{ slug: '02-digital', title: 'Digital Oscillators' }}
         instrumentSlug="evolver"
         quickRefContent={[]}
+        sessionSlug="01-analog-osc"
+        reference={null}
+        isDemo={false}
       />,
     );
 
@@ -117,6 +131,9 @@ describe('SessionDetail', () => {
         next={null}
         instrumentSlug="evolver"
         quickRefContent={[]}
+        sessionSlug="01-analog-osc"
+        reference={null}
+        isDemo={false}
       />,
     );
 
