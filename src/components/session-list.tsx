@@ -7,6 +7,10 @@ interface SessionListProps {
   instrumentSlug: string;
 }
 
+/**
+ * Server-safe session list that renders all sessions as 'available'.
+ * For prerequisite state badges, use SessionListClient instead.
+ */
 export function SessionList({ groups, instrumentSlug }: SessionListProps) {
   return (
     <div className="flex flex-col gap-2xl">
@@ -21,6 +25,8 @@ export function SessionList({ groups, instrumentSlug }: SessionListProps) {
                 title={session.data.title}
                 duration={session.data.duration}
                 href={`/instruments/${instrumentSlug}/sessions/${session.slug}`}
+                state="available"
+                prerequisiteNumber={session.data.prerequisite}
               />
             ))}
           </div>
