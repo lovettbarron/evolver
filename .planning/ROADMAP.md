@@ -93,8 +93,8 @@ Plans:
 
 Plans:
 - [x] 16-01-PLAN.md — TDD: search, filter, and sort pure functions with unit tests
-- [x] 16-02-PLAN.md — Global search bar with dropdown overlay in nav
-- [ ] 16-03-PLAN.md — Patch filter bar with multi-select type/tag pills and sort dropdown
+- [ ] 16-02-PLAN.md — Global search bar with dropdown overlay in nav
+- [x] 16-03-PLAN.md — Patch filter bar with multi-select type/tag pills and sort dropdown
 **UI hint**: yes
 
 ### Phase 17: Content & Pedagogy

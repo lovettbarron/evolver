@@ -4,13 +4,13 @@ milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: executing
 stopped_at: Completed 16-02-PLAN.md
-last_updated: "2026-04-06T20:18:17.907Z"
-last_activity: 2026-04-06
+last_updated: "2026-04-06T20:18:56.329Z"
+last_activity: 2026-04-06 -- Phase 16 execution started
 progress:
   total_phases: 4
-  completed_phases: 2
-  total_plans: 9
-  completed_plans: 8
+  completed_phases: 3
+  total_plans: 12
+  completed_plans: 9
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-04-05)
 ## Current Position
 
 Phase: 16 (search-filtering) — EXECUTING
-Plan: 2 of 3
-Status: Ready to execute
-Last activity: 2026-04-06
+Plan: 1 of 3
+Status: Executing Phase 16
+Last activity: 2026-04-06 -- Phase 16 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -70,7 +70,11 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 15 P02 | 5min | 3 tasks | 7 files |
 | Phase 15 P03 | 3min | 2 tasks | 4 files |
 | Phase 16 P01 | 2min | 1 tasks | 2 files |
+<<<<<<< HEAD
 | Phase 16 P02 | 5min | 2 tasks | 6 files |
+=======
+| Phase 16 P03 | 3min | 2 tasks | 3 files |
+>>>>>>> worktree-agent-a016c31e
 
 ## Accumulated Context
 
@@ -86,7 +90,16 @@ v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 - [Phase 15]: Second listSessions call in progress page acceptable — computeProgress doesn't expose grouped data
 - [Phase 16]: SearchableSession/SearchablePatch are narrow type projections, keeping search decoupled from content pipeline
 - [Phase 16]: filterPatches: types OR within, tags OR within, type+tag AND between groups
+
+<<<<<<< HEAD
+
 - [Phase 16]: SearchProvider wraps at AppShell level for global search data access
+
+=======
+
+- [Phase 16]: PatchFilterBar preserves grouped PatchGrid view when unfiltered, flat PatchCard grid when filtered
+
+>>>>>>> worktree-agent-a016c31e
 
 ### Roadmap Evolution
 
@@ -108,6 +121,11 @@ None yet.
 
 ## Session Continuity
 
+<<<<<<< HEAD
 Last session: 2026-04-06T20:18:17.903Z
 Stopped at: Completed 16-02-PLAN.md
+=======
+Last session: 2026-04-06T20:16:37.073Z
+Stopped at: Completed 16-03-PLAN.md
+>>>>>>> worktree-agent-a016c31e
 Resume file: None
