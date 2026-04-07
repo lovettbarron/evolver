@@ -55,7 +55,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 
 **Milestone Goal:** Comprehensive visual and layout redesign — new design system, typography, color palette, layout structure, interactive element styling, and polished markdown rendering that feels native, not like raw markdown.
 
-- [ ] **Phase 18: Token Foundation** - OKLCH color palette, spacing scale, contrast validation, warm dark surface elevations
+- [x] **Phase 18: Token Foundation** - OKLCH color palette, spacing scale, contrast validation, warm dark surface elevations (completed 2026-04-07)
 - [ ] **Phase 19: Prose & Typography** - Modular type scale, polished markdown rendering via @tailwindcss/typography with domain overrides
 - [ ] **Phase 20: Layout Shell & Navigation** - Navigation bar redesign, responsive page shells, footer, instrument-aware layout variation
 - [ ] **Phase 21: Cards & Content Components** - Unified card visual language, focus states, editorial session layout with designed markers
@@ -76,8 +76,8 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 **Plans**: 3 plans
 Plans:
 - [x] 18-01-PLAN.md — OKLCH token swap + contrast validation + grain texture
-- [ ] 18-02-PLAN.md — Spacing migration (all 29 components to token references)
-- [ ] 18-03-PLAN.md — /dev/tokens verification page + visual checkpoint
+- [x] 18-02-PLAN.md — Spacing migration (all 29 components to token references)
+- [x] 18-03-PLAN.md — /dev/tokens verification page + visual checkpoint
 
 ### Phase 19: Prose & Typography
 **Goal**: Session and patch content reads as polished editorial prose with clear typographic hierarchy — not a markdown viewer
@@ -105,7 +105,7 @@ Plans:
   4. User sees visually distinct page shells when browsing Evolver vs Cascadia content — subtle accent/color variation signals which instrument context they are in
 **Plans**: 3 plans
 Plans:
-- [ ] 18-01-PLAN.md — OKLCH token swap + contrast validation + grain texture
+- [x] 18-01-PLAN.md — OKLCH token swap + contrast validation + grain texture
 - [ ] 18-02-PLAN.md — Spacing migration (all 29 components to token references)
 - [ ] 18-03-PLAN.md — /dev/tokens verification page + visual checkpoint
 **UI hint**: yes
@@ -182,7 +182,7 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 15. Navigation & Progress Enhancements | v1.2 | 3/3 | Complete | 2026-04-06 |
 | 16. Search & Filtering | v1.2 | 3/3 | Complete | 2026-04-06 |
 | 17. Content & Pedagogy | v1.2 | 3/3 | Complete | 2026-04-07 |
-| 18. Token Foundation | v1.3 | 1/3 | In Progress|  |
+| 18. Token Foundation | v1.3 | 3/3 | Complete   | 2026-04-07 |
 | 19. Prose & Typography | v1.3 | 0/2 | Not started | - |
 | 20. Layout Shell & Navigation | v1.3 | 0/0 | Not started | - |
 | 21. Cards & Content Components | v1.3 | 0/0 | Not started | - |
