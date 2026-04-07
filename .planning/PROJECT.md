@@ -18,6 +18,11 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - Demo mode with synthetic learner journeys for both instruments
 - Tech stack: Next.js 15, React 19, Tailwind v4, TypeScript, Zod, ~43K LOC
 
+**Phase 17 complete:** Content & Pedagogy (2026-04-07)
+- Troubleshooting guides for both instruments (4 symptom sections, 5 checklist items each with specific parameter values)
+- 4 transitional partial recipe sessions (2 per instrument) with blanks and hints referencing prior sessions
+- Full code infrastructure: TroubleshootingSchema, content reader, route page, instrument home card
+
 **Phase 16 complete:** Search & Filtering (2026-04-06)
 - Global search bar in nav with instant results grouped by Sessions and Patches
 - Patch filter bar with multi-select type pills, tag pills, sort dropdown
@@ -160,4 +165,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-06 after Phase 16*
+*Last updated: 2026-04-07 after Phase 17*
