@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: executing
-stopped_at: Completed 17-03-PLAN.md
-last_updated: "2026-04-06T21:01:18.373Z"
+stopped_at: Completed 18-02-PLAN.md
+last_updated: "2026-04-07T19:26:59.965Z"
 last_activity: 2026-04-06
 progress:
   total_phases: 4
@@ -74,6 +74,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 16 P03 | 3min | 2 tasks | 3 files |
 | Phase 17 P01 | 12min | 2 tasks | 7 files |
 | Phase 17 P03 | 8min | 2 tasks | 8 files |
+| Phase 18 P02 | 2 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,7 @@ v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
 - [Phase 17]: getTroubleshooting returns null on any error for graceful degradation
 - [Phase 17]: Partial recipe blanks use ____ with parenthetical (hint: Session N covered X) format
 - [Phase 17]: Each partial recipe session has exactly 3 blanks targeting distinct prior sessions
+- [Phase 18]: Spacing migration completed in plan 18-01; plan 18-02 adds regression test only
 
 ### Roadmap Evolution
 
@@ -118,6 +120,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-06T20:31:22Z
-Stopped at: Completed 17-03-PLAN.md
+Last session: 2026-04-07T19:26:59.961Z
+Stopped at: Completed 18-02-PLAN.md
 Resume file: None
