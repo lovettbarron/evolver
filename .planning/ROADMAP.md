@@ -90,7 +90,7 @@ Plans:
   4. Domain-specific prose elements (`.param-table`, `.callout`, `.quick-ref-prose`) retain their specialized styling within the new typography system
 **Plans**: 2 plans
 Plans:
-- [ ] 19-01-PLAN.md — Font setup + typography plugin + type scale + prose color overrides
+- [x] 19-01-PLAN.md — Font setup + typography plugin + type scale + prose color overrides
 - [ ] 19-02-PLAN.md — Domain element editorial restyling + visual checkpoint
 **UI hint**: yes
 
@@ -183,7 +183,7 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 16. Search & Filtering | v1.2 | 3/3 | Complete | 2026-04-06 |
 | 17. Content & Pedagogy | v1.2 | 3/3 | Complete | 2026-04-07 |
 | 18. Token Foundation | v1.3 | 3/3 | Complete   | 2026-04-07 |
-| 19. Prose & Typography | v1.3 | 0/2 | Not started | - |
+| 19. Prose & Typography | v1.3 | 1/2 | In Progress|  |
 | 20. Layout Shell & Navigation | v1.3 | 0/0 | Not started | - |
 | 21. Cards & Content Components | v1.3 | 0/0 | Not started | - |
 | 22. Interactive Elements & Motion | v1.3 | 0/0 | Not started | - |
