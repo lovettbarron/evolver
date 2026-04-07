@@ -36,18 +36,17 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - Cumulative practice metrics (sessions this month, active weeks)
 - "You are here" pulsing dot on module journey visualization
 
-## Next Milestone: v1.2 Learner Experience & Discovery
+## Current Milestone: v1.3 Visual Redesign
 
-**Goal:** Remove key UX friction points — making the app genuinely usable for day-to-day practice rather than just browsable as a demo.
+**Goal:** Comprehensive visual and layout redesign of the existing app — new design system, typography, color palette, layout structure, interactive element styling, and polished markdown rendering that feels native, not like raw markdown.
 
 **Target features:**
-- Continue where you left off — persistent "next session" across visits
-- Search & filtering — full-text search across sessions/patches, type/tag filtering
-- Session completion without Obsidian — manual mark-complete toggle
-- Prerequisite visualization — locked/available/completed states in session list
-- Progress enhancements — clickable counts, "you are here" in module journey
-- Troubleshooting content — per-instrument "I hear nothing" guides
-- Transitional pedagogy — partial recipe sessions bridging guided to freeform
+- Design system overhaul (color palette, typography, spacing tokens)
+- Layout restructuring (navigation, page shells, content flow)
+- Component visual refresh (cards, tables, panels, forms)
+- Interactive element styling (search, filters, panel visualizers)
+- Motion and micro-interactions
+- Complete markdown rendering — styled prose that looks designed, not like a markdown viewer
 
 ## Requirements
 
@@ -165,4 +164,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-07 after Phase 17*
+*Last updated: 2026-04-07 after milestone v1.3 started*
