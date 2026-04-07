@@ -135,4 +135,4 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 14. Learner State Foundation | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 15. Navigation & Progress Enhancements | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 16. Search & Filtering | v1.2 | 2/3 | Complete    | 2026-04-06 |
-| 17. Content & Pedagogy | v1.2 | 3/3 | Complete   | 2026-04-07 |
+| 17. Content & Pedagogy | v1.2 | 3/3 | Complete    | 2026-04-07 |
