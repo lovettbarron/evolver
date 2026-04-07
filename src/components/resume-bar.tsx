@@ -15,7 +15,7 @@ interface ResumeBarProps {
 
 export function ResumeBar({ instrumentSlug, vaultCompletions, sessions, isDemo }: ResumeBarProps) {
   const hydrated = useHydrated();
-  const manualCompletionsArray = useLearnerStore((s) => s.completions[instrumentSlug] ?? []);
+  const manualCompletionsArray = useLearnerStore((s) => s.completions[instrumentSlug]) ?? [];
   const manualCompletions = new Set(manualCompletionsArray);
   const lastVisited = useLearnerStore((s) => s.lastVisited[instrumentSlug]);
 

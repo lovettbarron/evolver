@@ -150,6 +150,7 @@ interface SessionDetailProps {
   quickRefContent: { label: string; html: string }[];
   reference: string | null;
   isDemo: boolean;
+  banner?: React.ReactNode;
 }
 
 export function SessionDetail({
@@ -162,6 +163,7 @@ export function SessionDetail({
   quickRefContent,
   reference,
   isDemo,
+  banner,
 }: SessionDetailProps) {
   const hasEvolverPanel =
     instrumentSlug === 'evolver' && html.includes('data-evolver-panel');
@@ -194,6 +196,7 @@ export function SessionDetail({
         instrumentSlug={instrumentSlug}
       />
       <div className="max-w-[720px] mx-auto px-lg lg:px-xl py-2xl">
+        {banner && <div className="mb-lg">{banner}</div>}
         <header className="mb-2xl">
           <h1 className="text-4xl font-bold mb-md">{session.title}</h1>
           <div className="flex items-center gap-md text-sm text-muted">

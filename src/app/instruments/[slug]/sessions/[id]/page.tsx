@@ -58,28 +58,27 @@ export default async function SessionPage({
       ? allSessions.find((s) => s.data.session_number === prerequisiteNumber)
       : null;
 
-  return (
-    <>
-      {!prerequisiteMet && prerequisiteSession && (
-        <div className="max-w-[640px] mx-auto px-lg lg:px-xl pt-md">
-          <PrerequisiteBanner
-            prerequisiteNumber={prerequisiteNumber!}
-            prerequisiteSlug={prerequisiteSession.slug}
-            instrumentSlug={slug}
-          />
-        </div>
-      )}
-      <SessionDetail
-        session={current.data}
-        html={html}
-        prev={prev ? { slug: prev.slug, title: prev.data.title } : null}
-        next={next ? { slug: next.slug, title: next.data.title } : null}
+  const prerequisiteBanner =
+    !prerequisiteMet && prerequisiteSession ? (
+      <PrerequisiteBanner
+        prerequisiteNumber={prerequisiteNumber!}
+        prerequisiteSlug={prerequisiteSession.slug}
         instrumentSlug={slug}
-        sessionSlug={id}
-        quickRefContent={quickRefContent}
-        reference={current.data.reference ?? null}
-        isDemo={isDemo}
       />
-    </>
+    ) : null;
+
+  return (
+    <SessionDetail
+      session={current.data}
+      html={html}
+      prev={prev ? { slug: prev.slug, title: prev.data.title } : null}
+      next={next ? { slug: next.slug, title: next.data.title } : null}
+      instrumentSlug={slug}
+      sessionSlug={id}
+      quickRefContent={quickRefContent}
+      reference={current.data.reference ?? null}
+      isDemo={isDemo}
+      banner={prerequisiteBanner}
+    />
   );
 }
