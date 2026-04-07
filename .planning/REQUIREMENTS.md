@@ -64,30 +64,30 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TOKEN-01 | TBD | Pending |
-| TOKEN-02 | TBD | Pending |
-| TOKEN-03 | TBD | Pending |
-| TOKEN-04 | TBD | Pending |
-| TOKEN-05 | TBD | Pending |
-| TOKEN-06 | TBD | Pending |
-| LAYOUT-01 | TBD | Pending |
-| LAYOUT-02 | TBD | Pending |
-| LAYOUT-03 | TBD | Pending |
-| LAYOUT-04 | TBD | Pending |
-| CONTENT-01 | TBD | Pending |
-| CONTENT-02 | TBD | Pending |
-| COMP-01 | TBD | Pending |
-| COMP-02 | TBD | Pending |
-| COMP-03 | TBD | Pending |
-| COMP-04 | TBD | Pending |
-| SPEC-01 | TBD | Pending |
-| SPEC-02 | TBD | Pending |
+| TOKEN-01 | Phase 18 | Pending |
+| TOKEN-02 | Phase 19 | Pending |
+| TOKEN-03 | Phase 18 | Pending |
+| TOKEN-04 | Phase 18 | Pending |
+| TOKEN-05 | Phase 18 | Pending |
+| TOKEN-06 | Phase 23 | Pending |
+| LAYOUT-01 | Phase 20 | Pending |
+| LAYOUT-02 | Phase 20 | Pending |
+| LAYOUT-03 | Phase 20 | Pending |
+| LAYOUT-04 | Phase 20 | Pending |
+| CONTENT-01 | Phase 19 | Pending |
+| CONTENT-02 | Phase 21 | Pending |
+| COMP-01 | Phase 21 | Pending |
+| COMP-02 | Phase 21 | Pending |
+| COMP-03 | Phase 22 | Pending |
+| COMP-04 | Phase 22 | Pending |
+| SPEC-01 | Phase 23 | Pending |
+| SPEC-02 | Phase 23 | Pending |
 
 **Coverage:**
 - v1.3 requirements: 18 total
-- Mapped to phases: 0
-- Unmapped: 18
+- Mapped to phases: 18
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-07*
-*Last updated: 2026-04-07 after initial definition*
+*Last updated: 2026-04-06 after roadmap creation*
