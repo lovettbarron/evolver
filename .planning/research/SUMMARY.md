@@ -1,99 +1,184 @@
-# Research Summary: v1.2 Learner Experience & Discovery
+# Project Research Summary
 
-**Project:** Evolver Deep Learning
-**Domain:** Learner UX improvements for ADHD-friendly instrument learning platform
-**Researched:** 2026-04-03
-**Overall confidence:** HIGH
+**Project:** Evolver Deep Learning — v1.3 Visual Redesign
+**Domain:** Visual/design overhaul of an existing Next.js 15 synth learning app
+**Researched:** 2026-04-06
+**Confidence:** HIGH
 
 ## Executive Summary
 
-The v1.2 milestone transforms the app from a browsable curriculum into a daily practice tool by adding four capabilities: persistent session completion tracking, "continue where you left off" navigation, full-text search, and prerequisite visualization. The fundamental architectural challenge is introducing mutable client-side state into a currently stateless server-component architecture without disrupting the existing content pipeline.
+The v1.3 Visual Redesign is a **styling overhaul, not a structural rewrite**. The existing 51-component architecture, App Router data flow, and Obsidian vault content pipeline remain entirely unchanged. All visual work flows through a single control point — the `@theme` block in `globals.css` — which makes this a token-first, cascade-driven redesign. Two new packages are needed: `motion` (formerly Framer Motion, for micro-interactions and spring-physics animations) and `@tailwindcss/typography` (to replace 100+ lines of hand-rolled prose CSS). Everything else — OKLCH color scales, spacing tokens, grain texture, typography scale — is achieved within Tailwind v4's existing CSS-first `@theme` system with zero additional dependencies.
 
-Two new npm dependencies are needed: **MiniSearch** (^7.2.0, ~7KB gzipped) for client-side full-text search, and **Zustand** (^5.0.0, ~1.2KB gzipped) for persistent learner state with localStorage. Together they add under 9KB to the client bundle. The existing stack (Next.js 15, Zod, Tailwind, Lucide) covers all other needs -- prerequisite visualization, streak-alternative progress metrics, and UI enhancements are pure React + CSS work.
+The recommended approach is layered token architecture: a primitive palette layer feeds semantic intent tokens (`--color-surface-raised`, `--color-border`, `--color-text-muted`), which cascade automatically into all 51 components. The build order is strict: **tokens first, then prose, then shell/nav, then cards, then interactive elements, then motion.** This sequencing prevents rework because every downstream layer inherits from upstream token decisions. The prose styling is the single highest-impact surface — sessions are the core product, and the `.prose` cascade touches 60 session files and 36 patch documents simultaneously. It must be treated as an atomic unit, never partially refactored.
 
-The most dangerous pitfall is implementing consecutive-day streaks. The project's own ADHD design document explicitly prohibits calendar-based tracking because "missed dates create guilt spirals." Research confirms that streak features actively harm ADHD users. Use additive-only metrics instead: cumulative session counts, module completions, and patch library size. These only increase and never create shame.
-
-The completion tracking system must solve the two-source problem: existing Obsidian vault scanning (server-side) coexists with new manual toggles (client-side localStorage). The merge strategy is union -- if either source says a session is complete, it is complete. This is additive, never subtractive, matching the ADHD design principle that progress only moves forward.
+The dominant risks are: (1) **SVG panel corruption** from container sizing changes disrupting 289 hand-placed controls in the two panel visualizers — both must be frozen until a dedicated final phase; (2) **accessibility regression** as "calm" or warm palette choices push muted text colors below the WCAG AA 4.5:1 threshold; and (3) **ADHD design violations** if motion or visual complexity increases beyond the project's single-focus learning constraint. The ADHD constraint is non-negotiable and must function as an acceptance criterion for every phase.
 
 ## Key Findings
 
-**Stack:** Two new packages (MiniSearch + Zustand, ~9KB combined). Zero other additions needed.
+### Recommended Stack
 
-**Architecture:** Zustand store with `persist` middleware manages completions, last-visited, and practice dates in localStorage. Server components pass content + vault-scanned completions as props. Client components merge both sources via a `useCompletedSessions` hook. Search uses a build-time document array loaded into MiniSearch on the client.
+The existing stack (Next.js 15, React 19, Tailwind v4, Zustand, unified/remark) requires only two additions. Tailwind v4's `@theme` directive IS the design token system — there is no need for Style Dictionary, CSS-in-JS, or a component library. The `motion` package (v12+, import from `motion/react`) handles all animation needs including spring physics, layout animations, gesture handling, and hardware-accelerated scroll effects; all motion components require `"use client"` which matches existing codebase patterns. The `@tailwindcss/typography` plugin replaces hand-rolled prose styles and integrates via `@plugin` directive in CSS (not JS config) with Tailwind v4.
 
-**Critical pitfall:** Never implement consecutive-day streaks. Use additive counts only. This is a hard design rule, not a preference.
+**Core technologies:**
+- `motion@^12.38.0`: Animation — spring physics, layout animations, micro-interactions; replaces need for GSAP or CSS-only animation hacks
+- `@tailwindcss/typography@^0.5.19`: Prose rendering baseline — replaces 100+ lines of manual `.prose` CSS while preserving domain-specific overrides
+- Tailwind v4 `@theme` (already installed): Design token system — OKLCH color scales, spacing, radius, shadow tokens; no external token tool needed
+- Pre-rendered 64x64 WebP grain tile (`public/textures/grain.webp`): Texture overlay — zero runtime cost vs. SVG feTurbulence; GPU-composited via CSS pseudo-element at opacity 0.02-0.05
 
-## Reconciliation Notes
+**What NOT to add:** Radix UI / shadcn/ui (wrong scale — adds a component layer over 51 working components), GSAP (overkill vs. Motion), CSS Modules (fragments the styling approach), Sass (Lightning CSS already handles nesting), react-spring (less React 19 polish than Motion), any design token tool.
 
-The parallel ARCHITECTURE.md research recommends React Context + custom `useLocalStorage` hook. The STACK.md recommends Zustand with `persist` middleware. **Recommendation: use Zustand.** Rationale:
+### Expected Features
 
-1. Zustand's `persist` middleware handles localStorage serialization, hydration safety, and schema versioning out of the box -- replacing ~150 lines of custom Context + hook code
-2. Zustand uses `useSyncExternalStore` internally, avoiding the re-render-all-consumers problem of React Context
-3. Zustand selectors enable granular subscriptions (session list only re-renders when completions change, not when last-visited updates)
-4. No Provider component needed -- the store is a module-level singleton imported directly by client components, which is simpler in a server-component-first architecture where adding providers to the tree requires care
-5. At 1.2KB gzipped, Zustand costs less bundle size than the custom code it replaces
+The feature research defines a clear three-phase build sequence with explicit dependencies: color palette must land before typography, typography before component work, and prose before editorial layout. The "designed prose" differentiator is a two-pass effort — table-stakes pass makes it look decent, a later editorial pass makes it feel designed.
 
-The ARCHITECTURE.md's patterns for server/client boundary, prerequisite derivation, and component classification remain fully valid regardless of which state solution is chosen. The PITFALLS.md's warnings about hydration mismatches, dual-source conflicts, and client boundary creep apply equally to both approaches.
+**Must have (table stakes):**
+- Refined color palette with depth layers — current 3-surface system is visually flat; needs at minimum `surface-raised`, `border`, and `border-subtle` semantic tokens
+- Typography scale with modular rhythm — current hard-coded px sizes lack hierarchy; impacts every component
+- Card visual consistency — 5 card types (Hero, Patch, Module, Instrument, Count) have divergent border/padding/hover treatments
+- Polished markdown/prose rendering — sessions are the core product; generic markdown viewer feel undermines the entire app
+- Navigation visual weight — current minimal 48px bar has no brand expression
+- Accessible contrast ratios — `--color-muted` (#737373) is near the AA threshold; warmth-shifting the palette risks regression
+
+**Should have (differentiators):**
+- Textured/warm dark theme — shift from cold gray to warm dark tones with subtle grain (Hologram reference without mimicking it)
+- Micro-interactions on interactive elements — transform + scale hover states, spring-physics feel
+- Session content as editorial layout — parameter callouts, step markers, pull-quote elements as designed components
+- Instrument-aware page shells — per-instrument accent color token at layout level via `[data-instrument="x"]` override
+- Scroll-driven content reveals — subtle opacity fade-in only; no lateral movement or parallax
+- Progress page data visualization — module journey map from stat cards to something worth looking at
+- Footer as deliberate design element
+
+**Defer (v2+):**
+- Light mode / theme toggle — doubles design work; dark mode is the brand identity
+- Animated page transitions — Next.js App Router transitions are complex and add latency perception
+- Glassmorphism effects — poor readability on dark backgrounds, ages quickly
+- Skeleton loading screens — overkill for a local-first, server-component-heavy app
+- Custom cursor effects — breaks accessibility, adds nothing
+
+### Architecture Approach
+
+The redesign operates as a layered token replacement on top of the existing component tree with no structural changes to routing, data flow, or server/client boundaries. The three-layer token model (primitive → semantic → component) is the key pattern: primitives are raw OKLCH palette values, semantics map intent (`--color-bg`, `--color-surface-raised`), and the cascade handles the rest. The SVG panel internals are architecturally isolated — they use a `const styles = {}` object with hardcoded hex values representing physical hardware appearance, not UI chrome, and must not receive CSS variables.
+
+**Major components by redesign tier:**
+1. `globals.css @theme` — token foundation; all other work depends on this landing first
+2. Layout shell (`app-shell.tsx`, `nav.tsx`, `layout.tsx`) — sets the visual frame; Tier 2 after tokens
+3. Primary content cards (`hero-card.tsx`, `patch-card.tsx`, `module-card.tsx`, `instrument-card.tsx`, `count-card.tsx`, `session-row.tsx`) — highest visual identity impact; Tier 3
+4. Interactive elements (`search-bar.tsx`, `patch-filter-bar.tsx`, `completion-toggle.tsx`) — focus/hover/active states; Tier 4, CSS-only DOM changes to protect state management
+5. Motion and polish layer — micro-interactions, reduced-motion variants; Tier 5, final
+6. Panel visualizer containers only — outer container styling only, never internals; dedicated final phase
+
+### Critical Pitfalls
+
+1. **SVG panel coordinate corruption** — Layout changes (container width, padding, flex/grid restructuring) silently break 289 hand-placed controls in both panel visualizers. The `delta / 3` drag sensitivity constant assumes a specific pixel-to-SVG-unit ratio; any container resize breaks it. Prevention: wrap panels in a stable `aspect-ratio` container from day one, freeze the panels until a dedicated final phase, and create a visual regression screenshot page before touching any layout.
+
+2. **Accessibility regression in dark theme redesign** — Warming the palette (Hologram reference) tends toward lower-contrast muted tones. `--color-muted` (#737373 on #0a0a0a) is already near the AA threshold. Prevention: contrast-check every new color pairing before writing code; target 4.5:1 for body text, 7:1 for primary content. Run axe on every page template after palette changes.
+
+3. **ADHD design principle violations** — References like Hologram and DaVincis are portfolio/marketing sites, not educational tools. Borrowing their visual energy unfiltered produces a visually impressive but exhausting interface. Prevention: treat ADHD constraints as hard acceptance criteria: max one animated element visible at a time, no autoplay >3 seconds, same or fewer clicks to any destination, each page has exactly one primary visual hierarchy.
+
+4. **Markdown prose cascade destruction** — The `.prose` block in globals.css (lines 37-196) is an atomic unit covering 20+ rules for `.param-table`, `.callout`, `.quick-ref-prose`, heading anchors, and panel marker interop. Partial refactoring breaks 96 content files simultaneously. Prevention: create a test fixture page rendering every element type; treat prose as all-or-nothing per phase.
+
+5. **Tailwind v4 token naming conflicts** — Renaming or removing existing `--color-*` tokens before migrating all 51 component className strings creates a silent split where some components use old palette values and others new. Prevention: inventory all token usages first, migrate at token level with find-and-replace, use an additive strategy (add new tokens alongside old, migrate, then remove old).
 
 ## Implications for Roadmap
 
-Based on research, suggested phase structure:
+Based on research, the dependency graph is deterministic: tokens must land before everything else, prose before editorial, layout before cards, cards before motion. Six phases map cleanly to the architecture tiers.
 
-1. **Learner State Foundation** - Zustand store with persist, completion toggle, last-visited tracking
-   - Addresses: Manual completion, continue where you left off
-   - Avoids: Hydration mismatch (PITFALLS P2), dual-source conflict (P3), key collision (P11)
-   - This is the critical path -- four other features depend on completion data existing
+### Phase 1: Token Foundation
+**Rationale:** Every other visual change references the palette. Changing colors after building other features causes cascading rework across all 51 components. This phase has zero visible impact to users but enables all subsequent phases.
+**Delivers:** Expanded `@theme` block with OKLCH primitive scale, semantic color aliases (`surface-raised`, `border`, `border-subtle`), radius scale, shadow tokens, content width tokens, z-index scale. Zero visual regression — new tokens initially map to existing hex values.
+**Addresses:** Color depth layers, accessible contrast foundation, spacing consistency, WCAG AA verification tooling
+**Avoids:** Pitfall 5 (token naming conflicts), Pitfall 2 (accessibility regression) by establishing contrast checks before any visual changes
 
-2. **Prerequisite Visualization & Progress** - Session state badges, module journey enhancements, clickable counts
-   - Addresses: Prerequisite locked/available/completed states, "you are here" marker
-   - Avoids: Hard gating frustration (P4), streak guilt spirals (P1)
-   - Depends on Phase 1 for completion data
+### Phase 2: Prose and Typography
+**Rationale:** The prose layer is the highest single-impact visual surface (60 session files, 36 patch documents) and must be treated as an atomic unit. Typography scale decisions cascade into every component, so this must be defined before card or shell work.
+**Delivers:** Rewritten `.prose` rules using semantic tokens, `@tailwindcss/typography` as base with domain-specific overrides retained (`.param-table`, `.callout`, `.quick-ref-prose`), modular type scale, improved table/code/callout/heading rendering. Test fixture page for regression.
+**Uses:** `@tailwindcss/typography@^0.5.19`, OKLCH tokens from Phase 1
+**Implements:** Prose styling as design system expression
+**Avoids:** Pitfall 4 (cascade destruction) by treating prose atomically; Pitfall 14 (over-componentizing) by staying CSS-only
 
-3. **Search & Filtering** - Build-time search document extraction, MiniSearch integration, search UI
-   - Addresses: Full-text search across sessions/patches, tag filtering
-   - Avoids: Search index bloat (P5), client boundary creep (P6)
-   - Independent of Phases 1-2 -- can parallelize
+### Phase 3: Layout Shell and Navigation
+**Rationale:** The shell sets the visual frame that all content pages inherit. Standardizing page containers and nav before touching cards prevents layout regressions when card dimensions change.
+**Delivers:** Updated `nav.tsx` (visual weight, brand expression, active states), updated `app-shell.tsx` footer (deliberate design element), `.page-container` CSS utility replacing 13 pages of repeated `max-w-[720px]` inline patterns, panel visualizer containers wrapped in stable `aspect-ratio` divs (frozen, protected for final phase)
+**Addresses:** Navigation visual weight, footer redesign, responsive layout foundation
+**Avoids:** Pitfall 1 (SVG panel corruption) by locking panel containers before any layout work begins; Pitfall 7 (responsive breakpoint regression)
 
-4. **Content & Polish** - Troubleshooting guides, transitional pedagogy content, progress metric refinements
-   - Addresses: "I hear nothing" guides, recipe session scaffolding
-   - Avoids: Stale troubleshooting references (P8)
+### Phase 4: Cards and Content Components
+**Rationale:** Cards are the primary visual identity surface after shell and prose. All five card types share the same token foundation and can be standardized in one pass.
+**Delivers:** Visual unification of all card components — shared border treatment, hover states, border-radius, padding, shadow tokens. Per-instrument accent color override via `[data-instrument]` CSS selector. Responsive layout refinement for patch grid and home page.
+**Addresses:** Card visual consistency, instrument-aware theming, warm dark theme color temperature
+**Avoids:** Pitfall 9 (token conflicts) — cards reference tokens, not raw hex values
 
-**Phase ordering rationale:**
-- Phase 1 is the foundation: completion data unlocks prerequisite viz, continue bar, and progress enhancements
-- Phase 2 depends on Phase 1 (needs completion state) but Phase 3 does not (search is independent)
-- Phases 2 and 3 can run in parallel after Phase 1 completes
-- Phase 4 is pure content authoring, can happen anytime
+### Phase 5: Interactive Elements and Motion
+**Rationale:** Interactive element styling must come after card styling to inherit consistent hover/focus patterns. Motion is last because it depends on stable DOM structure and final token values.
+**Delivers:** Search bar, filter pills, completion toggle, resume bar restyling (CSS-only DOM changes). Micro-interactions via `motion/react` (whileHover scale, spring transitions, stagger for list rendering). `prefers-reduced-motion` fallbacks for every animation. Grain texture overlay. Scroll-driven opacity reveals on session content.
+**Uses:** `motion@^12.38.0`
+**Avoids:** Pitfall 5 (animation performance) — transform/opacity only; Pitfall 6 (motion sickness) — reduced-motion for all; Pitfall 3 (ADHD violations) — one animated element at a time; Pitfall 12 (bundle inflation)
 
-**Research flags for phases:**
-- Phase 1: Standard patterns. Zustand persist is well-documented. No additional research needed.
-- Phase 2: Standard patterns. Prerequisite derivation is pure logic. No research needed.
-- Phase 3: LOW risk -- MiniSearch API is simple. May need brief investigation of build-time index generation vs. API route approach.
-- Phase 4: No research needed. Content authoring against known instrument.
+### Phase 6: Panel Visualizer Integration and Final Audit
+**Rationale:** Panel components are the most complex and fragile in the codebase (782 and 1350 LOC). They must be last, only after all layout work is stable and verified. This phase is also the cross-cutting audit for the "looks done but isn't" checklist.
+**Delivers:** Panel container integration polish (outer div only — zoom transitions, contextual dimming, mobile treatment). Full visual regression check across all pages. Contrast audit via axe. ADHD 5-second test for each page. Progress page visualization upgrade. Final "looks done but isn't" checklist verification.
+**Avoids:** Pitfall 1 (SVG panel corruption) by operating only on outer containers; Pitfall 13 (color-only information loss in panels)
+
+### Phase Ordering Rationale
+
+- **Tokens before everything:** The cascade dependency is absolute. Changing `--color-accent` after card hover states are built means touching 51 component className strings. Changing it in the token layer means touching one line.
+- **Prose before shell, shell before cards:** Prose defines the typographic scale that cards inherit; shell defines the spatial frame that cards occupy. Reversing this order requires rework at each step.
+- **Motion last:** Animations layer on top of stable visual states. Adding springs and hover transforms while token values and DOM structure are still changing produces brittle animation code.
+- **Panels in dedicated final phase:** Not because they're unimportant, but because they're the most fragile. Every layout restructuring in phases 1-5 must be complete and verified before panel container dimensions are considered final.
+
+### Research Flags
+
+Phases likely needing deeper research during planning:
+- **Phase 5 (Motion):** The interaction between `motion/react` `AnimatePresence` and Next.js App Router page navigation has known edge cases. Validate the specific route transition pattern before planning implementation details.
+- **Phase 6 (Panels):** The `delta / 3` drag sensitivity recalibration formula in `useKnobDrag` needs measurement at the actual new container dimensions. This requires running the app, not just reading code.
+
+Phases with standard patterns (skip research-phase):
+- **Phase 1 (Tokens):** OKLCH in Tailwind v4 `@theme` is well-documented with official sources. Direct implementation.
+- **Phase 2 (Prose/Typography):** `@tailwindcss/typography` `@plugin` integration is documented. Challenge is domain-specific (prose override inventory), not technical research.
+- **Phase 3 (Shell):** CSS utility `.page-container` extraction is a mechanical refactor. No research needed.
+- **Phase 4 (Cards):** Token-driven className updates. Mechanical once tokens are defined.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | MiniSearch and Zustand are well-established, actively maintained, with good TypeScript support. Versions verified against npm registry. |
-| Features | HIGH | Feature landscape mapped against competitor analysis (Duolingo, Codecademy, Syntorial). ADHD design constraints from project's own framework docs. |
-| Architecture | HIGH | Based on direct codebase inspection. Server/client boundary patterns are standard Next.js App Router. |
-| Pitfalls | HIGH | 11 pitfalls identified from codebase audit, ADHD research, and Next.js hydration documentation. Recovery costs assessed. |
+| Stack | HIGH | All packages verified with official sources and npm. Motion v12 and @tailwindcss/typography v0.5.19 confirmed compatible with React 19 + Tailwind v4 + Next.js 15. The "two packages only" conclusion is strongly supported. |
+| Features | HIGH | Reference site analysis (Hologram, Ableton, DaVincis) was direct/fetched. Existing codebase audit confirmed current token and component inventory. Feature dependency graph is derived from the actual codebase, not speculation. |
+| Architecture | HIGH | Based on direct codebase analysis of all 51 components, globals.css, and both panel visualizers. Three-layer token pattern is a well-established Tailwind v4 practice. SVG panel isolation finding is based on actual code inspection. |
+| Pitfalls | HIGH | Pitfalls 1-4 are grounded in specific codebase observations (line numbers, LOC counts, actual hex values, specific component behaviors). Pitfalls 5-10 are grounded in established web platform constraints. |
 
-## Gaps to Address
+**Overall confidence:** HIGH
 
-- **Build-time vs. API route for search index:** ARCHITECTURE.md recommends API route (fresh content from vault). STACK.md recommends build-time generation. Decision depends on whether vault content changes between builds in local mode. For demo mode, build-time is clearly correct. For vault mode, an API route avoids stale indexes. Resolve during Phase 3 planning.
-- **Streak alternative specifics:** Research says "no consecutive-day streaks" but does not specify exactly what to show. Options: "sessions this month," "active weeks," "total sessions" milestones. Resolve during Phase 2 design.
-- **Cross-tab sync:** Zustand persist does not sync across browser tabs by default. If a user has two tabs open and marks a session complete in one, the other may show stale state. Low priority -- single-user tool -- but worth noting.
-- **Export/import learner data:** Mentioned in FEATURES.md as a differentiator. Not researched in depth. Simple JSON export/import from Zustand store. Defer to late v1.2 or v1.3.
+### Gaps to Address
+
+- **Display typeface decision:** Research recommends adding a display/heading typeface with music/instrument character but does not commit to a specific font. This requires a design decision before Phase 2 begins. Validate against `next/font` availability.
+- **Accent color warmth:** Research flags that `--color-accent` (#c8ff00) may need warmth adjustment but does not commit. This requires visual experimentation against the warm dark background before Phase 1 token values are finalized.
+- **Per-instrument accent color values:** Phase 4 implements instrument-aware theming but does not specify what the Cascadia accent color should be. Defer to Phase 4 planning.
+- **Motion budget for panel pages:** Phase 5 specifies no decorative animations on panel pages, but the panel zoom transition (Phase 6) is interactive animation. The boundary needs explicit definition during Phase 5 planning.
 
 ## Sources
 
-All sources documented in individual research files:
-- STACK.md: MiniSearch, Zustand, npm registry, npm-compare, Next.js docs
-- FEATURES.md: Duolingo, Codecademy, Syntorial, Khan Academy, Ableton Learning Synths, ADHD gamification research
-- ARCHITECTURE.md: MiniSearch GitHub, Next.js App Router patterns, codebase inspection
-- PITFALLS.md: ADHD design framework, Next.js hydration docs, streak harm research, codebase audit
+### Primary (HIGH confidence)
+- [Motion npm](https://www.npmjs.com/package/motion) — v12.38.0, React 19 + Next.js 15 compatibility
+- [Motion official docs](https://motion.dev/docs/react) — `motion/react` import path, hardware-accelerated scroll in v12
+- [Tailwind CSS v4 @theme docs](https://tailwindcss.com/docs/theme) — CSS-first configuration, OKLCH support
+- [@tailwindcss/typography npm](https://www.npmjs.com/package/@tailwindcss/typography) — v0.5.19, `@plugin` directive integration
+- [Tailwind CSS v4.0 Release](https://tailwindcss.com/blog/tailwindcss-v4) — CSS-first configuration philosophy
+- Codebase analysis: globals.css (213 lines), evolver-panel.tsx (782 LOC, 110 controls), cascadia-panel.tsx (1350 LOC, 179 controls), session-detail.tsx (panel marker regex pipeline), all 51 components
+
+### Secondary (MEDIUM confidence)
+- [Design Tokens That Scale in 2026 (Tailwind v4)](https://www.maviklabs.com/blog/design-tokens-tailwind-v4-2026) — three-layer token pattern
+- [Epic Web Dev: Tailwind CSS Color Tokens](https://www.epicweb.dev/tutorials/tailwind-color-tokens) — semantic color token patterns
+- [Dark Mode Best Practices 2026](https://natebal.com/best-practices-for-dark-mode/) — surface elevation, color temperature
+- [Inclusive Dark Mode — Smashing Magazine](https://www.smashingmagazine.com/2025/04/inclusive-dark-mode-designing-accessible-dark-themes/) — accessible dark theme patterns
+
+### Tertiary (reference / design direction)
+- [Hologram Electronics](https://hologramelectronics.com) — warm neutrals, material-aware design, boutique instrument feel; fetched and analyzed
+- [Ableton Learning Synths](https://learningsynths.ableton.com) — interactive element integration, educational information architecture; fetched and analyzed
+- [Da Vincis Digital](https://davincis.digital) — scroll-driven animation reference, used selectively and filtered through ADHD constraints
+- [Designing for users with ADHD](https://digitalcommunications.wp.st-andrews.ac.uk/2025/02/12/designing-for-users-with-adhd/) — ADHD web design principles
+- [Designing Safer Web Animation For Motion Sensitivity](https://alistapart.com/article/designing-safer-web-animation-for-motion-sensitivity/) — vestibular disorder animation safety
 
 ---
-*Research completed: 2026-04-03*
+*Research completed: 2026-04-06*
 *Ready for roadmap: yes*

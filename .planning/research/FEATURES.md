@@ -1,211 +1,187 @@
-# Feature Landscape: Learner Experience & Discovery
+# Feature Research: Visual Redesign
 
-**Domain:** Learning app UX -- continue/resume, search/discovery, prerequisite gating, progress streaks, troubleshooting, transitional pedagogy
-**Researched:** 2026-04-03
-**Milestone:** v1.2 Learner Experience & Discovery
+**Domain:** Educational instrument learning app — visual/layout redesign
+**Researched:** 2026-04-06
+**Confidence:** HIGH (based on reference site analysis, existing codebase audit, and established design best practices)
 
-## How Real Learning Apps Handle These Features
+## Feature Landscape
 
-### Continue Where You Left Off
+### Table Stakes (Users Expect These)
 
-**Duolingo:** Linear path with a "you are here" marker. A floating arrow button in the bottom-right returns users to their current position if they scroll away. Completed lessons show as gold circles; the next lesson is visually prominent. No decision required -- open the app, tap the glowing circle.
+Features that are baseline for a polished, designed-feeling app. Missing any of these and the app still looks like a developer prototype.
 
-**Codecademy:** "Resume" button on the dashboard. Shows the course name, lesson title, and a progress bar. One click to resume. Also shows a "next up" card for the upcoming lesson.
+| Feature | Why Expected | Complexity | Dependencies | Notes |
+|---------|--------------|------------|--------------|-------|
+| Refined color palette with depth layers | Current 3-color system (#0a0a0a, #161616, #e8e8e8) is flat. Users expect at least 4-5 surface elevation levels for visual hierarchy | LOW | Modifies `--color-*` CSS variables in globals.css | Hologram uses cream/olive/taupe with multiple neutrals. Add `--color-surface-raised`, `--color-surface-sunken`, `--color-border` at minimum |
+| Typography scale with clear hierarchy | Current hard-coded px sizes (36/24/20) lack rhythm. A modular scale communicates structure | MEDIUM | Touches every component's text sizing. May change `--font-sans` choice | Hologram uses Hamburg Hand / Chalet pairing. Consider a display font for headings (instrument/music feel) vs Inter body. At minimum, implement a type scale (e.g., 1.25 ratio) |
+| Consistent spacing system | Current custom spacing tokens (4/8/16/24/32/48/64px) are already decent but applied inconsistently across 51 components | MEDIUM | Audit all components for spacing consistency | Hologram uses 30px grid gutters. Current tokens are fine — the issue is consistent application |
+| Card component visual consistency | ModuleCard, PatchCard, InstrumentCard, CountCard all use slightly different patterns (border vs no-border, different padding, different hover states) | MEDIUM | Touches 5+ card components | Standardize: surface color, border treatment, hover state, border-radius, padding, and content layout pattern |
+| Polished markdown/prose rendering | Current `.prose` styles are functional but generic — looks like a styled markdown viewer, not designed content. Tables, code blocks, callouts, headings all need the "this was designed" treatment | HIGH | globals.css `.prose` rules + potentially a custom MDX component map | Biggest single impact item. Sessions are the core product — if they look like raw markdown, the whole app feels unfinished |
+| Navigation with visual weight | Current nav is a minimal 48px bar with monospace "evolver" text. No visual presence or brand expression | MEDIUM | `nav.tsx`, `app-shell.tsx` — sticky header behavior already exists | Hologram has minimal but intentional nav. Add logo treatment, better active states, possibly a left sidebar for instrument context |
+| Accessible contrast ratios | Current #737373 muted on #0a0a0a = 4.2:1 ratio, barely passes WCAG AA for normal text. Several areas likely fail | LOW | Audit and bump muted color values | Non-negotiable for any redesign. Check all text/background combinations |
+| Responsive layout refinement | Current responsive approach is basic Tailwind utilities. Pages like home and session list need mobile-specific layouts, not just reflowed desktop | MEDIUM | Touch page layouts and card components | Current max-width is a flat 720px everywhere — consider wider for some views (patches grid, panel visualizer) |
+| Focus states and keyboard navigation | Current focus states are minimal/default. A designed app has intentional focus rings that match the design system | LOW | Add focus-visible styles to design tokens | Use accent color ring with proper offset |
 
-**Syntorial:** Sequential progression through 129 challenges. Progress syncs across devices. Implicit resume -- the next locked challenge is where you pick up.
+### Differentiators (Set This App Apart)
 
-**Khan Academy:** "Keep learning" prompt on the dashboard. Shows the most recent course and where you left off within it.
+Features from the reference sites that would elevate this from "clean dark app" to "this feels like a music instrument company made it."
 
-**Learning Synths (Ableton):** No account system, no persistence. Users start fresh each visit or navigate manually to where they were. Anti-pattern for retention.
+| Feature | Value Proposition | Complexity | Reference | Notes |
+|---------|-------------------|------------|-----------|-------|
+| Textured/warm dark theme | Move from "generic dark mode" to a warm, instrument-like feel. Think dark wood, aged metal, matte plastic — the materials of synthesizers | MEDIUM | Hologram (earth tones, cream/olive) | Shift from pure cold grays to warm dark tones. Not a full light mode — warm darks. e.g., background from #0a0a0a to a very dark warm gray like #0d0d0b, accent from neon green to something earthier or keep green but add warm secondary colors |
+| Micro-interactions on interactive elements | Panel visualizer controls, filter pills, card hovers, completion toggles — subtle motion that makes the app feel alive and responsive | MEDIUM | Da Vincis (scroll animations, scale), Ableton (loading states) | Current hover states are color-only. Add transform scale, subtle shadows, spring-like transitions. Use `prefers-reduced-motion` guard (already have precedent with pulse-glow) |
+| Session content as designed editorial layout | Sessions rendered not as "markdown viewer" but as a designed reading experience — pull quotes, parameter callouts as styled inline elements, step numbers as designed markers, section dividers | HIGH | Ableton (educational integration), Hologram (restraint) | This is the single biggest differentiator. Custom MDX components or remark plugins to transform markdown elements into designed components. Parameter tables become styled inline panels, not HTML tables |
+| Instrument-aware page shells | Different instruments get subtly different visual treatments — section tint, accent color variation, header imagery. The Evolver pages feel different from Cascadia pages without breaking the design system | MEDIUM | N/A (unique to this app) | Already have section tint precedent (opacity 0.08). Extend to per-instrument accent color token + subtle visual differentiators |
+| Panel visualizer integration polish | Panel SVGs embedded in sessions should feel integrated into the content flow, not dropped-in widgets. Smooth zoom transitions, contextual dimming of non-relevant sections, better mobile treatment | HIGH | Ableton (interactive element integration) | Current panel embedding works but feels like a separate tool pasted in. Add transition animations for zoom, fade non-active sections more gracefully |
+| Progress visualization as data art | Progress page transforms from stat cards into something visually interesting — a module map, a journey visualization, practice heat map | HIGH | Da Vincis (dynamic visual energy) | Already have module-journey.tsx with pulsing dot. Elevate from functional to beautiful — make the progress page something users want to look at |
+| Scroll-driven content reveals | Subtle fade-in and slide-up for content sections as they enter the viewport, especially on longer session pages | LOW | Da Vincis (scroll-triggered animations) | Use CSS `@scroll-timeline` or Intersection Observer. Keep subtle — Hologram's restraint, not Da Vincis' drama |
+| Footer as design element | Current footer is an afterthought. Make it a deliberate design element — project identity, instrument quick links, warm closing to the page | LOW | Hologram (understated premium) | Small effort, outsized polish impact |
 
-**Pattern:** Every serious learning app surfaces the next action on the home screen with zero decisions. The user opens the app and sees exactly one thing to do. This is especially critical for ADHD (zero activation energy principle from `framework/adhd-design.md`).
+### Anti-Features (Do NOT Build These)
 
-### Search and Discovery
-
-**Duolingo:** No search. Content is a fixed linear path -- there is nothing to search for. Discovery is the path itself.
-
-**Codecademy:** Search bar in the header. Searches across courses, lessons, articles, and documentation. Filters by content type (course, path, article). Autocomplete suggestions.
-
-**Syntorial:** No search. Sequential curriculum with no cross-referencing needs.
-
-**Khan Academy:** Prominent search. Searches across all subjects, units, and videos. Autocomplete with category grouping (Math > Algebra > Linear equations).
-
-**Learning Synths:** No search. Seven chapters navigated via sidebar.
-
-**Pattern:** Search matters when the content library is large and non-linear. For a structured curriculum with 25-35 sessions per instrument, search is a convenience, not a necessity. It becomes important for the patch library (dozens of patches across instruments) and for users who want to find "that session about FM synthesis" without scrolling through modules.
-
-### Prerequisite Gating
-
-**Duolingo:** Soft gating via the linear path. You cannot jump ahead -- lessons unlock sequentially. However, placement tests let users skip known material. Completed lessons can be revisited at any time.
-
-**Codecademy:** Hard gating within courses (lessons unlock sequentially). But courses themselves are fully accessible -- you can start any course regardless of other course completion.
-
-**Syntorial:** Hard sequential gating. Challenges unlock one at a time. You must pass the current challenge to proceed. However, "nuanced scoring" in v2.0 means the system is more forgiving about what counts as passing.
-
-**Khan Academy:** Soft gating. Mastery system recommends prerequisites but does not lock content. Users can access any lesson directly. Progress tracking shows what is "mastered" vs "needs practice" vs "not started."
-
-**Learning Synths:** No gating. All chapters accessible from the sidebar. Progressive disclosure within chapters only.
-
-**Pattern:** Two schools -- hard gating (Duolingo, Syntorial) enforces learning order; soft gating (Khan Academy) trusts the learner. For ADHD learners, hard gating removes decision fatigue ("what should I work on?") but risks frustration if a prerequisite feels mastered but is not technically "complete." The Evolver app already has a `prerequisite` field in the Session schema (number or null) -- the data model supports gating.
-
-### Progress Streaks
-
-**Duolingo:** The streak is the product. Flame icon, day counter, streak freeze tokens, 3-hour earn-back window, gem-based instant repair. Users who reach a 7-day streak are 3.6x more likely to complete their course. Streak milestones at 7, 14, 30, 100, 365 days. Loss aversion is the primary motivator.
-
-**Codecademy:** "Day streak" counter on the profile. Less aggressive than Duolingo -- no notifications, no loss-aversion mechanics. Simple count of consecutive active days.
-
-**Syntorial:** No streak system. Progress is measured by challenge completion, not temporal consistency.
-
-**Khan Academy:** "Energy points" and activity streaks. Badges for milestones. Less streak-focused than Duolingo; mastery percentage is the primary progress indicator.
-
-**Learning Synths:** No progress tracking at all.
-
-**Pattern:** Streaks are powerful for habit formation but dangerous for ADHD users. The ADHD design doc explicitly warns against calendar-based tracking: "Missed dates create guilt spirals. Sequence-based, no dates." Duolingo mitigates this with streak freezes and repair, but the core mechanic is still daily pressure. A safer pattern for this app: session-frequency tracking ("3 sessions this week") rather than daily streaks, with no penalty for gaps.
-
-### Troubleshooting / Help
-
-**Duolingo:** Tooltips on grammar concepts. "Tips" section before each skill with explanations. Discussion forums for each exercise. No troubleshooting for technical issues within the lesson flow.
-
-**Codecademy:** "Get Unstuck" button offering hints, then solution code, then community forum. Progressive disclosure of help -- try hints before seeing the answer.
-
-**Syntorial:** Hint button reveals the correct parameter settings when a challenge is failed. Audio comparison between user's attempt and target sound. Immediate, context-specific help.
-
-**Khan Academy:** Hints system for practice problems (progressive, step-by-step). Video explanations linked from exercises. Community Q&A on every piece of content.
-
-**Learning Synths:** Inline explanatory text with interactive examples. No separate help system needed because the teaching IS the interface.
-
-**Pattern:** For a hardware synth learning app, troubleshooting means "I followed the steps but my Evolver does not sound right." This is fundamentally different from code/language learning where the app can check your work. Troubleshooting content must be proactive (embedded in sessions) and reactive (standalone guides). Syntorial's hint button is the closest analog -- revealing parameter values when the learner is stuck.
-
----
-
-## Table Stakes
-
-Features users expect in a learning app used for regular practice. Missing = the app feels like a demo, not a daily tool.
-
-| Feature | Why Expected | Complexity | Dependencies | Learning App Precedent |
-|---------|--------------|------------|--------------|----------------------|
-| Continue where you left off | Every learning app shows "resume here" on launch. Without it, users must remember and navigate to their current session -- activation energy that kills ADHD momentum | Low | Needs persistent storage of "last completed session" per instrument. Can use localStorage (client) or a local JSON file (server). Existing `getAdjacentSessions()` already computes next session | Duolingo path marker, Codecademy resume button, Khan Academy "keep learning" |
-| Session completion without Obsidian | Currently requires Obsidian vault with specific tags. Users without Obsidian (or in demo mode) cannot mark sessions complete. This blocks all progress features | Med | New completion storage mechanism. Options: localStorage toggle, local JSON file, or extend the vault reader pattern. Must coexist with Obsidian scanning, not replace it | All learning apps track completion internally; external dependency is unusual |
-| Prerequisite visualization | Sessions have a `prerequisite` field but the UI does not surface it. Users cannot see which sessions are locked, available, or completed. The session list is a flat list with no state indicators | Med | Requires completed-session data (from Obsidian scan or manual toggle) + prerequisite field already in schema. UI: badges/icons on `SessionList` component items showing locked/available/completed state | Duolingo locked circles, Codecademy sequential unlock, Syntorial challenge gating |
-| Patch filtering and sorting | Patch library exists but has no filtering beyond type badges. Users need to filter by type, sort by date/session, and browse efficiently as the library grows | Low | Existing `PatchSchema` has `type`, `session_origin`, `created`, `tags` fields. Client-side filtering on existing data. No new data fetching needed | Codecademy resource filtering, Khan Academy content type filters |
-
-## Differentiators
-
-Features that elevate the app from "browsable curriculum" to "daily practice companion." Not expected, but valued.
-
-| Feature | Value Proposition | Complexity | Dependencies | Learning App Precedent |
-|---------|-------------------|------------|--------------|----------------------|
-| Full-text search across sessions and patches | Find "that session about filter envelopes" or "the bass patch with wave folding" without scrolling through modules. Becomes more valuable as content grows across instruments | Med | Search index over session content + patch descriptions. Options: client-side with Fuse.js/MiniSearch over pre-built index, or build-time index generation. Must search frontmatter fields AND markdown body text | Codecademy global search, Khan Academy cross-subject search |
-| ADHD-aware consistency tracking (not streaks) | Track practice frequency without daily pressure. "You practiced 3 times this week" and "Your best run was 4 sessions in a row" -- celebrating effort without punishing gaps. Aligns with ADHD design principle: "Skipping days/weeks is expected, not a failure" | Med | Requires timestamped completion data (when was each session completed, not just which ones). Current Obsidian scanning extracts session numbers from daily notes but daily note dates could provide timestamps. Manual completion needs timestamp storage | Duolingo streaks (adapted -- remove loss aversion, keep celebration). Codecademy day streak (lighter touch) |
-| "You are here" in module journey | The existing ModuleJourney shows complete/incomplete modules. Adding a "current session" indicator and making modules clickable to jump to their sessions transforms it from a progress report to a navigation tool | Low | Requires next-session computation (same data as "continue where left off") + linking module journey nodes to session list filtered by module | Duolingo floating arrow "return to current spot," Khan Academy mastery map |
-| Transitional pedagogy (partial recipe sessions) | Sessions 22-25 in both curricula shift from guided exercises to "recipe" sessions (make a bass patch using techniques from Modules 2-4). These bridge guided learning to freeform sound design. The app should visually distinguish these sessions and provide scaffolding (ingredient checklists, technique cross-references) | Low | Content design, not code. UI could show "techniques used" tags linking back to source sessions. Existing `tags` field in SessionSchema supports this | Syntorial's graduated challenge difficulty. Codecademy projects that combine learned skills |
-| Clickable progress counts | CountCard components show numbers but are not interactive. Making "12 Sessions Completed" clickable to show which 12, and "3 Modules Done" clickable to show which 3, adds depth without new pages | Low | Data already available from `computeProgress()`. Needs popover or expandable detail on CountCard component | Khan Academy expandable mastery details |
-| Troubleshooting content (per-instrument) | "I hear nothing," "my filter is not responding," "the patch sounds wrong" -- standalone guides that diagnose common hardware/setup issues. Reduces frustration that causes learners to quit | Low | Pure content (markdown files in `instruments/<name>/troubleshooting/`). Linked from session pages when relevant. No new infrastructure | Syntorial hint button (adapted for hardware). Codecademy "Get Unstuck" pattern |
-
-## Anti-Features
-
-Features to explicitly NOT build. These are tempting but wrong for this app and audience.
-
-| Anti-Feature | Why Avoid | What to Do Instead |
-|--------------|-----------|-------------------|
-| Daily streak with loss aversion | ADHD design doc is explicit: "Calendar-based schedules create guilt spirals." Duolingo's streak works for neurotypical habit formation but is actively harmful for ADHD users who miss days and feel shame. Even Duolingo needs streak freezes to mitigate the damage | Track session frequency and best-run length. Celebrate consistency without punishing inconsistency. "You completed 3 sessions this week" not "Day 12 streak -- do not break it" |
-| Leaderboards or social competition | Single-user personal tool. Adding competition adds comparison anxiety. The ADHD design doc emphasizes "good enough patches count" -- competition undermines this | Personal bests only. "Your most productive week: 4 sessions." No ranking |
-| XP points or gamification currency | Adds abstraction between action and reward. The dopamine reward should be the patch you made or the technique you learned, not arbitrary points. ADHD design principle: "Every session produces a named artifact -- you can point to it and say I made that" | The patch library IS the reward system. More patches = more visible progress. The artifact is the point |
-| Spaced repetition algorithm | Tempting to algorithmically schedule review sessions. But this app has no quiz mechanism -- synth learning is experiential, not testable. And algorithmic scheduling removes learner agency, which matters for ADHD users who need to feel in control | Warm-ups bridge the forgetting gap (already in session design). Cross-references between sessions. "Before starting, play the patch from Session 08" |
-| AI-powered search or help | Adds infrastructure complexity (API keys, cost, latency) for a small content corpus. With 25-35 sessions and 20-50 patches per instrument, client-side search handles the volume easily | Fuse.js or MiniSearch client-side. Static troubleshooting content. Keep it simple |
-| Notification system or reminders | Push notifications are an attention tax. The app is a pull tool -- the user comes to it when ready. Duolingo's notification strategy works at scale for retention metrics but is intrusive for a personal practice tool | The app is always ready when you are. No nagging. Obsidian daily notes serve as the gentle reminder system |
-| Automatic Obsidian note generation | Tempting to auto-create daily notes with session completion tags. But this breaks the Obsidian-as-source-of-truth principle -- the vault should be written by the user, read by the app | Provide a "copy to clipboard" button with the exact text to paste into Obsidian. Or provide an Obsidian template. But never write to the vault |
+| Feature | Why Requested | Why Problematic | Alternative |
+|---------|---------------|-----------------|-------------|
+| Light mode / theme toggle | "Every app should have both modes" | Doubles the design work for a single-user app. Dark mode is the brand identity. Instrument panels are designed for dark backgrounds | Commit to dark mode. Make it a warm, comfortable dark — not a compromise dark |
+| Parallax scrolling or heavy scroll effects | Da Vincis reference has dramatic scroll animations | Motion-heavy pages conflict with ADHD focus. Session content should be read, not watched. Causes motion sickness for some users | Use minimal scroll-driven reveals (opacity fade only). Never move content laterally or scale on scroll |
+| Custom cursor or pointer effects | "Makes it feel premium" | Breaks accessibility, confuses muscle memory, adds no information | Standard cursors with well-designed hover states |
+| Glassmorphism / frosted glass effects | Trending in 2025-2026 design | Reduces text readability on dark backgrounds, performs poorly on older devices, ages quickly | Clean surface elevation with subtle borders — Hologram's "zero border-radius, 1px borders" approach |
+| Animated page transitions | "SPA-like feel" | Next.js App Router page transitions are complex to implement well, add loading latency perception, and distract from content | Fast, clean page loads. If anything, a subtle top progress bar |
+| Skeleton loading screens everywhere | "Modern loading pattern" | Over-engineering for a local-first app that loads from filesystem. Demo mode on Vercel is the only slow path | Show content immediately (server components already do this). Skeleton only for the search dropdown which is client-side |
+| Gradient backgrounds or neon glow effects | "Synth aesthetic" | Neon/retrowave is cliche for synth apps. Reads as "student project" not "instrument company" | The Hologram approach: understated, material-aware, grown-up. Save neon for the single accent color at most |
 
 ## Feature Dependencies
 
 ```
-Session Completion Without Obsidian (manual toggle)
+Color Palette Refinement
     |
-    +--> Continue Where You Left Off (needs completion data)
-    |       |
-    |       +--> "You Are Here" in Module Journey (needs "next session" computation)
+    +---> Typography Scale (type colors reference palette)
+    |         |
+    |         +---> Prose/Markdown Rendering (inherits type scale + colors)
+    |         |
+    |         +---> Card Visual Consistency (inherits type scale)
     |
-    +--> Prerequisite Visualization (needs completion data to compute locked/available/completed)
+    +---> Navigation Redesign (references palette tokens)
     |
-    +--> ADHD-Aware Consistency Tracking (needs timestamped completion data)
+    +---> Micro-interactions (hover/focus colors from palette)
     |
-    +--> Clickable Progress Counts (needs completion data for detail views)
+    +---> Instrument-aware Page Shells (extends palette with per-instrument tokens)
 
-Full-Text Search
-    (independent -- no dependencies on completion data)
-    |
-    +--> Build-time search index (sessions + patches)
-    |
-    +--> Client-side search UI component
+Spacing System Audit
+    +---> Card Visual Consistency (uses standardized spacing)
+    +---> Responsive Layout Refinement (spacing adapts per breakpoint)
 
-Patch Filtering/Sorting
-    (independent -- works with existing patch data)
+Prose/Markdown Rendering (table stakes)
+    +---> Session Editorial Layout (differentiator, extends prose into designed content)
+          +---> Panel Visualizer Integration (panels embedded in editorial flow)
 
-Troubleshooting Content
-    (independent -- pure content authoring)
-    |
-    +--> Links from session pages (contextual integration)
-
-Transitional Pedagogy
-    (independent -- content design in existing session format)
-    |
-    +--> "Techniques used" tags (uses existing tags field)
+Accessible Contrast Ratios
+    +---> Every other visual feature (contrast must be validated after each change)
 ```
 
-**Critical path:** Session completion without Obsidian unblocks four other features. It is the foundation of this milestone.
+### Dependency Notes
 
-## Complexity Breakdown
+- **Color palette must come first:** Every other visual change references the palette. Changing colors after building other features causes rework.
+- **Typography scale before component work:** Card text, nav text, prose text all need the scale defined before individual component styling.
+- **Prose rendering is the bridge:** Table-stakes prose gets markdown looking decent; differentiator editorial layout makes it feel designed. Build in two passes.
+- **Contrast validation is continuous:** Not a one-time task. Check after palette changes, after component styling, after prose updates.
 
-| Feature | Frontend | Backend/Data | Content | Total |
-|---------|----------|-------------|---------|-------|
-| Continue where you left off | Low (banner component + "next session" link) | Low (derive from completion data + `getAdjacentSessions()`) | None | **Low** |
-| Session completion without Obsidian | Med (toggle UI on session detail page, state management) | Med (storage mechanism -- localStorage or local JSON, coexistence with Obsidian scan) | None | **Med** |
-| Prerequisite visualization | Med (locked/available/completed states on SessionList items, visual design) | Low (combine completion data with `prerequisite` field) | None | **Med** |
-| Full-text search | Med (search UI, result display, keyboard navigation) | Med (build-time index generation, search library integration) | None | **Med** |
-| Patch filtering/sorting | Low (filter controls, sort dropdown) | None (client-side on existing data) | None | **Low** |
-| ADHD-aware consistency tracking | Med (visualization component, week/month views) | Med (timestamped completion storage, frequency computation) | None | **Med** |
-| "You are here" in module journey | Low (current-session indicator, click handlers) | None (data already computed) | None | **Low** |
-| Clickable progress counts | Low (popover or expandable detail) | None (data already in ProgressData) | None | **Low** |
-| Troubleshooting content | None (existing markdown rendering) | None (existing content reader) | Med (write guides for Evolver + Cascadia) | **Low** |
-| Transitional pedagogy | Low (visual distinction for recipe sessions) | None | Med (session content design) | **Low** |
+## MVP Definition
 
-## MVP Recommendation
+### Phase 1: Foundation (Must Complete First)
 
-Build in this order (respecting the dependency chain):
+- [ ] Color palette expansion — add depth layers, warm the darks, refine accent
+- [ ] Typography scale — define modular scale, choose heading typeface, set hierarchy
+- [ ] Spacing audit — apply existing tokens consistently across all 51 components
+- [ ] Accessible contrast — validate all text/background combinations against WCAG AA
 
-1. **Session completion without Obsidian** -- unblocks everything else. Implement as a client-side toggle with localStorage persistence. Coexist with Obsidian scanning: if vault is configured, merge both sources. If not, localStorage only. This also makes demo mode interactive (users can "try" completing sessions).
+### Phase 2: Core Surfaces (Build on Foundation)
 
-2. **Continue where you left off** -- highest ADHD impact. A single "Next Session" banner on the instrument page showing the title, module, and duration of the next incomplete session. One tap to start. Zero decisions. Derive from completion data + session ordering.
+- [ ] Card component standardization — unified visual language across all card types
+- [ ] Navigation redesign — visual weight, brand expression, better instrument context
+- [ ] Prose/markdown polish — styled headings, code blocks, tables, callouts, task lists
+- [ ] Footer redesign — deliberate design element, not an afterthought
+- [ ] Focus states — intentional keyboard navigation styling
+- [ ] Responsive refinement — mobile-specific layouts for key pages
 
-3. **Prerequisite visualization** -- makes the session list meaningful. Three states per session: locked (prerequisite not met), available (prerequisite met, not completed), completed. Icons or badges on each session in the list. Locked sessions are still viewable (soft gating -- you can read ahead) but not markable as complete.
+### Phase 3: Elevation (Differentiators)
 
-4. **Patch filtering and sorting** -- quick win. Add type filter chips and sort dropdown (by date, by session origin, by name) to the existing patch library page. Client-side only.
+- [ ] Micro-interactions — hover transforms, spring transitions, completion celebrations
+- [ ] Session editorial layout — custom components for parameters, steps, pull-quotes
+- [ ] Panel visualizer integration — smooth zoom transitions, contextual dimming
+- [ ] Instrument-aware theming — per-instrument accent colors and subtle visual variation
+- [ ] Scroll-driven content reveals — subtle fade-in for session content sections
+- [ ] Progress page visual upgrade — from stat cards to data visualization
 
-5. **Troubleshooting content** -- write "I hear nothing" and "common issues" guides for Evolver and Cascadia. Link from session pages where relevant. Pure content, no code changes beyond adding links.
+## Feature Prioritization Matrix
 
-6. **Full-text search** -- valuable but not blocking. Build a search index at build time over session frontmatter + body text + patch data. Use Fuse.js for fuzzy client-side search. Add search UI to the header or a dedicated page.
+| Feature | User Value | Implementation Cost | Priority | Phase |
+|---------|------------|---------------------|----------|-------|
+| Color palette refinement | HIGH | LOW | P1 | 1 |
+| Typography scale | HIGH | MEDIUM | P1 | 1 |
+| Prose/markdown rendering | HIGH | HIGH | P1 | 2 |
+| Card visual consistency | HIGH | MEDIUM | P1 | 2 |
+| Navigation redesign | MEDIUM | MEDIUM | P1 | 2 |
+| Accessible contrast | HIGH | LOW | P1 | 1 |
+| Responsive layout | MEDIUM | MEDIUM | P2 | 2 |
+| Micro-interactions | MEDIUM | MEDIUM | P2 | 3 |
+| Session editorial layout | HIGH | HIGH | P2 | 3 |
+| Panel visualizer polish | MEDIUM | HIGH | P2 | 3 |
+| Instrument-aware theming | LOW | MEDIUM | P3 | 3 |
+| Scroll content reveals | LOW | LOW | P3 | 3 |
+| Progress page visualization | LOW | HIGH | P3 | 3 |
+| Footer redesign | LOW | LOW | P2 | 2 |
+| Focus states | MEDIUM | LOW | P2 | 2 |
 
-7. **"You are here" + clickable counts** -- polish features that make existing progress page more useful.
+## Reference Site Pattern Analysis
 
-8. **Consistency tracking** -- requires timestamped data, which means extending the completion storage from step 1. Add after the storage pattern is proven.
+| Pattern | Hologram | Ableton Learning Synths | Da Vincis | Our Approach |
+|---------|----------|------------------------|-----------|--------------|
+| Color temperature | Warm neutrals (cream, olive, taupe) | Cold (black + white + blue) | Dark charcoal + cyan | Warm darks — dark olive/brown undertones, not cold gray. Closer to Hologram's warmth in a dark palette |
+| Typography | Custom display + body pairing | System-like, functional | GT Flexa display + Georgia body | Display font for headings (music/instrument character) + Inter body. Consider a humanist sans or slab serif for display |
+| Spacing | Generous (30px gutters, 55px sections) | Modular (0.625rem increments) | Dense with dramatic vertical scale | Generous — the content is educational, it needs room to breathe. Increase section spacing from current values |
+| Borders and surfaces | Zero border-radius, 1px borders, minimal shadow | Minimal, flat | Minimal | Move toward zero or very small border-radius (currently 6px). 1px borders for surface edges. Drop current rounded-lg cards to rounded or rounded-sm |
+| Animation | Restrained (almost none) | Loading spinner, functional transitions | Heavy scroll + scale animations | Restrained with purpose — Hologram's philosophy. Transition on interaction, not on scroll. Exception: panel zoom |
+| Brand expression | Strong (custom fonts, consistent palette, photography) | Moderate (Ableton brand, interactive is the brand) | Strong (motion is the brand) | Moderate — the instruments and curriculum are the brand. Design should support, not compete with, the synth panels and session content |
+| Interactive elements | Outlined inputs, clean focus states | Blue primary buttons, outline secondaries | Minimal interactive | Warm accent buttons, outlined form elements, accent-tinted interactive states |
+| Content presentation | Clean product cards, restrained | Interactive synth embedded in educational flow | Showcase/portfolio layout | Sessions as editorial content with embedded interactive panels — closest to Ableton's approach but with Hologram's restraint |
 
-Defer to v1.3+:
-- **Transitional pedagogy visual distinction**: The recipe sessions work fine as regular sessions. Special UI treatment can come later when the content exists and the pattern is validated through use.
+## Existing CSS Variable System (Integration Notes)
+
+The current design system uses Tailwind v4's `@theme` directive with custom tokens in `globals.css`:
+
+```css
+@theme {
+  --color-bg: #0a0a0a;        /* Will become warmer */
+  --color-surface: #161616;    /* Needs elevation variants */
+  --color-text: #e8e8e8;       /* May soften slightly */
+  --color-muted: #737373;      /* Needs contrast bump */
+  --color-accent: #c8ff00;     /* Evaluate warmth vs keep as-is */
+  --color-param: #a3e635;      /* Parameter-specific green */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --spacing-xs through --spacing-3xl;  /* Keep, enforce consistency */
+}
+```
+
+All 51 components reference these tokens via Tailwind classes (`bg-surface`, `text-muted`, etc.). The redesign should extend this system, not replace it. New tokens get added; existing tokens get updated. No component should use raw hex values — everything flows through the theme.
+
+Key integration points:
+- **`globals.css @theme`** — single source of truth for all design tokens
+- **`.prose` rules in `@layer base`** — all markdown rendering styles live here
+- **Tailwind utility classes** — components use `bg-surface`, `text-accent`, `p-lg` etc. throughout
+- **Per-instrument accent** — would need a CSS custom property override at the instrument layout level (e.g., `[data-instrument="cascadia"] { --color-accent: #4ecdc4; }`)
 
 ## Sources
 
-- [Duolingo new learning path design](https://blog.duolingo.com/new-duolingo-home-screen-design/) -- path-based progression, "you are here" floating arrow, gold completed circles -- HIGH confidence
-- [Duolingo streak system breakdown](https://medium.com/@salamprem49/duolingo-streak-system-detailed-breakdown-design-flow-886f591c953f) -- streak mechanics, freeze tokens, loss aversion, recovery pathways -- MEDIUM confidence (single source, but detailed)
-- [Duolingo streak and habit research](https://blog.duolingo.com/how-duolingo-streak-builds-habit/) -- 7-day streak = 3.6x course completion, habit formation research -- HIGH confidence (official Duolingo blog)
-- [Syntorial 2.0 review](https://promusicianhub.com/syntorial-review/) -- sequential challenge gating, hint button, 3-star scoring, progressive parameter introduction -- MEDIUM confidence
-- [Syntorial official site](https://www.syntorial.com/learn-more/) -- cross-device sync, 60+ parameters introduced incrementally -- HIGH confidence (official)
-- [Ableton Learning Synths](https://learningsynths.ableton.com/) -- progressive disclosure, immediate interaction, no persistence -- HIGH confidence (official)
-- [ADHD gamification design patterns](https://www.tiimoapp.com/resource-hub/gamification-adhd) -- flexible frequency over daily streaks, guilt-free recovery, optional streak visibility -- MEDIUM confidence
-- [Contextual help UX patterns](https://userpilot.com/blog/contextual-help/) -- proactive vs reactive help, progressive hint disclosure -- MEDIUM confidence
-- [Search UX best practices](https://www.pencilandpaper.io/articles/search-ux) -- autocomplete, filters, content-type grouping -- MEDIUM confidence
-- Existing codebase: `SessionSchema.prerequisite` field, `getAdjacentSessions()`, `computeProgress()`, `ModuleJourney` component, `CountCard` component -- HIGH confidence (direct code inspection)
-- `framework/adhd-design.md` -- zero activation energy, sequence-not-calendar, visible progress, dopamine by design -- HIGH confidence (in-repo)
+- [Hologram Electronics](https://hologramelectronics.com) — reference site analysis (warm neutrals, material-aware design, boutique instrument feel)
+- [Ableton Learning Synths](https://learningsynths.ableton.com) — reference site analysis (interactive element integration, educational information architecture)
+- [Da Vincis Digital](https://davincis.digital) — reference site analysis (scroll-driven animation, dynamic visual energy — used selectively)
+- [Dark Mode UI Best Practices 2025](https://www.graphiceagle.com/dark-mode-ui/) — contrast ratios, typography weight in dark mode, avoiding pure black
+- [Inclusive Dark Mode — Smashing Magazine](https://www.smashingmagazine.com/2025/04/inclusive-dark-mode-designing-accessible-dark-themes/) — accessible dark theme patterns
+- [Dark Mode Best Practices 2026](https://natebal.com/best-practices-for-dark-mode/) — surface elevation, color temperature
+- [Syntorial Review](https://producerhive.com/buyer-guides/learn/syntorial-review/) — synth learning app UX patterns
+- [Modern Web App Design 2026](https://halodigital.co/modern-web-application-design/) — micro-interaction and subtle animation trends
 
 ---
-*Feature research for: Learner Experience & Discovery (v1.2 milestone)*
-*Researched: 2026-04-03*
+*Feature research for: Visual Redesign of Evolver Deep Learning App (v1.3 milestone)*
+*Researched: 2026-04-06*

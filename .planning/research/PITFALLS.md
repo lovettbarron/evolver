@@ -1,382 +1,213 @@
-# Pitfalls Research: v1.2 Learner Experience & Discovery
+# Domain Pitfalls
 
-**Domain:** Adding search, client-side persistent state, gamification, prerequisite gating, and manual completion to an ADHD-focused learning app built on Next.js 15 server components
-**Researched:** 2026-04-03
-**Confidence:** HIGH (based on codebase audit, ADHD design principles doc, Next.js hydration documentation, and ADHD gamification research)
+**Domain:** Visual redesign of existing Next.js synth learning app
+**Researched:** 2026-04-06
 
 ## Critical Pitfalls
 
-### Pitfall 1: Streak Counter Creates ADHD Guilt Spirals
+Mistakes that cause rewrites or major issues.
 
-**What goes wrong:**
-The app adds a "practice streak" (consecutive days) counter to the progress dashboard. The user misses two days because of ADHD executive function challenges. The streak resets to zero. The user feels the same shame spiral that calendar-based tracking was explicitly designed to prevent (see `framework/adhd-design.md` principle #8: "Forgiveness is Built In" and the anti-pattern table: "Calendar-based schedules -> Missed dates -> guilt spiral"). The streak feature directly contradicts the project's foundational ADHD design document, which states: "The curriculum doesn't have dates, only sequence."
+### Pitfall 1: SVG Panel Coordinate Corruption
 
-**Why it happens:**
-Streaks are the default gamification pattern. Every learning app (Duolingo, etc.) uses them. They feel like an obvious add. But research on ADHD users specifically shows that streak features "create the opposite effect: anxiety, avoidance, and eventually, app abandonment" because "people with ADHD often experience heightened perfectionism, anxiety around performance, and resistance to external pressure." The PROJECT.md itself lists "Sequence-based not calendar-based" as a key decision with the rationale "Missed days create guilt spirals with ADHD."
+**What goes wrong:** CSS changes (new font sizes, spacing tokens, container queries, or layout restructuring) silently break the 289 hand-placed SVG controls across both panel visualizers (evolver-panel.tsx at 782 LOC, cascadia-panel.tsx at 1350 LOC). The panels use precise viewBox coordinates (`0 0 1200 520` for Evolver) with hardcoded x,y positions for every knob, slider, switch, and jack. Any CSS that affects the SVG's container sizing, aspect ratio, or transform origin can shift controls out of alignment, break drag interactions (pointer capture uses clientY deltas), or crop the panel entirely.
 
-**Consequences:**
-- User avoids opening the app after missing a day (activation energy increases)
-- "Zero streak" becomes a visible failure marker every time the app loads
-- The app becomes a source of shame rather than motivation -- the exact opposite of its purpose
-- User abandons the app entirely (the Duolingo churn pattern)
+**Why it happens:** Redesigns typically change container widths, padding, and flex/grid layouts. SVG panels render inline via React and rely on the container to determine their rendered size. A new layout grid that changes the panel's parent width from 100% to a constrained max-width alters the mapping between screen pixels and SVG coordinates, breaking the drag sensitivity (the `delta / 3` calculation in useKnobDrag assumes a specific pixel-to-SVG-unit ratio). The zoom-section feature (`computeZoomViewBox`) also depends on stable SECTION_BOUNDS data mapping to the rendered output.
+
+**Consequences:** Knob drag becomes too sensitive or too sluggish. Tooltip positions drift from controls. Zoom viewBox calculations produce incorrect crops. Cable bezier curves in Cascadia (droop formula: `min(80, 30 + dx * 0.15)`) render at wrong positions. Session panel markers (`data-evolver-panel`, `data-cascadia-panel` embedded in 60+ markdown files) display broken visualizations.
 
 **Prevention:**
-1. **Never implement consecutive-day streaks.** This is a hard rule, not a preference.
-2. Use **cumulative metrics only**: "12 sessions completed," "5 patches created," "3 modules done." These only go up. They match the existing `ProgressData` interface which already tracks `sessionsCompleted`, `patchesCreated`, `modulesDone` -- all additive, never decreasing.
-3. If any time-based engagement metric is desired, use **"sessions this month"** or **"active weeks"** (non-consecutive) -- never consecutive-day counting.
-4. Show **"you are here" in the module journey** (already planned) -- this is intrinsic progress visualization, not extrinsic pressure.
-5. If streak-like motivation is wanted, use **"total sessions" milestones** ("You've completed 10 sessions!") which cannot be lost.
+- Treat both panel components as frozen during initial redesign phases. Wrap them in a stable container div with fixed `aspect-ratio` CSS and never change the wrapper during layout restructuring.
+- Create a visual regression test page that renders both panels at multiple container widths with known knob values and highlight states. Screenshot-diff this page before and after every CSS change.
+- The panel components should be the LAST thing styled in the redesign, in a dedicated phase, after all layout work is stable.
+- If the panel container must change size, the `delta / 3` drag sensitivity constant in `useKnobDrag` must be recalibrated to the new pixel-to-SVG-unit ratio.
 
-**Detection:**
-- Any field in the codebase tracking consecutive days
-- Any UI element that resets to zero based on inactivity
-- Any notification or visual indicator that implies "you should have practiced yesterday"
+**Detection:** Drag a knob on both panels after any layout change. If the value jumps erratically or the tooltip drifts more than 5px from the control center, the container sizing has changed.
 
-**Phase to address:**
-Progress enhancements phase. This pitfall must be addressed in the design specification before any progress UI work begins. The existing `ProgressData` interface is already correctly designed (additive only) -- the pitfall is adding new fields that violate this.
+### Pitfall 2: Accessibility Regression in Dark Theme Redesign
 
----
+**What goes wrong:** New color palette breaks WCAG contrast ratios that currently work. The existing system uses `#e8e8e8` on `#0a0a0a` (contrast ratio ~17:1) and `#737373` for muted text on `#0a0a0a` (~5.5:1, passing AA). A redesign inspired by "calm colors" (Hologram Electronics reference) or "dynamic colors" (DaVincis reference) introduces mid-tone backgrounds or lower-contrast accent colors that fail AA, especially for the `--color-muted` text which is already near the 4.5:1 threshold.
 
-### Pitfall 2: localStorage State Causes Hydration Mismatches in Server-Component-First App
+**Why it happens:** Designers optimize for aesthetic feel, not contrast math. "Calm" palettes tend toward low-contrast muted tones. The dark theme amplifies this risk because small changes to background luminance have outsized effects on contrast ratios. Additionally, the `--color-param` (#a3e635, lime green for parameter values) and `--color-accent` (#c8ff00) are carefully chosen to be readable on dark backgrounds; swapping to a different accent hue (e.g., a cooler blue-green) may tank contrast for inline code in `.prose code` blocks.
 
-**What goes wrong:**
-The app needs client-side persistent state for "continue where you left off" (last session visited), manual completion toggles, and search preferences. A developer reads localStorage during component render to show the user's last session. The server renders the page with no localStorage (it does not exist on the server). The client hydrates with a different value from localStorage. React throws a hydration mismatch error. In Next.js 15, this manifests as either a console error (development) or silent UI corruption (production).
-
-This app is currently 100% server components -- there are zero `"use client"` directives in `src/components/`. Adding localStorage is the first introduction of client-side state, making every pattern decision here foundational.
-
-**Why it happens:**
-The current architecture has no client components at all. Every component renders on the server via `async function` patterns (see `layout.tsx`, progress `page.tsx`). Developers unfamiliar with this codebase may not realize that adding `"use client"` to an existing component converts its entire subtree to client rendering, potentially breaking server-side data fetching that components rely on.
-
-**Consequences:**
-- Hydration mismatch errors in development (React error overlay)
-- Silent UI bugs in production (wrong session shown, completion state flickering)
-- If `"use client"` is added to a component that currently does `async` server work, that component breaks entirely (client components cannot be async in React)
-- Performance regression if large component subtrees become client-rendered unnecessarily
+**Consequences:** Parameter values in session content become unreadable. Muted labels on patch cards, module headers, and progress metrics fade into backgrounds. Users with visual impairments lose access. WCAG AA compliance is lost silently because there is no automated contrast checking in the build pipeline.
 
 **Prevention:**
-1. **Create dedicated client component wrappers** for localStorage access. Never add `"use client"` to existing server components. Instead, create new leaf components: `<LastSessionBanner />`, `<CompletionToggle />`, `<SearchInput />`.
-2. **Always use the `useEffect` pattern** for localStorage reads:
-   ```tsx
-   const [value, setValue] = useState<string | null>(null); // null = loading
-   useEffect(() => {
-     setValue(localStorage.getItem('key'));
-   }, []);
-   ```
-   This ensures the server render and initial client render both produce `null`, avoiding mismatch.
-3. **Render a loading/skeleton state** for localStorage-dependent UI during the first render. Never conditionally render different DOM structures based on localStorage during SSR.
-4. **Keep the client boundary as narrow as possible.** The `<SessionDetail />` component should remain a server component; only the `<CompletionToggle />` child within it should be a client component.
-5. **Create a `useLocalStorage` hook** early that encapsulates the hydration-safe pattern. Every feature that needs localStorage should use this single hook rather than implementing the pattern independently.
+- Run every new color combination through a contrast checker BEFORE implementation. Enforce minimum 4.5:1 for body text, 3:1 for large text, 7:1 target for primary content.
+- Add a lint step or build-time check (e.g., `eslint-plugin-jsx-a11y`) that flags color pairings below AA.
+- Define the new palette as CSS custom properties first, then audit every usage against every background it appears on. The `.prose` styles alone use 6 different color/background combinations.
+- Test with a color blindness simulator (protanopia, deuteranopia) since synth panel controls use color-coded highlights (blue vs amber).
 
-**Detection:**
-- React hydration mismatch warnings in browser console
-- UI elements that flash/flicker on page load (showing server state then switching to client state)
-- `"use client"` added to files that contain `async function` components
-- `localStorage.getItem()` called outside of `useEffect`
+**Detection:** Install the axe browser extension and run it on every page template after palette changes. Check the `.prose code` elements specifically since parameter values are central to the educational content.
 
-**Phase to address:**
-Must be the first technical task -- the `useLocalStorage` hook and client component boundary pattern must be established before any feature uses localStorage. Every subsequent feature (search, completion, "continue where you left off") depends on this pattern being correct.
+### Pitfall 3: ADHD Design Principle Violations
 
----
+**What goes wrong:** The redesign introduces visual complexity, animation, or layout changes that violate the project's core ADHD constraints, turning a focused learning tool into a visually overwhelming experience. Common violations: adding decorative animations that compete with content, introducing navigation patterns that require more decisions, creating layouts with too many visual focal points, or adding transitions that make the interface feel "alive" but distracting.
 
-### Pitfall 3: Dual Completion Sources Create Contradictory State
+**Why it happens:** The design references (Hologram Electronics, Ableton Learning Synths, DaVincis) are portfolio/marketing sites designed to impress on first visit, not educational tools designed for repeated focused use. Borrowing their visual energy without filtering through ADHD constraints produces a site that looks great in screenshots but is exhausting to use for 15-30 minute learning sessions. Research on ADHD web design specifically warns that "excessive movement can be distracting and make it harder for users to concentrate" and that "cluttered interfaces, excessive distractions and complex navigation can create barriers to engagement."
 
-**What goes wrong:**
-The app currently tracks completion via Obsidian vault scanning (`scanDailyNotes()` in `progress.ts`). v1.2 adds manual completion toggles (localStorage) for users without Obsidian. Now there are two sources of truth: the vault says session 5 is not completed, but localStorage says it is (or vice versa). The progress dashboard shows inconsistent numbers. The prerequisite gate blocks a session the user has manually marked complete because the vault scan does not find it. The "continue where you left off" feature points to the wrong session.
-
-**Why it happens:**
-These are genuinely different user modes (vault user vs. non-vault user) but the `computeProgress()` function currently only accepts `completedSessionNumbers: Set<number>` from a single source. There is no merge strategy defined for when both sources have data.
-
-**Consequences:**
-- User marks session complete manually, navigates to progress page, sees it as incomplete (vault scan overrides)
-- Prerequisite gating blocks advancement when manual completion should allow it
-- Module completion flags disagree between progress dashboard and session list
-- In demo mode, synthetic data, manual toggles, and vault data could all conflict
+**Consequences:** Users with ADHD (the primary user, the project owner) experience decision fatigue from too many visual elements competing for attention. Startup friction increases if navigation becomes more complex. Session focus degrades if animations or visual effects distract from the educational content. The fundamental value proposition -- zero activation energy, single focus -- is undermined.
 
 **Prevention:**
-1. **Define a clear precedence rule**: manual completion is additive to vault scanning, never subtractive. If either source says "complete," the session is complete. This is a union merge: `completedSessions = vaultSessions UNION manualSessions`.
-2. **Store manual completions per-instrument**: localStorage key should be `evolver:manual-completions` not `manual-completions`, because completion is instrument-scoped.
-3. **The merge must happen at a single point** -- modify `computeProgress()` to accept an optional second `Set<number>` for manual completions, or merge before calling it. Do not merge in UI components.
-4. **Show completion source in the UI** when possible: a small indicator showing whether completion was detected via vault or manually marked. This prevents confusion when sources disagree.
-5. **In demo mode, manual completions should layer on top of synthetic data**, not replace it. A user toggling completions in demo mode should see their changes persist but not lose the synthetic baseline.
+- Codify ADHD design rules as acceptance criteria for every redesign phase:
+  - Maximum one animated element visible at any time
+  - No autoplay animations longer than 3 seconds
+  - Navigation must be completable in 2 clicks or fewer from any page
+  - Each page must have exactly one primary visual hierarchy (one thing draws the eye first)
+  - Content density must not increase (same or fewer elements per viewport)
+- Apply the "5-second test": show each redesigned page for 5 seconds, then ask "what is this page for?" If the answer is not immediate, the visual hierarchy has failed.
+- The Ableton Learning Synths reference is the ONLY appropriate model for layout -- it is actually an educational tool. Hologram and DaVincis should inform texture and color only, not layout or interaction patterns.
+- Follow the research principle: "Simplify layouts: avoid clutter and use clear, consistent navigation. Straightforward menus and intuitive pathways help users stay focused."
 
-**Detection:**
-- Progress numbers change when navigating between pages (one page reads vault, another reads localStorage)
-- "Mark complete" toggle does not affect the prerequisite gate for the next session
-- Module shows as incomplete despite all sessions being manually marked complete
+**Detection:** Before/after comparison of each page's visual weight. Count the number of distinct visual elements (colored regions, text blocks, interactive controls) in one viewport. If the count increased by more than 20%, the page has become more complex, not less.
 
-**Phase to address:**
-Must be designed before either manual completion or prerequisite gating is implemented. The merge strategy is a prerequisite for both features.
+### Pitfall 4: Markdown Prose Styling Cascade Destruction
 
----
+**What goes wrong:** The existing `.prose` CSS in globals.css (lines 37-196) is a carefully tuned cascade of 20+ rules covering headings, links, tables, code, callouts, task lists, parameter tables, and mermaid placeholders. A redesign that replaces this with Tailwind's `@tailwindcss/typography` plugin or refactors the prose styles breaks the rendering of 60 session markdown files and 36 patch documents. The custom `.param-table` styling, `.callout` blocks, `.quick-ref-prose` overrides, and heading anchor link behavior are all bespoke and interleave with the markdown HTML output.
 
-### Pitfall 4: Prerequisite Gating Frustrates Instead of Guiding
+**Why it happens:** Redesigns naturally want to consolidate styling. The temptation is to replace hand-written prose CSS with the typography plugin or a component library. But the markdown rendering pipeline (session-detail.tsx) processes raw HTML with regex-matched panel markers, meaning the prose styles must work with arbitrary markdown-generated HTML structures, not just controlled component output.
 
-**What goes wrong:**
-Sessions are locked behind prerequisite completion. The user sees a padlock icon on session 12 because sessions 1-11 are not all marked complete. But the user has actually done sessions 1-8, skipped session 9 (which covers a topic they already know from experience), and wants to try session 12. The gate blocks them. This violates ADHD design principle #8 ("Forgiveness is Built In": "Repeating sessions is encouraged" and "Skipping days/weeks is expected"). The app now feels like a rigid course, not a flexible learning tool.
-
-**Why it happens:**
-Prerequisite gating is borrowed from LMS (Learning Management System) design where strict ordering ensures pedagogical integrity. But this app's ADHD design principles explicitly reject rigidity. The anti-pattern table warns against "Perfectionism gates: 'Master this before moving on' -> stalling."
-
-**Consequences:**
-- User feels punished for non-linear learning
-- Activation energy increases ("I need to go back and mark 3 sessions complete before I can do what I want")
-- User stops using the app because it feels controlling rather than supportive
-- Advanced users (who already know some synth concepts) are forced through beginner sessions
+**Consequences:** Parameter tables lose their monospace value styling (critical for synth parameter documentation). Callout blocks lose their accent-colored left border. Heading anchors break. The `quick-ref-prose` compact variant used in the side panel diverges from the main prose styles. Worst case: session content becomes unreadable and every session file appears broken.
 
 **Prevention:**
-1. **Use soft gating, not hard gating.** Show prerequisites as recommendations, not locks. Visual states should be: "completed" (check), "recommended next" (highlighted), "available" (normal), "has prerequisites" (dimmed with tooltip showing what they are). Never "locked" (disabled/unclickable).
-2. **All sessions must remain accessible regardless of completion state.** The user can always click any session and start it.
-3. **Show prerequisite context, not barriers**: "This session builds on: [Session 9: Filter Basics]. If you haven't done it, the warm-up might feel unfamiliar." This is guidance, not enforcement.
-4. **Module boundaries, not session boundaries**, are the natural gates. Suggest completing Module 1 before Module 3, but within a module, let the user jump around.
-5. **The "you are here" journey view** is the positive version of gating -- it shows where you are and what is recommended next without blocking anything.
+- Treat the prose CSS as a unit. Never partially refactor it. Either port ALL prose rules to the new system in one phase, or leave them entirely alone until a dedicated prose-styling phase.
+- Create a test fixture page that renders a "worst case" markdown document containing every element type: H1-H4, tables, param-tables, code blocks, callouts, task lists, links, heading anchors, ordered and unordered lists, and embedded panel markers. Screenshot-diff this page before and after every prose CSS change.
+- If adopting `@tailwindcss/typography`, use it as a BASE and layer custom overrides on top, rather than expecting it to handle bespoke elements like `.param-table` and `.callout`.
+- The `color-mix()` function used in table borders (line 113) is a modern CSS feature -- verify it still works in the new styling context.
 
-**Detection:**
-- Any session URL that returns a redirect or error based on completion state
-- Any disabled/unclickable session in the UI
-- Click handlers that check prerequisites before navigation
-- Test scenarios where an incomplete prerequisite prevents session access
-
-**Phase to address:**
-Prerequisite visualization phase. The design must specify "soft gating only" before implementation begins. This is a UX decision, not a technical one, but if the wrong decision is made the technical implementation will enforce frustration.
-
----
+**Detection:** Render three session pages (one Evolver, one Cascadia, one with panel markers) and visually inspect every element type.
 
 ## Moderate Pitfalls
 
-### Pitfall 5: Client-Side Search Index Grows Beyond Reasonable Bundle Size
+### Pitfall 5: Animation Performance Degradation
 
-**What goes wrong:**
-The app pre-builds a search index from all session and patch content (~125 markdown files currently, growing to 200+ with Cascadia). The full-text index is serialized as JSON and shipped to the client. With full markdown body content, this could be 500KB-1MB+ of JSON, adding significantly to page load time -- especially on mobile or slower connections.
-
-**Why it happens:**
-Client-side search (Flexsearch/Fuse.js) requires the index to be available in the browser. The naive approach is to index the full body content of every session and patch. With 35 Evolver sessions, 35+ Cascadia sessions, 40+ patches, and full markdown content per file, the index grows quickly.
+**What goes wrong:** Adding micro-interactions, page transitions, hover effects, and animated card reveals to 51 components causes layout thrashing and dropped frames, especially on the panel visualizer pages where SVG rendering is already complex. The Cascadia panel with 179 controls and cable bezier curves is particularly vulnerable.
 
 **Prevention:**
-1. **Index metadata only for the initial implementation**: title, module, tags, objective, instrument. This keeps the index under 50KB for 200+ items.
-2. **If full-text search is needed later**, build the index at build time and **lazy-load it** on first search interaction, not on page load. Use dynamic `import()` triggered by the search input receiving focus.
-3. **Flexsearch over Fuse.js** for this use case -- Flexsearch is significantly more memory-efficient and faster for the kind of structured content this app has.
-4. **Set a budget**: if the serialized index exceeds 100KB, split into metadata index (always loaded) and body index (loaded on demand).
-5. **Use the server-component pattern for initial results**: the search page server component can pre-render results from URL search params, while the client component handles real-time filtering. This is the pattern from the Next.js tutorial -- `useSearchParams` on client updates URL, server component fetches matching results.
+- Limit animations to `transform` and `opacity` only (GPU-composited properties). Never animate `width`, `height`, `margin`, `padding`, or `top/left`.
+- Use `will-change` sparingly and only on elements that actually animate.
+- Budget: total page animation count must stay under 10 simultaneous animations. The panel pages get 0 decorative animations -- all animation budget goes to functional feedback (knob rotation, highlight transitions).
+- Test on a throttled CPU (Chrome DevTools, 4x slowdown) to catch jank that is invisible on a fast Mac.
 
-**Detection:**
-- Search index JSON file exceeds 100KB
-- Lighthouse reports increased bundle size after search feature is added
-- Search input causes visible page jank when the index is first loaded
+### Pitfall 6: Motion Sickness from Parallax and Scroll Animations
 
-**Phase to address:**
-Search & filtering phase. Size budget should be defined before index generation is built.
-
----
-
-### Pitfall 6: `"use client"` Boundary Creep Degrades Server-Component Architecture
-
-**What goes wrong:**
-Multiple features need client interactivity: search input, completion toggles, "continue where you left off" banner, streak display, prerequisite tooltips. Each one needs `"use client"`. Without discipline, developers add `"use client"` to progressively larger components. Eventually, `session-detail.tsx` or `module-card.tsx` becomes a client component, pulling its entire subtree (including data-fetching children) to the client. The app loses the server-component performance benefits it was built on.
-
-**Why it happens:**
-The current codebase has zero client components. There is no established pattern for where the client boundary should go. The first developer to add `"use client"` sets the precedent. If they add it to `session-detail.tsx` (because it needs a completion toggle), every child of that component becomes client-rendered.
+**What goes wrong:** Design references like DaVincis use dynamic scroll-triggered animations and parallax. Implementing these triggers vestibular disorders in affected users (~8 million US adults report chronic balance problems). The existing codebase correctly handles `prefers-reduced-motion` for the pulse-glow animation (globals.css line 207-212), but new animations may not get the same treatment.
 
 **Prevention:**
-1. **Establish a component architecture rule**: interactive features are always in dedicated leaf components that wrap around server-rendered content, never the other way around.
-2. **Create a `src/components/client/` directory** (or similar convention) to make client components visually distinct in the codebase.
-3. **Pattern**: Server component renders content and passes it as `children` to a client wrapper. The client wrapper adds interactivity (toggle, tooltip) without converting the content itself to client rendering.
-   ```
-   <SessionDetail>           <!-- server: fetches data, renders markdown -->
-     <CompletionToggle />    <!-- client: manages localStorage state -->
-   </SessionDetail>
-   ```
-4. **Never add `"use client"` to existing component files.** Always create a new file for the client version.
-5. **Code review check**: any PR adding `"use client"` should verify that the file does not import server-only modules (`fs`, `path`, `glob`) and that the component is a leaf node, not a subtree root.
+- EVERY animation must have a `prefers-reduced-motion` counterpart that provides the same information without motion. The existing pattern in globals.css (`@media (prefers-reduced-motion: reduce) { animation: none; border: 2px solid var(--color-accent); }`) is the template.
+- Never use parallax scrolling. The educational content is text-heavy and scroll-intensive; parallax would directly harm readability.
+- Avoid scroll-triggered animations entirely for content pages (sessions, patches). Reserve them only for the landing/home page if at all.
+- Follow WCAG 2.1 SC 2.3.3: "Motion animation triggered by interaction can be disabled, unless the animation is essential to the functionality."
 
-**Detection:**
-- `"use client"` in a file that also imports from `@/lib/content/reader` or `@/lib/progress`
-- A component file with both `"use client"` and `async function`
-- More than 5-6 client components in `src/components/` (initial features should need only 3-4)
+### Pitfall 7: Responsive Breakpoint Regression
 
-**Phase to address:**
-First phase of v1.2 implementation. The client component convention must be established before any feature work begins.
-
----
-
-### Pitfall 7: Manual Completion Toggle Has No Undo / Confirmation
-
-**What goes wrong:**
-User accidentally taps the completion toggle on a session they have not actually completed. The session is now marked complete, the prerequisite visualization updates, and the "next session" pointer advances. There is no undo. The user must find the session again and un-toggle it, but they may not remember which session was accidentally toggled, especially across multiple visits.
-
-**Why it happens:**
-Toggle buttons are ergonomically convenient but error-prone on touch devices. A single tap with no confirmation permanently changes state. Since manual completions are stored in localStorage and affect the progress dashboard, module completion, and prerequisite visualization, the blast radius of an accidental toggle is wide.
+**What goes wrong:** The redesign introduces a new breakpoint system or layout grid that works at desktop widths but breaks the panel visualizers and session content at tablet/mobile widths. The SVG panels need a minimum readable width (~600px) before controls become too small to identify; below that, the zoom-section feature must activate.
 
 **Prevention:**
-1. **Allow easy undo**: the toggle should be bidirectional (mark complete / mark incomplete) with no confirmation dialog for either direction. Friction-free correction is better than friction-full prevention.
-2. **Show a brief toast/snackbar** on completion: "Session 5 marked complete. [Undo]" with a 5-second undo window.
-3. **Do NOT require confirmation dialogs** -- they add activation energy to a legitimate action (marking complete), violating ADHD design principle #1 (Zero Activation Energy).
-4. **Visual feedback must be immediate** -- the toggle state should change instantly (optimistic UI), not wait for any async operation.
+- Define and test at exactly three breakpoints: mobile (375px), tablet (768px), desktop (1280px).
+- Panel visualizers should switch to a section-zoom-only mode below 768px rather than trying to render the full panel.
+- Session content with inline panels should stack vertically on mobile (panel above, prose below) rather than side-by-side.
+- Test the patch parameter tables at mobile width -- they are dense data tables that need horizontal scroll, not column wrapping.
 
-**Detection:**
-- Completion toggle has a confirmation dialog
-- No visual way to un-mark a completed session
-- Toggling completion requires navigating to a different page
+### Pitfall 8: Font Loading FOUT/FOIT
 
-**Phase to address:**
-Manual completion phase. Design the toggle with undo from the start.
-
----
-
-### Pitfall 8: Troubleshooting Content Becomes Stale as Sessions Evolve
-
-**What goes wrong:**
-The "I hear nothing" troubleshooting guide references specific session numbers or patch names. Sessions are renumbered, patches are renamed, or new sessions are inserted between existing ones. The troubleshooting guide now points to the wrong session or a non-existent patch. Users follow stale instructions and get more confused.
-
-**Why it happens:**
-Troubleshooting content is written as static markdown that references dynamic content (session numbers, patch names). There is no automated validation that cross-references remain valid. The content validation script (`validate-content.ts`) likely does not check troubleshooting docs for broken internal references.
+**What goes wrong:** Changing typography (new typeface for headings, different monospace font for parameter values) introduces Flash of Unstyled Text or Flash of Invisible Text. The existing stack uses Inter (sans) and JetBrains Mono (mono) via `next/font`, which handles self-hosting and font-display automatically. Switching to a non-next/font font or adding a third typeface (display/decorative) breaks this.
 
 **Prevention:**
-1. **Reference sessions by slug, not by number**, in troubleshooting content. Session slugs are more stable than numbers.
-2. **Keep troubleshooting content generic** where possible: "If you hear nothing after loading a patch, check: [MIDI channel, audio routing, volume]" rather than "After Session 3, if you..."
-3. **Organize troubleshooting by symptom, not by session**: "No audio output," "Unexpected pitch," "Filter not responding" -- these are instrument-level issues, not session-level.
-4. **Add troubleshooting references to content validation**: if a troubleshooting doc mentions `session-XX`, verify that session exists.
+- Keep fonts loaded via `next/font` for automatic optimization.
+- Maximum two font families (sans + mono). A third display font adds load time and visual complexity with minimal payoff for an educational app.
+- If changing fonts, verify that JetBrains Mono (or replacement) renders parameter values with consistent character widths -- proportional fonts make parameter tables misaligned and values harder to read.
+- Test font loading on a simulated slow 3G connection to catch FOUT.
 
-**Detection:**
-- Troubleshooting doc references a session number that has been renumbered
-- User reports following troubleshooting steps that do not match their current session
-- Content validation passes but troubleshooting docs have dead references
+### Pitfall 9: Tailwind v4 @theme Token Conflicts
 
-**Phase to address:**
-Troubleshooting content phase. Design the reference strategy before writing content.
+**What goes wrong:** The app already uses Tailwind v4 with `@theme` CSS custom properties (globals.css lines 3-20). The redesign adds new tokens or renames existing ones, but some of the 51 components still reference old token names via inline Tailwind classes, creating a split where some components use the old palette and others use the new one.
 
----
+**Prevention:**
+- Inventory ALL current `--color-*`, `--spacing-*`, and `--font-*` token usages across all 51 components BEFORE changing any tokens.
+- Use find-and-replace at the token level, not component-by-component. Changing `--color-accent` from `#c8ff00` to a new value must update everywhere simultaneously.
+- If adding new semantic tokens (e.g., `--color-surface-elevated`, `--color-border`), add them alongside existing tokens first, then migrate components, then remove old tokens. Never have a phase where both old and new tokens are "current."
+- Remember that Tailwind v4 does NOT use `tailwind.config.js` -- all theming is in CSS via `@theme`. There is no config file to forget to update.
+
+### Pitfall 10: Search and Filter UI Regression
+
+**What goes wrong:** Phase 16 shipped a working search bar with instant grouped results and a patch filter bar with multi-select pills. Restyling these interactive components breaks their state management (URL param persistence, dropdown positioning, keyboard navigation) because the redesign changes the DOM structure that the JavaScript expects.
+
+**Prevention:**
+- Restyle interactive components by changing CSS properties only, not DOM structure, wherever possible.
+- If DOM restructuring is necessary (e.g., wrapping in new layout containers), test all interactive states: empty state, loading, results displayed, filter selected, filter cleared, keyboard navigation, URL param round-trip.
+- The search dropdown positioning depends on its parent's position context. Changing the nav layout can push the dropdown off-screen or behind other elements.
 
 ## Minor Pitfalls
 
-### Pitfall 9: Search Highlights Break Markdown Rendering
+### Pitfall 11: z-index Stack Collapse
 
-**What goes wrong:**
-Search results show matched text with highlighting (e.g., wrapping matches in `<mark>` tags). But the matched text is from raw markdown source. Inserting highlight tags into markdown content breaks the rendering pipeline: a highlight inside a code block, a YAML frontmatter value, or a markdown link produces corrupted output.
+**What goes wrong:** The sticky header, search dropdown, panel tooltips, and modal dialogs all have z-index values that form an implicit stacking context. Adding new decorative layers, backdrop overlays, or fixed-position elements without a z-index system creates overlap bugs.
 
-**Prevention:**
-1. Search results should show **plain text excerpts**, not highlighted markdown source.
-2. If highlighting is desired, apply it to **rendered text** (post-markdown-processing), not to source markdown.
-3. Simpler and safer: show the matched field name ("Found in: objective") and the surrounding sentence as plain text, without inline highlighting.
+**Prevention:** Define a z-index scale in the `@theme` block: `--z-base: 0`, `--z-sticky: 100`, `--z-dropdown: 200`, `--z-tooltip: 300`, `--z-modal: 400`. Migrate all existing z-index values to use these tokens.
 
-**Phase to address:** Search phase, UI design stage.
+### Pitfall 12: Build Size Inflation from Animation Libraries
 
----
+**What goes wrong:** Adding Framer Motion or GSAP for page transitions and micro-interactions adds 30-150KB to the client bundle. For a content-heavy educational app where most pages are server-rendered markdown, this is disproportionate overhead.
 
-### Pitfall 10: "Continue Where You Left Off" Stale After Content Updates
+**Prevention:** Use CSS animations and transitions exclusively for the redesign. CSS can handle fade-in, slide-in, scale, color transitions, hover states, and even staggered list reveals via `animation-delay`. Reserve a JS animation library ONLY if a specific interaction requires physics-based spring animations that CSS cannot achieve, and then use a lightweight option like `motion` (the lite Framer Motion export, ~5KB).
 
-**What goes wrong:**
-localStorage stores the last-visited session slug (e.g., `evolver/07-oscillators-fm-synthesis`). A content update renames or removes that session. The "continue" banner links to a 404 page.
+### Pitfall 13: Color-Only Information Loss in Panel Visualizers
 
-**Prevention:**
-1. The "continue" feature must verify the stored session slug still resolves to valid content before displaying the banner.
-2. If the session no longer exists, fall back to the first incomplete session or clear the stored value.
-3. Store both the slug and the session number -- if the slug fails, try to find the session by number as a fallback.
+**What goes wrong:** The panel visualizers use blue and amber highlight colors to distinguish control categories. A palette change that makes these colors too similar, or a new highlight system that relies solely on color, excludes colorblind users (8% of men).
 
-**Phase to address:** "Continue where you left off" feature implementation.
+**Prevention:** Every color-coded element must have a secondary non-color indicator: shape, pattern, label, or icon. The existing panel highlights should add a shape difference (circle for blue, diamond for amber) in addition to color.
 
----
+### Pitfall 14: Losing the "Designed Prose" Feel by Over-Componentizing
 
-### Pitfall 11: localStorage Keys Collide Across Instruments
+**What goes wrong:** The redesign goal includes making markdown rendering "feel native, not like raw markdown." The temptation is to wrap every markdown element in a React component for fine-grained control. But this breaks the content pipeline: session content is stored as markdown in the Obsidian vault, rendered as HTML by the markdown processor, and then enhanced by regex-based panel marker injection in session-detail.tsx. Over-componentizing the prose output conflicts with this pipeline.
 
-**What goes wrong:**
-Manual completions are stored under a generic key like `completedSessions`. The user completes Evolver session 5 and Cascadia session 5. Both are stored in the same Set. The app cannot distinguish which instrument's session 5 was completed. Progress is inflated or crossed between instruments.
-
-**Prevention:**
-1. **Namespace all localStorage keys by instrument**: `evolver:completedSessions`, `cascadia:completedSessions`, `evolver:lastSession`, etc.
-2. Define the key naming convention once in a shared utility, not ad-hoc in each component.
-3. The existing `computeProgress()` function is already per-instrument (takes `instrument: string` parameter) -- the localStorage layer must match this scoping.
-
-**Phase to address:** First localStorage implementation. Must be correct from the start; migrating keys later requires data migration code.
-
----
-
-## ADHD-Specific Anti-Patterns for Gamification
-
-These are patterns that work well for neurotypical users but actively harm ADHD users in this context. Derived from the project's `framework/adhd-design.md` and ADHD gamification research.
-
-| Anti-Pattern | Why It Harms ADHD Users | What to Do Instead |
-|-------------|------------------------|-------------------|
-| Consecutive-day streaks | Missed days create shame spirals; ADHD users cannot reliably maintain daily habits | Cumulative counts only: "12 sessions done" (never resets) |
-| Daily practice reminders | External pressure triggers avoidance in ADHD; the "wall of awful" grows | No notifications. The app is a tool you reach for, not a nag |
-| Leaderboards / social comparison | ADHD perfectionism + comparison = paralysis | Personal progress only. No other users exist |
-| "You missed X days" messaging | Directly triggers guilt about time-blindness, a core ADHD trait | Show only positive: "Welcome back! Your next session is..." |
-| XP / points with levels | Creates external motivation that ADHD brains eventually habituate to, then ignore | Real artifacts (patches, techniques) are the reward -- they have intrinsic value |
-| Loss aversion mechanics | "Your streak will reset!" exploits anxiety. ADHD users have elevated anxiety comorbidity | Nothing in the app should ever decrease or reset. Progress only goes forward |
-| Badges for consistency | Rewards the thing ADHD users struggle with most (consistency), highlighting their weakness | Badges for milestones if at all: "Completed Module 1" (achievement, not habit) |
-| Completion percentages | "73% complete" creates anxiety about the remaining 27% and pressure to reach 100% | Show completed items as a growing list, not as a fraction of a total |
-
-**The safe gamification elements for this app:**
-- Additive session/patch/module counts (already in `ProgressData`)
-- "You are here" position in module journey (planned)
-- Patch library as tangible evidence of learning (already exists)
-- Module completion celebrations (one-time, not recurring)
-- "Welcome back" messaging that references what was last learned (not how long ago)
-
----
+**Prevention:** Achieve the "designed prose" look through CSS-only styling of the existing HTML output structure. Use the `.prose` class cascade, not component wrappers. The goal is CSS that makes `<h2>`, `<table>`, `<code>`, and `<blockquote>` elements look polished within the prose context, not MDX components that replace them.
 
 ## Phase-Specific Warnings
 
 | Phase Topic | Likely Pitfall | Mitigation |
 |-------------|---------------|------------|
-| localStorage foundation | Hydration mismatch (P2), key collision (P11) | Build `useLocalStorage` hook first with hydration-safe pattern; namespace keys by instrument |
-| Client-side search | Bundle size (P5), boundary creep (P6) | Index metadata only; search input is a leaf client component |
-| Manual completion | Dual source conflict (P3), no undo (P7) | Union merge strategy; bidirectional toggle with undo toast |
-| Prerequisite visualization | Hard gating (P4) | Soft gating only -- visual recommendations, never locks |
-| Progress enhancements / streaks | Guilt spiral (P1) | Additive metrics only. Zero consecutive-day tracking. Hard rule |
-| Troubleshooting content | Stale references (P8) | Reference by slug, organize by symptom not session |
-| "Continue where you left off" | Stale slug (P10) | Verify slug resolves before displaying |
-
----
+| Design token/palette definition | Contrast regression (#2), ADHD violations (#3) | Contrast-check every pairing before coding. Apply ADHD 5-second test to mockups |
+| Layout restructuring | SVG panel corruption (#1), responsive regression (#7) | Freeze panel containers. Test at 3 breakpoints |
+| Typography changes | Font loading issues (#8), prose cascade destruction (#4) | Use next/font only. Port all prose rules as a unit |
+| Component restyling | Search/filter regression (#10), z-index collapse (#11) | CSS-only changes where possible. Define z-index scale |
+| Animation/motion | Performance degradation (#5), motion sickness (#6), ADHD violations (#3), bundle inflation (#12) | CSS-only animations. prefers-reduced-motion for all. Budget of 10 max simultaneous |
+| Panel visualizer styling | SVG coordinate corruption (#1), color information loss (#13) | Dedicated final phase. Visual regression screenshots |
+| Prose/markdown styling | Cascade destruction (#4), over-componentizing (#14) | Fixture page with all element types. CSS-only approach. All-or-nothing port |
 
 ## "Looks Done But Isn't" Checklist
 
-- [ ] **Hydration**: No `localStorage.getItem()` calls outside `useEffect` hooks
-- [ ] **Client boundary**: All `"use client"` files are leaf components, not subtree roots
-- [ ] **Client boundary**: No `"use client"` file imports from `@/lib/content/reader` or `@/lib/progress`
-- [ ] **Completion merge**: `computeProgress()` accepts both vault and manual completion sources
-- [ ] **Completion merge**: Manual completion + vault completion = union, not override
-- [ ] **Prerequisite gating**: Every session is clickable regardless of completion state
-- [ ] **Prerequisite gating**: No HTTP redirects based on prerequisite completion
-- [ ] **Streaks**: No field in codebase tracks consecutive days
-- [ ] **Streaks**: No UI element that resets to zero based on inactivity
-- [ ] **Streaks**: No messaging about missed days or time since last session
-- [ ] **Search index**: Serialized index is under 100KB
-- [ ] **Search input**: Is a leaf client component, not embedded in a server component
-- [ ] **localStorage keys**: All namespaced by instrument slug
-- [ ] **Manual toggle**: Bidirectional (can mark incomplete after marking complete)
-- [ ] **"Continue" banner**: Validates stored session slug before rendering link
-- [ ] **Troubleshooting**: References sessions by slug, not by number
-- [ ] **Gamification**: All metrics are additive (only increase, never decrease or reset)
-
----
-
-## Recovery Strategies
-
-| Pitfall | Recovery Cost | Recovery Steps |
-|---------|---------------|----------------|
-| Streak feature shipped | LOW | Remove streak counter, replace with cumulative count. No data migration needed |
-| Hydration mismatches | MEDIUM | Refactor localStorage reads into `useEffect`, add loading states. May require restructuring component tree |
-| Hard prerequisite gating | LOW | Change locked states to dimmed-with-tooltip. Remove redirect logic. UI-only change |
-| Dual completion conflict | MEDIUM | Implement union merge in `computeProgress()`. Requires touching progress data flow |
-| Client boundary creep | HIGH | Must decompose bloated client components back into server+client pairs. Extensive refactoring |
-| Search index too large | LOW | Reduce indexed fields to metadata only. Rebuild index at build time |
-| localStorage key collision | MEDIUM | Add instrument namespace prefix, write migration to move existing keys |
-
----
+- [ ] **Contrast**: Every text/background combination meets WCAG AA (4.5:1 body, 3:1 large text)
+- [ ] **Contrast**: `--color-muted` on `--color-bg` still passes AA after palette change
+- [ ] **Contrast**: `--color-param` inline code on `--color-surface` still readable
+- [ ] **Panel integrity**: Evolver panel knob drag works correctly at new container width
+- [ ] **Panel integrity**: Cascadia panel cables render at correct positions
+- [ ] **Panel integrity**: Panel zoom-section crops correctly in session markdown context
+- [ ] **Prose rendering**: All 6 heading/list/table/code/callout/task-list element types render correctly
+- [ ] **Prose rendering**: `.param-table` monospace values intact
+- [ ] **Prose rendering**: `.quick-ref-prose` compact variant still distinct from main prose
+- [ ] **Motion**: Every animation has a `prefers-reduced-motion` fallback
+- [ ] **Motion**: No parallax or scroll-triggered animations on content pages
+- [ ] **Motion**: Maximum one animated element visible at any time per page
+- [ ] **ADHD**: Each page has exactly one primary visual focal point
+- [ ] **ADHD**: Navigation complexity did not increase (same or fewer clicks to any destination)
+- [ ] **ADHD**: No autoplay animations longer than 3 seconds
+- [ ] **Responsive**: Panels readable at 768px, zoom-only below 768px
+- [ ] **Responsive**: Parameter tables horizontally scrollable at mobile width
+- [ ] **Tokens**: No component references a deleted or renamed CSS custom property
+- [ ] **Performance**: No JS animation library exceeding 10KB added to bundle
+- [ ] **z-index**: Sticky header, search dropdown, and panel tooltips layer correctly
+- [ ] **Fonts**: All fonts loaded via `next/font`, maximum 2 families
 
 ## Sources
 
-- Codebase audit: `src/lib/progress.ts` (current completion model), `src/app/layout.tsx` (server component architecture), `src/components/` (zero client components), `src/app/instruments/[slug]/progress/page.tsx` (vault scanning integration)
-- [ADHD design principles](/Users/albair/src/evolver/framework/adhd-design.md) -- project's own ADHD design document, anti-patterns table, forgiveness principle
-- [PROJECT.md](/Users/albair/src/evolver/.planning/PROJECT.md) -- key decision: "Sequence-based not calendar-based: Missed days create guilt spirals with ADHD"
-- [Next.js hydration error documentation](https://nextjs.org/docs/messages/react-hydration-error) -- official guidance on hydration mismatch causes and fixes
-- [Fix hydration mismatch errors in Next.js](https://oneuptime.com/blog/post/2026-01-24-fix-hydration-mismatch-errors-nextjs/view) -- 2026 guide on App Router hydration patterns
-- [Next.js App Router search tutorial](https://nextjs.org/learn/dashboard-app/adding-search-and-pagination) -- official server/client search pattern with useSearchParams
-- [Breaking the Chain: Why Streak Features Fail ADHD Users](https://www.helloklarity.com/post/breaking-the-chain-why-streak-features-fail-adhd-users-and-how-to-design-better-alternatives/) -- ADHD-specific research on streak harm and alternatives
-- [Duolingo's Shallow Learning Trap](https://dev.to/yaptech/duolingos-shallow-learning-trap-gamified-streaks-harmful-habits-4134) -- streak anxiety and harmful gamification patterns
-- [Flexsearch GitHub](https://github.com/nextapps-de/flexsearch) -- client-side search library performance and memory characteristics
-- [Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components) -- Next.js component boundary documentation
-
----
-*Pitfalls research for: v1.2 Learner Experience & Discovery*
-*Researched: 2026-04-03*
+- [Designing for users with ADHD](https://digitalcommunications.wp.st-andrews.ac.uk/2025/02/12/designing-for-users-with-adhd/) -- ADHD web design principles
+- [ADHD-Friendly Web Design: Minimizing Distractions](https://www.boia.org/blog/adhd-friendly-web-design-minimizing-distractions) -- ADHD accessibility patterns
+- [Designing Safer Web Animation For Motion Sensitivity](https://alistapart.com/article/designing-safer-web-animation-for-motion-sensitivity/) -- vestibular disorder animation safety
+- [WCAG 2.1 Animation from Interactions](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html) -- W3C animation accessibility standard
+- [prefers-reduced-motion - MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion) -- reduced motion media query
+- [How to Scale SVG - CSS-Tricks](https://css-tricks.com/scale-svg/) -- SVG viewBox responsive scaling
+- [6 Common SVG Fails](https://css-tricks.com/6-common-svg-fails-and-how-to-fix-them/) -- SVG rendering pitfalls
+- [Tailwind CSS v4 Upgrade Guide](https://tailwindcss.com/docs/upgrade-guide) -- official Tailwind v4 migration docs
+- [Tailwind CSS 4 Migration: What Changed](https://designrevision.com/blog/tailwind-4-migration) -- Tailwind v4 breaking changes
+- Codebase analysis: globals.css (213 lines, 6 color tokens, 7 spacing tokens, 20+ prose rules), evolver-panel.tsx (782 LOC, 110 controls), cascadia-panel.tsx (1350 LOC, 179 controls), session-detail.tsx (panel marker regex injection pipeline)

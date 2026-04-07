@@ -1,497 +1,330 @@
-# Architecture: Learner Experience Features
+# Architecture Patterns: Visual Redesign Integration
 
-**Domain:** Learner UX layer on server-component + filesystem architecture
-**Researched:** 2026-04-03
-**Confidence:** HIGH (patterns well-understood, no novel infrastructure)
+**Domain:** Visual redesign of a Next.js 15 synth learning app with Tailwind v4 + CSS variable architecture
+**Researched:** 2026-04-06
 
-## Executive Summary
+## Recommended Architecture
 
-The v1.2 learner experience features require solving one core architectural problem: **where does mutable user state live in a read-only filesystem architecture?** The answer is localStorage, managed through a React Context provider that bridges the server-component world (which computes content and prerequisites) with client-side persistence (which tracks completions, last session, and streaks).
+The redesign operates as a **layered token replacement** on top of the existing component tree. No structural changes to routing, data flow, or server/client boundaries. The existing architecture (App Router server components reading Obsidian vault, client components for interactivity) remains untouched. The redesign is purely the visual layer: tokens, styles, and component presentation.
 
-The existing architecture is clean: server components read filesystem content, validate with Zod, and pass data down. The new features layer on top without disrupting this. Content indexing for search happens via an API route (server reads content, returns JSON, client indexes it). Prerequisite visualization is purely computed from existing `prerequisite` fields in session frontmatter plus completion state. No database, no mutation API routes, no new server infrastructure.
+### Core Principle: Three-Layer Token System
 
-## Current Architecture (As-Is)
-
-```
-                    evolver.config.json
-                         |
-                    loadConfig()
-                         |
-              +----------+-----------+
-              |                      |
-         vaultPath set?         no vaultPath
-              |                      |
-     ~/song vault (local)    src/content/ (demo)
-              |                      |
-              +----------+-----------+
-                         |
-                   reader.ts (Zod validation)
-                         |
-              +----------+-----------+
-              |          |           |
-         listSessions  listPatches  listModules
-              |          |           |
-              +----------+-----------+
-                         |
-                Server Components (pages)
-                         |
-                Client Components (presentational only)
-```
-
-**Key characteristics:**
-- All data flows top-down from filesystem through server components
-- No mutable state anywhere -- progress is computed from daily note scanning or synthetic data
-- Client components are purely presentational (SessionRow, ModuleJourney, etc.)
-- The `prerequisite` field exists in SessionSchema but is not used in the UI yet
-- Server components load config, read content, compute progress, pass props to client components
-
-## Proposed Architecture (To-Be)
-
-### New Layer: Client-Side Learner State
+The current `@theme` block has 6 colors and 6 spacing values inline. This is workable for a small app but breaks down during a redesign because every token change requires auditing all 51 components. Replace with a three-layer system:
 
 ```
-                  Server Components (unchanged)
-                         |
-                   props with content data
-                         |
-              LearnerStateProvider (client context)
-                    |           |
-              localStorage    React state
-              (persistent)    (reactive)
-                    |           |
-              +-----+-----+----+----+
-              |           |         |
-         CompletionState  LastSession  StreakData
-              |           |         |
-         SessionList    ContinueBar  ProgressPage
-         (enhanced)     (new)        (enhanced)
+Layer 1: Primitive tokens (raw palette values)
+Layer 2: Semantic tokens (purpose-driven: what it means)
+Layer 3: Component tokens (scoped overrides, optional)
 ```
 
-### Component Classification
+This is the standard pattern for Tailwind v4 design systems in 2026, validated by the `@theme` directive's CSS-first approach.
 
-| Component | Current | v1.2 Change | Server/Client |
-|-----------|---------|-------------|---------------|
-| `SessionList` | Server component, presentational | Receives completion map, passes to enhanced rows | Server (wrapper) |
-| `SessionRow` | Server component, link only | Add completion badge + prerequisite lock icon | Client (needs state) |
-| `ModuleJourney` | Server component, dots only | Add click-through to module detail, "you are here" marker | Client (needs state) |
-| `ProgressPage` | Server component | Merge server-computed + client completion data | Server (data) + Client (merge) |
-| `ContinueBar` | Does not exist | "Continue: Session 22 - Sequencer Basics" banner | Client (reads last session) |
-| `SearchOverlay` | Does not exist | Cmd+K full-text search dialog | Client (search index) |
-| `CompletionToggle` | Does not exist | Checkbox on session detail page | Client (writes state) |
-| `StreakDisplay` | Does not exist | Current streak + best streak on progress page | Client (computed from timestamps) |
+### Component Boundaries
 
-## Feature Architecture Details
+| Component Layer | Count | Redesign Impact | Strategy |
+|----------------|-------|-----------------|----------|
+| Layout shell (AppShell, Nav, layout.tsx) | 3 | HIGH - structural visual changes | Modify in-place, token-first |
+| Page containers (13 route pages) | 13 | MEDIUM - max-width, spacing, padding | Batch update after tokens land |
+| Content cards (HeroCard, PatchCard, ModuleCard, CountCard, InstrumentCard) | 5 | HIGH - primary visual identity | Redesign with new tokens, same props |
+| Data display (tables, lists, session rows) | 8 | MEDIUM - typography and spacing | Token cascade handles most changes |
+| Interactive (SearchBar, PatchFilterBar, CompletionToggle) | 5 | MEDIUM - input styling, states | Update focus/hover/active states |
+| Panel visualizers (EvolverPanel, CascadiaPanel) | 2 | LOW-MEDIUM - self-contained SVG | Isolated; touch only outer container |
+| Prose/markdown (.prose CSS rules) | 1 (globals.css) | HIGH - 80+ lines of prose styling | Rewrite prose block with new tokens |
+| Supporting (tooltips, banners, dialogs) | 15+ | LOW - cascade from token changes | Minimal manual intervention |
 
-### 1. Learner State Provider
+### Data Flow for Design Tokens
 
-**Pattern:** React Context + localStorage + custom hook
-
-This is the central new abstraction. A single `'use client'` context provider wraps the app (inside `AppShell`) and manages all mutable learner state.
-
-```typescript
-// src/lib/learner-state.tsx
-'use client';
-
-interface LearnerState {
-  // Completion tracking
-  completions: Record<string, CompletionRecord>;  // keyed by "{instrument}:{session_number}"
-
-  // Last session visited (for "continue where you left off")
-  lastSession: { instrument: string; slug: string; title: string; number: number } | null;
-
-  // Streak data
-  streakDays: string[];  // ISO date strings of days with completions
-}
-
-interface CompletionRecord {
-  completedAt: string;   // ISO timestamp
-  source: 'manual' | 'vault';  // manual = toggle, vault = daily note scan
-}
+```
+globals.css @theme block
+    |
+    v
+Tailwind v4 utility generation (bg-surface, text-muted, etc.)
+    |
+    +---> Component className strings (all 51 components)
+    |
+    +---> .prose CSS rules (markdown rendering)
+    |
+    +---> SVG panel inline styles (ISOLATED - hardcoded hex values)
 ```
 
-**Why a single provider, not per-feature hooks:**
-- All features share the same localStorage backing store
-- Prevents multiple competing `useEffect` syncs
-- Single hydration boundary simplifies SSR handling
-- One place to handle the demo-mode vs local-mode branching
+**Key insight:** The SVG panels do NOT use CSS variables. They use a `const styles = {}` object with hardcoded hex values (`#111`, `#333`, `#999`, etc.). This is intentional -- SVG panel colors represent physical hardware appearance and should NOT change with a theme redesign. The panel visualizers are a visual simulation of physical instruments, not UI chrome.
 
-**Hydration strategy:**
-- Provider initializes with `null` state (matches server render)
-- `useEffect` loads from localStorage on mount
-- Components show a neutral state (no badge, no streak) until hydrated
-- No layout shift because completion badges and streak numbers are additive, not replacing content
+## Patterns to Follow
 
-**localStorage schema:**
+### Pattern 1: Layered Token Architecture in @theme
 
-```json
-{
-  "version": 1,
-  "completions": {
-    "evolver:1": { "completedAt": "2026-04-03T10:30:00Z", "source": "manual" },
-    "evolver:2": { "completedAt": "2026-04-03T11:00:00Z", "source": "manual" }
-  },
-  "lastSession": {
-    "instrument": "evolver",
-    "slug": "22-sequencer-basics",
-    "title": "Sequencer Basics",
-    "number": 22
-  },
-  "streakDays": ["2026-04-01", "2026-04-02", "2026-04-03"]
+**What:** Replace flat token list with primitive + semantic layers. Primitives are the raw palette; semantics map intent.
+
+**When:** First step of the redesign. Everything else depends on this.
+
+**Example:**
+```css
+@theme {
+  /* === Primitives (raw palette) === */
+  --color-neutral-950: #0a0a0a;
+  --color-neutral-900: #161616;
+  --color-neutral-800: #1e1e1e;
+  --color-neutral-400: #737373;
+  --color-neutral-200: #e8e8e8;
+  --color-lime-400: #c8ff00;
+  --color-lime-300: #a3e635;
+
+  /* === Semantic (what it means) === */
+  --color-bg: var(--color-neutral-950);
+  --color-surface: var(--color-neutral-900);
+  --color-surface-raised: var(--color-neutral-800);
+  --color-border: var(--color-neutral-800);
+  --color-border-subtle: color-mix(in srgb, var(--color-neutral-900) 80%, var(--color-neutral-400));
+  --color-text: var(--color-neutral-200);
+  --color-text-muted: var(--color-neutral-400);
+  --color-accent: var(--color-lime-400);
+  --color-accent-soft: var(--color-lime-300);
+
+  /* === Typography === */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* === Spacing (keep existing, add semantic) === */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* === Radii === */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* === Shadows === */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-card-hover: 0 4px 12px rgba(200,255,0,0.08);
+
+  /* === Content widths === */
+  --content-narrow: 720px;
+  --content-wide: 960px;
 }
 ```
 
-**Why version field:** Future schema migrations. Parse with Zod on load, reset to defaults if validation fails.
+**Why this structure:**
+- Changing the accent color means editing ONE primitive; all semantics cascade
+- Adding `--color-surface-raised` and `--color-border` fills real gaps (currently components use `border-surface` which is invisible against `bg-surface`)
+- `--radius-*` tokens eliminate the inconsistent `rounded-[6px]` / `rounded-lg` / `rounded` scattered across components
+- `--content-narrow` / `--content-wide` replaces the hardcoded `max-w-[720px]` repeated in every page
 
-### 2. Completion Tracking (Manual Mark-Complete)
+### Pattern 2: Component Visual Layer Separation
 
-**Data flow:**
+**What:** Separate component structure (props, logic, layout) from visual presentation (colors, spacing, borders). The redesign only touches the visual layer.
 
-```
-Session Detail Page (server)
-  |
-  renders session content + CompletionToggle (client)
-  |
-CompletionToggle reads/writes LearnerStateProvider
-  |
-  writes to localStorage key: "evolver-learner-state"
-  |
-  updates completions["{instrument}:{session_number}"]
-```
+**When:** Every component update during the redesign.
 
-**Merging with vault-scanned completions:**
-
-The progress page currently gets completed sessions from either vault scanning or synthetic data (server-side). Manual completions live in localStorage (client-side). These must merge:
-
-```typescript
-// In a client wrapper component:
-// Server provides: vaultCompletedSessions (Set<number>) as serialized array via props
-// Client provides: manualCompletions from LearnerStateProvider
-// Merged set = union of both, displayed in progress UI
+**Example of current pattern (PatchCard):**
+```tsx
+// Structure and visual are interleaved
+<Link className="block bg-surface rounded-[6px] p-lg border border-transparent hover:border-accent transition-colors">
 ```
 
-**Important constraint:** Manual completions NEVER write back to the vault. They are a client-only convenience for users who do not use Obsidian or who want quick tracking. The vault remains the source of truth for users who have it configured.
+**Redesigned (same structure, updated visual):**
+```tsx
+// Same structure, tokens do the work
+<Link className="block bg-surface rounded-md p-lg border border-border hover:border-accent transition-colors shadow-card hover:shadow-card-hover">
+```
 
-### 3. Search
+The key is that no props change, no data flow changes, no test breakage. Only className strings update.
 
-**Architecture: API route + client-side MiniSearch**
+### Pattern 3: Prose Styling as Design System Expression
 
-Use **MiniSearch** (8KB gzipped, zero dependencies) because:
-- The corpus is small (35 sessions + ~20 patches per instrument = well under 1000 documents)
-- Full-text with fuzzy matching and field boosting covers all needs
-- No server infrastructure needed beyond a read-only JSON endpoint
-- Loads fast, searches instantly after first fetch
+**What:** The `.prose` rules in globals.css are the most impactful visual surface -- they render ALL session content, patch descriptions, and instrument overviews. Treat prose styling as first-class design system work, not an afterthought.
 
-**Index serving via API route (recommended):**
+**When:** After token system is in place, before component visual refresh.
 
-Create `src/app/api/search-index/[instrument]/route.ts` that reads content server-side and returns JSON. This is the first API route in the project but it is strictly read-only -- no state mutation. It aligns with the filesystem-read pattern and keeps page payload small.
+**Current problem:** Prose uses hardcoded `font-size: 36px`, `margin-top: 2em` etc. These should reference tokens or at minimum use a consistent typographic scale.
 
-```typescript
-// src/app/api/search-index/[instrument]/route.ts
-import { NextResponse } from 'next/server';
-import { loadConfig } from '@/lib/config';
-import { listSessions, listPatches } from '@/lib/content/reader';
+**Target approach:**
+```css
+.prose h2 {
+  font-size: 1.5rem;
+  margin-top: var(--spacing-2xl);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.01em;
+}
 
-export async function GET(
-  _req: Request,
-  { params }: { params: Promise<{ instrument: string }> }
-) {
-  const { instrument } = await params;
-  const config = await loadConfig();
-  const [sessions, patches] = await Promise.all([
-    listSessions(instrument, config),
-    listPatches(instrument, config),
-  ]);
+.prose table td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
 
-  const documents = [
-    ...sessions.map(s => ({
-      id: `session:${s.slug}`,
-      type: 'session' as const,
-      title: s.data.title,
-      module: s.data.module,
-      tags: s.data.tags.join(' '),
-      body: s.content.slice(0, 2000),
-      href: `/instruments/${instrument}/sessions/${s.slug}`,
-    })),
-    ...patches.map(p => ({
-      id: `patch:${p.slug}`,
-      type: 'patch' as const,
-      title: p.data.name,
-      tags: p.data.tags.join(' '),
-      body: p.data.description,
-      href: `/instruments/${instrument}/patches/${p.slug}`,
-    })),
-  ];
-
-  return NextResponse.json(documents);
+.prose .callout {
+  background-color: var(--color-surface);
+  border-left: 3px solid var(--color-accent);
+  padding: var(--spacing-md);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 ```
 
-**Why API route over build-time index:** When `vaultPath` is set, content comes from the live vault (which changes between sessions). A build-time index would be stale. The API route reads fresh content at request time and benefits from Next.js request deduplication.
+### Pattern 4: Content Width Standardization
 
-**Search UI flow:**
+**What:** Every page currently repeats `max-w-[720px] mx-auto px-lg lg:px-xl py-2xl`. Extract this into a reusable pattern.
 
-```
-Cmd+K (or search icon in nav)
-  |
-  opens SearchOverlay (dialog/modal, client component)
-  |
-  fetches /api/search-index/{instrument} once (cached in component state)
-  |
-  MiniSearch indexes documents on first open
-  |
-  user types -> miniSearch.search(query) -> results grouped by type
-  |
-  keyboard navigation (up/down/enter)
-  |
-  selecting a result navigates via Next.js router.push()
-```
+**When:** During layout restructuring phase.
 
-### 4. Prerequisite Visualization
+**Approach:** A CSS utility class or a thin wrapper component:
 
-**Entirely computed from existing data, no new state needed.**
+```css
+/* In globals.css */
+.page-container {
+  max-width: var(--content-narrow);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+  padding-block: var(--spacing-2xl);
+}
 
-The `SessionSchema` already has `prerequisite: z.union([z.number(), z.null()])` -- a session number that must be completed before this session is available.
-
-**State derivation:**
-
-```typescript
-type SessionAvailability = 'completed' | 'available' | 'locked';
-
-function getAvailability(
-  session: Session,
-  completedSessions: Set<number>
-): SessionAvailability {
-  if (completedSessions.has(session.session_number)) return 'completed';
-  if (session.prerequisite === null) return 'available';
-  if (completedSessions.has(session.prerequisite)) return 'available';
-  return 'locked';
+@media (min-width: 1024px) {
+  .page-container { padding-inline: var(--spacing-xl); }
 }
 ```
 
-**UI treatment in SessionRow:**
-
-| State | Visual | Interaction |
-|-------|--------|-------------|
-| `completed` | Green checkmark badge | Normal link |
-| `available` | No badge (default) | Normal link |
-| `locked` | Lock icon, muted text | Link still works (soft lock, not hard block) |
-
-**Why soft lock:** Hard blocking creates frustration for ADHD users who might want to peek ahead. The lock is informational ("you should do session 7 first") not prohibitive.
-
-**Data flow:**
-
-```
-SessionListPage (server)
-  |
-  loads sessions + vault completions (as serialized number array)
-  |
-  passes as props to SessionListWithState (new client wrapper)
-  |
-  SessionListWithState merges vault completions + manual completions from LearnerStateProvider
-  |
-  computes availability per session
-  |
-  renders SessionRow with availability prop
-```
-
-### 5. "Continue Where You Left Off"
-
-**Track last-visited session in LearnerStateProvider.**
-
-```
-SessionDetailPage (server) renders SessionDetail (client)
-  |
-  useEffect on mount: update lastSession in LearnerStateProvider
-  |
-  LearnerStateProvider persists to localStorage
-
-InstrumentPage reads lastSession from LearnerStateProvider
-  |
-  renders ContinueBar: "Continue: Session 22 - Sequencer Basics"
-  |
-  only shows if lastSession.instrument matches current instrument
-```
-
-**ContinueBar component:** A prominent banner shown at the top of the instrument overview page. Shows session title, module context, and a direct link. Not dismissable -- it is the primary navigation mechanism for returning learners.
-
-### 6. Progress Streaks
-
-**Computed from completion timestamps in localStorage.**
-
-```typescript
-interface StreakInfo {
-  currentStreak: number;   // consecutive days ending today (or yesterday)
-  bestStreak: number;      // all-time best
-  lastActiveDate: string;  // ISO date
-}
-
-function computeStreak(streakDays: string[]): StreakInfo {
-  // Sort dates, walk backwards from today
-  // Count consecutive days (allowing yesterday as "still active")
-  // Track best streak seen during walk
-}
-```
-
-**ADHD-friendly streak design:** A streak is not broken until TWO days pass without activity. One day off is normal and expected per the project's design principles. This prevents guilt spirals.
-
-**Data source:** When a completion is recorded (manual toggle), add today's date to `streakDays` array. Vault-scanned completions currently lack timestamps, so they do not feed streaks.
-
-**Future enhancement:** Since Obsidian daily note filenames ARE dates (e.g., `2026-04-03.md`), vault scanning could extract dates and feed streaks. Flag this for a later phase.
-
-### 7. Clickable Progress Counts
-
-**Enhancement to existing CountCard component.**
-
-Currently `CountCard` shows a number and label. Add an optional `href` prop to make it a link:
-
-```typescript
-interface CountCardProps {
-  count: number;
-  label: string;
-  href?: string;  // NEW: optional link destination
-}
-```
-
-- "Sessions Completed" links to session list
-- "Patches Created" links to patch library
-- "Modules Done" links to module index
-- Pure UI enhancement, no architecture change needed
-
-## Component Dependency Graph and Build Order
-
-Build order matters because features share the LearnerStateProvider:
-
-```
-Phase 1: Foundation
-  LearnerStateProvider (context + localStorage + Zod schema for stored data)
-    |
-Phase 2: Core Features (can parallelize after Phase 1)
-    |
-    +-- CompletionToggle (depends on: LearnerStateProvider)
-    |
-    +-- ContinueBar (depends on: LearnerStateProvider)
-    |
-    +-- SessionRow enhancement with prereq viz (depends on: LearnerStateProvider)
-    |
-Phase 3: Computed Features (depend on completion data existing)
-    |
-    +-- StreakDisplay (depends on: CompletionToggle populating timestamp data)
-    |
-    +-- Progress page merge (depends on: LearnerStateProvider + existing progress.ts)
-    |
-    +-- Clickable CountCard (independent, can go anywhere)
-    |
-Phase 4: Independent Feature (no dependency on LearnerStateProvider)
-    |
-    +-- SearchOverlay + API route + MiniSearch integration
-```
-
-**Phase 4 (Search) can be built in parallel with Phases 1-3.** It has no dependency on the learner state system.
-
-## New Files (Predicted)
-
-| File | Type | Purpose |
-|------|------|---------|
-| `src/lib/learner-state.tsx` | Client context provider | Central mutable state management with localStorage persistence |
-| `src/lib/learner-state-schema.ts` | Zod schema | Validate localStorage data shape on load, handle migrations |
-| `src/hooks/use-learner-state.ts` | Custom hook | Convenience wrapper: `const { completions, markComplete, lastSession } = useLearnerState()` |
-| `src/lib/availability.ts` | Pure function | `getAvailability(session, completedSessions)` -- testable without React |
-| `src/lib/streaks.ts` | Pure function | `computeStreak(streakDays)` -- testable without React |
-| `src/app/api/search-index/[instrument]/route.ts` | API route (read-only) | Serve search document JSON for client-side indexing |
-| `src/components/search-overlay.tsx` | Client component | Cmd+K search dialog with MiniSearch |
-| `src/components/completion-toggle.tsx` | Client component | Manual mark-complete checkbox on session detail |
-| `src/components/continue-bar.tsx` | Client component | "Continue where you left off" banner |
-| `src/components/streak-display.tsx` | Client component | Current streak + best streak counters |
-| `src/components/session-list-with-state.tsx` | Client component | Wrapper that merges vault + manual completions, computes availability |
-
-## Modified Files (Predicted)
-
-| File | Change |
-|------|--------|
-| `src/components/app-shell.tsx` | Wrap children in `LearnerStateProvider` |
-| `src/components/session-row.tsx` | Add completion badge, prerequisite lock icon, `availability` prop |
-| `src/components/session-list.tsx` | Accept vault completion data, delegate to `SessionListWithState` |
-| `src/components/module-journey.tsx` | Add `'use client'`, "you are here" marker based on completions, click-through links |
-| `src/components/count-card.tsx` | Add optional `href` prop for navigation |
-| `src/components/session-detail.tsx` | Add CompletionToggle, track lastSession on mount |
-| `src/components/nav.tsx` | Add search trigger button (magnifying glass / Cmd+K hint) |
-| `src/app/instruments/[slug]/sessions/page.tsx` | Load vault completions, pass to enhanced session list |
-| `src/app/instruments/[slug]/progress/page.tsx` | Serialize vault completions as props for client-side merge |
-| `src/app/instruments/[slug]/page.tsx` | Add ContinueBar component |
-| `package.json` | Add `minisearch` dependency |
+This is simpler than a React component wrapper because it's purely presentational. 13 pages can be updated with find-and-replace.
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Server-Side Mutation for Completions
-**What:** Creating API routes that write completion state to a JSON file or SQLite database.
-**Why bad:** Breaks the read-only filesystem contract. Introduces write concurrency. Diverges from vault-as-source-of-truth. Adds deployment complexity on Vercel.
-**Instead:** localStorage for manual completions. The vault handles "real" tracking via daily notes.
+### Anti-Pattern 1: Touching SVG Panel Internals During Redesign
 
-### Anti-Pattern 2: Lifting All Components to Client
-**What:** Making SessionListPage, ProgressPage etc. fully `'use client'` to access learner state.
-**Why bad:** Loses server-side rendering benefits. Session content does not need client rendering.
-**Instead:** Keep page-level data loading in server components. Create thin client wrappers that receive server data as props AND access learner state from context.
+**What:** Changing the hardcoded hex values inside `evolver-panel.tsx` and `cascadia-panel.tsx` styles objects to use CSS variables.
 
-### Anti-Pattern 3: Pre-Building Search Index at Build Time
-**What:** Running a build script to generate `search-index.json` as a static asset.
-**Why bad:** When `vaultPath` is set, content comes from the live vault (which changes). A build-time index would be stale. Having two code paths (build-time for demo, runtime for vault) is fragile.
-**Instead:** API route that reads content at request time. Works identically in both modes.
+**Why bad:** The panel visualizers simulate physical hardware. Their colors (#111 panel background, #999 labels, #555 knob strokes) represent the actual instrument appearance. Making them theme-responsive would break the skeuomorphic accuracy that is the entire point of these components. Additionally, these are the two most complex components in the codebase (~800+ lines each with 110-179 controls). Any change risks breaking interaction behavior.
 
-### Anti-Pattern 4: Hard Prerequisite Locks
-**What:** Returning 404 or blocking navigation to sessions with unmet prerequisites.
-**Why bad:** ADHD users explore non-linearly. Hard blocks create frustration and may trigger abandonment.
-**Instead:** Visual indicators (lock icon, muted styling) with a tooltip explaining recommended order. Navigation always works.
+**Instead:** Only touch the outer container styling (the `className` prop on the top-level `<div>`) for integration with the page layout. Leave all internal SVG styles untouched.
 
-### Anti-Pattern 5: Multiple localStorage Keys
-**What:** Separate keys for completions, last-session, streaks, search-history.
-**Why bad:** Fragmented state, no single migration path, race conditions between independent writes.
-**Instead:** Single `evolver-learner-state` key with versioned JSON. One read on mount, one write per mutation.
+### Anti-Pattern 2: Big-Bang Component Rewrite
 
-## Demo Mode Considerations
+**What:** Rewriting all 51 components simultaneously with new visual styles.
 
-| Feature | Local Mode | Demo Mode |
-|---------|-----------|-----------|
-| Completions source | Vault scan + manual (localStorage) | Synthetic set + manual (localStorage) |
-| Search index | API route reads vault content | API route reads src/content/ |
-| Continue bar | localStorage (persists between visits) | localStorage (persists between visits) |
-| Streaks | Manual completions only (no vault timestamps) | Manual completions only |
-| Prerequisites | Computed from vault + manual completions | Computed from synthetic + manual |
+**Why bad:** No way to verify visual correctness incrementally. Regression risk is enormous. You cannot tell which component broke the layout.
 
-**Key insight:** localStorage works identically in both modes. Demo visitors can mark sessions complete, see streaks, and use "continue." This makes the demo genuinely interactive rather than purely passive.
+**Instead:** Follow the dependency order: tokens first, then prose, then shell/nav, then cards, then interactive elements, then supporting components. Each layer can be visually verified before moving to the next.
 
-## Data Flow Summary
+### Anti-Pattern 3: Adding a Component Library or CSS-in-JS
 
-```
-Filesystem (vault or bundled)
-    |
-    | (server-side read, Zod validated)
-    v
-Server Components (pages)
-    |
-    | (props: sessions, patches, vault completions as number[])
-    v
-LearnerStateProvider (client context, wraps app in AppShell)
-    |
-    | (merges vault completions + localStorage manual completions)
-    v
-Client Components
-    |
-    +-- SessionRow: shows completed/available/locked via availability prop
-    +-- CompletionToggle: writes to localStorage via context
-    +-- ContinueBar: reads lastSession from context
-    +-- StreakDisplay: computed from streakDays in context
-    +-- SearchOverlay: fetches index from API route, searches client-side with MiniSearch
-    +-- ModuleJourney: shows "you are here" based on merged completions
-```
+**What:** Introducing Radix Themes, shadcn/ui, Chakra, or styled-components as part of the redesign.
 
-## Scalability Notes
+**Why bad:** The app already has 51 working components with consistent patterns. Adding a component library means either replacing them (massive rewrite) or running two systems in parallel (inconsistency). The existing Tailwind v4 + CSS variables approach is the right architecture for this app's scale.
 
-This architecture handles the current scale (35 sessions, 20 patches, 2 instruments) comfortably. At 10 instruments with 50 sessions each (500 total), the search index would be ~500KB JSON -- still fine for client-side search. localStorage has a 5-10MB limit; completion records for 500 sessions would use ~50KB. No scaling concerns for the foreseeable multi-instrument roadmap.
+**Instead:** Use the existing pattern: Tailwind utilities + CSS variable tokens + clsx for conditional classes. The redesign is about better tokens and better visual choices, not different tooling.
+
+### Anti-Pattern 4: Introducing a Separate Theme File
+
+**What:** Creating a `theme.ts` or `design-tokens.json` that generates CSS.
+
+**Why bad:** Tailwind v4's entire philosophy is CSS-first configuration. The `@theme` block IS the theme file. Adding a JavaScript theme layer reintroduces the build-time indirection that v4 was designed to eliminate.
+
+**Instead:** Keep everything in `globals.css` `@theme`. It is inspectable in DevTools, requires no build step, and is the canonical Tailwind v4 approach.
+
+## Integration Points: New vs Modified Components
+
+### New Components (create during redesign)
+
+| Component | Purpose | Depends On |
+|-----------|---------|------------|
+| None required | The redesign is visual-only; no new components needed | - |
+
+**Important:** This is a redesign, not a feature addition. Every component already exists. The work is updating className strings and CSS rules, not creating new React components. If the redesign scope creeps into new components, that is a feature milestone, not a visual redesign.
+
+### Modified Components (update during redesign)
+
+**Tier 1 - Token Foundation (must land first):**
+- `globals.css` -- expanded @theme block, rewritten .prose rules
+
+**Tier 2 - Layout Shell (sets the visual frame):**
+- `app-shell.tsx` -- footer styling, overall page chrome
+- `nav.tsx` -- navigation bar, active states, search integration
+- `layout.tsx` -- font loading (potentially add/change fonts)
+
+**Tier 3 - Primary Content (highest visual impact):**
+- `hero-card.tsx` -- landing experience
+- `instrument-card.tsx` -- instrument selection
+- `patch-card.tsx` -- patch browsing
+- `module-card.tsx` -- module browsing
+- `count-card.tsx` -- progress dashboard
+- `session-row.tsx` -- session list items
+- `instrument-overview.tsx` -- instrument landing page
+
+**Tier 4 - Interactive Elements:**
+- `search-bar.tsx` -- input styling, dropdown
+- `search-dropdown.tsx` -- results presentation
+- `patch-filter-bar.tsx` -- pill buttons, sort dropdown
+- `completion-toggle.tsx` -- toggle states
+- `resume-bar.tsx` -- progress indicator
+
+**Tier 5 - Supporting (cascade from tokens):**
+- `prerequisite-banner.tsx`, `sticky-header.tsx`, `prev-next-nav.tsx`, `source-ref.tsx`, `confirm-dialog.tsx`, `status-indicator.tsx`, etc.
+- Most of these will look correct just from token changes without explicit modification.
+
+### Untouched Components (do not modify)
+
+- `evolver-panel.tsx` -- internal SVG rendering
+- `cascadia-panel.tsx` -- internal SVG rendering
+- `evolver-panel-tooltip.tsx` -- tooltip content (already minimal)
+- `mermaid-renderer.tsx` -- third-party rendering
+- `midi-connection.tsx`, `capture-panel.tsx`, `send-panel.tsx`, `diff-view.tsx`, `diff-picker.tsx` -- MIDI functionality pages (low traffic, functional-first)
+- All test files
+
+## Suggested Build Order
+
+This order minimizes risk and maximizes visual feedback at each step.
+
+### Phase 1: Token Foundation
+1. Expand `@theme` block with primitive + semantic layers
+2. Ensure zero visual regression (new tokens map to same values initially)
+3. Add missing tokens: `--color-surface-raised`, `--color-border`, `--color-border-subtle`, `--radius-*`, `--shadow-*`, `--content-*`
+
+### Phase 2: Prose Overhaul
+1. Rewrite `.prose` rules using new semantic tokens
+2. Refine typography scale (heading sizes, line heights, letter spacing)
+3. Improve table, callout, code block, and list styling
+4. Verify with actual session content (markdown rendering is the primary content surface)
+
+### Phase 3: Layout Shell
+1. Update Nav (height, spacing, active indicator style, search bar integration)
+2. Update AppShell footer
+3. Standardize page containers (introduce `.page-container` pattern)
+4. Update `layout.tsx` if fonts change
+
+### Phase 4: Card and Content Components
+1. Update all card components (hero, instrument, patch, module, count, session-row)
+2. Apply new border, shadow, radius, and hover tokens
+3. Update instrument-overview page layout
+
+### Phase 5: Interactive Elements
+1. Search bar input and dropdown styling
+2. Filter bar pills and sort dropdown
+3. Completion toggle, resume bar
+4. Focus and hover state consistency pass
+
+### Phase 6: Motion and Polish
+1. Add transition tokens if needed
+2. Micro-interactions (hover lifts, focus rings, state transitions)
+3. Reduced-motion variants
+4. Cross-page visual consistency audit
+
+## Scalability Considerations
+
+| Concern | Current (6 tokens) | After Redesign (~25 tokens) | Future (themes/dark-light) |
+|---------|--------------------|-----------------------------|----------------------------|
+| Token management | Flat list, easy to scan | Layered but still one file | Swap primitive layer per theme |
+| Component updates | Edit className strings | Same mechanism | Same mechanism |
+| SVG panels | Hardcoded, isolated | Unchanged | Could add theme layer later |
+| Prose rendering | Inline values | Token-referenced | Theme-responsive automatically |
+
+The layered token architecture is specifically chosen to make future theming trivial: swap the primitive layer values, and all semantic + component tokens cascade automatically. This is not needed now (the app is dark-only) but the architecture does not preclude it.
 
 ## Sources
 
-- Existing codebase: `src/lib/progress.ts`, `src/lib/content/reader.ts`, `src/lib/content/schemas.ts` -- direct inspection (HIGH confidence)
-- Session schema `prerequisite` field already defined in `schemas.ts` line 8 -- unused in UI (HIGH confidence)
-- [MiniSearch](https://github.com/lucaong/minisearch) -- 8KB client-side full-text search, zero dependencies (HIGH confidence)
-- [Next.js App Router localStorage patterns](https://app.studyraid.com/en/read/1903/31004/persisting-state-on-the-client-side) (MEDIUM confidence)
-- [FlexSearch](https://github.com/nextapps-de/flexsearch) -- considered, rejected for simpler MiniSearch API (MEDIUM confidence)
+- [Tailwind CSS v4 Theme Variables](https://tailwindcss.com/docs/theme) -- official @theme documentation (HIGH confidence)
+- [Design Tokens That Scale in 2026 (Tailwind v4 + CSS Variables)](https://www.maviklabs.com/blog/design-tokens-tailwind-v4-2026) -- three-layer token pattern (MEDIUM confidence)
+- [Epic Web Dev: Tailwind CSS Color Tokens](https://www.epicweb.dev/tutorials/tailwind-color-tokens) -- semantic color token patterns (MEDIUM confidence)
+- [Tailwind CSS v4.0 Release](https://tailwindcss.com/blog/tailwindcss-v4) -- CSS-first configuration philosophy (HIGH confidence)
+- Codebase analysis of 51 components, globals.css, and 2 SVG panel visualizers (HIGH confidence)
