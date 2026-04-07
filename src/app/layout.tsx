@@ -1,4 +1,4 @@
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { AppShell } from '@/components/app-shell';
 import { loadConfig } from '@/lib/config';
 import { discoverInstruments, loadInstrumentConfig, listSessions, listPatches } from '@/lib/content/reader';
@@ -16,6 +16,13 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains-mono',
   display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+  weight: ['700'],
 });
 
 export const metadata = {
@@ -52,7 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const searchPatches = allSearchData.flatMap((d) => d.patches);
 
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
       <body>
         <AppShell isDemoMode={isDemoMode} instruments={instruments}
           searchSessions={searchSessions} searchPatches={searchPatches}>{children}</AppShell>
