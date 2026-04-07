@@ -59,21 +59,26 @@ Exceptions: none. Prose vertical rhythm uses `em`-based margins for heading spac
 
 **Source:** CONTEXT.md D-01/D-02/D-03
 
-### Type Scale (Major Third 1.25 ratio)
+### Type Scale (4 sizes, 2 weights)
 
 Base body size: 16px (1rem)
 
 | Role | Size | Weight | Line Height | Letter Spacing | Typeface |
 |------|------|--------|-------------|----------------|----------|
-| Caption / th | 13px (0.8125rem) | 400 | 1.4 | 0 | Inter |
-| Code inline | 14px (0.875rem) | 400 | 1.5 | 0 | JetBrains Mono |
-| Body | 16px (1rem) | 400 | 1.6 | 0 | Inter |
-| h4 | 20px (1.25rem) | 600 | 1.3 | -0.01em | Inter |
-| h3 | 25px (1.5625rem) | 600 | 1.3 | -0.015em | Inter |
-| h2 | 31px (1.9375rem) | 700 | 1.2 | -0.02em | Space Grotesk |
-| h1 | 39px (2.4375rem) | 700 | 1.15 | -0.025em | Space Grotesk |
+| Display (h1, h2) | 39px (2.4375rem) | 700 | 1.15 | -0.025em | Space Grotesk |
+| Heading (h3, h4) | 25px (1.5625rem) | 700 | 1.3 | -0.015em | Inter |
+| Body (p, li) | 16px (1rem) | 400 | 1.6 | 0 | Inter |
+| Small (caption, th) | 13px (0.8125rem) | 400 | 1.4 | 0 | Inter |
 
-**Scale math:** 16 x 1.25 = 20 (h4), 20 x 1.25 = 25 (h3), 25 x 1.25 = 31 (h2), 31 x 1.25 = 39 (h1)
+**Weight palette:** 400 (regular) for body and small text, 700 (bold) for display and heading text. Two weights only.
+
+**Implementation details (not part of the named scale):**
+- Code (inline and block) renders at the mono typeface's natural size relative to body (0.875em / ~14px) — this is a font-specific adjustment, not a separate scale entry
+- h1 vs h2 differentiation uses CSS `clamp()` responsive scaling (see Responsive Type Scaling below), not separate scale sizes. Both map to the Display role: h1 renders at the full 39px on desktop, h2 at a clamped range topping out at 31px
+- h3 vs h4 differentiation: h3 renders at the full 25px, h4 at 20px (0.8x of Heading size) — a proportional step within the Heading role, not a separate scale entry
+- Generic tables use Small (13px) for cell text and th headers
+
+**Scale math:** Major third ratio (1.25) from 16px base: 16 x 1.25^2 = 25 (Heading), 16 x 1.25^3.2 ~ 39 (Display). Small = 16 / 1.25 ~ 13.
 
 **Source:** CONTEXT.md D-04/D-05. Sizes rounded to nearest integer for rendering crispness. Negative letter-spacing on headings tightens Space Grotesk for editorial feel (Claude's discretion per CONTEXT.md).
 
@@ -82,8 +87,8 @@ Base body size: 16px (1rem)
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
 | h1 (in quick-ref) | 20px | 700 | 1.2 |
-| h2 (in quick-ref) | 16px | 600 | 1.3 |
-| h3 (in quick-ref) | 14px | 600 | 1.3 |
+| h2 (in quick-ref) | 16px | 700 | 1.3 |
+| h3 (in quick-ref) | 14px | 700 | 1.3 |
 
 **Source:** Existing globals.css `.quick-ref-prose` rules (preserved, not redesigned)
 
@@ -134,12 +139,12 @@ These elements override within the prose context. The typography plugin handles 
 | Param table | `.param-table` | Accent-colored left border (3px solid `--color-accent`), surface background on header row, `.param-name` in body weight, `.param-value` in mono + param color. Table flows inline with prose, no card container (D-10) |
 | Callout | `.callout[data-callout]` | Surface background, left border colored per type (see Callout Type Colors above), icon per type, rounded right corners (0 `--radius-md` `--radius-md` 0), md padding (D-11) |
 | Task list | `.contains-task-list` | No list-style, no left padding, checkbox accent-color matches `--color-accent` |
-| Code block | `pre > code` | Surface background, md padding, `--radius-md` corners, mono font at 14px, horizontal scroll |
-| Inline code | `p code, li code` | Surface background, xs vertical + sm horizontal padding, `--radius-sm` corners, param color, mono font at 14px |
-| Obsidian tag | `.obsidian-tag` | Muted text, small size (13px), no decoration -- unobtrusive metadata (Claude's discretion) |
+| Code block | `pre > code` | Surface background, md padding, `--radius-md` corners, mono font at 0.875em (~14px), horizontal scroll |
+| Inline code | `p code, li code` | Surface background, xs vertical + sm horizontal padding, `--radius-sm` corners, param color, mono font at 0.875em (~14px) |
+| Obsidian tag | `.obsidian-tag` | Muted text, Small size (13px), no decoration -- unobtrusive metadata (Claude's discretion) |
 | Mermaid placeholder | `.mermaid-placeholder` | Surface background, lg padding, `--radius-md` corners, centered muted text, xl vertical margin |
 | Heading anchor | `a.heading-anchor` | No underline, inherit color, accent on hover |
-| Tables (generic) | `.prose table` | Full width, collapse borders, 14px font, th in muted + 600 weight, even-row surface stripe, border-subtle row separators |
+| Tables (generic) | `.prose table` | Full width, collapse borders, Small size (13px), th in muted + 700 weight, even-row surface stripe, border-subtle row separators |
 
 ### Responsive Type Scaling
 
