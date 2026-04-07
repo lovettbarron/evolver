@@ -43,6 +43,47 @@
 
 ---
 
+## Milestone: v1.2 — Learner Experience & Discovery
+
+**Shipped:** 2026-04-07
+**Phases:** 4 | **Plans:** 12 | **Commits:** 90
+
+### What Was Built
+- Persistent learner state with Zustand 5 store, per-instrument completion tracking, and vault+manual union merge
+- Navigation enhancements: prerequisite badges, resume bar, module journey "you are here" marker, clickable count cards, cumulative metrics
+- Full-text search across sessions and patches with global search bar and patch filter bar (type/tag/sort)
+- Troubleshooting guides and 4 transitional partial recipe sessions for both instruments
+
+### What Worked
+- **Parallelization of Phase 15+16**: Search & Filtering had no dependency on Learner State, so both ran concurrently — saved approximately a day
+- **TDD for search engine (Phase 16)**: 22 pure-function tests before building UI meant zero rework on the search logic
+- **Phase 17 as independent content work**: No code dependencies on 14-16, could run in parallel with UI phases
+- **Union merge semantics for completions**: Simple rule (vault OR manual = complete) avoided complex conflict resolution
+
+### What Was Inefficient
+- **Plan 15-02 was absorbed into 15-01 and 15-03**: The clickable count cards + module journey plan overlapped with its neighbors, creating merge conflicts in the worktree
+- **ROADMAP plan checkboxes drifted**: Some plans marked `[ ]` despite being completed on disk — manual tracking lag from parallel worktrees
+- **No REQUIREMENTS.md for v1.2**: Requirements were embedded in ROADMAP.md phase descriptions rather than a standalone file, making traceability harder
+
+### Patterns Established
+- **Zustand 5 with persist middleware** as the standard for client-side state that survives browser restarts
+- **Soft visual gating** for prerequisites — inform without blocking, ADHD-friendly
+- **TDD for pure function modules** — write failing tests first when the logic is separable from UI
+- **Symptom-based troubleshooting** format: "I hear nothing" → checklist with specific parameter names and values
+
+### Key Lessons
+1. **Parallel worktrees create merge overhead** — 3-way merge conflicts in STATE.md and ROADMAP.md required manual resolution; worth it for speed but needs cleaner state isolation
+2. **Content phases are still the fastest** — Phase 17 (content + pedagogy) completed in one session with minimal rework, confirming v1.1 observation
+3. **v1.2 was the fastest milestone yet** — 12 plans in 2 days vs v1.1's 25 plans in 6 days, showing velocity improvement from established patterns
+4. **Standalone REQUIREMENTS.md is worth maintaining** — embedding requirements in ROADMAP.md phase descriptions made milestone completion harder to validate
+
+### Cost Observations
+- Model mix: Opus for execution, Sonnet for research/planning agents
+- Sessions: ~6 across 2 days
+- Notable: Fastest milestone per plan — parallelization and established patterns paid off
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -51,8 +92,11 @@
 |-----------|---------|--------|-------|------------|
 | v1.0 | ~137 | 6 | 23 | Established GSD workflow, vault reader pattern |
 | v1.1 | 194 | 8 | 25 | Added milestone audit, decimal phases, panel visualizers |
+| v1.2 | 90 | 4 | 12 | Parallel worktrees, TDD for pure functions, fastest milestone |
 
 ### Top Lessons (Verified Across Milestones)
 
-1. Phase ordering based on data dependencies prevents rework (validated in both v1.0 and v1.1)
+1. Phase ordering based on data dependencies prevents rework (validated in v1.0, v1.1, v1.2)
 2. Validate format/schema before committing to bulk content (v1.0: curriculum after pipeline, v1.1: patch schema before patches)
+3. Content phases execute fastest and most reliably (confirmed across all three milestones)
+4. Parallelization of independent phases saves wall-clock time but creates merge overhead in shared state files

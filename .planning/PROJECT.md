@@ -10,31 +10,17 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 
 ## Current State
 
-**Shipped:** v1.1 Cascadia Instrument Support (2026-04-05)
-- Two instruments fully supported: Evolver (35 sessions) and Cascadia (25 sessions)
+**Shipped:** v1.2 Learner Experience & Discovery (2026-04-07)
+- Two instruments fully supported: Evolver (37 sessions) and Cascadia (27 sessions)
 - Interactive panel visualizers for both instruments with 289 total controls
 - 36 documented patches (23 Evolver + 13 Cascadia) across all categories
 - MIDI SysEx integration (Evolver only — Cascadia is CV-only)
 - Demo mode with synthetic learner journeys for both instruments
-- Tech stack: Next.js 15, React 19, Tailwind v4, TypeScript, Zod, ~43K LOC
-
-**Phase 17 complete:** Content & Pedagogy (2026-04-07)
-- Troubleshooting guides for both instruments (4 symptom sections, 5 checklist items each with specific parameter values)
-- 4 transitional partial recipe sessions (2 per instrument) with blanks and hints referencing prior sessions
-- Full code infrastructure: TroubleshootingSchema, content reader, route page, instrument home card
-
-**Phase 16 complete:** Search & Filtering (2026-04-06)
-- Global search bar in nav with instant results grouped by Sessions and Patches
-- Patch filter bar with multi-select type pills, tag pills, sort dropdown
-- URL param persistence for filter state
-- Pure search/filter/sort engine with 22 unit tests (TDD)
-
-**Phase 15 complete:** Navigation & Progress Enhancements (2026-04-06)
-- Prerequisite state badges (checkmark/circle/lock) on session list
-- Dismissible prerequisite banner on session detail pages
-- Clickable count cards with hover lift affordance on progress page
-- Cumulative practice metrics (sessions this month, active weeks)
-- "You are here" pulsing dot on module journey visualization
+- Persistent learner state: Zustand 5 store with completion tracking and vault+manual union merge
+- Navigation: prerequisite badges, resume bar, module journey "you are here" marker, clickable count cards
+- Search: global search bar with instant results, patch filter bar with type/tag/sort
+- Content: troubleshooting guides and partial recipe transitional sessions for both instruments
+- Tech stack: Next.js 15, React 19, Tailwind v4, TypeScript, Zod, ~55K LOC
 
 ## Current Milestone: v1.3 Visual Redesign
 
@@ -68,6 +54,15 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - ✓ Cascadia demo mode (synthetic journey, content bundling, both instruments) — v1.1
 - ✓ Evolver panel visualizer (110 controls, drag interaction, tooltips, 4 integration contexts) — v1.1
 - ✓ Cascadia panel visualizer (179 controls, cable rendering, session annotations) — v1.1
+- ✓ Persistent learner state (Zustand store, completion toggle, vault+manual merge) — v1.2
+- ✓ Resume bar ("continue where you left off" with last-visited tracking) — v1.2
+- ✓ Prerequisite state badges (locked/available/completed with soft gating) — v1.2
+- ✓ Module journey "you are here" marker — v1.2
+- ✓ Clickable count cards and cumulative practice metrics — v1.2
+- ✓ Global search (sessions + patches, instant results) — v1.2
+- ✓ Patch filtering (type/tag multi-select, sort options, URL persistence) — v1.2
+- ✓ Troubleshooting guides (symptom-based checklists per instrument) — v1.2
+- ✓ Transitional partial recipe sessions (4 sessions, 2 per instrument) — v1.2
 
 ### Active
 
@@ -144,6 +139,10 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 | Cascadia control ID: {type}-{module}-{name-kebab} | Consistent naming across 179 controls | ✓ Good |
 | Section tint opacity 0.08 cross-panel standard | Subtle enough to not obscure controls | ✓ Good |
 | Cable bezier droop: min(80, 30 + dx * 0.15) | Natural droop that scales with distance | ✓ Good |
+| Zustand 5 with persist middleware | Client-side state survives browser restart, simpler than Context API | ✓ Good |
+| Union merge for completions (vault OR manual) | Never lose progress — if either source says complete, it is | ✓ Good |
+| Soft visual gating for prerequisites | Informs learner without blocking — ADHD-friendly, no frustration gates | ✓ Good |
+| TDD for search/filter pure functions | 22 tests before UI ensures correctness; pure functions easy to test | ✓ Good |
 
 ---
 ## Evolution
@@ -164,4 +163,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-07 after milestone v1.3 started*
+*Last updated: 2026-04-07 after v1.2 milestone completed*

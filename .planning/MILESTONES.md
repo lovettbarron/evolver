@@ -1,5 +1,26 @@
 # Milestones: Instrument Deep Learning
 
+## v1.2 Learner Experience & Discovery (Shipped: 2026-04-07)
+
+**Phases completed:** 4 phases (14-17), 12 plans, 24 tasks
+**Timeline:** 2 days (2026-04-05 → 2026-04-07), 90 commits, 112 files changed (+12,329 / -550)
+
+**What shipped:**
+
+- Persistent learner state: Zustand 5 store with persist middleware for per-instrument completion tracking, vault+manual union merge, and "continue where you left off" resume bar
+- Navigation enhancements: prerequisite state badges (locked/available/completed), clickable count cards, module journey "you are here" pulsing dot marker, cumulative practice metrics
+- Search & filtering: TDD pure-function search engine, global search bar with instant results, patch filter bar with multi-select type/tag pills and sort options
+- Content & pedagogy: troubleshooting guides for both instruments (symptom-based checklists with specific parameter values), 4 transitional partial recipe sessions
+
+**Key decisions:**
+
+- Zustand 5 with persist middleware over Context API for client-side state
+- Union merge semantics: vault OR manual = complete (never loses progress)
+- Soft visual gating for prerequisites (informs, doesn't block)
+- TDD approach for search/filter pure functions (22 unit tests before UI)
+
+---
+
 ## v1.1 Cascadia Instrument Support (Shipped: 2026-04-05)
 
 **Phases completed:** 8 phases (7-13.1), 25 plans, 34 tasks

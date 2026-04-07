@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-04-07)
 Phase: Not started (defining requirements)
 Plan: —
 Status: Defining requirements
-Last activity: 2026-04-07 — Milestone v1.3 started
+Last activity: 2026-04-07 — v1.2 archived, v1.3 started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -56,7 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 
 Decisions are logged in PROJECT.md Key Decisions table.
 v1.1 decisions archived to milestones/v1.1-ROADMAP.md.
-v1.2 decisions accumulated during phases 14-17.
+v1.2 decisions archived to milestones/v1.2-ROADMAP.md.
 
 ### Roadmap Evolution
 
@@ -73,5 +73,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-07
-Stopped at: Milestone v1.3 started
+Stopped at: v1.2 milestone archived, v1.3 defining requirements
 Resume file: None
