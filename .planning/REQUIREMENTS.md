@@ -9,11 +9,11 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 
 ### Design Tokens
 
-- [ ] **TOKEN-01**: User sees a warm dark color palette with 5+ surface elevation levels (bg, sunken, surface, raised, overlay)
+- [x] **TOKEN-01**: User sees a warm dark color palette with 5+ surface elevation levels (bg, sunken, surface, raised, overlay)
 - [ ] **TOKEN-02**: User sees a modular typography scale with distinct heading and body typefaces
 - [ ] **TOKEN-03**: User sees consistent spacing applied uniformly across all pages and components
-- [ ] **TOKEN-04**: User sees all text/background combinations meeting WCAG AA contrast ratios (4.5:1 minimum)
-- [ ] **TOKEN-05**: User sees warm dark tones (olive/brown undertones) instead of cold pure grays
+- [x] **TOKEN-04**: User sees all text/background combinations meeting WCAG AA contrast ratios (4.5:1 minimum)
+- [x] **TOKEN-05**: User sees warm dark tones (olive/brown undertones) instead of cold pure grays
 - [ ] **TOKEN-06**: User sees subtly different accent colors for Evolver vs Cascadia instrument sections
 
 ### Layout
@@ -64,11 +64,11 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TOKEN-01 | Phase 18 | Pending |
+| TOKEN-01 | Phase 18 | Complete |
 | TOKEN-02 | Phase 19 | Pending |
 | TOKEN-03 | Phase 18 | Pending |
-| TOKEN-04 | Phase 18 | Pending |
-| TOKEN-05 | Phase 18 | Pending |
+| TOKEN-04 | Phase 18 | Complete |
+| TOKEN-05 | Phase 18 | Complete |
 | TOKEN-06 | Phase 23 | Pending |
 | LAYOUT-01 | Phase 20 | Pending |
 | LAYOUT-02 | Phase 20 | Pending |
