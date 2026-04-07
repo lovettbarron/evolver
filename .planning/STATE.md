@@ -4,8 +4,8 @@ milestone: v1.2
 milestone_name: Learner Experience & Discovery
 status: executing
 stopped_at: Completed 17-03-PLAN.md
-last_updated: "2026-04-06T21:01:18.373Z"
-last_activity: 2026-04-06
+last_updated: "2026-04-06T21:41:12.203Z"
+last_activity: 2026-04-06 -- Phase 17 execution started
 progress:
   total_phases: 4
   completed_phases: 3
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-05)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 16 — search-filtering
+**Current focus:** Phase 17 — content-pedagogy
 
 ## Current Position
 
-Phase: 17
-Plan: Not started
-Status: Executing Phase 16
-Last activity: 2026-04-06
+Phase: 17 (content-pedagogy) — EXECUTING
+Plan: 1 of 3
+Status: Executing Phase 17
+Last activity: 2026-04-06 -- Phase 17 execution started
 
 Progress: [░░░░░░░░░░] 0%
 

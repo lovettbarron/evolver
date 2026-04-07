@@ -45,7 +45,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 - [x] **Phase 14: Learner State Foundation** — Zustand store with persist middleware, completion toggle, last-visited tracking, vault+manual merge, resume bar (completed 2026-04-06)
 - [x] **Phase 15: Navigation & Progress Enhancements** — Prerequisite state badges, clickable count cards, module journey "you are here" marker, cumulative practice metrics (completed 2026-04-06)
 - [x] **Phase 16: Search & Filtering** — Full-text search across sessions and patches, tag/type filtering with sort options (completed 2026-04-06)
-- [ ] **Phase 17: Content & Pedagogy** — Troubleshooting guides and transitional "partial recipe" sessions
+- [x] **Phase 17: Content & Pedagogy** — Troubleshooting guides and transitional "partial recipe" sessions (completed 2026-04-07)
 
 ### Phase 14: Learner State Foundation
 **Goal**: Users have persistent learning state that survives browser restarts — they can mark sessions complete, and the app remembers where they left off
@@ -107,8 +107,8 @@ Plans:
 **Plans**: 1/3 plans complete
 
 Plans:
-- [ ] 17-01-PLAN.md -- Troubleshooting guides for both instruments
-- [ ] 17-02-PLAN.md -- Session design patterns and ADHD-aware scaffolding
+- [x] 17-01-PLAN.md -- Troubleshooting guides for both instruments
+- [x] 17-02-PLAN.md -- Session design patterns and ADHD-aware scaffolding
 - [x] 17-03-PLAN.md -- Partial recipe sessions (2 per instrument)
 
 ## Progress
@@ -135,4 +135,4 @@ Phases 14 first (foundation). Then 15+16 can parallelize. Phase 17 is independen
 | 14. Learner State Foundation | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 15. Navigation & Progress Enhancements | v1.2 | 2/3 | Complete    | 2026-04-06 |
 | 16. Search & Filtering | v1.2 | 2/3 | Complete    | 2026-04-06 |
-| 17. Content & Pedagogy | v1.2 | 1/3 | In Progress | - |
+| 17. Content & Pedagogy | v1.2 | 3/3 | Complete   | 2026-04-07 |
