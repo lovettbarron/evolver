@@ -173,16 +173,16 @@
 .prose ul, .prose ol { margin-bottom: 1em; padding-left: 1.5em; }
 .prose li { margin-bottom: 0.25em; }
 
-.prose code {
+.prose :where(code) {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 0.875em;
   color: var(--color-param);
   background-color: var(--color-surface);
   padding: 2px 6px;
   border-radius: 3px;
 }
 
-.prose pre {
+.prose :where(pre) {
   background-color: var(--color-surface);
   padding: var(--spacing-md);
   border-radius: 6px;
@@ -190,9 +190,11 @@
   margin-bottom: 1em;
 }
 
-.prose pre code {
+.prose :where(pre code) {
   background: none;
   padding: 0;
+  font-size: 0.875em;
+  color: var(--color-text);
 }
 
 /* Base table styling for all markdown tables */
@@ -222,21 +224,24 @@
   background-color: var(--color-surface);
 }
 
-/* Parameter table styling from Phase 1 HTML classes */
+/* Parameter table styling — accent left border, inline with prose (D-10) */
 .prose .param-table {
-  width: 100%;
+  border-left: 3px solid var(--color-accent);
   border-collapse: collapse;
   margin-bottom: 1em;
   font-size: 14px;
+  width: 100%;
 }
 
 .prose .param-table th {
   text-align: left;
   padding: 8px 12px;
+  background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-muted);
   color: var(--color-muted);
   font-weight: 400;
   font-family: var(--font-sans);
+  font-size: 13px;
 }
 
 .prose .param-table td {
@@ -247,6 +252,7 @@
 .prose .param-table .param-name {
   color: var(--color-text);
   font-family: var(--font-sans);
+  font-weight: 400;
 }
 
 .prose .param-table .param-value {
@@ -258,7 +264,7 @@
   background-color: var(--color-surface);
 }
 
-/* Callout styling */
+/* Callout styling — type-specific colors (D-11) */
 .prose .callout {
   background-color: var(--color-surface);
   border-left: 3px solid var(--color-accent);
@@ -267,12 +273,38 @@
   border-radius: 0 6px 6px 0;
 }
 
-.prose .callout[data-callout="challenge"] {
-  border-left-color: var(--color-accent);
+.prose .callout .callout-title {
+  color: var(--color-accent);
+  font-weight: 700;
+  margin-bottom: 0.5em;
 }
 
+.prose .callout[data-callout="challenge"] {
+  border-left-color: oklch(0.75 0.15 85);
+}
 .prose .callout[data-callout="challenge"] .callout-title {
-  color: var(--color-accent);
+  color: oklch(0.75 0.15 85);
+}
+
+.prose .callout[data-callout="tip"] {
+  border-left-color: oklch(0.70 0.15 145);
+}
+.prose .callout[data-callout="tip"] .callout-title {
+  color: oklch(0.70 0.15 145);
+}
+
+.prose .callout[data-callout="warning"] {
+  border-left-color: oklch(0.65 0.20 25);
+}
+.prose .callout[data-callout="warning"] .callout-title {
+  color: oklch(0.65 0.20 25);
+}
+
+/* Obsidian tag styling — muted metadata */
+.prose .obsidian-tag {
+  color: var(--color-muted);
+  font-size: 13px;
+  text-decoration: none;
 }
 
 /* Task list styling */
