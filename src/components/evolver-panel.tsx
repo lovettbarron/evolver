@@ -255,7 +255,8 @@ function EvolverPanelInner({
 
   // Event delegation: find the closest control element from any hover target
   const findControlId = useCallback((target: EventTarget | null): string | null => {
-    let el = target as Element | null;
+    if (!target || !(target instanceof Element)) return null;
+    let el: Element | null = target;
     while (el && el !== svgRef.current) {
       const id = el.getAttribute('id');
       if (id && CONTROL_METADATA[id]) return id;
