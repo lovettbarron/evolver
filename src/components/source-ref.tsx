@@ -4,7 +4,19 @@ import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 const PdfViewer = dynamic(
-  () => import('./pdf-viewer').then((m) => ({ default: m.PdfViewer })),
+  () =>
+    import('./pdf-viewer')
+      .then((m) => ({ default: m.PdfViewer }))
+      .catch(() => ({
+        default: ({ onClose }: { onClose: () => void; src: string; initialPage?: number }) => (
+          <div className="fixed inset-0 z-50 bg-bg/95 flex items-center justify-center">
+            <div className="text-center p-xl">
+              <p className="text-muted mb-md">PDF viewer failed to load.</p>
+              <button onClick={onClose} className="text-accent hover:underline">Close</button>
+            </div>
+          </div>
+        ),
+      })),
   { ssr: false },
 );
 
