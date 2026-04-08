@@ -56,7 +56,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 **Milestone Goal:** Comprehensive visual and layout redesign — new design system, typography, color palette, layout structure, interactive element styling, and polished markdown rendering that feels native, not like raw markdown.
 
 - [x] **Phase 18: Token Foundation** - OKLCH color palette, spacing scale, contrast validation, warm dark surface elevations (completed 2026-04-07)
-- [ ] **Phase 19: Prose & Typography** - Modular type scale, polished markdown rendering via @tailwindcss/typography with domain overrides
+- [x] **Phase 19: Prose & Typography** - Modular type scale, polished markdown rendering via @tailwindcss/typography with domain overrides (completed 2026-04-08)
 - [ ] **Phase 20: Layout Shell & Navigation** - Navigation bar redesign, responsive page shells, footer, instrument-aware layout variation
 - [ ] **Phase 21: Cards & Content Components** - Unified card visual language, focus states, editorial session layout with designed markers
 - [ ] **Phase 22: Interactive Elements & Motion** - Micro-interactions, scroll reveals, spring transitions via motion package
@@ -91,7 +91,7 @@ Plans:
 **Plans**: 2 plans
 Plans:
 - [x] 19-01-PLAN.md — Font setup + typography plugin + type scale + prose color overrides
-- [ ] 19-02-PLAN.md — Domain element editorial restyling + visual checkpoint
+- [x] 19-02-PLAN.md — Domain element editorial restyling + visual checkpoint
 **UI hint**: yes
 
 ### Phase 20: Layout Shell & Navigation
@@ -183,7 +183,7 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 16. Search & Filtering | v1.2 | 3/3 | Complete | 2026-04-06 |
 | 17. Content & Pedagogy | v1.2 | 3/3 | Complete | 2026-04-07 |
 | 18. Token Foundation | v1.3 | 3/3 | Complete    | 2026-04-07 |
-| 19. Prose & Typography | v1.3 | 1/2 | In Progress|  |
+| 19. Prose & Typography | v1.3 | 2/2 | Complete   | 2026-04-08 |
 | 20. Layout Shell & Navigation | v1.3 | 0/0 | Not started | - |
 | 21. Cards & Content Components | v1.3 | 0/0 | Not started | - |
 | 22. Interactive Elements & Motion | v1.3 | 0/0 | Not started | - |

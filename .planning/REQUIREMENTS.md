@@ -25,7 +25,7 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 
 ### Content
 
-- [ ] **CONTENT-01**: User sees markdown content rendered as polished prose — styled headings, tables, code blocks, callouts, and task lists that look designed
+- [x] **CONTENT-01**: User sees markdown content rendered as polished prose — styled headings, tables, code blocks, callouts, and task lists that look designed
 - [ ] **CONTENT-02**: User sees session content with editorial layout — parameter callouts as styled inline elements, numbered steps as designed markers, section dividers
 
 ### Components
@@ -74,7 +74,7 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 | LAYOUT-02 | Phase 20 | Pending |
 | LAYOUT-03 | Phase 20 | Pending |
 | LAYOUT-04 | Phase 20 | Pending |
-| CONTENT-01 | Phase 19 | Pending |
+| CONTENT-01 | Phase 19 | Complete |
 | CONTENT-02 | Phase 21 | Pending |
 | COMP-01 | Phase 21 | Pending |
 | COMP-02 | Phase 21 | Pending |
