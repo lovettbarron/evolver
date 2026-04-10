@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: in-progress
-stopped_at: Completed 20-01-PLAN.md
-last_updated: "2026-04-10T20:18:00.000Z"
+stopped_at: Completed 20-02-PLAN.md
+last_updated: "2026-04-10T20:19:06.084Z"
 last_activity: 2026-04-10
 progress:
   total_phases: 6
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-07)
 ## Current Position
 
 Phase: 20
-Plan: 1 of 3 complete
+Plan: 2 of 3 complete
 Status: In progress
 Last activity: 2026-04-10
 
@@ -56,6 +56,7 @@ Recent decisions affecting current work:
 - [Phase 19]: Prose domain rules placed outside @layer base for CSS specificity over Tailwind typography defaults
 - [Phase 20]: Nav height 60px, per-instrument accent via [data-instrument] CSS override
 - [Phase 20]: Active link uses 2px accent bottom bar instead of underline
+- [Phase 20]: Footer uses wide shell width (1200px) matching UI-SPEC D-08
 
 ### Pending Todos
 
@@ -69,6 +70,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-10T20:18:00.000Z
-Stopped at: Completed 20-01-PLAN.md
-Resume file: .planning/phases/20-layout-shell-navigation/20-02-PLAN.md
+Last session: 2026-04-10T20:19:06.081Z
+Stopped at: Completed 20-02-PLAN.md
+Resume file: .planning/phases/20-layout-shell-navigation/20-03-PLAN.md
