@@ -22,7 +22,7 @@ export function StickyHeader({
 
   return (
     <>
-      <header className="sticky top-0 z-40 h-[48px] bg-surface flex items-center px-lg border-b border-muted/20">
+      <header className="sticky top-[60px] z-40 h-[48px] bg-surface flex items-center px-lg border-b border-muted/20">
         <Link
           href={backHref}
           aria-label="Back to session list"

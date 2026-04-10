@@ -13,6 +13,7 @@ vi.mock('next/link', () => ({
 const mockUsePathname = vi.fn();
 vi.mock('next/navigation', () => ({
   usePathname: () => mockUsePathname(),
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), prefetch: vi.fn() }),
 }));
 
 const instruments = [
@@ -89,5 +90,66 @@ describe('Nav dynamic instrument rendering', () => {
     expect(screen.queryByText('Patches')).toBeNull();
     expect(screen.queryByText('MIDI')).toBeNull();
     expect(screen.queryByText('Progress')).toBeNull();
+  });
+});
+
+describe('Nav visual styling', () => {
+  beforeEach(() => {
+    mockUsePathname.mockReset();
+  });
+
+  test('renders brand wordmark with Space Grotesk display font', () => {
+    mockUsePathname.mockReturnValue('/');
+    const { container } = render(<Nav instruments={instruments} />);
+
+    const brandSpan = container.querySelector('.font-display');
+    expect(brandSpan).toBeDefined();
+    expect(brandSpan?.textContent).toContain('evolver');
+  });
+
+  test('renders active link with accent indicator bar', () => {
+    mockUsePathname.mockReturnValue('/instruments/evolver/sessions');
+    render(<Nav instruments={instruments} />);
+
+    const sessionsLink = screen.getByText('Sessions').closest('a');
+    expect(sessionsLink?.getAttribute('aria-current')).toBe('page');
+
+    // Check for accent indicator bar
+    const indicatorBar = sessionsLink?.querySelector('.bg-accent');
+    expect(indicatorBar).toBeDefined();
+    expect(indicatorBar).not.toBeNull();
+  });
+
+  test('renders inactive link with muted color', () => {
+    mockUsePathname.mockReturnValue('/instruments/evolver/sessions');
+    render(<Nav instruments={instruments} />);
+
+    const patchesLink = screen.getByText('Patches').closest('a');
+    expect(patchesLink?.className).toContain('text-muted');
+  });
+
+  test('nav bar has 60px height class', () => {
+    mockUsePathname.mockReturnValue('/');
+    const { container } = render(<Nav instruments={instruments} />);
+
+    const nav = container.querySelector('nav');
+    expect(nav?.className).toContain('h-[60px]');
+  });
+
+  test('inactive link does not have aria-current attribute', () => {
+    mockUsePathname.mockReturnValue('/instruments/evolver/sessions');
+    render(<Nav instruments={instruments} />);
+
+    const patchesLink = screen.getByText('Patches').closest('a');
+    expect(patchesLink?.getAttribute('aria-current')).toBeNull();
+  });
+
+  test('nav bar has sticky positioning and raised surface', () => {
+    mockUsePathname.mockReturnValue('/');
+    const { container } = render(<Nav instruments={instruments} />);
+
+    const nav = container.querySelector('nav');
+    expect(nav?.className).toContain('sticky');
+    expect(nav?.className).toContain('bg-surface-raised');
   });
 });

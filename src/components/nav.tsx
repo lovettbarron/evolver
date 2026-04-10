@@ -43,8 +43,8 @@ export function Nav({
   }
 
   return (
-    <nav className="flex items-center gap-lg px-lg h-[48px] bg-surface border-b border-surface">
-      <span className="font-mono text-sm text-muted tracking-wider uppercase flex items-center gap-sm">
+    <nav className="sticky top-0 z-sticky flex items-center gap-lg px-lg h-[60px] bg-surface-raised border-b border-border shadow-[0_1px_4px_oklch(0_0_0/0.2)]">
+      <span className="font-display text-[20px] font-bold text-text tracking-[-0.025em] flex items-center gap-sm hover:text-accent transition-colors duration-150">
         evolver
         {isDemoMode && (
           <span className="text-[10px] font-mono uppercase tracking-wider text-bg bg-accent/80 px-xs py-[1px] rounded">
@@ -54,7 +54,7 @@ export function Nav({
       </span>
       <InstrumentSwitcher instruments={instruments} currentSlug={currentSlug} />
       <SearchBar />
-      <div className="flex items-center gap-md overflow-x-auto ml-auto">
+      <div className="hidden md:flex items-center gap-md overflow-x-auto ml-auto">
         {subLinks.map((link) => {
           const isActive =
             link.href === '/'
@@ -65,14 +65,18 @@ export function Nav({
             <Link
               key={link.href}
               href={link.href}
+              aria-current={isActive ? 'page' : undefined}
               className={clsx(
-                'text-sm whitespace-nowrap min-h-[48px] flex items-center transition-colors',
+                'text-sm whitespace-nowrap h-[60px] flex items-center transition-colors duration-150 relative focus:outline-2 focus:outline-accent focus:outline-offset-2',
                 isActive
-                  ? 'text-text underline underline-offset-4'
+                  ? 'text-text'
                   : 'text-muted hover:text-text',
               )}
             >
               {link.label}
+              {isActive && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent" aria-hidden="true" />
+              )}
             </Link>
           );
         })}
