@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
-status: in-progress
-stopped_at: Completed 20-02-PLAN.md
-last_updated: "2026-04-10T20:19:06.084Z"
-last_activity: 2026-04-10
+status: completed
+stopped_at: Completed 19-02-PLAN.md
+last_updated: "2026-04-08T05:40:46.309Z"
+last_activity: 2026-04-08
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 8
-  completed_plans: 6
-  percent: 75
+  total_plans: 5
+  completed_plans: 5
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-07)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 20 — layout-shell-navigation
+**Current focus:** Phase 20 — layout-shell-navigation (complete)
 
 ## Current Position
 
 Phase: 20
-Plan: 2 of 3 complete
-Status: In progress
+Plan: 3 of 3
+Status: Phase 20 complete
 Last activity: 2026-04-10
 
-Progress: [███████░░░] 75% (v1.3 milestone)
+Progress: [█████░░░░░] 50% (v1.3 milestone — 3/6 phases)
 
 ## Performance Metrics
 
@@ -57,6 +57,9 @@ Recent decisions affecting current work:
 - [Phase 20]: Nav height 60px, per-instrument accent via [data-instrument] CSS override
 - [Phase 20]: Active link uses 2px accent bottom bar instead of underline
 - [Phase 20]: Footer uses wide shell width (1200px) matching UI-SPEC D-08
+- [Phase 20]: AppShell converted to client component for usePathname-based data-instrument attribute
+- [Phase 20]: Mobile hamburger menu uses slideDown keyframe with motion-safe prefix
+- [Phase 20]: Content width strategy — NarrowShell (720px) for reading, WideShell (1200px) for browsing
 
 ### Pending Todos
 
@@ -70,6 +73,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-10T20:19:06.081Z
-Stopped at: Completed 20-02-PLAN.md
-Resume file: .planning/phases/20-layout-shell-navigation/20-03-PLAN.md
+Last session: 2026-04-10T21:00:00Z
+Stopped at: Completed 20-03-PLAN.md
+Resume file: None
