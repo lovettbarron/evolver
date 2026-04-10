@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Nav } from '@/components/nav';
 
 // Mock next/link to render as a plain anchor
@@ -151,5 +151,75 @@ describe('Nav visual styling', () => {
     const nav = container.querySelector('nav');
     expect(nav?.className).toContain('sticky');
     expect(nav?.className).toContain('bg-surface-raised');
+  });
+});
+
+describe('Nav mobile hamburger menu', () => {
+  beforeEach(() => {
+    mockUsePathname.mockReset();
+  });
+
+  test('renders hamburger button on mobile (md:hidden)', () => {
+    mockUsePathname.mockReturnValue('/');
+    render(<Nav instruments={instruments} />);
+
+    const button = screen.getByLabelText('Toggle navigation');
+    expect(button).toBeDefined();
+    expect(button.className).toContain('md:hidden');
+  });
+
+  test('hamburger button has aria-expanded=false by default', () => {
+    mockUsePathname.mockReturnValue('/');
+    render(<Nav instruments={instruments} />);
+
+    const button = screen.getByLabelText('Toggle navigation');
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  test('mobile menu is not rendered when closed', () => {
+    mockUsePathname.mockReturnValue('/');
+    render(<Nav instruments={instruments} />);
+
+    const mobileMenu = screen.queryByRole('navigation', { name: 'Navigation menu' });
+    expect(mobileMenu).toBeNull();
+  });
+
+  test('clicking hamburger opens mobile menu', () => {
+    mockUsePathname.mockReturnValue('/instruments/evolver/sessions');
+    render(<Nav instruments={instruments} />);
+
+    const button = screen.getByLabelText('Toggle navigation');
+    fireEvent.click(button);
+
+    const mobileMenu = screen.getByRole('navigation', { name: 'Navigation menu' });
+    expect(mobileMenu).toBeDefined();
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  test('clicking hamburger again closes mobile menu', () => {
+    mockUsePathname.mockReturnValue('/instruments/evolver/sessions');
+    render(<Nav instruments={instruments} />);
+
+    const button = screen.getByLabelText('Toggle navigation');
+    fireEvent.click(button);
+    fireEvent.click(button);
+
+    const mobileMenu = screen.queryByRole('navigation', { name: 'Navigation menu' });
+    expect(mobileMenu).toBeNull();
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  test('mobile menu renders all nav links', () => {
+    mockUsePathname.mockReturnValue('/instruments/evolver/sessions');
+    render(<Nav instruments={instruments} />);
+
+    const button = screen.getByLabelText('Toggle navigation');
+    fireEvent.click(button);
+
+    const mobileMenu = screen.getByRole('navigation', { name: 'Navigation menu' });
+    expect(mobileMenu.textContent).toContain('Home');
+    expect(mobileMenu.textContent).toContain('Sessions');
+    expect(mobileMenu.textContent).toContain('Patches');
+    expect(mobileMenu.textContent).toContain('Progress');
   });
 });
