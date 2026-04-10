@@ -53,10 +53,13 @@ Source: globals.css --spacing-* tokens (Phase 18)
 
 | Role | Size | Weight | Line Height | Font Family |
 |------|------|--------|-------------|-------------|
-| Body / Nav links | 14px | 400 (regular) | 1.5 | Inter (--font-sans) |
+| Body / Nav links / Footer links | 14px | 400 (regular) | 1.5 | Inter (--font-sans) |
 | Brand wordmark | 20px | 700 (bold) | 1.2 | Space Grotesk (--font-display) |
-| Footer heading | 14px | 600 (semibold) | 1.4 | Inter (--font-sans) |
-| Footer links | 13px | 400 (regular) | 1.5 | Inter (--font-sans) |
+| Footer heading / Instrument group label | 14px | 700 (bold) | 1.4 | Inter (--font-sans) |
+
+Declared sizes: 14px, 20px (2 sizes). Declared weights: 400 (regular), 700 (bold) (2 weights).
+
+Revision note: Footer links unified from 13px to 14px to eliminate a 1px size gap that provided no meaningful visual hierarchy. Footer heading weight changed from 600 (semibold) to 700 (bold) to stay within the 2-weight maximum. The footer heading and brand wordmark now share the same weight but are differentiated by font family (Inter vs Space Grotesk) and size (14px vs 20px).
 
 Source: D-02 (Space Grotesk wordmark), existing nav.tsx (14px/text-sm links), Phase 19 type system
 
@@ -150,8 +153,8 @@ Source: D-06, D-07, existing --content-narrow/--content-wide tokens
 | Padding | var(--spacing-xl) vertical, var(--spacing-lg) horizontal |
 | Max width | 1200px (--content-wide), centered |
 | Layout | Two columns on desktop (flexbox, space-between). Stack on mobile (<768px) |
-| Left column | Project identity: "Evolver Deep Learning" in Inter 600 14px, tagline "Structured instrument mastery" in Inter 400 13px color: var(--color-muted) |
-| Right column | Instrument quick-links grouped by instrument name. Each group: instrument name as label (13px, semibold, muted), links below (13px, regular, muted, hover: text color). Plus "About" link |
+| Left column | Project identity: "Evolver Deep Learning" in Inter 700 14px, tagline "Structured instrument mastery" in Inter 400 14px color: var(--color-muted) |
+| Right column | Instrument quick-links grouped by instrument name. Each group: instrument name as label (Inter 700 14px, muted), links below (Inter 400 14px, muted, hover: text color). Plus "About" link |
 | Demo mode | Demo badge + "Run it yourself" link preserved from current footer, positioned below left column identity |
 
 Source: D-08, D-09, existing app-shell.tsx footer
