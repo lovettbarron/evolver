@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: completed
-stopped_at: Phase 20 UI-SPEC approved
-last_updated: "2026-04-10T05:46:07.740Z"
+stopped_at: Completed 20-02-PLAN.md
+last_updated: "2026-04-10T20:19:06.084Z"
 last_activity: 2026-04-08
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 8
+  completed_plans: 6
   percent: 100
 ---
 
@@ -54,6 +54,7 @@ Recent decisions affecting current work:
 - [Phase 18]: color-mix(in srgb) replaced with --color-border-subtle token reference
 - [Phase 18]: Spacing migration completed in plan 18-01; plan 18-02 adds regression test only
 - [Phase 19]: Prose domain rules placed outside @layer base for CSS specificity over Tailwind typography defaults
+- [Phase 20]: Footer uses wide shell width (1200px) matching UI-SPEC D-08
 
 ### Pending Todos
 
@@ -67,6 +68,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-10T05:46:07.730Z
-Stopped at: Phase 20 UI-SPEC approved
-Resume file: .planning/phases/20-layout-shell-navigation/20-UI-SPEC.md
+Last session: 2026-04-10T20:19:06.081Z
+Stopped at: Completed 20-02-PLAN.md
+Resume file: None
