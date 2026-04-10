@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-07)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 19 — prose-typography
+**Current focus:** Phase 20 — layout-shell-navigation (complete)
 
 ## Current Position
 
 Phase: 20
-Plan: Not started
-Status: Phase 19 complete
-Last activity: 2026-04-08
+Plan: 3 of 3
+Status: Phase 20 complete
+Last activity: 2026-04-10
 
-Progress: [██████████] 100% (v1.3 milestone)
+Progress: [█████░░░░░] 50% (v1.3 milestone — 3/6 phases)
 
 ## Performance Metrics
 
@@ -54,6 +54,9 @@ Recent decisions affecting current work:
 - [Phase 18]: color-mix(in srgb) replaced with --color-border-subtle token reference
 - [Phase 18]: Spacing migration completed in plan 18-01; plan 18-02 adds regression test only
 - [Phase 19]: Prose domain rules placed outside @layer base for CSS specificity over Tailwind typography defaults
+- [Phase 20]: AppShell converted to client component for usePathname-based data-instrument attribute
+- [Phase 20]: Mobile hamburger menu uses slideDown keyframe with motion-safe prefix
+- [Phase 20]: Content width strategy — NarrowShell (720px) for reading, WideShell (1200px) for browsing
 
 ### Pending Todos
 
@@ -67,6 +70,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-08T05:15:00.000Z
-Stopped at: Completed 19-02-PLAN.md
+Last session: 2026-04-10T21:00:00Z
+Stopped at: Completed 20-03-PLAN.md
 Resume file: None
