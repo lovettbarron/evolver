@@ -1,6 +1,7 @@
 import { listModules, loadInstrumentConfig } from '@/lib/content/reader';
 import { loadConfig } from '@/lib/config';
 import { ModuleIndex } from '@/components/module-index';
+import { WideShell } from '@/components/page-shell';
 
 /**
  * Extract a purpose line from markdown content.
@@ -27,12 +28,12 @@ export default async function ModulesPage({ params }: { params: Promise<{ slug: 
 
   if (modules.length === 0) {
     return (
-      <div className="max-w-[960px] mx-auto px-lg lg:px-xl py-2xl text-center">
+      <WideShell className="lg:px-xl py-2xl text-center">
         <h1 className="text-4xl font-bold leading-[1.1] mb-sm">No modules documented yet</h1>
         <p className="text-muted text-base">
           Module documentation is coming soon. Check back after the next update.
         </p>
-      </div>
+      </WideShell>
     );
   }
 

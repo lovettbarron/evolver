@@ -10,6 +10,7 @@ import { CascadiaPanel } from '@/components/cascadia-panel';
 import { CONTROL_METADATA } from '@/lib/evolver-panel-data';
 import { CONTROL_METADATA as CASCADIA_METADATA } from '@/lib/cascadia-panel-data';
 import { CompletionToggle } from '@/components/completion-toggle';
+import { NarrowShell } from '@/components/page-shell';
 import dynamic from 'next/dynamic';
 
 const MermaidRenderer = dynamic(
@@ -195,7 +196,7 @@ export function SessionDetail({
         quickRefContent={quickRefContent}
         instrumentSlug={instrumentSlug}
       />
-      <div className="max-w-[720px] mx-auto px-lg lg:px-xl py-2xl">
+      <NarrowShell className="lg:px-xl py-2xl">
         {banner && <div className="mb-lg">{banner}</div>}
         <header className="mb-2xl">
           <h1 className="text-4xl font-bold mb-md">{session.title}</h1>
@@ -254,7 +255,7 @@ export function SessionDetail({
             instrumentSlug={instrumentSlug}
           />
         </div>
-      </div>
+      </NarrowShell>
       <CompletionToggle
         instrumentSlug={instrumentSlug}
         sessionSlug={sessionSlug}

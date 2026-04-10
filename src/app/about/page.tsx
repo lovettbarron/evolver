@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { renderMarkdown } from '@/lib/markdown/processor';
 import { loadConfig } from '@/lib/config';
+import { NarrowShell } from '@/components/page-shell';
 
 export default async function AboutPage() {
   const config = await loadConfig();
@@ -36,7 +37,7 @@ export default async function AboutPage() {
   const adhdHtml = adhdMd ? await renderMarkdown(adhdMd) : '';
 
   return (
-    <div className="max-w-[720px] mx-auto px-lg lg:px-xl py-2xl">
+    <NarrowShell className="lg:px-xl py-2xl">
       <h1 className="text-4xl font-bold mb-2xl">About This Method</h1>
       <div className="prose" dangerouslySetInnerHTML={{ __html: readmeHtml }} />
       {adhdHtml && (
@@ -60,6 +61,6 @@ export default async function AboutPage() {
           </ol>
         </section>
       )}
-    </div>
+    </NarrowShell>
   );
 }
