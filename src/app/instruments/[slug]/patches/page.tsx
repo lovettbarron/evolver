@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { listPatches } from '@/lib/content/reader';
 import { loadConfig } from '@/lib/config';
 import { PatchFilterBar } from '@/components/patch-filter-bar';
+import { WideShell } from '@/components/page-shell';
 import Link from 'next/link';
 
 export default async function PatchListPage({
@@ -14,7 +15,7 @@ export default async function PatchListPage({
   const patches = await listPatches(slug, config);
 
   return (
-    <div className="max-w-[960px] mx-auto px-lg py-2xl">
+    <WideShell className="py-2xl">
       <h1 className="text-2xl font-bold mb-md">Patch Library</h1>
       <p className="text-muted mb-2xl">
         Documented patches from your learning sessions
@@ -39,6 +40,6 @@ export default async function PatchListPage({
           <PatchFilterBar patches={patches} instrumentSlug={slug} />
         </Suspense>
       )}
-    </div>
+    </WideShell>
   );
 }

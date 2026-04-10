@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ModuleCard } from './module-card';
+import { WideShell } from '@/components/page-shell';
 
 interface ModuleData {
   slug: string;
@@ -46,7 +47,7 @@ export function ModuleIndex({ instrumentSlug, instrumentName, modules }: ModuleI
   })).filter((g) => g.modules.length > 0);
 
   return (
-    <div className="max-w-[960px] mx-auto px-lg lg:px-xl py-2xl">
+    <WideShell className="lg:px-xl py-2xl">
       <h1 className="text-4xl font-bold leading-[1.1] mb-sm">Modules</h1>
       <p className="text-muted text-sm mb-xl">
         {instrumentName} &mdash; {modules.length} hardware modules
@@ -110,6 +111,6 @@ export function ModuleIndex({ instrumentSlug, instrumentName, modules }: ModuleI
           </p>
         </div>
       )}
-    </div>
+    </WideShell>
   );
 }
