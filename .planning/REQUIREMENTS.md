@@ -18,7 +18,7 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 
 ### Layout
 
-- [ ] **LAYOUT-01**: User sees a navigation bar with visual weight, brand expression, and clear active state indicators
+- [x] **LAYOUT-01**: User sees a navigation bar with visual weight, brand expression, and clear active state indicators
 - [ ] **LAYOUT-02**: User sees mobile-optimized layouts with appropriate content widths per page type (narrow for sessions, wider for grids)
 - [ ] **LAYOUT-03**: User sees a designed footer with project identity and instrument navigation links
 - [ ] **LAYOUT-04**: User sees visually distinct page shells for each instrument (subtle color/accent variation)
@@ -70,7 +70,7 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 | TOKEN-04 | Phase 18 | Complete |
 | TOKEN-05 | Phase 18 | Complete |
 | TOKEN-06 | Phase 23 | Pending |
-| LAYOUT-01 | Phase 20 | Pending |
+| LAYOUT-01 | Phase 20 | Complete |
 | LAYOUT-02 | Phase 20 | Pending |
 | LAYOUT-03 | Phase 20 | Pending |
 | LAYOUT-04 | Phase 20 | Pending |
