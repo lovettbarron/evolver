@@ -105,9 +105,9 @@ Plans:
   4. User sees visually distinct page shells when browsing Evolver vs Cascadia content — subtle accent/color variation signals which instrument context they are in
 **Plans**: 3 plans
 Plans:
-- [x] 18-01-PLAN.md — OKLCH token swap + contrast validation + grain texture
-- [ ] 18-02-PLAN.md — Spacing migration (all 29 components to token references)
-- [ ] 18-03-PLAN.md — /dev/tokens verification page + visual checkpoint
+- [ ] 20-01-PLAN.md — Nav restyle with tokens, brand wordmark, active indicators
+- [ ] 20-02-PLAN.md — Footer extraction and page shell components
+- [ ] 20-03-PLAN.md — Mobile hamburger menu and data-instrument wiring
 **UI hint**: yes
 
 ### Phase 21: Cards & Content Components
