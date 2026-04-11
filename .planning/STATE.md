@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: executing
-stopped_at: Phase 22 UI-SPEC approved
+stopped_at: Completed 21-01-PLAN.md
 last_updated: "2026-04-11T05:59:00.004Z"
-last_activity: 2026-04-11 -- Phase 21 execution started
+last_activity: 2026-04-11 -- Phase 21 plan 01 complete
 progress:
   total_phases: 6
   completed_phases: 3
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-07)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 21 — cards-content-components
+**Current focus:** Phase 21 — cards-content-components (plan 1/2 complete)
 
 ## Current Position
 
 Phase: 21 (cards-content-components) — EXECUTING
 Plan: 1 of 2
-Status: Executing Phase 21
-Last activity: 2026-04-11 -- Phase 21 execution started
+Status: Plan 21-01 complete, executing plan 21-02
+Last activity: 2026-04-11
 
-Progress: [█████░░░░░] 50% (v1.3 milestone — 3/6 phases)
+Progress: [██████░░░░] 55% (v1.3 milestone — 3/6 phases, plan 1/2)
 
 ## Performance Metrics
 
@@ -60,6 +60,8 @@ Recent decisions affecting current work:
 - [Phase 20]: AppShell converted to client component for usePathname-based data-instrument attribute
 - [Phase 20]: Mobile hamburger menu uses slideDown keyframe with motion-safe prefix
 - [Phase 20]: Content width strategy — NarrowShell (720px) for reading, WideShell (1200px) for browsing
+- [Phase 21]: :where(:focus-visible) zero-specificity pattern lets Tailwind utility overrides win naturally
+- [Phase 21]: Inline code pill uses surface-raised bg + 2px accent left border
 
 ### Pending Todos
 
@@ -74,5 +76,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-11T05:59:00.000Z
-Stopped at: Phase 22 UI-SPEC approved
-Resume file: .planning/phases/22-interactive-elements-motion/22-UI-SPEC.md
+Stopped at: Completed 21-01-PLAN.md
+Resume file: .planning/phases/21-cards-content-components/21-02-PLAN.md
