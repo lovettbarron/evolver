@@ -33,7 +33,7 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 - [x] **COMP-01**: User sees unified visual language across all card types (consistent borders, padding, hover states, border-radius)
 - [x] **COMP-02**: User sees intentional focus states on all interactive elements matching the design system
 - [x] **COMP-03**: User sees micro-interactions on hover (scale transforms, spring transitions) and completion celebrations
-- [ ] **COMP-04**: User sees content sections fade in subtly as they enter the viewport on scroll
+- [x] **COMP-04**: User sees content sections fade in subtly as they enter the viewport on scroll
 
 ### Specialized
 
@@ -79,11 +79,7 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 | COMP-01 | Phase 21 | Complete |
 | COMP-02 | Phase 21 | Complete |
 | COMP-03 | Phase 22 | Complete |
-<<<<<<< HEAD
 | COMP-04 | Phase 22 | Complete |
-=======
-| COMP-04 | Phase 22 | Pending |
->>>>>>> worktree-agent-a3b3b0c6
 | SPEC-01 | Phase 23 | Pending |
 | SPEC-02 | Phase 23 | Pending |
 

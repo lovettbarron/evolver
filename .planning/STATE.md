@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: executing
-stopped_at: Completed 22-01-PLAN.md
-last_updated: "2026-04-11T15:43:26.387Z"
+stopped_at: Completed 22-02-PLAN.md
+last_updated: "2026-04-11T15:57:40.519Z"
 last_activity: 2026-04-11
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 13
-  completed_plans: 11
-  percent: 55
+  completed_plans: 13
+  percent: 72
 ---
 
 # Project State
@@ -66,6 +66,8 @@ Recent decisions affecting current work:
 - [Phase 22]: Mock motion/react via data-attributes for animation prop inspection in tests
 - [Phase 22]: Dual-system hover: border-color CSS transition + motion spring for transform/boxShadow
 - [Phase 22]: SpringCard wrapper pattern: server components import client boundary without use client
+- [Phase 22]: Computed stagger variants inline (useMemo) for JSON-serializable test compatibility
+- [Phase 22]: MotionProvider wired into app-shell wrapping SearchProvider
 
 ### Pending Todos
 
@@ -79,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-11T15:43:26.384Z
-Stopped at: Completed 22-01-PLAN.md
+Last session: 2026-04-11T15:57:34.512Z
+Stopped at: Completed 22-02-PLAN.md
 Resume file: None

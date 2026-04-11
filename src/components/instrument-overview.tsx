@@ -5,6 +5,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FileText } from 'lucide-react';
 import { ResumeBar } from './resume-bar';
+import { ScrollReveal } from '@/components/motion/scroll-reveal';
 
 const MermaidRenderer = dynamic(
   () =>
@@ -71,37 +72,44 @@ export function InstrumentOverview({
         </div>
       )}
 
-      <div className="prose" dangerouslySetInnerHTML={{ __html: overviewHtml }} />
+      <ScrollReveal>
+        <div className="prose" dangerouslySetInnerHTML={{ __html: overviewHtml }} />
+      </ScrollReveal>
 
       {signalFlowHtml && (
-        <section className="mt-2xl">
-          <h2 className="text-2xl font-bold mb-lg">Signal Flow</h2>
-          <div className="prose" dangerouslySetInnerHTML={{ __html: signalFlowHtml }} />
-          <MermaidRenderer />
-        </section>
+        <ScrollReveal>
+          <section className="mt-2xl">
+            <h2 className="text-2xl font-bold mb-lg">Signal Flow</h2>
+            <div className="prose" dangerouslySetInnerHTML={{ __html: signalFlowHtml }} />
+            <MermaidRenderer />
+          </section>
+        </ScrollReveal>
       )}
 
       {references && references.length > 0 && (
-        <section className="mt-2xl">
-          <h2 className="text-2xl font-bold mb-lg">References</h2>
-          <div className="flex flex-col gap-md">
-            {references.map((ref) => (
-              <button
-                key={ref.pdfPath}
-                onClick={() => setOpenPdf(ref.pdfPath)}
-                className="bg-surface p-md rounded hover:border-accent border border-surface transition-colors cursor-pointer text-left flex items-center gap-md"
-              >
-                <FileText size={20} className="text-muted shrink-0" />
-                <span className="text-text">{ref.label}</span>
-              </button>
-            ))}
-          </div>
-        </section>
+        <ScrollReveal>
+          <section className="mt-2xl">
+            <h2 className="text-2xl font-bold mb-lg">References</h2>
+            <div className="flex flex-col gap-md">
+              {references.map((ref) => (
+                <button
+                  key={ref.pdfPath}
+                  onClick={() => setOpenPdf(ref.pdfPath)}
+                  className="bg-surface p-md rounded hover:border-accent border border-surface transition-colors cursor-pointer text-left flex items-center gap-md"
+                >
+                  <FileText size={20} className="text-muted shrink-0" />
+                  <span className="text-text">{ref.label}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
       )}
 
       <hr className="border-muted/30 my-2xl" />
 
-      <div className="flex flex-col gap-md items-start">
+      <ScrollReveal>
+        <div className="flex flex-col gap-md items-start">
         {hasBasicPatch && (
           <Link
             href={`/instruments/${slug}/basic-patch`}
@@ -135,7 +143,8 @@ export function InstrumentOverview({
         >
           Start Curriculum
         </Link>
-      </div>
+        </div>
+      </ScrollReveal>
 
       {openPdf && (
         <PdfViewer

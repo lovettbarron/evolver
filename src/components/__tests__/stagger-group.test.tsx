@@ -34,6 +34,7 @@ vi.mock('motion/react', () => {
   return {
     motion,
     useReducedMotion: vi.fn(() => false),
+    useInView: vi.fn(() => true),
     AnimatePresence: ({ children }: { children: React.ReactNode }) => (
       <>{children}</>
     ),

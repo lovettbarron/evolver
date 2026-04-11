@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { ModuleCard } from './module-card';
 import { WideShell } from '@/components/page-shell';
+import { ScrollReveal } from '@/components/motion/scroll-reveal';
+import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group';
 
 interface ModuleData {
   slug: string;
@@ -73,32 +75,36 @@ export function ModuleIndex({ instrumentSlug, instrumentName, modules }: ModuleI
       {filter === 'all' ? (
         <div className="flex flex-col gap-2xl">
           {grouped.map((group) => (
-            <section key={group.category}>
-              <h2 className="text-[20px] font-bold leading-[1.2] mb-md">
-                {group.label}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-md">
-                {group.modules.map((mod) => (
-                  <ModuleCard
-                    key={mod.slug}
-                    instrumentSlug={instrumentSlug}
-                    {...mod}
-                  />
-                ))}
-              </div>
-            </section>
+            <ScrollReveal key={group.category}>
+              <section>
+                <h2 className="text-[20px] font-bold leading-[1.2] mb-md">
+                  {group.label}
+                </h2>
+                <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-md">
+                  {group.modules.map((mod) => (
+                    <StaggerItem key={mod.slug}>
+                      <ModuleCard
+                        instrumentSlug={instrumentSlug}
+                        {...mod}
+                      />
+                    </StaggerItem>
+                  ))}
+                </StaggerGroup>
+              </section>
+            </ScrollReveal>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-md">
+        <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-md" key={filter}>
           {filteredModules.map((mod) => (
-            <ModuleCard
-              key={mod.slug}
-              instrumentSlug={instrumentSlug}
-              {...mod}
-            />
+            <StaggerItem key={mod.slug}>
+              <ModuleCard
+                instrumentSlug={instrumentSlug}
+                {...mod}
+              />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       )}
 
       {filteredModules.length === 0 && (

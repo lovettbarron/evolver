@@ -37,14 +37,14 @@ export function AppShell({
   }));
 
   return (
-    <SearchProvider sessions={searchSessions} patches={searchPatches}>
-      <MotionProvider>
+    <MotionProvider>
+      <SearchProvider sessions={searchSessions} patches={searchPatches}>
         <div className="flex flex-col min-h-screen" data-instrument={instrumentSlug || undefined}>
           <Nav isDemoMode={isDemoMode} instruments={navInstruments} />
           <main className="flex-1">{children}</main>
           <Footer instruments={footerInstruments} isDemoMode={isDemoMode} />
         </div>
-      </MotionProvider>
-    </SearchProvider>
+      </SearchProvider>
+    </MotionProvider>
   );
 }
