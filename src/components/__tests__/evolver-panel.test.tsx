@@ -65,3 +65,11 @@ describe('EvolverPanel', () => {
     expect(svg).toBeTruthy();
   });
 });
+
+describe('viewBox animation', () => {
+  it.todo('renders motion.svg element instead of plain svg');
+
+  it.todo('sets initial viewBox to full panel dimensions 0 0 1200 520');
+
+  it.todo('animates viewBox to zoom target when zoomSections provided');
+});

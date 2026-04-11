@@ -136,3 +136,11 @@ describe('Design Token System', () => {
     });
   });
 });
+
+describe('accent color audit', () => {
+  it.todo('--shadow-card-hover does not contain hardcoded lime oklch(0.85 0.18 105)');
+
+  it.todo('@keyframes pulse-glow does not contain hardcoded lime');
+
+  it.todo('panel glow circles use var(--color-accent) not #c8ff00');
+});

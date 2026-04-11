@@ -115,3 +115,11 @@ describe('CascadiaPanel', () => {
     expect(mod.CascadiaPanel).toBeDefined();
   });
 });
+
+describe('viewBox animation', () => {
+  it.todo('renders motion.svg element instead of plain svg');
+
+  it.todo('sets initial viewBox to full panel dimensions 0 0 1000 580');
+
+  it.todo('animates viewBox to zoom target when zoomSections provided');
+});
