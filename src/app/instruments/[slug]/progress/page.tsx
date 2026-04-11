@@ -11,7 +11,7 @@ import { groupByModule } from '@/lib/sessions';
 import { CountCard } from '@/components/count-card';
 import { ModuleJourney } from '@/components/module-journey';
 import { EmptyProgressState } from '@/components/empty-progress';
-import { CumulativeMetrics } from '@/components/cumulative-metrics';
+import { PracticeHeatmap } from '@/components/practice-heatmap';
 
 export default async function ProgressPage({
   params,
@@ -54,7 +54,7 @@ export default async function ProgressPage({
       </div>
       <h2 className="text-[24px] font-bold mt-xl mb-md">Module Journey</h2>
       <ModuleJourney modules={progress.moduleCompletionMap} currentModule={currentModule} />
-      <CumulativeMetrics completionDates={completionDates} />
+      <PracticeHeatmap completionDates={completionDates} />
     </main>
   );
 }
