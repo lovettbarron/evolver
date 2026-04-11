@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { getSessionsThisMonth, getActiveWeeks, getSyntheticCompletionDates } from '@/lib/practice-metrics';
+import { getSessionsThisMonth, getActiveWeeks, getSyntheticCompletionDates, getHeatmapData } from '@/lib/practice-metrics';
 
 describe('getSessionsThisMonth', () => {
   test('returns 0 for empty array', () => {
@@ -82,11 +82,29 @@ describe('getSyntheticCompletionDates', () => {
 });
 
 describe('getHeatmapData', () => {
-  it.todo('returns cells aligned to Monday start');
+  test('returns cells aligned to Monday start', () => {
+    const cells = getHeatmapData([], 1);
+    expect(cells[0].dayOfWeek).toBe(0); // Monday
+  });
 
-  it.todo('returns 12 weeks of data by default');
+  test('returns 12 weeks of data by default', () => {
+    const cells = getHeatmapData([]);
+    // 12 weeks = ~84 days, but depends on current day of week alignment
+    expect(cells.length).toBeGreaterThanOrEqual(78);
+    expect(cells.length).toBeLessThanOrEqual(91);
+  });
 
-  it.todo('counts sessions per date correctly');
+  test('counts sessions per date correctly', () => {
+    const today = new Date().toISOString().slice(0, 10);
+    const completionDates = [today, today, today];
+    const cells = getHeatmapData(completionDates);
+    const todayCell = cells.find(c => c.date === today);
+    expect(todayCell).toBeDefined();
+    expect(todayCell!.count).toBe(3);
+  });
 
-  it.todo('returns count 0 for dates with no sessions');
+  test('returns count 0 for dates with no sessions', () => {
+    const cells = getHeatmapData([]);
+    expect(cells.every(c => c.count === 0)).toBe(true);
+  });
 });

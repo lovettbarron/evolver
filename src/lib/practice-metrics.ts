@@ -67,3 +67,54 @@ export function getSyntheticCompletionDates(instrument?: string): Map<number, st
 
   return dates;
 }
+
+/**
+ * Generate heatmap grid data for a practice activity visualization.
+ * Returns one cell per day, aligned to Monday-start weeks.
+ */
+export function getHeatmapData(
+  completionDates: string[],
+  weeks: number = 12,
+): Array<{ date: string; count: number; dayOfWeek: number; weekIndex: number }> {
+  // Build count map from completion dates
+  const countMap = new Map<string, number>();
+  for (const d of completionDates) {
+    countMap.set(d, (countMap.get(d) ?? 0) + 1);
+  }
+
+  // Compute start date: today minus (weeks * 7 - 1) days
+  const today = new Date();
+  const startDate = new Date(today);
+  startDate.setDate(startDate.getDate() - (weeks * 7 - 1));
+
+  // Align startDate backward to Monday
+  const dayOffset = (startDate.getDay() + 6) % 7;
+  startDate.setDate(startDate.getDate() - dayOffset);
+
+  const cells: Array<{ date: string; count: number; dayOfWeek: number; weekIndex: number }> = [];
+  const cursor = new Date(startDate);
+  let weekIndex = 0;
+  let prevWeekDay = -1;
+
+  while (cursor <= today) {
+    const dayOfWeek = (cursor.getDay() + 6) % 7; // 0=Monday through 6=Sunday
+
+    // Increment week when we wrap back to Monday
+    if (dayOfWeek === 0 && prevWeekDay > 0) {
+      weekIndex++;
+    }
+
+    const isoDate = cursor.toISOString().slice(0, 10);
+    cells.push({
+      date: isoDate,
+      count: countMap.get(isoDate) ?? 0,
+      dayOfWeek,
+      weekIndex,
+    });
+
+    prevWeekDay = dayOfWeek;
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  return cells;
+}
