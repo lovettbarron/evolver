@@ -1,8 +1,8 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-// Track AnimatePresence props
-let animatePresenceProps: Record<string, unknown> = {};
+// Track AnimatePresence props (all instances)
+let allAnimatePresenceProps: Array<Record<string, unknown>> = [];
 
 // Mock motion/react to expose animation props
 vi.mock('motion/react', () => {
@@ -61,7 +61,7 @@ vi.mock('motion/react', () => {
       mode?: string;
       [key: string]: unknown;
     }) => {
-      animatePresenceProps = { mode, ...rest };
+      allAnimatePresenceProps.push({ mode, ...rest });
       return <div data-testid="animate-presence">{children}</div>;
     },
     MotionConfig: ({ children }: { children: React.ReactNode }) => (
@@ -71,11 +71,18 @@ vi.mock('motion/react', () => {
 });
 
 // Mock the learner store used by completion-toggle
-vi.mock('@/stores/learner-store', () => ({
-  useLearnerStore: vi.fn(() => ({
-    isSessionComplete: vi.fn(() => false),
-    toggleSessionCompletion: vi.fn(),
-  })),
+vi.mock('@/stores/learner-store', () => {
+  const fn = vi.fn(() => false) as any;
+  fn.getState = vi.fn(() => ({
+    toggleCompletion: vi.fn(),
+    setLastVisited: vi.fn(),
+  }));
+  return { useLearnerStore: fn };
+});
+
+// Mock useHydrated to return true so component renders
+vi.mock('@/hooks/use-hydrated', () => ({
+  useHydrated: vi.fn(() => true),
 }));
 
 import { useReducedMotion } from 'motion/react';
@@ -88,20 +95,20 @@ import { useLearnerStore } from '@/stores/learner-store';
 describe('CompletionToggle animation', () => {
   beforeEach(() => {
     vi.mocked(useReducedMotion).mockReturnValue(false);
-    animatePresenceProps = {};
+    allAnimatePresenceProps = [];
   });
 
   it('uses spring with stiffness 500 and damping 15 for check entrance', () => {
     // Mock as completed state
-    vi.mocked(useLearnerStore).mockReturnValue({
-      isSessionComplete: vi.fn(() => true),
-      toggleSessionCompletion: vi.fn(),
-    } as any);
+    vi.mocked(useLearnerStore).mockReturnValue(true as any);
 
     render(
       <CompletionToggle
         instrumentSlug="evolver"
         sessionSlug="01-oscillators-basics"
+        sessionNumber={1}
+        sessionTitle="Oscillators Basics"
+        isDemo={false}
       />
     );
 
@@ -121,15 +128,15 @@ describe('CompletionToggle animation', () => {
   });
 
   it('uses 100ms fade for uncomplete exit', () => {
-    vi.mocked(useLearnerStore).mockReturnValue({
-      isSessionComplete: vi.fn(() => false),
-      toggleSessionCompletion: vi.fn(),
-    } as any);
+    vi.mocked(useLearnerStore).mockReturnValue(false as any);
 
     render(
       <CompletionToggle
         instrumentSlug="evolver"
         sessionSlug="01-oscillators-basics"
+        sessionNumber={1}
+        sessionTitle="Oscillators Basics"
+        isDemo={false}
       />
     );
 
@@ -150,34 +157,36 @@ describe('CompletionToggle animation', () => {
   });
 
   it('wraps check/uncheck in AnimatePresence mode=wait', () => {
-    vi.mocked(useLearnerStore).mockReturnValue({
-      isSessionComplete: vi.fn(() => true),
-      toggleSessionCompletion: vi.fn(),
-    } as any);
+    vi.mocked(useLearnerStore).mockReturnValue(true as any);
 
     render(
       <CompletionToggle
         instrumentSlug="evolver"
         sessionSlug="01-oscillators-basics"
+        sessionNumber={1}
+        sessionTitle="Oscillators Basics"
+        isDemo={false}
       />
     );
 
-    const presenceEl = screen.queryByTestId('animate-presence');
-    expect(presenceEl).toBeDefined();
-    expect(animatePresenceProps.mode).toBe('wait');
+    const presenceEls = screen.getAllByTestId('animate-presence');
+    expect(presenceEls.length).toBeGreaterThan(0);
+    // First AnimatePresence should have mode="wait" (check/uncheck wrapper)
+    const waitPresence = allAnimatePresenceProps.find((p) => p.mode === 'wait');
+    expect(waitPresence).toBeDefined();
   });
 
   it('does not animate when reduced motion is preferred', () => {
     vi.mocked(useReducedMotion).mockReturnValue(true);
-    vi.mocked(useLearnerStore).mockReturnValue({
-      isSessionComplete: vi.fn(() => true),
-      toggleSessionCompletion: vi.fn(),
-    } as any);
+    vi.mocked(useLearnerStore).mockReturnValue(true as any);
 
     render(
       <CompletionToggle
         instrumentSlug="evolver"
         sessionSlug="01-oscillators-basics"
+        sessionNumber={1}
+        sessionTitle="Oscillators Basics"
+        isDemo={false}
       />
     );
 
