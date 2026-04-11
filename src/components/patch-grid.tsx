@@ -2,6 +2,7 @@
 
 import { groupByType } from '@/lib/patches';
 import { PatchCard } from '@/components/patch-card';
+import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group';
 import type { Patch } from '@/lib/content/types';
 
 interface PatchGridProps {
@@ -22,16 +23,17 @@ export function PatchGrid({ patches, instrumentSlug }: PatchGridProps) {
             {group.type}
             <span className="flex-1 h-px bg-muted/20" />
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-lg">
+          <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-lg">
             {group.patches.map((patch) => (
-              <PatchCard
-                key={patch.slug}
-                patch={patch.data}
-                slug={patch.slug}
-                instrumentSlug={instrumentSlug}
-              />
+              <StaggerItem key={patch.slug}>
+                <PatchCard
+                  patch={patch.data}
+                  slug={patch.slug}
+                  instrumentSlug={instrumentSlug}
+                />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       ))}
     </>

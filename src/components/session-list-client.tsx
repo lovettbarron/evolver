@@ -7,6 +7,7 @@ import { useLearnerStore } from '@/stores/learner-store';
 import { useHydrated } from '@/hooks/use-hydrated';
 import { ModuleHeader } from '@/components/module-header';
 import { SessionRow } from '@/components/session-row';
+import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group';
 
 interface SessionListClientProps {
   groups: ModuleGroup[];
@@ -32,7 +33,7 @@ export function SessionListClient({
       {groups.map((group) => (
         <section key={group.module}>
           <ModuleHeader module={group.module} />
-          <div className="flex flex-col">
+          <StaggerGroup className="flex flex-col">
             {group.sessions.map((session) => {
               const state = getSessionState(
                 session.data.session_number,
@@ -40,18 +41,19 @@ export function SessionListClient({
                 mergedCompletions,
               );
               return (
-                <SessionRow
-                  key={session.slug}
-                  number={session.data.session_number}
-                  title={session.data.title}
-                  duration={session.data.duration}
-                  href={`/instruments/${instrumentSlug}/sessions/${session.slug}`}
-                  state={state}
-                  prerequisiteNumber={session.data.prerequisite}
-                />
+                <StaggerItem key={session.slug}>
+                  <SessionRow
+                    number={session.data.session_number}
+                    title={session.data.title}
+                    duration={session.data.duration}
+                    href={`/instruments/${instrumentSlug}/sessions/${session.slug}`}
+                    state={state}
+                    prerequisiteNumber={session.data.prerequisite}
+                  />
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
         </section>
       ))}
     </div>
