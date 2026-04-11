@@ -1,7 +1,8 @@
 ---
 phase: 23
 slug: panel-progress-polish
-status: draft
+status: approved
+reviewed_at: 2026-04-11
 shadcn_initialized: false
 preset: none
 created: 2026-04-11
@@ -41,7 +42,7 @@ Inherited from Phase 18 token foundation, unchanged:
 | 3xl | 64px | Page-level spacing |
 
 Exceptions:
-- Heatmap cell gap: 2px (sub-token, intentional density for grid cells)
+- Heatmap cell gap: 4px (xs token, compact grid density while staying on the 4px scale)
 - Heatmap cell size: 12px (sub-token, compact squares for data density)
 
 ---
@@ -233,7 +234,7 @@ Grid:
   display: grid
   grid-template-rows: repeat(7, 1fr)
   grid-auto-flow: column
-  gap: 2px
+  gap: 4px (xs token)
   
   Day labels column (left):
     "Mon" / "Wed" / "Fri" at 12px/400 in --color-muted
@@ -249,7 +250,7 @@ Grid:
   Legend (below grid, right-aligned):
     "Less" label -- 5 sample squares (empty through max) -- "More" label
     12px/400 text in --color-muted
-    gap: 2px between legend squares
+    gap: 4px between legend squares (xs token)
 ```
 
 ---
@@ -298,4 +299,4 @@ No third-party registries. No new packages. motion (already installed) is the on
 - [ ] Dimension 5 Spacing: PASS
 - [ ] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved (2026-04-11)
