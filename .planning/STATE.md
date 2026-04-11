@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: completed
-stopped_at: Completed 20-03-PLAN.md
-last_updated: "2026-04-10T21:06:18.635Z"
+stopped_at: Completed 22-02-PLAN.md
+last_updated: "2026-04-11T15:57:40.519Z"
 last_activity: 2026-04-10
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 8
-  completed_plans: 8
+  completed_plans: 9
   percent: 50
 ---
 
@@ -60,6 +60,8 @@ Recent decisions affecting current work:
 - [Phase 20]: AppShell converted to client component for usePathname-based data-instrument attribute
 - [Phase 20]: Mobile hamburger menu uses slideDown keyframe with motion-safe prefix
 - [Phase 20]: Content width strategy — NarrowShell (720px) for reading, WideShell (1200px) for browsing
+- [Phase 22]: Computed stagger variants inline (useMemo) for JSON-serializable test compatibility
+- [Phase 22]: MotionProvider wired into app-shell wrapping SearchProvider
 
 ### Pending Todos
 
@@ -73,6 +75,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-10T21:00:00Z
-Stopped at: Completed 20-03-PLAN.md
+Last session: 2026-04-11T15:57:34.512Z
+Stopped at: Completed 22-02-PLAN.md
 Resume file: None
