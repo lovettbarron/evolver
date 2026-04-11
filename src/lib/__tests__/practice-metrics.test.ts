@@ -80,3 +80,13 @@ describe('getSyntheticCompletionDates', () => {
     expect(dates.size).toBe(21);
   });
 });
+
+describe('getHeatmapData', () => {
+  it.todo('returns cells aligned to Monday start');
+
+  it.todo('returns 12 weeks of data by default');
+
+  it.todo('counts sessions per date correctly');
+
+  it.todo('returns count 0 for dates with no sessions');
+});
