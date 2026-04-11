@@ -149,11 +149,12 @@ Plans:
   2. User sees the progress page with data visualization elements (charts, visual metrics) instead of plain stat cards
   3. User sees subtly different accent colors for Evolver vs Cascadia sections throughout the app (nav highlights, card accents, progress indicators)
   4. All pages pass an ADHD 5-second test: single clear visual hierarchy, no competing animated elements, same or fewer clicks to any destination as before the redesign
-**Plans**: 3 plans
+**Plans**: 4 plans
 Plans:
-- [ ] 18-01-PLAN.md — OKLCH token swap + contrast validation + grain texture
-- [ ] 18-02-PLAN.md — Spacing migration (all 29 components to token references)
-- [ ] 18-03-PLAN.md — /dev/tokens verification page + visual checkpoint
+- [ ] 23-00-PLAN.md — Wave 0: test stubs for heatmap, panel viewBox, and accent audit (Nyquist)
+- [ ] 23-01-PLAN.md — Panel viewBox tween via motion.svg + accent color audit fixes
+- [ ] 23-02-PLAN.md — PracticeHeatmap component + progress page wiring
+- [ ] 23-03-PLAN.md — Full verification + visual checkpoint (ADHD 5-second test)
 **UI hint**: yes
 
 ## Progress
@@ -186,4 +187,4 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 20. Layout Shell & Navigation | v1.3 | 3/3 | Complete    | 2026-04-10 |
 | 21. Cards & Content Components | v1.3 | 2/2 | Complete    | 2026-04-11 |
 | 22. Interactive Elements & Motion | v1.3 | 1/3 | Complete    | 2026-04-11 |
-| 23. Panel & Progress Polish | v1.3 | 0/0 | Not started | - |
+| 23. Panel & Progress Polish | v1.3 | 0/4 | Not started | - |
