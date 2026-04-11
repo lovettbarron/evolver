@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SpringCard } from '@/components/motion/spring-card';
 import type { Patch } from '@/lib/content/types';
 
 interface PatchCardProps {
@@ -10,11 +11,12 @@ interface PatchCardProps {
 export function PatchCard({ patch, slug, instrumentSlug }: PatchCardProps) {
   return (
     <article>
-      <Link
-        href={`/instruments/${instrumentSlug}/patches/${slug}`}
-        aria-label={`Open patch: ${patch.name}`}
-        className="card block"
-      >
+      <SpringCard>
+        <Link
+          href={`/instruments/${instrumentSlug}/patches/${slug}`}
+          aria-label={`Open patch: ${patch.name}`}
+          className="card block"
+        >
         <div className="flex justify-between items-center mb-sm">
           <div className="flex items-center gap-sm">
             <span className="text-sm uppercase tracking-wider text-accent">
@@ -41,7 +43,8 @@ export function PatchCard({ patch, slug, instrumentSlug }: PatchCardProps) {
             </span>
           ))}
         </div>
-      </Link>
+        </Link>
+      </SpringCard>
     </article>
   );
 }

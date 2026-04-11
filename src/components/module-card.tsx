@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SpringCard } from '@/components/motion/spring-card';
 
 interface ModuleCardProps {
   slug: string;
@@ -22,11 +23,12 @@ export function ModuleCard({
   purpose,
 }: ModuleCardProps) {
   return (
-    <Link
-      href={`/instruments/${instrumentSlug}/modules/${slug}`}
-      aria-label={`Open module: ${title}`}
-      className="card block"
-    >
+    <SpringCard>
+      <Link
+        href={`/instruments/${instrumentSlug}/modules/${slug}`}
+        aria-label={`Open module: ${title}`}
+        className="card block"
+      >
       <div className="flex items-start justify-between mb-sm">
         {category && (
           <span className="text-accent text-sm uppercase tracking-wider font-normal">
@@ -47,7 +49,8 @@ export function ModuleCard({
       <div className="flex items-center gap-md text-muted text-sm">
         {controlCount != null && <span>{controlCount} controls</span>}
         {hasNormals && <span>Has normals</span>}
-      </div>
-    </Link>
+        </div>
+      </Link>
+    </SpringCard>
   );
 }
