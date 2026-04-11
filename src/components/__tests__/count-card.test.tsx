@@ -38,15 +38,15 @@ describe('CountCard', () => {
     expect(link.getAttribute('aria-label')).toBe('3 Modules Done');
   });
 
-  test('includes hover translate-y classes for lift affordance', () => {
+  test('uses .card CSS class for hover lift affordance', () => {
     render(<CountCard count={7} label="Challenges Completed" href="/instruments/evolver/sessions" />);
     const link = screen.getByRole('link');
-    expect(link.className).toContain('hover:-translate-y-');
+    expect(link.className).toContain('card');
   });
 
-  test('includes focus-visible outline classes for keyboard accessibility', () => {
+  test('does not include inline focus-visible classes (inherits global :focus-visible)', () => {
     render(<CountCard count={7} label="Challenges Completed" href="/instruments/evolver/sessions" />);
     const link = screen.getByRole('link');
-    expect(link.className).toContain('focus-visible:outline');
+    expect(link.className).not.toContain('focus-visible:outline');
   });
 });

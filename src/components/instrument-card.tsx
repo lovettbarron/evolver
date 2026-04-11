@@ -18,7 +18,7 @@ export function InstrumentCard({
   return (
     <Link
       href={`/instruments/${slug}`}
-      className="block bg-surface p-2xl rounded-md border border-surface hover:border-accent transition-colors duration-150"
+      className="card block"
     >
       <div className="flex flex-col gap-sm">
         <h2 className="text-2xl font-bold text-text">{displayName}</h2>

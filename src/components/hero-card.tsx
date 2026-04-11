@@ -12,7 +12,7 @@ export interface HeroCardProps {
 
 export function HeroCard({ moduleName, sessionTitle, objective, duration, href }: HeroCardProps) {
   return (
-    <div className="bg-surface max-w-[480px] w-full p-2xl rounded-lg">
+    <div className="card card-hero max-w-[480px] w-full">
       <p className="text-muted text-sm uppercase tracking-wide mb-sm">
         {moduleName}
       </p>
@@ -27,7 +27,7 @@ export function HeroCard({ moduleName, sessionTitle, objective, duration, href }
       </p>
       <Link
         href={href}
-        className="inline-flex items-center justify-center bg-accent text-bg font-bold py-md px-xl rounded min-h-[48px] hover:brightness-110 focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg transition-[filter]"
+        className="inline-flex items-center justify-center bg-accent text-bg font-bold py-md px-xl rounded min-h-[48px] hover:brightness-110 transition-[filter]"
       >
         Start Session
       </Link>

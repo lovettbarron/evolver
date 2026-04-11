@@ -13,7 +13,7 @@ export function PatchCard({ patch, slug, instrumentSlug }: PatchCardProps) {
       <Link
         href={`/instruments/${instrumentSlug}/patches/${slug}`}
         aria-label={`Open patch: ${patch.name}`}
-        className="block bg-surface rounded-[6px] p-lg border border-transparent hover:border-accent transition-colors"
+        className="card block"
       >
         <div className="flex justify-between items-center mb-sm">
           <div className="flex items-center gap-sm">

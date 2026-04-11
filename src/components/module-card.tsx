@@ -25,7 +25,7 @@ export function ModuleCard({
     <Link
       href={`/instruments/${instrumentSlug}/modules/${slug}`}
       aria-label={`Open module: ${title}`}
-      className="bg-surface rounded-[6px] p-lg border border-transparent hover:border-accent transition-colors block"
+      className="card block"
     >
       <div className="flex items-start justify-between mb-sm">
         {category && (
