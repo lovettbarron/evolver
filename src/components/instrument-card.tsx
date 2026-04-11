@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SpringCard } from '@/components/motion/spring-card';
 
 interface InstrumentCardProps {
   slug: string;
@@ -16,10 +17,11 @@ export function InstrumentCard({
   patchCount,
 }: InstrumentCardProps) {
   return (
-    <Link
-      href={`/instruments/${slug}`}
-      className="card block"
-    >
+    <SpringCard>
+      <Link
+        href={`/instruments/${slug}`}
+        className="card block"
+      >
       <div className="flex flex-col gap-sm">
         <h2 className="text-2xl font-bold text-text">{displayName}</h2>
         <p className="text-sm text-muted">{tagline}</p>
@@ -29,7 +31,8 @@ export function InstrumentCard({
         <span className="text-sm text-accent underline underline-offset-2 hover:brightness-110 mt-md">
           Explore {displayName}
         </span>
-      </div>
-    </Link>
+        </div>
+      </Link>
+    </SpringCard>
   );
 }

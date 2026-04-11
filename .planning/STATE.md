@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: executing
-stopped_at: Completed 22-00-PLAN.md
-last_updated: "2026-04-11T15:42:25.101Z"
+stopped_at: Completed 22-01-PLAN.md
+last_updated: "2026-04-11T15:43:26.387Z"
 last_activity: 2026-04-11
 progress:
   total_phases: 6
@@ -64,6 +64,8 @@ Recent decisions affecting current work:
 - [Phase 21]: Inline code pill uses surface-raised bg + 2px accent left border
 - [Phase 21]: SessionRow intentionally excluded from .card migration -- keeps list-item identity
 - [Phase 22]: Mock motion/react via data-attributes for animation prop inspection in tests
+- [Phase 22]: Dual-system hover: border-color CSS transition + motion spring for transform/boxShadow
+- [Phase 22]: SpringCard wrapper pattern: server components import client boundary without use client
 
 ### Pending Todos
 
@@ -77,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-11T15:42:25.091Z
-Stopped at: Completed 22-00-PLAN.md
+Last session: 2026-04-11T15:43:26.384Z
+Stopped at: Completed 22-01-PLAN.md
 Resume file: None

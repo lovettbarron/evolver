@@ -136,7 +136,7 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 22-00-PLAN.md — Wave 0: vitest test stubs for all motion components (Nyquist compliance)
-- [ ] 22-01-PLAN.md — Motion foundation: install motion, SpringCard wrapper, MotionProvider, card spring hover wiring
+- [x] 22-01-PLAN.md — Motion foundation: install motion, SpringCard wrapper, MotionProvider, card spring hover wiring
 - [ ] 22-02-PLAN.md — ScrollReveal + StaggerGroup wrappers, grid/list/section reveal, completion celebration
 **UI hint**: yes
 
