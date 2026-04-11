@@ -9,9 +9,10 @@ vi.mock('motion/react', () => {
     {
       get: (_target, prop: string) => {
         return React.forwardRef((props: Record<string, unknown>, ref: React.Ref<unknown>) => {
-          const { animate, transition, ...rest } = props;
+          const { animate, whileInView, transition, viewport, ...rest } = props;
           const dataProps: Record<string, string> = {};
-          if (animate) dataProps['data-animate'] = JSON.stringify(animate);
+          const animateValue = whileInView || animate;
+          if (animateValue) dataProps['data-animate'] = JSON.stringify(animateValue);
           if (transition) dataProps['data-transition'] = JSON.stringify(transition);
           return React.createElement(prop, { ...rest, ...dataProps, ref });
         });
