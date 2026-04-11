@@ -133,7 +133,7 @@
   --tw-prose-bold: var(--color-text);
   --tw-prose-counters: var(--color-muted);
   --tw-prose-bullets: var(--color-muted);
-  --tw-prose-hr: var(--color-muted);
+  --tw-prose-hr: var(--color-border-subtle);
   --tw-prose-quotes: var(--color-text);
   --tw-prose-quote-borders: var(--color-muted);
   --tw-prose-captions: var(--color-muted);
@@ -215,9 +215,10 @@
   font-family: var(--font-mono);
   font-size: 0.875em;
   color: var(--color-param);
-  background-color: var(--color-surface);
-  padding: 2px 6px;
+  background-color: var(--color-surface-raised);
+  padding: 2px 8px;
   border-radius: 3px;
+  border-left: 2px solid var(--color-accent);
 }
 
 .prose :where(pre) {
@@ -233,6 +234,20 @@
   padding: 0;
   font-size: 0.875em;
   color: var(--color-text);
+}
+
+/* Ordered step markers — accent numerals (D-08) */
+.prose ol > li::marker {
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+/* Section dividers — subtle rule (D-09) */
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-border-subtle);
+  margin-block: var(--spacing-2xl);
 }
 
 /* Base table styling for all markdown tables */
