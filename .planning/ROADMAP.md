@@ -59,7 +59,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 - [x] **Phase 19: Prose & Typography** - Modular type scale, polished markdown rendering via @tailwindcss/typography with domain overrides (completed 2026-04-08)
 - [x] **Phase 20: Layout Shell & Navigation** - Navigation bar redesign, responsive page shells, footer, instrument-aware layout variation (completed 2026-04-10)
 - [x] **Phase 21: Cards & Content Components** - Unified card visual language, focus states, editorial session layout with designed markers (completed 2026-04-11)
-- [ ] **Phase 22: Interactive Elements & Motion** - Micro-interactions, scroll reveals, spring transitions via motion package
+- [x] **Phase 22: Interactive Elements & Motion** - Micro-interactions, scroll reveals, spring transitions via motion package (completed 2026-04-11)
 - [ ] **Phase 23: Panel & Progress Polish** - Panel visualizer container polish, progress data visualization, instrument accent colors
 
 ## Phase Details
@@ -185,5 +185,5 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 19. Prose & Typography | v1.3 | 2/2 | Complete    | 2026-04-08 |
 | 20. Layout Shell & Navigation | v1.3 | 3/3 | Complete    | 2026-04-10 |
 | 21. Cards & Content Components | v1.3 | 2/2 | Complete    | 2026-04-11 |
-| 22. Interactive Elements & Motion | v1.3 | 1/3 | In Progress|  |
+| 22. Interactive Elements & Motion | v1.3 | 1/3 | Complete    | 2026-04-11 |
 | 23. Panel & Progress Polish | v1.3 | 0/0 | Not started | - |
