@@ -100,13 +100,14 @@
   border: 1px solid var(--color-border-subtle);
   border-radius: 8px;
   padding: var(--spacing-lg);
-  transition: border-color 150ms, transform 150ms, box-shadow 150ms;
+  transition: border-color 150ms;
+  /* transform + box-shadow now handled by motion SpringCard wrapper */
+  /* border-color intentionally stays as CSS transition (not in whileHover) */
 }
 
 .card:hover {
   border-color: var(--color-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px oklch(0.85 0.18 105 / 0.06);
+  /* transform and box-shadow removed — spring physics via SpringCard */
 }
 
 /* Hero card variant — accent left bar (D-03) */

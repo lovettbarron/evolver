@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
 import { SearchProvider } from '@/components/search-provider';
+import { MotionProvider } from '@/components/motion/motion-provider';
 import type { InstrumentConfig } from '@/lib/content/schemas';
 import type { SearchableSession, SearchablePatch } from '@/lib/search';
 
@@ -37,11 +38,13 @@ export function AppShell({
 
   return (
     <SearchProvider sessions={searchSessions} patches={searchPatches}>
-      <div className="flex flex-col min-h-screen" data-instrument={instrumentSlug || undefined}>
-        <Nav isDemoMode={isDemoMode} instruments={navInstruments} />
-        <main className="flex-1">{children}</main>
-        <Footer instruments={footerInstruments} isDemoMode={isDemoMode} />
-      </div>
+      <MotionProvider>
+        <div className="flex flex-col min-h-screen" data-instrument={instrumentSlug || undefined}>
+          <Nav isDemoMode={isDemoMode} instruments={navInstruments} />
+          <main className="flex-1">{children}</main>
+          <Footer instruments={footerInstruments} isDemoMode={isDemoMode} />
+        </div>
+      </MotionProvider>
     </SearchProvider>
   );
 }
