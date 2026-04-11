@@ -14,7 +14,7 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 - [ ] **TOKEN-03**: User sees consistent spacing applied uniformly across all pages and components
 - [x] **TOKEN-04**: User sees all text/background combinations meeting WCAG AA contrast ratios (4.5:1 minimum)
 - [x] **TOKEN-05**: User sees warm dark tones (olive/brown undertones) instead of cold pure grays
-- [ ] **TOKEN-06**: User sees subtly different accent colors for Evolver vs Cascadia instrument sections
+- [x] **TOKEN-06**: User sees subtly different accent colors for Evolver vs Cascadia instrument sections
 
 ### Layout
 
@@ -37,8 +37,8 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 
 ### Specialized
 
-- [ ] **SPEC-01**: User sees smooth panel visualizer zoom transitions and contextual dimming of non-relevant sections
-- [ ] **SPEC-02**: User sees an elevated progress page with data visualization instead of plain stat cards
+- [x] **SPEC-01**: User sees smooth panel visualizer zoom transitions and contextual dimming of non-relevant sections
+- [x] **SPEC-02**: User sees an elevated progress page with data visualization instead of plain stat cards
 
 ## Future Requirements
 
@@ -69,7 +69,7 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 | TOKEN-03 | Phase 18 | Pending |
 | TOKEN-04 | Phase 18 | Complete |
 | TOKEN-05 | Phase 18 | Complete |
-| TOKEN-06 | Phase 23 | Pending |
+| TOKEN-06 | Phase 23 | Complete |
 | LAYOUT-01 | Phase 20 | Complete |
 | LAYOUT-02 | Phase 20 | Complete |
 | LAYOUT-03 | Phase 20 | Complete |
@@ -80,8 +80,8 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 | COMP-02 | Phase 21 | Complete |
 | COMP-03 | Phase 22 | Complete |
 | COMP-04 | Phase 22 | Complete |
-| SPEC-01 | Phase 23 | Pending |
-| SPEC-02 | Phase 23 | Pending |
+| SPEC-01 | Phase 23 | Complete |
+| SPEC-02 | Phase 23 | Complete |
 
 **Coverage:**
 - v1.3 requirements: 18 total
