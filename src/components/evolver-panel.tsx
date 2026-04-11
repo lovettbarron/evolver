@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useCallback, memo } from 'react';
+import { motion } from 'motion/react';
 import { clsx } from 'clsx';
 import { CONTROL_METADATA, SECTION_BOUNDS, midiToRotation } from '@/lib/evolver-panel-data';
 import { PanelTooltip } from './evolver-panel-tooltip';
@@ -166,7 +167,7 @@ function KnobGroupInner({
         />
       )}
       {dragHandlers.isDragging && (
-        <circle r={r + 4} fill="#c8ff00" fillOpacity={0.4} />
+        <circle r={r + 4} fill="var(--color-accent)" fillOpacity={0.4} />
       )}
       <circle r={r} style={knobStyle} />
       <line
@@ -309,10 +310,12 @@ function EvolverPanelInner({
 
   return (
     <div className={clsx('relative', className)}>
-    <svg
+    <motion.svg
       ref={svgRef}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={viewBox}
+      viewBox="0 0 1200 520"
+      animate={{ viewBox: viewBox }}
+      transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
       width="100%"
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
@@ -770,7 +773,7 @@ function EvolverPanelInner({
           ))}
         </g>
       </g>
-    </svg>
+    </motion.svg>
     <PanelTooltip
       controlId={hoveredControl}
       svgRef={svgRef}

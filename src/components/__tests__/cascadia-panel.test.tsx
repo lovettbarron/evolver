@@ -1,5 +1,26 @@
 import { describe, test, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
+import React from 'react';
+
+// Mock motion/react so motion.svg renders as plain svg with data attributes
+vi.mock('motion/react', () => {
+  const motion = new Proxy(
+    {},
+    {
+      get: (_target, prop: string) => {
+        return React.forwardRef((props: Record<string, unknown>, ref: React.Ref<unknown>) => {
+          const { animate, transition, ...rest } = props;
+          const dataProps: Record<string, string> = {};
+          if (animate) dataProps['data-animate'] = JSON.stringify(animate);
+          if (transition) dataProps['data-transition'] = JSON.stringify(transition);
+          return React.createElement(prop, { ...rest, ...dataProps, ref });
+        });
+      },
+    },
+  );
+  return { motion };
+});
+
 import { CascadiaPanel } from '@/components/cascadia-panel';
 
 describe('CascadiaPanel', () => {
@@ -88,7 +109,6 @@ describe('CascadiaPanel', () => {
     );
     const svg = container.querySelector('svg');
     expect(svg?.querySelector('filter#glow-blue')).toBeTruthy();
-    // Check that there is an element with the glow filter applied
     const glowElements = svg?.querySelectorAll('[filter*="glow-blue"]');
     expect(glowElements?.length).toBeGreaterThan(0);
   });
@@ -98,10 +118,11 @@ describe('CascadiaPanel', () => {
       <CascadiaPanel zoomSections={['vco-a']} />
     );
     const svg = container.querySelector('svg');
-    const viewBox = svg?.getAttribute('viewBox');
-    expect(viewBox).toBeTruthy();
+    const animateAttr = svg?.getAttribute('data-animate');
+    expect(animateAttr).toBeTruthy();
+    const animate = JSON.parse(animateAttr!);
     // Should NOT be the default full-panel viewBox
-    expect(viewBox).not.toBe('0 0 1000 750');
+    expect(animate.viewBox).not.toBe('0 0 1000 580');
   });
 
   test('renders in uncontrolled mode without knobValues', () => {
@@ -113,6 +134,34 @@ describe('CascadiaPanel', () => {
   test('exports CascadiaPanel as named export', async () => {
     const mod = await import('@/components/cascadia-panel');
     expect(mod.CascadiaPanel).toBeDefined();
+  });
+
+  describe('viewBox animation', () => {
+    test('default render has animate prop with full viewBox', () => {
+      const { container } = render(<CascadiaPanel />);
+      const svg = container.querySelector('svg');
+      const animateAttr = svg?.getAttribute('data-animate');
+      expect(animateAttr).toBeTruthy();
+      const animate = JSON.parse(animateAttr!);
+      expect(animate.viewBox).toBe('0 0 1000 580');
+    });
+
+    test('transition uses tween with 0.3s duration', () => {
+      const { container } = render(<CascadiaPanel />);
+      const svg = container.querySelector('svg');
+      const transitionAttr = svg?.getAttribute('data-transition');
+      expect(transitionAttr).toBeTruthy();
+      const transition = JSON.parse(transitionAttr!);
+      expect(transition.type).toBe('tween');
+      expect(transition.duration).toBe(0.3);
+      expect(transition.ease).toBe('easeInOut');
+    });
+
+    test('glow circle does not use hardcoded #c8ff00', () => {
+      const { container } = render(<CascadiaPanel />);
+      const svg = container.querySelector('svg');
+      expect(svg?.innerHTML).not.toContain('fill="#c8ff00"');
+    });
   });
 });
 
