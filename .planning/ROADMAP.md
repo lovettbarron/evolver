@@ -133,11 +133,10 @@ Plans:
   2. User sees completion celebrations (subtle animation feedback) when toggling session completion
   3. User sees content sections fade in subtly as they scroll into the viewport — no jarring pop-in or lateral movement
   4. User with `prefers-reduced-motion` enabled sees no animations — all motion respects the accessibility preference
-**Plans**: 3 plans
+**Plans**: 2 plans
 Plans:
-- [ ] 18-01-PLAN.md — OKLCH token swap + contrast validation + grain texture
-- [ ] 18-02-PLAN.md — Spacing migration (all 29 components to token references)
-- [ ] 18-03-PLAN.md — /dev/tokens verification page + visual checkpoint
+- [ ] 22-01-PLAN.md — Motion foundation: install motion, SpringCard wrapper, MotionProvider, card spring hover wiring
+- [ ] 22-02-PLAN.md — ScrollReveal + StaggerGroup wrappers, grid/list/section reveal, completion celebration
 **UI hint**: yes
 
 ### Phase 23: Panel & Progress Polish
@@ -185,5 +184,5 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 19. Prose & Typography | v1.3 | 2/2 | Complete    | 2026-04-08 |
 | 20. Layout Shell & Navigation | v1.3 | 3/3 | Complete    | 2026-04-10 |
 | 21. Cards & Content Components | v1.3 | 2/2 | Complete    | 2026-04-11 |
-| 22. Interactive Elements & Motion | v1.3 | 0/0 | Not started | - |
+| 22. Interactive Elements & Motion | v1.3 | 0/2 | Not started | - |
 | 23. Panel & Progress Polish | v1.3 | 0/0 | Not started | - |
