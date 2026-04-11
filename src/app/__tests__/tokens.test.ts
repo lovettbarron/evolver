@@ -135,6 +135,49 @@ describe('Design Token System', () => {
       expect(theme).not.toContain('#a3e635');
     });
   });
+
+  describe('Accent color audit', () => {
+    it('--shadow-card-hover uses oklch(from var(--color-accent)) not hardcoded lime', () => {
+      const shadowLine = globalsContent
+        .split('\n')
+        .find((line) => line.includes('--shadow-card-hover'));
+      expect(shadowLine).toBeTruthy();
+      expect(shadowLine).toContain('oklch(from var(--color-accent)');
+      expect(shadowLine).not.toContain('oklch(0.85 0.18 105');
+    });
+
+    it('@keyframes pulse-glow uses oklch(from var(--color-accent)) not hardcoded lime', () => {
+      // Extract the pulse-glow keyframe block
+      const pulseGlowMatch = globalsContent.match(
+        /@keyframes pulse-glow\s*\{[\s\S]*?\n\}/
+      );
+      expect(pulseGlowMatch).toBeTruthy();
+      const block = pulseGlowMatch![0];
+      expect(block).toContain('oklch(from var(--color-accent)');
+      expect(block).not.toContain('oklch(0.85 0.18 105');
+    });
+
+    it('panel glow circles do not use hardcoded #c8ff00', () => {
+      const evolverPanel = fs.readFileSync(
+        path.resolve(__dirname, '../../components/evolver-panel.tsx'),
+        'utf-8'
+      );
+      const cascadiaPanel = fs.readFileSync(
+        path.resolve(__dirname, '../../components/cascadia-panel.tsx'),
+        'utf-8'
+      );
+      expect(evolverPanel).not.toContain('fill="#c8ff00"');
+      expect(cascadiaPanel).not.toContain('fill="#c8ff00"');
+    });
+
+    it('--color-lime-500 primitive definition is preserved', () => {
+      const primitiveLine = globalsContent
+        .split('\n')
+        .find((line) => line.includes('--color-lime-500'));
+      expect(primitiveLine).toBeTruthy();
+      expect(primitiveLine).toContain('oklch(0.85 0.18 105)');
+    });
+  });
 });
 
 describe('accent color audit', () => {

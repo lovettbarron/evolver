@@ -54,7 +54,7 @@
 
   /* === Shadows === */
   --shadow-card: 0 1px 3px oklch(0 0 0 / 0.3);
-  --shadow-card-hover: 0 4px 12px oklch(0.85 0.18 105 / 0.08);
+  --shadow-card-hover: 0 4px 12px oklch(from var(--color-accent) l c h / 0.08);
 
   /* === Content widths === */
   --content-narrow: 720px;
@@ -399,8 +399,8 @@ body::before {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 oklch(0.85 0.18 105 / 0.4); }
-  50% { box-shadow: 0 0 0 6px oklch(0.85 0.18 105 / 0); }
+  0%, 100% { box-shadow: 0 0 0 0 oklch(from var(--color-accent) l c h / 0.4); }
+  50% { box-shadow: 0 0 0 6px oklch(from var(--color-accent) l c h / 0); }
 }
 
 @keyframes slideDown {
