@@ -26,12 +26,12 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 ### Content
 
 - [x] **CONTENT-01**: User sees markdown content rendered as polished prose — styled headings, tables, code blocks, callouts, and task lists that look designed
-- [ ] **CONTENT-02**: User sees session content with editorial layout — parameter callouts as styled inline elements, numbered steps as designed markers, section dividers
+- [x] **CONTENT-02**: User sees session content with editorial layout — parameter callouts as styled inline elements, numbered steps as designed markers, section dividers
 
 ### Components
 
-- [ ] **COMP-01**: User sees unified visual language across all card types (consistent borders, padding, hover states, border-radius)
-- [ ] **COMP-02**: User sees intentional focus states on all interactive elements matching the design system
+- [x] **COMP-01**: User sees unified visual language across all card types (consistent borders, padding, hover states, border-radius)
+- [x] **COMP-02**: User sees intentional focus states on all interactive elements matching the design system
 - [ ] **COMP-03**: User sees micro-interactions on hover (scale transforms, spring transitions) and completion celebrations
 - [ ] **COMP-04**: User sees content sections fade in subtly as they enter the viewport on scroll
 
@@ -75,9 +75,9 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 | LAYOUT-03 | Phase 20 | Complete |
 | LAYOUT-04 | Phase 20 | Complete |
 | CONTENT-01 | Phase 19 | Complete |
-| CONTENT-02 | Phase 21 | Pending |
-| COMP-01 | Phase 21 | Pending |
-| COMP-02 | Phase 21 | Pending |
+| CONTENT-02 | Phase 21 | Complete |
+| COMP-01 | Phase 21 | Complete |
+| COMP-02 | Phase 21 | Complete |
 | COMP-03 | Phase 22 | Pending |
 | COMP-04 | Phase 22 | Pending |
 | SPEC-01 | Phase 23 | Pending |

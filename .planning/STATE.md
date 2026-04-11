@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: completed
-stopped_at: Completed 20-03-PLAN.md
+stopped_at: Completed 21-01-PLAN.md
 last_updated: "2026-04-10T21:06:18.635Z"
 last_activity: 2026-04-10
 progress:
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-07)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 20 — layout-shell-navigation (complete)
+**Current focus:** Phase 21 — cards-content-components (plan 1/2 complete)
 
 ## Current Position
 
 Phase: 21
-Plan: Not started
-Status: Phase 20 complete
-Last activity: 2026-04-10
+Plan: 1 of 2
+Status: Plan 21-01 complete
+Last activity: 2026-04-11
 
-Progress: [█████░░░░░] 50% (v1.3 milestone — 3/6 phases)
+Progress: [██████░░░░] 55% (v1.3 milestone — 3/6 phases, plan 1/2)
 
 ## Performance Metrics
 
@@ -60,6 +60,8 @@ Recent decisions affecting current work:
 - [Phase 20]: AppShell converted to client component for usePathname-based data-instrument attribute
 - [Phase 20]: Mobile hamburger menu uses slideDown keyframe with motion-safe prefix
 - [Phase 20]: Content width strategy — NarrowShell (720px) for reading, WideShell (1200px) for browsing
+- [Phase 21]: :where(:focus-visible) zero-specificity pattern lets Tailwind utility overrides win naturally
+- [Phase 21]: Inline code pill uses surface-raised bg + 2px accent left border
 
 ### Pending Todos
 
@@ -73,6 +75,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-10T21:00:00Z
-Stopped at: Completed 20-03-PLAN.md
+Last session: 2026-04-11T05:58:47Z
+Stopped at: Completed 21-01-PLAN.md
 Resume file: None
