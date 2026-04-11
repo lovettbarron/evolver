@@ -22,6 +22,12 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - Content: troubleshooting guides and partial recipe transitional sessions for both instruments
 - Tech stack: Next.js 15, React 19, Tailwind v4, TypeScript, Zod, ~55K LOC
 
+**v1.3 in progress:** Visual Redesign
+- Phase 18: Token foundation (OKLCH color palette, spacing scale, semantic tokens) — Complete
+- Phase 19: Prose & typography (@tailwindcss/typography, editorial prose rules) — Complete
+- Phase 20: Layout shell & navigation (AppShell, NarrowShell/WideShell, sticky nav, mobile menu) — Complete
+- Phase 21: Cards & content components (unified .card CSS class, :focus-visible global, editorial prose styling) — Complete
+
 ## Current Milestone: v1.3 Visual Redesign
 
 **Goal:** Comprehensive visual and layout redesign of the existing app — new design system, typography, color palette, layout structure, interactive element styling, and polished markdown rendering that feels native, not like raw markdown.
@@ -163,4 +169,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-10 after Phase 20 (Layout Shell & Navigation) completed*
+*Last updated: 2026-04-11 after Phase 21 (Cards & Content Components) completed*
