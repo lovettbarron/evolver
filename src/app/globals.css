@@ -94,6 +94,34 @@
   --color-accent: var(--color-accent-cascadia);
 }
 
+/* Card base — shared visual envelope (D-01, D-02, D-10) */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  padding: var(--spacing-lg);
+  transition: border-color 150ms, transform 150ms, box-shadow 150ms;
+}
+
+.card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px oklch(0.85 0.18 105 / 0.06);
+}
+
+/* Hero card variant — accent left bar (D-03) */
+.card-hero {
+  border-left: 3px solid var(--color-accent);
+  border-radius: 2px 8px 8px 2px;
+  padding: var(--spacing-2xl);
+}
+
+/* Global keyboard focus indicator (D-05) — :where() for zero specificity so component overrides win */
+:where(:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 /* Prose overrides OUTSIDE @layer base — must beat typography plugin specificity */
 
 /* Prose plugin color overrides — dark palette, no prose-invert */
