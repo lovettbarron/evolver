@@ -60,7 +60,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 - [x] **Phase 20: Layout Shell & Navigation** - Navigation bar redesign, responsive page shells, footer, instrument-aware layout variation (completed 2026-04-10)
 - [x] **Phase 21: Cards & Content Components** - Unified card visual language, focus states, editorial session layout with designed markers (completed 2026-04-11)
 - [x] **Phase 22: Interactive Elements & Motion** - Micro-interactions, scroll reveals, spring transitions via motion package (completed 2026-04-11)
-- [ ] **Phase 23: Panel & Progress Polish** - Panel visualizer container polish, progress data visualization, instrument accent colors
+- [x] **Phase 23: Panel & Progress Polish** - Panel visualizer container polish, progress data visualization, instrument accent colors (completed 2026-04-12)
 
 ## Phase Details
 
@@ -152,9 +152,9 @@ Plans:
 **Plans**: 4 plans
 Plans:
 - [x] 23-00-PLAN.md — Wave 0: test stubs for heatmap, panel viewBox, and accent audit (Nyquist)
-- [ ] 23-01-PLAN.md — Panel viewBox tween via motion.svg + accent color audit fixes
-- [ ] 23-02-PLAN.md — PracticeHeatmap component + progress page wiring
-- [ ] 23-03-PLAN.md — Full verification + visual checkpoint (ADHD 5-second test)
+- [x] 23-01-PLAN.md — Panel viewBox tween via motion.svg + accent color audit fixes
+- [x] 23-02-PLAN.md — PracticeHeatmap component + progress page wiring
+- [x] 23-03-PLAN.md — Full verification + visual checkpoint (ADHD 5-second test)
 **UI hint**: yes
 
 ## Progress
@@ -187,4 +187,4 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 20. Layout Shell & Navigation | v1.3 | 3/3 | Complete    | 2026-04-10 |
 | 21. Cards & Content Components | v1.3 | 2/2 | Complete    | 2026-04-11 |
 | 22. Interactive Elements & Motion | v1.3 | 1/3 | Complete    | 2026-04-11 |
-| 23. Panel & Progress Polish | v1.3 | 1/4 | In Progress|  |
+| 23. Panel & Progress Polish | v1.3 | 4/4 | Complete    | 2026-04-12 |
