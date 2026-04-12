@@ -1092,7 +1092,7 @@ function CascadiaPanelInner({
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1000 580"
         whileInView={{ viewBox: viewBox }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.7 }}
         transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
         width="100%"
         onMouseOver={onMouseOver}
