@@ -32,6 +32,14 @@ function extractHue(oklchValue: string): number | null {
   return match ? parseFloat(match[1]) : null;
 }
 
+/**
+ * Extract the lightness (L) from an oklch() value.
+ */
+function extractLightness(oklchValue: string): number | null {
+  const match = oklchValue.match(/oklch\(\s*([\d.]+)\s+/);
+  return match ? parseFloat(match[1]) : null;
+}
+
 describe('Design Token System', () => {
   describe('Surface elevation tokens exist with OKLCH values', () => {
     const surfaceTokens = [
@@ -83,11 +91,11 @@ describe('Design Token System', () => {
     ];
 
     for (const token of semanticTokens) {
-      it(`${token} exists`, () => {
+      it(`${token} exists and references a primitive`, () => {
         const value = getTokenValue(token);
         expect(value).not.toBeNull();
         // Should reference a primitive or contain oklch
-        expect(value).toMatch(/oklch\(|var\(--color-/);
+        expect(value).toMatch(/oklch\(|var\(--color-(olive|neutral)/);
       });
     }
   });
@@ -169,21 +177,118 @@ describe('Design Token System', () => {
       expect(evolverPanel).not.toContain('fill="#c8ff00"');
       expect(cascadiaPanel).not.toContain('fill="#c8ff00"');
     });
+  });
 
-    it('--color-lime-500 primitive definition is preserved', () => {
-      const primitiveLine = globalsContent
-        .split('\n')
-        .find((line) => line.includes('--color-lime-500'));
-      expect(primitiveLine).toBeTruthy();
-      expect(primitiveLine).toContain('oklch(0.85 0.18 105)');
+  describe('Per-instrument color primitives', () => {
+    const primitives: [string, number, number][] = [
+      ['--color-blue-500', 240, 255],
+      ['--color-blue-400', 245, 255],
+      ['--color-steel-500', 245, 255],
+      ['--color-steel-400', 245, 255],
+      ['--color-neutral-500', 235, 255],
+      ['--color-neutral-400', 235, 255],
+    ];
+
+    for (const [token, hueMin, hueMax] of primitives) {
+      it(`${token} exists with oklch hue in range ${hueMin}-${hueMax}`, () => {
+        const value = getTokenValue(token);
+        expect(value).not.toBeNull();
+        const hue = extractHue(value!);
+        expect(hue).not.toBeNull();
+        expect(hue!).toBeGreaterThanOrEqual(hueMin);
+        expect(hue!).toBeLessThanOrEqual(hueMax);
+      });
+    }
+  });
+
+  describe('Per-instrument cascade overrides', () => {
+    it('[data-instrument="evolver"] sets --color-accent and --color-param', () => {
+      expect(globalsContent).toMatch(
+        /\[data-instrument="evolver"\]\s*\{[^}]*--color-accent:\s*var\(--color-blue-500\)/
+      );
+      expect(globalsContent).toMatch(
+        /\[data-instrument="evolver"\]\s*\{[^}]*--color-param:\s*var\(--color-blue-400\)/
+      );
+    });
+
+    it('[data-instrument="cascadia"] sets --color-accent and --color-param', () => {
+      expect(globalsContent).toMatch(
+        /\[data-instrument="cascadia"\]\s*\{[^}]*--color-accent:\s*var\(--color-steel-500\)/
+      );
+      expect(globalsContent).toMatch(
+        /\[data-instrument="cascadia"\]\s*\{[^}]*--color-param:\s*var\(--color-steel-400\)/
+      );
     });
   });
-});
 
-describe('accent color audit', () => {
-  it.todo('--shadow-card-hover does not contain hardcoded lime oklch(0.85 0.18 105)');
+  describe('Legacy lime/teal cleanup', () => {
+    it('no --color-lime primitives remain in @theme', () => {
+      const theme = getThemeBlock();
+      expect(theme).not.toContain('--color-lime');
+    });
 
-  it.todo('@keyframes pulse-glow does not contain hardcoded lime');
+    it('no --color-teal primitives remain in @theme', () => {
+      const theme = getThemeBlock();
+      expect(theme).not.toContain('--color-teal');
+    });
 
-  it.todo('panel glow circles use var(--color-accent) not #c8ff00');
+    it('no --color-accent-cascadia semantic token remains', () => {
+      const theme = getThemeBlock();
+      expect(theme).not.toContain('--color-accent-cascadia');
+    });
+  });
+
+  describe('WCAG AA contrast estimation', () => {
+    const accentTokens = [
+      '--color-blue-500',
+      '--color-steel-500',
+      '--color-neutral-500',
+    ];
+
+    for (const token of accentTokens) {
+      it(`${token} lightness >= 0.65 for WCAG AA against dark bg`, () => {
+        const value = getTokenValue(token);
+        expect(value).not.toBeNull();
+        const lightness = extractLightness(value!);
+        expect(lightness).not.toBeNull();
+        expect(lightness!).toBeGreaterThanOrEqual(0.65);
+      });
+    }
+
+    const paramTokens = [
+      '--color-blue-400',
+      '--color-steel-400',
+      '--color-neutral-400',
+    ];
+
+    for (const token of paramTokens) {
+      it(`${token} lightness >= 0.70 for higher readability`, () => {
+        const value = getTokenValue(token);
+        expect(value).not.toBeNull();
+        const lightness = extractLightness(value!);
+        expect(lightness).not.toBeNull();
+        expect(lightness!).toBeGreaterThanOrEqual(0.70);
+      });
+    }
+
+    const palettePairs: [string, string][] = [
+      ['--color-blue-500', '--color-blue-400'],
+      ['--color-steel-500', '--color-steel-400'],
+      ['--color-neutral-500', '--color-neutral-400'],
+    ];
+
+    for (const [accent, param] of palettePairs) {
+      it(`${param} is lighter than ${accent} (param > accent lightness)`, () => {
+        const accentValue = getTokenValue(accent);
+        const paramValue = getTokenValue(param);
+        expect(accentValue).not.toBeNull();
+        expect(paramValue).not.toBeNull();
+        const accentL = extractLightness(accentValue!);
+        const paramL = extractLightness(paramValue!);
+        expect(accentL).not.toBeNull();
+        expect(paramL).not.toBeNull();
+        expect(paramL!).toBeGreaterThan(accentL!);
+      });
+    }
+  });
 });
