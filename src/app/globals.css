@@ -13,9 +13,18 @@
   --color-olive-200: oklch(0.58 0.01 85);
   --color-olive-100: oklch(0.93 0.01 85);
 
-  --color-lime-500: oklch(0.85 0.18 105);
-  --color-lime-400: oklch(0.72 0.15 120);
-  --color-teal-500: oklch(0.75 0.12 185);
+  /* Evolver blue (DSI panel blue Lexan) */
+  --color-blue-500: oklch(0.70 0.15 245);
+  --color-blue-400: oklch(0.78 0.10 250);
+
+  /* Cascadia steel gray (Intellijel aluminum) */
+  --color-steel-500: oklch(0.70 0.04 250);
+  --color-steel-400: oklch(0.78 0.03 250);
+
+  /* Neutral base (hardware aluminum — home page, non-instrument routes) */
+  --color-neutral-500: oklch(0.70 0.03 250);
+  --color-neutral-400: oklch(0.78 0.02 250);
+
   --color-red-500: oklch(0.55 0.2 25);
 
   --font-sans: var(--font-inter);
@@ -30,9 +39,8 @@
   --color-overlay: var(--color-olive-600);
   --color-text: var(--color-olive-100);
   --color-muted: var(--color-olive-200);
-  --color-accent: var(--color-lime-500);
-  --color-accent-cascadia: var(--color-teal-500);
-  --color-param: var(--color-lime-400);
+  --color-accent: var(--color-neutral-500);
+  --color-param: var(--color-neutral-400);
   --color-border: var(--color-olive-500);
   --color-border-subtle: var(--color-olive-400);
   --color-destructive: var(--color-red-500);
@@ -89,9 +97,15 @@
   }
 }
 
-/* Per-instrument accent color (D-10, D-11) */
+/* Per-instrument accent color cascade (D-10, D-11, Phase 24) */
+[data-instrument="evolver"] {
+  --color-accent: var(--color-blue-500);
+  --color-param: var(--color-blue-400);
+}
+
 [data-instrument="cascadia"] {
-  --color-accent: var(--color-accent-cascadia);
+  --color-accent: var(--color-steel-500);
+  --color-param: var(--color-steel-400);
 }
 
 /* Card base — shared visual envelope (D-01, D-02, D-10) */
