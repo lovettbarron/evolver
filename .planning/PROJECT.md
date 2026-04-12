@@ -27,6 +27,8 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - Phase 19: Prose & typography (@tailwindcss/typography, editorial prose rules) — Complete
 - Phase 20: Layout shell & navigation (AppShell, NarrowShell/WideShell, sticky nav, mobile menu) — Complete
 - Phase 21: Cards & content components (unified .card CSS class, :focus-visible global, editorial prose styling) — Complete
+- Phase 22: Motion & micro-interactions (ScrollReveal, SpringCard, completion-toggle animations) — Complete
+- Phase 23: Panel & progress polish (motion.svg viewBox zoom tween, PracticeHeatmap, per-instrument accent identity) — Complete
 
 ## Current Milestone: v1.3 Visual Redesign
 
@@ -169,4 +171,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-11 after Phase 21 (Cards & Content Components) completed*
+*Last updated: 2026-04-12 after Phase 23 (Panel & Progress Polish) completed*
