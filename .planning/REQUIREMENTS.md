@@ -40,6 +40,15 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 - [x] **SPEC-01**: User sees smooth panel visualizer zoom transitions and contextual dimming of non-relevant sections
 - [x] **SPEC-02**: User sees an elevated progress page with data visualization instead of plain stat cards
 
+### Color Identity
+
+- [ ] **COLOR-01**: User sees a neutral aluminum accent on the home page and non-instrument routes (not lime green)
+- [ ] **COLOR-02**: User sees blue accent colors on Evolver pages reflecting the DSI blue Lexan panel identity
+- [ ] **COLOR-03**: User sees cool gray accent colors on Cascadia pages reflecting the Intellijel aluminum panel identity
+- [ ] **COLOR-04**: User sees per-instrument inline code/parameter colors (--color-param) that are visibly lighter than their accent counterparts
+- [ ] **COLOR-05**: All accent and param text passes WCAG AA 4.5:1 contrast against all surface backgrounds
+- [ ] **COLOR-06**: No lime or teal green color remnants visible anywhere in the app
+
 ## Future Requirements
 
 ### v1.4+ Candidates
@@ -82,12 +91,18 @@ Requirements for the visual redesign milestone. Each maps to roadmap phases.
 | COMP-04 | Phase 22 | Complete |
 | SPEC-01 | Phase 23 | Complete |
 | SPEC-02 | Phase 23 | Complete |
+| COLOR-01 | Phase 24 | Pending |
+| COLOR-02 | Phase 24 | Pending |
+| COLOR-03 | Phase 24 | Pending |
+| COLOR-04 | Phase 24 | Pending |
+| COLOR-05 | Phase 24 | Pending |
+| COLOR-06 | Phase 24 | Pending |
 
 **Coverage:**
-- v1.3 requirements: 18 total
-- Mapped to phases: 18
+- v1.3 requirements: 24 total
+- Mapped to phases: 24
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-07*
-*Last updated: 2026-04-06 after roadmap creation*
+*Last updated: 2026-04-12 after Phase 24 planning*

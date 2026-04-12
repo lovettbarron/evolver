@@ -5,7 +5,7 @@
 - ✅ **v1.0 Evolver Learning Platform** — Phases 1-6 (shipped 2026-03-30)
 - ✅ **v1.1 Cascadia Instrument Support** — Phases 7-13.1 (shipped 2026-04-05)
 - ✅ **v1.2 Learner Experience & Discovery** — Phases 14-17 (shipped 2026-04-07)
-- 🚧 **v1.3 Visual Redesign** — Phases 18-23 (in progress)
+- 🚧 **v1.3 Visual Redesign** — Phases 18-24 (in progress)
 
 ## Phases
 
@@ -158,10 +158,27 @@ Plans:
 - [x] 23-03-PLAN.md — Full verification + visual checkpoint (ADHD 5-second test)
 **UI hint**: yes
 
+### Phase 24: Instrument Color Identity
+
+**Goal**: Each instrument has its own color palette derived from its brand identity (Evolver blue, Cascadia gray), with an Intellijel eurorack aluminum neutral base replacing the current lime-centric palette
+**Depends on:** Phase 23
+**Requirements**: COLOR-01, COLOR-02, COLOR-03, COLOR-04, COLOR-05, COLOR-06
+**Success Criteria** (what must be TRUE):
+  1. User sees a neutral aluminum accent on the home page and non-instrument routes instead of lime green
+  2. User sees blue accent colors on Evolver pages reflecting the DSI blue Lexan panel identity
+  3. User sees cool gray accent colors on Cascadia pages reflecting the Intellijel aluminum panel identity
+  4. User sees per-instrument inline code/parameter colors that are visibly lighter than their accent counterparts
+  5. All accent and param text passes WCAG AA 4.5:1 contrast against all surface backgrounds
+  6. No lime or teal green remnants visible anywhere in the app
+**Plans:** 1 plan
+Plans:
+- [ ] 24-01-PLAN.md — Per-instrument color primitives, semantic defaults, cascade overrides, test updates, visual checkpoint
+**UI hint**: yes
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
+Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23 → 24
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -189,14 +206,4 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 21. Cards & Content Components | v1.3 | 2/2 | Complete    | 2026-04-11 |
 | 22. Interactive Elements & Motion | v1.3 | 1/3 | Complete    | 2026-04-11 |
 | 23. Panel & Progress Polish | v1.3 | 4/4 | Complete    | 2026-04-12 |
-| 24. Instrument Color Identity | v1.3 | 0/0 | Not Started | — |
-
-### Phase 24: Instrument Color Identity
-
-**Goal**: Each instrument has its own color palette derived from its brand identity (Evolver blue, Cascadia gray), with an Intellijel eurorack aluminum neutral base replacing the current lime-centric palette
-**Requirements**: TBD
-**Depends on:** Phase 23
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (run /gsd:plan-phase 24 to break down)
+| 24. Instrument Color Identity | v1.3 | 0/1 | Not Started | — |
