@@ -61,6 +61,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 - [x] **Phase 21: Cards & Content Components** - Unified card visual language, focus states, editorial session layout with designed markers (completed 2026-04-11)
 - [x] **Phase 22: Interactive Elements & Motion** - Micro-interactions, scroll reveals, spring transitions via motion package (completed 2026-04-11)
 - [x] **Phase 23: Panel & Progress Polish** - Panel visualizer container polish, progress data visualization, instrument accent colors (completed 2026-04-12)
+- [ ] **Phase 24: Instrument Color Identity** - Per-instrument color palettes (Evolver blue, Cascadia gray), Intellijel aluminum neutral base
 
 ## Phase Details
 
@@ -188,3 +189,14 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23
 | 21. Cards & Content Components | v1.3 | 2/2 | Complete    | 2026-04-11 |
 | 22. Interactive Elements & Motion | v1.3 | 1/3 | Complete    | 2026-04-11 |
 | 23. Panel & Progress Polish | v1.3 | 4/4 | Complete    | 2026-04-12 |
+| 24. Instrument Color Identity | v1.3 | 0/0 | Not Started | — |
+
+### Phase 24: Instrument Color Identity
+
+**Goal**: Each instrument has its own color palette derived from its brand identity (Evolver blue, Cascadia gray), with an Intellijel eurorack aluminum neutral base replacing the current lime-centric palette
+**Requirements**: TBD
+**Depends on:** Phase 23
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 24 to break down)

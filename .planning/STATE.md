@@ -74,6 +74,10 @@ Recent decisions affecting current work:
 
 None yet.
 
+### Roadmap Evolution
+
+- Phase 24 added: Per-instrument color palettes (Evolver blue, Cascadia gray) with Intellijel aluminum neutral base
+
 ### Blockers/Concerns
 
 - Display typeface decision needed before Phase 19 — validate against next/font
