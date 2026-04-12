@@ -219,6 +219,24 @@ describe('Design Token System', () => {
         /\[data-instrument="cascadia"\]\s*\{[^}]*--color-param:\s*var\(--color-steel-400\)/
       );
     });
+
+    const surfaceTokens = ['--color-bg', '--color-sunken', '--color-surface', '--color-surface-raised', '--color-overlay'];
+
+    it('[data-instrument="evolver"] overrides surface tokens with blue hue', () => {
+      for (const token of surfaceTokens) {
+        expect(globalsContent).toMatch(
+          new RegExp(`\\[data-instrument="evolver"\\]\\s*\\{[^}]*${token.replace(/[-]/g, '\\$&')}:\\s*oklch\\([\\d.]+\\s+[\\d.]+\\s+245\\)`)
+        );
+      }
+    });
+
+    it('[data-instrument="cascadia"] overrides surface tokens with steel hue', () => {
+      for (const token of surfaceTokens) {
+        expect(globalsContent).toMatch(
+          new RegExp(`\\[data-instrument="cascadia"\\]\\s*\\{[^}]*${token.replace(/[-]/g, '\\$&')}:\\s*oklch\\([\\d.]+\\s+[\\d.]+\\s+250\\)`)
+        );
+      }
+    });
   });
 
   describe('Legacy lime/teal cleanup', () => {
