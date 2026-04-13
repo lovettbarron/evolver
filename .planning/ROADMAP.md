@@ -61,7 +61,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 - [x] **Phase 21: Cards & Content Components** - Unified card visual language, focus states, editorial session layout with designed markers (completed 2026-04-11)
 - [x] **Phase 22: Interactive Elements & Motion** - Micro-interactions, scroll reveals, spring transitions via motion package (completed 2026-04-11)
 - [x] **Phase 23: Panel & Progress Polish** - Panel visualizer container polish, progress data visualization, instrument accent colors (completed 2026-04-12)
-- [ ] **Phase 24: Instrument Color Identity** - Per-instrument color palettes (Evolver blue, Cascadia gray), Intellijel aluminum neutral base
+- [x] **Phase 24: Instrument Color Identity** - Per-instrument color palettes (Evolver blue, Cascadia gray), Intellijel aluminum neutral base (completed 2026-04-13)
 
 ## Phase Details
 
@@ -170,9 +170,9 @@ Plans:
   4. User sees per-instrument inline code/parameter colors that are visibly lighter than their accent counterparts
   5. All accent and param text passes WCAG AA 4.5:1 contrast against all surface backgrounds
   6. No lime or teal green remnants visible anywhere in the app
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
-- [ ] 24-01-PLAN.md — Per-instrument color primitives, semantic defaults, cascade overrides, test updates, visual checkpoint
+- [x] 24-01-PLAN.md — Per-instrument color primitives, semantic defaults, cascade overrides, test updates, visual checkpoint
 **UI hint**: yes
 
 ## Progress
@@ -206,4 +206,4 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23 → 24
 | 21. Cards & Content Components | v1.3 | 2/2 | Complete    | 2026-04-11 |
 | 22. Interactive Elements & Motion | v1.3 | 1/3 | Complete    | 2026-04-11 |
 | 23. Panel & Progress Polish | v1.3 | 4/4 | Complete    | 2026-04-12 |
-| 24. Instrument Color Identity | v1.3 | 0/1 | Not Started | — |
+| 24. Instrument Color Identity | v1.3 | 1/1 | Complete   | 2026-04-13 |
