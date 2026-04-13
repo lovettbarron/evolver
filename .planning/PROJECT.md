@@ -29,6 +29,7 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - Phase 21: Cards & content components (unified .card CSS class, :focus-visible global, editorial prose styling) — Complete
 - Phase 22: Motion & micro-interactions (ScrollReveal, SpringCard, completion-toggle animations) — Complete
 - Phase 23: Panel & progress polish (motion.svg viewBox zoom tween, PracticeHeatmap, per-instrument accent identity) — Complete
+- Phase 24: Instrument color identity (per-instrument color palettes + surface tinting, lime removal) — Complete
 
 ## Current Milestone: v1.3 Visual Redesign
 
@@ -171,4 +172,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-12 after Phase 23 (Panel & Progress Polish) completed*
+*Last updated: 2026-04-13 after Phase 24 (Instrument Color Identity) completed*
