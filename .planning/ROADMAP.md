@@ -178,7 +178,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23 → 24
+Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -207,3 +207,29 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23 → 24
 | 22. Interactive Elements & Motion | v1.3 | 1/3 | Complete    | 2026-04-11 |
 | 23. Panel & Progress Polish | v1.3 | 4/4 | Complete    | 2026-04-12 |
 | 24. Instrument Color Identity | v1.3 | 1/1 | Complete    | 2026-04-13 |
+| 25. Octatrack Curriculum + Site Integration | v1.3 | 0/7 | Planned | — |
+
+### Phase 25: Complete the Octatrack curriculum work so that it is ready to add to the evolver site. Focus on song writing and arrangement, and live sessions and looping.
+
+**Goal:** Take the Octatrack MKII from "metadata + 6 of 31 sessions + panel SVG" to full Cascadia-parity on the evolver site — complete 31-session curriculum, triple-write pipeline, full site integration (instrument selector, nav, capability-gated routes, demo mode), new sampler capability profile, Elektron-orange color identity with surface tinting, and 5 demo project-state patches.
+**Requirements**: Decisions D-01 through D-22 from 25-CONTEXT.md (no REQ-IDs — CONTEXT decisions are the authoritative requirements)
+**Depends on:** Phase 24
+**Success Criteria** (what must be TRUE):
+  1. All 31 Octatrack sessions exist in all three content locations with valid frontmatter (duration ≤ 30 min ADHD cap)
+  2. Octatrack appears as a first-class instrument on home, nav, selector, session browser, patches, panel route, global search
+  3. Capability gates correct: MIDI/SysEx page hidden for Octatrack, patch pages render project-state format (no cable routing, no knob settings)
+  4. Color identity visible: Elektron orange accent + subtle warm surface tint on octatrack routes, WCAG AA readable
+  5. 5 demo patches render from the patches index (basic-project + 4 focus-module demos)
+  6. Demo mode shows a realistic Octatrack synthetic journey (~23/31 complete, partway through Module 8)
+  7. Full test suite green + validate-content green + validate-contrast green + check-triple-write green + npm run build green
+  8. D-22 guard: `src/components/octatrack-panel.tsx` and `src/lib/octatrack-panel-data.ts` unchanged throughout the phase
+**Plans:** 7 plans across 5 waves
+
+Plans:
+- [ ] 25-00-PLAN.md — Wave 0: test fixtures + test stubs + validate-contrast TOKEN_MAP refresh + check-triple-write.sh
+- [ ] 25-01-PLAN.md — Wave 1: Schema extension (sampler/sequencer/midi_sequencer optional flags) + globals.css orange primitives + [data-instrument="octatrack"] cascade + panel-route regression test
+- [ ] 25-02-PLAN.md — Wave 2: Bootstrap 9 content directories + write instruments/octatrack/instrument.json + triple-write existing content + flip Wave 0 todos to real tests
+- [ ] 25-03a-PLAN.md — Wave 3 (parallel): Author 16 Module 1-6 sessions with sparse markers + triple-write
+- [ ] 25-03b-PLAN.md — Wave 3 (parallel): Author 9 focus-module sessions (19-24, 26, 27, 30) with dense panel markers + triple-write
+- [ ] 25-04-PLAN.md — Wave 4: Author 5 demo patches (basic-project + 4 focus-module demos) in project-state format + triple-write
+- [ ] 25-05-PLAN.md — Wave 5: Extend synthetic-daily-notes.ts with Octatrack journey + wire dispatchers + manual UAT checkpoint
