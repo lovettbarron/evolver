@@ -10,6 +10,7 @@
     "start": "next start",
     "bundle-content": "tsx scripts/bundle-content.ts",
     "validate-content": "tsx scripts/validate-content.ts",
+    "check-triple-write": "bash scripts/check-triple-write.sh octatrack",
     "test": "vitest run",
     "test:watch": "vitest"
   },
