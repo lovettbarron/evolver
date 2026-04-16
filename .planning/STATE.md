@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: executing
-stopped_at: Completed 25-01-PLAN.md
-last_updated: "2026-04-16T22:05:42.429Z"
+stopped_at: Completed 25-02-PLAN.md
+last_updated: "2026-04-16T22:17:29.317Z"
 last_activity: 2026-04-16
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 25
-  completed_plans: 20
+  completed_plans: 21
   percent: 55
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-07)
 ## Current Position
 
 Phase: 25 (complete-the-octatrack-curriculum-work-so-that-it-is-ready-to-add-to-the-evolver-site-focus-on-song-writing-and-arrangement-and-live-sessions-and-looping) — EXECUTING
-Plan: 3 of 7
+Plan: 4 of 7
 Status: Ready to execute
 Last activity: 2026-04-16
 
@@ -78,6 +78,9 @@ Recent decisions affecting current work:
 - [Phase 25]: Zero OKLCH iterations needed — Wave 0 starter values (accent 0.72 0.16 40, param 0.80 0.12 42) passed all 10 octatrack pairings. Final tuples are canonical Elektron hot orange at hue 40 without chroma sacrifice
 - [Phase 25]: muted on surface 4.55:1 tightness is an inherited Phase 24 cross-cascade constraint (base 4.53, evolver 4.53, cascadia 4.53) — octatrack marginally better, no octatrack-specific change warranted
 - [Phase 25]: tokens.test.ts uses regex bounds (not literal equality) for OKLCH values so intentional tuning stays green; bounds tight enough to catch hue drift (e.g., 40 vs 200=blue) while leaving room for lightness/chroma nudges
+- [Phase 25]: Plan 25-02: Added manufacturer field to canonical octatrack signal-flow/modules/basic-patch.md (Rule 1 fix). Cascadia files all have it; octatrack's were the outlier — surfaced by validate-content as soon as content was bundled to src/content/
+- [Phase 25]: Plan 25-02: midi-capability test loads real bundled octatrack instrumentConfig (not a mock) — catches schema/data drift the moment it happens, asserts the same code path MidiRoute server component runs at request time
+- [Phase 25]: Plan 25-02: PatchDetail tests must filter SVGs by viewBox to skip lucide icons — container.querySelector('svg') returns the 24x24 ChevronLeft, not the 1000x500 panel. Pattern: Array.from(querySelectorAll('svg')).find(s => s.getAttribute('viewBox') === '<expected>')
 
 ### Pending Todos
 
@@ -101,9 +104,10 @@ None yet.
 | 260416-9hx | Generate Octatrack front panel SVG component | 2026-04-16 | 9cb345b | [260416-9hx-generate-octatrack-front-panel-svg-compo](./quick/260416-9hx-generate-octatrack-front-panel-svg-compo/) |
 | Phase 25 P00 | 9 | 5 tasks | 12 files |
 | Phase 25 P01 | 7min | 4 tasks | 7 files |
+| Phase 25 P02 | 7min | 2 tasks | 18 files |
 
 ## Session Continuity
 
-Last session: 2026-04-16T22:05:42.425Z
-Stopped at: Completed 25-01-PLAN.md
+Last session: 2026-04-16T22:17:29.314Z
+Stopped at: Completed 25-02-PLAN.md
 Resume file: None
