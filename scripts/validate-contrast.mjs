@@ -3,10 +3,14 @@
  * Validates all foreground/background pairings meet 4.5:1 minimum ratio.
  *
  * TOKEN_MAP reflects the current Phase 24 palette (olive neutrals, blue
- * Evolver cascade, steel Cascadia cascade) plus Phase 25 starter values
- * for the Octatrack orange cascade. Starter orange values are an educated
- * guess based on the Elektron panel hue (≈40°); plan 25-01 Task 1.3 will
- * iterate chroma/lightness until every octatrack-* pairing passes.
+ * Evolver cascade, steel Cascadia cascade) plus Phase 25 finalized values
+ * for the Octatrack orange cascade (plan 25-01). Octatrack accent/param
+ * land on the canonical Elektron panel hue (~40°) and all octatrack-*
+ * pairings pass WCAG AA without iteration from the Wave 0 starter values.
+ *
+ * The tightest muted-on-surface pairings (~4.53–4.55:1) are an inherited
+ * Phase 24 boundary shared by every cascade (base: 4.53, evolver: 4.53,
+ * cascadia: 4.53, octatrack: 4.55) — not an octatrack-specific concern.
  *
  * Usage: node scripts/validate-contrast.mjs
  */
@@ -45,7 +49,11 @@ export const TOKEN_MAP = {
   'cascadia-accent': 'oklch(0.70 0.04 250)',
   'cascadia-param': 'oklch(0.78 0.03 250)',
 
-  // Octatrack Elektron orange (Phase 25 — starting OKLCH values; iterated in plan 25-01)
+  // Octatrack Elektron orange (Phase 25 / plan 25-01 — finalized OKLCH values)
+  // Surface chroma 0.03 keeps warm tint without overwhelming muted text.
+  // Accent oklch(0.72 0.16 40) is canonical Elektron hot orange (validated
+  // against Octatrack MKII panel photo). Param 0.80 0.12 42 is the lighter
+  // derivative used for parameter values + inline code.
   'octatrack-bg': 'oklch(0.12 0.03 40)',
   'octatrack-sunken': 'oklch(0.10 0.03 40)',
   'octatrack-surface': 'oklch(0.16 0.03 40)',
