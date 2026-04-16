@@ -309,4 +309,81 @@ describe('Design Token System', () => {
       });
     }
   });
+
+  describe('Phase 25 — Octatrack color identity', () => {
+    it('declares --color-orange-500 primitive in @theme block', () => {
+      expect(globalsContent).toMatch(/--color-orange-500:\s*oklch\(0\.(7[0-9]|8[0-5])\s+0\.1[0-7]\s+4[0-5]\)/);
+    });
+
+    it('declares --color-orange-400 primitive (lighter param derivative) in @theme block', () => {
+      expect(globalsContent).toMatch(/--color-orange-400:\s*oklch\(0\.(7[5-9]|8[0-9])\s+0\.1[0-7]\s+4[0-5]\)/);
+    });
+
+    it('--color-orange-400 is lighter than --color-orange-500', () => {
+      const accent = getTokenValue('--color-orange-500');
+      const param = getTokenValue('--color-orange-400');
+      expect(accent).not.toBeNull();
+      expect(param).not.toBeNull();
+      const accentL = extractLightness(accent!);
+      const paramL = extractLightness(param!);
+      expect(accentL).not.toBeNull();
+      expect(paramL).not.toBeNull();
+      expect(paramL!).toBeGreaterThan(accentL!);
+    });
+
+    it('[data-instrument="octatrack"] cascade block exists with --color-accent → orange-500', () => {
+      expect(globalsContent).toMatch(
+        /\[data-instrument="octatrack"\]\s*\{[^}]*--color-accent:\s*var\(--color-orange-500\)/
+      );
+    });
+
+    it('[data-instrument="octatrack"] sets --color-param → orange-400', () => {
+      expect(globalsContent).toMatch(
+        /\[data-instrument="octatrack"\]\s*\{[^}]*--color-param:\s*var\(--color-orange-400\)/
+      );
+    });
+
+    it('octatrack cascade block sets all 5 surface tokens + 2 borders', () => {
+      const blockMatch = globalsContent.match(/\[data-instrument="octatrack"\]\s*\{([^}]+)\}/);
+      expect(blockMatch).not.toBeNull();
+      const block = blockMatch![1];
+      expect(block).toContain('--color-accent');
+      expect(block).toContain('--color-param');
+      expect(block).toContain('--color-bg');
+      expect(block).toContain('--color-sunken');
+      expect(block).toContain('--color-surface');
+      expect(block).toContain('--color-surface-raised');
+      expect(block).toContain('--color-overlay');
+      expect(block).toContain('--color-border');
+      expect(block).toContain('--color-border-subtle');
+    });
+
+    it('octatrack cascade oklch values use warm hue 35-45 (Elektron orange range)', () => {
+      const blockMatch = globalsContent.match(/\[data-instrument="octatrack"\]\s*\{([^}]+)\}/);
+      expect(blockMatch).not.toBeNull();
+      const block = blockMatch![1];
+      const oklchValues = block.match(/oklch\([^)]+\)/g) || [];
+      expect(oklchValues.length).toBeGreaterThan(0);
+      for (const v of oklchValues) {
+        const hueMatch = v.match(/oklch\(\s*[\d.]+\s+[\d.]+\s+([\d.]+)\s*\)/);
+        expect(hueMatch).not.toBeNull();
+        const hue = parseFloat(hueMatch![1]);
+        expect(hue).toBeGreaterThanOrEqual(35);
+        expect(hue).toBeLessThanOrEqual(45);
+      }
+    });
+
+    it('octatrack surface chroma stays ≤ 0.04 (avoid visual noise per D-14)', () => {
+      const blockMatch = globalsContent.match(/\[data-instrument="octatrack"\]\s*\{([^}]+)\}/);
+      const block = blockMatch![1];
+      const surfaceLines = block.match(/--color-(bg|sunken|surface|surface-raised|overlay|border|border-subtle):\s*oklch\([^)]+\)/g) || [];
+      expect(surfaceLines.length).toBeGreaterThanOrEqual(5);
+      for (const line of surfaceLines) {
+        const chromaMatch = line.match(/oklch\(\s*[\d.]+\s+([\d.]+)\s+/);
+        expect(chromaMatch).not.toBeNull();
+        const chroma = parseFloat(chromaMatch![1]);
+        expect(chroma).toBeLessThanOrEqual(0.04);
+      }
+    });
+  });
 });
