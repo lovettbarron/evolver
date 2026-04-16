@@ -81,9 +81,19 @@ describe('AppShell data-instrument attribute', () => {
     expect(el).toBeNull();
   });
 
-  // Phase 25 Wave 0 stub — Wave 2 (plan 25-02) wires octatrack
-  // routes so this can flip from .todo to a real assertion.
-  test.todo('applies data-instrument="octatrack" to app shell on /instruments/octatrack/... routes');
+  // Phase 25 Wave 2 (plan 25-02): octatrack routes exist now, so AppShell
+  // should set data-instrument="octatrack" via the existing slug-extraction
+  // regex (no production-code change needed; this regression-locks it).
+  test('sets data-instrument="octatrack" when pathname is /instruments/octatrack/sessions/01-...', () => {
+    mockUsePathname.mockReturnValue('/instruments/octatrack/sessions/01-foundations-orientation-first-sound');
+    const { container } = render(
+      <AppShell {...defaultProps}><div>content</div></AppShell>
+    );
+
+    const el = container.querySelector('[data-instrument]');
+    expect(el).not.toBeNull();
+    expect(el?.getAttribute('data-instrument')).toBe('octatrack');
+  });
 
   test('renders Nav and Footer components', () => {
     mockUsePathname.mockReturnValue('/');

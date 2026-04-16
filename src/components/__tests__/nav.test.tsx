@@ -58,9 +58,25 @@ describe('Nav dynamic instrument rendering', () => {
     expect(screen.getByText('Progress')).toBeDefined();
   });
 
-  // Phase 25 Wave 0 stub — Wave 2 (plan 25-02) adds octatrack to the
-  // instruments registry so this case can render a real Nav and assert.
-  test.todo('hides MIDI link on nav when instrumentConfig.sysex is false for octatrack');
+  // Phase 25 Wave 2 (plan 25-02): octatrack instrument is now in the registry
+  // (sysex:false). Nav should hide the MIDI link, exactly like cascadia.
+  test('hides MIDI link for octatrack (sysex: false)', () => {
+    const instrumentsWithOctatrack = [
+      ...instruments,
+      { slug: 'octatrack', displayName: 'Octatrack MKII', sysex: false },
+    ];
+    mockUsePathname.mockReturnValue('/instruments/octatrack/sessions');
+    render(<Nav instruments={instrumentsWithOctatrack} />);
+
+    expect(screen.getByText('Sessions')).toBeDefined();
+    expect(screen.getByText('Patches')).toBeDefined();
+    expect(screen.queryByText('MIDI')).toBeNull();
+    expect(screen.getByText('Progress')).toBeDefined();
+
+    // Sub-links use octatrack slug
+    const sessionsLink = screen.getByText('Sessions').closest('a');
+    expect(sessionsLink?.getAttribute('href')).toBe('/instruments/octatrack/sessions');
+  });
 
   test('sub-links use current instrument slug in href', () => {
     mockUsePathname.mockReturnValue('/instruments/cascadia/sessions');

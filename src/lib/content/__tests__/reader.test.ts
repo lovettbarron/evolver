@@ -69,9 +69,16 @@ describe('discoverInstruments', () => {
     }
   });
 
-  // Phase 25 Wave 0 stub — Wave 2 (plan 25-02) creates the
-  // src/content/instruments/octatrack/ bundle directory and removes .todo.
-  it.todo('discoverInstruments returns octatrack once src/content/instruments/octatrack exists');
+  // Phase 25 Wave 2 (plan 25-02): octatrack/ fixture directory was added in
+  // Wave 0 with instrument.json + overview.md, so discoverInstruments
+  // (driven by FIXTURES_DIR) returns it alongside cascadia and evolver.
+  it('returns octatrack alongside cascadia and evolver', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const instruments = await discoverInstruments(config);
+    expect(instruments).toContain('octatrack');
+    expect(instruments).toContain('cascadia');
+    expect(instruments).toContain('evolver');
+  });
 });
 
 describe('loadInstrumentConfig', () => {

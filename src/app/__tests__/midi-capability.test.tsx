@@ -56,8 +56,29 @@ describe('MIDI Capability Gating', () => {
       expect(content).toContain('NoSysexPage');
     });
 
-    // Phase 25 Wave 0 stub — Wave 2 (plan 25-02) lands the bundled
-    // octatrack instrument.json so this can flip from .todo to real assertion.
-    test.todo('renders NoSysexPage for octatrack (sysex:false)');
+    // Phase 25 Wave 2 (plan 25-02): octatrack instrument.json now exists in
+    // src/content/instruments/octatrack/. loadInstrumentConfig('octatrack')
+    // returns sysex:false, so MidiRoute will route through NoSysexPage.
+    test('renders NoSysexPage for octatrack (sysex:false)', async () => {
+      // Load the actual bundled octatrack config that MidiRoute reads at runtime.
+      const { loadInstrumentConfig } = await import('@/lib/content/reader');
+      const instrumentConfig = await loadInstrumentConfig('octatrack', { instrument: 'octatrack' });
+
+      // Assert the capability that drives the routing decision in MidiRoute.
+      expect(instrumentConfig.sysex).toBe(false);
+      expect(instrumentConfig.display_name).toBe('Octatrack MKII');
+
+      // Render the NoSysexPage exactly as MidiRoute would when sysex===false.
+      render(
+        <NoSysexPage
+          displayName={instrumentConfig.display_name}
+          patchesHref={`/instruments/octatrack/patches`}
+        />,
+      );
+      expect(screen.getByRole('heading').textContent).toContain('Octatrack MKII');
+      expect(screen.getByText(/doesn.t support MIDI SysEx/)).toBeDefined();
+      const link = screen.getByText(/Browse Octatrack MKII Patches/);
+      expect(link.closest('a')?.getAttribute('href')).toBe('/instruments/octatrack/patches');
+    });
   });
 });
