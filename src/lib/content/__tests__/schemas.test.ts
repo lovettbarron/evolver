@@ -397,11 +397,62 @@ describe('InstrumentConfigSchema', () => {
     expect(result.patch_memory).toBe(false);
   });
 
-  // Phase 25 Wave 0 stubs — Wave 1 (plan 25-01) extends InstrumentConfigSchema
-  // with optional sampler/sequencer/midi_sequencer flags and removes .todo here.
-  it.todo('accepts valid Octatrack config with sampler/sequencer/midi_sequencer flags');
-  it.todo('accepts Octatrack config where sysex=false and patch_memory=false');
-  it.todo('treats missing sampler flag as undefined (backward compat for evolver/cascadia)');
+  // Phase 25 Wave 1 — InstrumentConfigSchema extended with optional
+  // sampler/sequencer/midi_sequencer flags (D-08).
+  it('accepts valid Octatrack config with sampler/sequencer/midi_sequencer flags', () => {
+    const data = JSON.parse(
+      require('fs').readFileSync(
+        require('path').join(__dirname, '__fixtures__/instruments/octatrack/instrument.json'),
+        'utf-8'
+      )
+    );
+    const result = InstrumentConfigSchema.parse(data);
+    expect(result.display_name).toBe('Octatrack MKII');
+    expect(result.manufacturer).toBe('Elektron');
+    expect(result.sampler).toBe(true);
+    expect(result.sequencer).toBe(true);
+    expect(result.midi_sequencer).toBe(true);
+  });
+
+  it('accepts Octatrack config where sysex=false and patch_memory=false', () => {
+    const data = JSON.parse(
+      require('fs').readFileSync(
+        require('path').join(__dirname, '__fixtures__/instruments/octatrack/instrument.json'),
+        'utf-8'
+      )
+    );
+    const result = InstrumentConfigSchema.parse(data);
+    expect(result.sysex).toBe(false);
+    expect(result.patch_memory).toBe(false);
+  });
+
+  it('treats missing sampler flag as undefined (backward compat for evolver/cascadia)', () => {
+    const cascadiaLike = {
+      display_name: 'Cascadia',
+      tagline: 'West coast modular synthesis exploration',
+      manufacturer: 'Intellijel',
+      sysex: false,
+      patch_memory: false,
+      reference_pdfs: [],
+    };
+    const result = InstrumentConfigSchema.parse(cascadiaLike);
+    expect(result.sampler).toBeUndefined();
+    expect(result.sequencer).toBeUndefined();
+    expect(result.midi_sequencer).toBeUndefined();
+  });
+
+  it('rejects non-boolean sampler flag (D-08 — flags must be boolean)', () => {
+    const data = {
+      display_name: 'Test',
+      tagline: 'test',
+      manufacturer: 'test',
+      sysex: false,
+      patch_memory: false,
+      sampler: 'true',
+      reference_pdfs: [],
+    };
+    expect(() => InstrumentConfigSchema.parse(data)).toThrow(ZodError);
+  });
 
   it('rejects object missing display_name', () => {
     const data = {

@@ -69,13 +69,16 @@ export type InstrumentFile = z.infer<typeof InstrumentFileSchema>;
 export type CableConnection = z.infer<typeof CableConnectionSchema>;
 export type KnobSetting = z.infer<typeof KnobSettingSchema>;
 
-// Instrument configuration schema (Phase 7: multi-instrument support)
+// Instrument configuration schema (Phase 7: multi-instrument support; Phase 25: sampler flags)
 export const InstrumentConfigSchema = z.object({
   display_name: z.string(),
   tagline: z.string(),
   manufacturer: z.string(),
-  sysex: z.boolean(),
-  patch_memory: z.boolean(),
+  sysex: z.boolean(),                       // Phase 7 — MIDI SysEx capability (Evolver has, Cascadia/Octatrack don't)
+  patch_memory: z.boolean(),                // Phase 7 — patch-dump memory (Evolver has, Cascadia/Octatrack don't)
+  sampler: z.boolean().optional(),          // Phase 25 / D-08 — has_sampler (Octatrack: true)
+  sequencer: z.boolean().optional(),        // Phase 25 / D-08 — has_sequencer (Octatrack: true)
+  midi_sequencer: z.boolean().optional(),   // Phase 25 / D-08, D-10 — has_midi_sequencer (Octatrack: true — informational for now)
   reference_pdfs: z.array(z.object({
     label: z.string(),
     file: z.string(),
