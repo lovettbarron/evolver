@@ -55,5 +55,9 @@ describe('MIDI Capability Gating', () => {
       expect(content).toContain('instrumentConfig.sysex');
       expect(content).toContain('NoSysexPage');
     });
+
+    // Phase 25 Wave 0 stub — Wave 2 (plan 25-02) lands the bundled
+    // octatrack instrument.json so this can flip from .todo to real assertion.
+    test.todo('renders NoSysexPage for octatrack (sysex:false)');
   });
 });

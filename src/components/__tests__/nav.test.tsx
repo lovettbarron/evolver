@@ -58,6 +58,10 @@ describe('Nav dynamic instrument rendering', () => {
     expect(screen.getByText('Progress')).toBeDefined();
   });
 
+  // Phase 25 Wave 0 stub — Wave 2 (plan 25-02) adds octatrack to the
+  // instruments registry so this case can render a real Nav and assert.
+  test.todo('hides MIDI link on nav when instrumentConfig.sysex is false for octatrack');
+
   test('sub-links use current instrument slug in href', () => {
     mockUsePathname.mockReturnValue('/instruments/cascadia/sessions');
     render(<Nav instruments={instruments} />);

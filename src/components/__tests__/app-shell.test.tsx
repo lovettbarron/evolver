@@ -81,6 +81,10 @@ describe('AppShell data-instrument attribute', () => {
     expect(el).toBeNull();
   });
 
+  // Phase 25 Wave 0 stub — Wave 2 (plan 25-02) wires octatrack
+  // routes so this can flip from .todo to a real assertion.
+  test.todo('applies data-instrument="octatrack" to app shell on /instruments/octatrack/... routes');
+
   test('renders Nav and Footer components', () => {
     mockUsePathname.mockReturnValue('/');
     render(

@@ -68,6 +68,10 @@ describe('discoverInstruments', () => {
       expect(name).not.toMatch(/^\./);
     }
   });
+
+  // Phase 25 Wave 0 stub — Wave 2 (plan 25-02) creates the
+  // src/content/instruments/octatrack/ bundle directory and removes .todo.
+  it.todo('discoverInstruments returns octatrack once src/content/instruments/octatrack exists');
 });
 
 describe('loadInstrumentConfig', () => {

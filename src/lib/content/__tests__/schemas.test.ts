@@ -397,6 +397,12 @@ describe('InstrumentConfigSchema', () => {
     expect(result.patch_memory).toBe(false);
   });
 
+  // Phase 25 Wave 0 stubs — Wave 1 (plan 25-01) extends InstrumentConfigSchema
+  // with optional sampler/sequencer/midi_sequencer flags and removes .todo here.
+  it.todo('accepts valid Octatrack config with sampler/sequencer/midi_sequencer flags');
+  it.todo('accepts Octatrack config where sysex=false and patch_memory=false');
+  it.todo('treats missing sampler flag as undefined (backward compat for evolver/cascadia)');
+
   it('rejects object missing display_name', () => {
     const data = {
       tagline: 'test',
