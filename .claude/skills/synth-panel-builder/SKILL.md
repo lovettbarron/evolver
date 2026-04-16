@@ -386,3 +386,34 @@ Panel building is inherently visual and iterative:
 - Tests: `src/lib/__tests__/{instrument}-panel-data.test.ts`, `src/components/__tests__/{instrument}-panel.test.tsx`
 - Tooltip: `src/components/evolver-panel-tooltip.tsx` (shared across instruments)
 - ID convention: `{type}-{module}-{name-kebab}` (e.g., `knob-vco-a-pitch`, `jack-mixer-out`, `switch-vcf-mode`)
+
+## Changelog
+
+### 2026-04-16 — Octatrack MKII validated the skill
+Adding the Octatrack MKII panel took only **a handful of prompts** to reach a
+usable layout — a massive improvement over the Evolver and Cascadia builds,
+both of which required many iterative rounds of visual comparison and position
+tweaking (Cascadia alone went through ~20 rounds).
+
+What made the difference:
+- The **reference-first, never algorithmic** principle was enforced from the
+  start — the initial plan explicitly named the manual as the source of truth
+  and flagged positions for later manual verification
+- The **data-driven vs inline-JSX** decision was made up front based on the
+  control inventory (Octatrack's 67 controls with repeating trig/track rows
+  pointed clearly at the data-driven approach)
+- The **ID convention** and **SECTION_BOUNDS** structure were already codified,
+  so the only work left was positioning — not architecture
+- User feedback about the real physical layout (LCD central, T1-T4/T5-T8
+  flanking, SRC/AMP below LCD, crossfader above trig row) was applied as
+  targeted coordinate edits rather than rewrites
+
+This round also added the **Cluster Structure** section (above) covering
+Elektron instruments — a pattern that Row Structure didn't capture. Future
+Elektron panel work (Digitakt, Digitone, Analog Rytm, etc.) should benefit
+from the same cluster-first framing.
+
+**Takeaway**: the skill is now mature enough that adding a new instrument
+panel is mostly a positioning exercise, not an architectural one. Keep the
+skill up to date with lessons learned from each new instrument so the next
+build stays fast.
