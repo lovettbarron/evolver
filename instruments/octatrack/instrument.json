@@ -1,0 +1,11 @@
+{
+  "display_name": "Octatrack MKII",
+  "tagline": "Performance sampler, live looper, and MIDI brain",
+  "manufacturer": "Elektron",
+  "sysex": false,
+  "patch_memory": false,
+  "sampler": true,
+  "sequencer": true,
+  "midi_sequencer": true,
+  "reference_pdfs": []
+}
