@@ -13,6 +13,11 @@ const PANEL_CONFIG: Record<string, { title: string; description: string; maxWidt
     description: 'Interactive panel reference. Drag knobs and sliders to explore. Patch jacks show cable connection points.',
     maxWidth: 'max-w-[1800px]',
   },
+  octatrack: {
+    title: 'Octatrack Panel',
+    description: 'Interactive front panel reference. Drag the data entry knobs and crossfader to explore parameter ranges.',
+    maxWidth: 'max-w-[1400px]',
+  },
 };
 
 export default async function PanelPage({ params }: { params: Promise<{ slug: string }> }) {

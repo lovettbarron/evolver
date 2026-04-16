@@ -9,6 +9,7 @@ import { KnobSettingsTable } from './knob-settings-table';
 import { AudioPreviewPlaceholder } from './audio-preview-placeholder';
 import { EvolverPanel } from './evolver-panel';
 import { CascadiaPanel } from './cascadia-panel';
+import { OctatrackPanel } from './octatrack-panel';
 import { resolveCascadiaCableId, getCascadiaCableSignalType } from '@/lib/cascadia-cable-lookup';
 import type { CableConnection, KnobSetting } from '@/lib/content/schemas';
 
@@ -133,6 +134,13 @@ export function PatchDetail({
                 : undefined
               }
             />
+          </div>
+        )}
+
+        {instrumentSlug === 'octatrack' && (
+          <div className="mt-xl">
+            <h3 className="text-lg font-semibold mb-md">Panel View</h3>
+            <OctatrackPanel />
           </div>
         )}
       </div>
