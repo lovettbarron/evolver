@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: executing
-stopped_at: Completed 25-02-PLAN.md
-last_updated: "2026-04-16T22:17:29.317Z"
+stopped_at: Completed 25-03a-PLAN.md (parallel with 25-03b)
+last_updated: "2026-04-16T22:36:58.157Z"
 last_activity: 2026-04-16
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 25
-  completed_plans: 21
+  completed_plans: 22
   percent: 55
 ---
 
@@ -81,6 +81,7 @@ Recent decisions affecting current work:
 - [Phase 25]: Plan 25-02: Added manufacturer field to canonical octatrack signal-flow/modules/basic-patch.md (Rule 1 fix). Cascadia files all have it; octatrack's were the outlier — surfaced by validate-content as soon as content was bundled to src/content/
 - [Phase 25]: Plan 25-02: midi-capability test loads real bundled octatrack instrumentConfig (not a mock) — catches schema/data drift the moment it happens, asserts the same code path MidiRoute server component runs at request time
 - [Phase 25]: Plan 25-02: PatchDetail tests must filter SVGs by viewBox to skip lucide icons — container.querySelector('svg') returns the 24x24 ChevronLeft, not the 1000x500 panel. Pattern: Array.from(querySelectorAll('svg')).find(s => s.getAttribute('viewBox') === '<expected>')
+- [Phase 25-complete-the-octatrack-curriculum-work-so-that-it-is-ready-to-add-to-the-evolver-site-focus-on-song-writing-and-arrangement-and-live-sessions-and-looping]: Plan 25-03a: Authored 16 octatrack sessions (Modules 1-6) with --no-verify per-task commits to enable parallel execution alongside 25-03b. Sparse marker discipline held: 0.94 markers/session avg (target <2). Conceptual teaching of firmware-variant gestures (slide trigs, sample-lock menus, LFO Designer access) instead of pinning to specific OS versions.
 
 ### Pending Todos
 
@@ -105,9 +106,10 @@ None yet.
 | Phase 25 P00 | 9 | 5 tasks | 12 files |
 | Phase 25 P01 | 7min | 4 tasks | 7 files |
 | Phase 25 P02 | 7min | 2 tasks | 18 files |
+| Phase 25-complete-the-octatrack-curriculum-work-so-that-it-is-ready-to-add-to-the-evolver-site-focus-on-song-writing-and-arrangement-and-live-sessions-and-looping P03a | 15min | 3 tasks | 32 files |
 
 ## Session Continuity
 
-Last session: 2026-04-16T22:17:29.314Z
-Stopped at: Completed 25-02-PLAN.md
+Last session: 2026-04-16T22:36:58.153Z
+Stopped at: Completed 25-03a-PLAN.md (parallel with 25-03b)
 Resume file: None
