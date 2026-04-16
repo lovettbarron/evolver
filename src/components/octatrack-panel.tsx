@@ -54,19 +54,19 @@ const MODULE_ORDER = [
 
 const MODULE_DISPLAY_NAMES: Record<string, string> = {
   card: '',
-  main: 'MAIN',
+  main: '',
   lcd: '',
   data: 'DATA ENTRY',
-  transport: 'TRANSPORT',
+  transport: '',
   tempo: '',
   func: '',
   param: 'TRACK PARAMS',
-  scene: 'SCENE',
+  scene: '',
   mix: '',
-  rec: 'RECORDERS',
-  nav: 'NAVIGATION',
-  track: 'TRACKS',
-  trig: 'TRIGS',
+  rec: '',
+  nav: '',
+  track: '',
+  trig: '',
 };
 
 // ===== Hand-placed control positions =====
@@ -81,115 +81,124 @@ const MODULE_DISPLAY_NAMES: Record<string, string> = {
 
 interface ControlPosition { x: number; y: number }
 
+// Positions match the physical Octatrack MKII photo. The LCD is CENTRAL to
+// the top half, track keys T1-T4 flank its left side and T5-T8 flank its
+// right side (vertical columns). SRC/AMP/LFO/FX1/FX2 sit directly below the
+// LCD. STOP/PLAY/REC sit below the param row. Crossfader is above the trig
+// row at the right, flanked by Scene A (left) and Scene B (right). PAGE is
+// at the far right of the trig row (next to trig 16).
 const CONTROL_POSITIONS: Record<string, ControlPosition> = {
-  // ===== CF CARD STATUS LED — top-left, above LCD =====
-  'led-card-status': { x: 155, y: 12 },
+  // ===== CF CARD STATUS LED — small dot above the LCD =====
+  'led-card-status': { x: 510, y: 18 },
 
-  // ===== MAIN block (top-left) =====
-  // Volume knob + headphones knob stacked vertically
-  'knob-main-level':      { x: 45, y: 55 },
-  'knob-main-headphones': { x: 95, y: 55 },
-  // Track LEVEL knob sits in main module bounds (larger knob near right)
-  'knob-track-level':     { x: 70, y: 115 },
+  // ===== MAIN block (top-left corner) =====
+  // Headphones Vol + Main Volume (small pair), Track LEVEL (large) in right cluster
+  'knob-main-headphones': { x: 45,  y: 70 },
+  'knob-main-level':      { x: 95,  y: 70 },
+  // Track LEVEL knob lives in the right cluster next to Data A (big knob)
+  'knob-track-level':     { x: 720, y: 70 },
 
-  // ===== LCD DISPLAY (upper-center anchor) =====
-  'display-lcd-screen': { x: 130, y: 25 },  // rect starts here; width/height inside renderer
+  // ===== LCD DISPLAY (compact, centered in top half) =====
+  // Rect dimensions handled inside LCDComponent (w=200, h=155).
+  'display-lcd-screen': { x: 430, y: 45 },
 
-  // ===== DATA ENTRY KNOBS (3 cols x 2 rows, right of LCD) =====
-  // Row 1: A, B, C
-  'knob-data-a': { x: 600, y: 55 },
-  'knob-data-b': { x: 665, y: 55 },
-  'knob-data-c': { x: 730, y: 55 },
-  // Row 2: D, E, F
-  'knob-data-d': { x: 600, y: 115 },
-  'knob-data-e': { x: 665, y: 115 },
-  'knob-data-f': { x: 730, y: 115 },
+  // ===== DATA ENTRY KNOBS (3 cols x 2 rows, top right) =====
+  // Row 1: Level, A, B, C at y=70
+  'knob-data-a': { x: 800, y: 70 },
+  'knob-data-b': { x: 870, y: 70 },
+  'knob-data-c': { x: 940, y: 70 },
+  // Row 2: Tempo, D, E, F at y=140
+  'knob-data-d': { x: 800, y: 140 },
+  'knob-data-e': { x: 870, y: 140 },
+  'knob-data-f': { x: 940, y: 140 },
 
-  // ===== TRANSPORT (top-right: PLAY STOP REC horizontally) =====
-  'key-transport-play':   { x: 820, y: 50 },
-  'key-transport-stop':   { x: 880, y: 50 },
-  'key-transport-record': { x: 940, y: 50 },
+  // ===== TEMPO (below LEVEL, top-right cluster) =====
+  'key-tempo-tempo': { x: 720, y: 140 },
 
-  // ===== TEMPO (below transport) =====
-  'key-tempo-tempo':      { x: 820, y: 120 },
+  // ===== RECORDER BUTTONS (REC1 REC2 REC3 — top-left row) =====
+  'key-rec-1': { x: 160, y: 70 },
+  'key-rec-2': { x: 220, y: 70 },
+  'key-rec-3': { x: 280, y: 70 },
 
-  // ===== FUNCTION CLUSTER (horizontal row below LCD) =====
-  // FUNC | PROJ | PART | AED | MIX | ARR | MIDI
-  'key-func-func': { x: 150, y: 180 },
-  'key-func-proj': { x: 210, y: 180 },
-  'key-func-part': { x: 270, y: 180 },
-  'key-func-aed':  { x: 330, y: 180 },
-  'key-func-mix':  { x: 390, y: 180 },
-  'key-func-arr':  { x: 450, y: 180 },
-  'key-func-midi': { x: 510, y: 180 },
+  // ===== TRANSPORT (STOP PLAY REC — directly below the LCD/param row) =====
+  'key-transport-stop':   { x: 470, y: 295 },
+  'key-transport-play':   { x: 535, y: 295 },
+  'key-transport-record': { x: 600, y: 295 },
 
-  // ===== TRACK PARAMETER KEYS (row right of function cluster) =====
-  // SRC AMP LFO FX1 FX2
-  'key-param-src': { x: 585, y: 180 },
-  'key-param-amp': { x: 625, y: 180 },
-  'key-param-lfo': { x: 665, y: 180 },
-  'key-param-fx1': { x: 705, y: 180 },
-  'key-param-fx2': { x: 745, y: 180 },
+  // ===== TRACK PARAMETER KEYS (SRC AMP LFO FX1 FX2 directly below LCD) =====
+  'key-param-src': { x: 445, y: 235 },
+  'key-param-amp': { x: 490, y: 235 },
+  'key-param-lfo': { x: 535, y: 235 },
+  'key-param-fx1': { x: 580, y: 235 },
+  'key-param-fx2': { x: 625, y: 235 },
 
-  // ===== SCENE A / SCENE B (flanking the crossfader, mid-left) =====
-  'key-scene-a': { x: 30, y: 245 },
-  'key-scene-b': { x: 95, y: 245 },
+  // ===== FUNCTION CLUSTER — left side =====
+  // Top row: MIDI + PROJ PART AED MIX ARR  (matches panel "Save Proj, Part Edit,
+  // Slice Grid, Click, Arr Mode" label row)
+  'key-func-midi': { x: 40,  y: 235 },
+  'key-func-proj': { x: 100, y: 235 },
+  'key-func-part': { x: 150, y: 235 },
+  'key-func-aed':  { x: 200, y: 235 },
+  'key-func-mix':  { x: 250, y: 235 },
+  'key-func-arr':  { x: 300, y: 235 },
+  // Lower row: FUNC + CUE
+  'key-func-func':  { x: 40,  y: 290 },
+  'key-track-cue':  { x: 100, y: 290 },
 
-  // ===== CROSSFADER (horizontal, middle) =====
-  // Positioned so track starts at x=140 (track width = 380 in renderer)
-  'slider-mix-crossfader': { x: 140, y: 248 },
+  // ===== PATTERN / BANK — below FUNC/CUE =====
+  'key-nav-pattern': { x: 40,  y: 325 },
+  'key-nav-bank':    { x: 100, y: 325 },
 
-  // ===== RECORDERS (REC1 REC2 REC3) — small cluster mid-right =====
-  'key-rec-1': { x: 575, y: 245 },
-  'key-rec-2': { x: 620, y: 245 },
-  'key-rec-3': { x: 665, y: 245 },
+  // ===== NAVIGATION (YES + UP + NO + LEFT/DOWN/RIGHT) =====
+  // Layout from photo: YES top-left, UP top-right, NO below YES,
+  // LEFT/DOWN/RIGHT horizontal row below UP.
+  'key-nav-yes':   { x: 205, y: 285 },
+  'key-nav-up':    { x: 290, y: 285 },
+  'key-nav-no':    { x: 205, y: 325 },
+  'key-nav-left':  { x: 250, y: 325 },
+  'key-nav-down':  { x: 290, y: 325 },
+  'key-nav-right': { x: 330, y: 325 },
 
-  // ===== NAVIGATION: arrows + YES/NO + PTN/BANK/PAGE cluster (right) =====
-  // Arrows in diamond layout: UP top, LEFT/DOWN/RIGHT bottom row
-  'key-nav-up':    { x: 780, y: 230 },
-  'key-nav-left':  { x: 755, y: 260 },
-  'key-nav-down':  { x: 780, y: 275 },
-  'key-nav-right': { x: 805, y: 260 },
-  // YES / NO to the right of arrows
-  'key-nav-yes':   { x: 855, y: 245 },
-  'key-nav-no':    { x: 855, y: 280 },
-  // PTN / BANK / PAGE — vertical column far right
-  'key-nav-pattern': { x: 915, y: 230 },
-  'key-nav-bank':    { x: 915, y: 265 },
-  'key-nav-page':    { x: 915, y: 300 },
+  // ===== SCENE + CROSSFADER (right side, above trig row) =====
+  // Scene A flanks the left of the crossfader, Scene B flanks the right.
+  'key-scene-a': { x: 720, y: 290 },
+  'slider-mix-crossfader': { x: 755, y: 300 }, // track starts at x=755, width=190
+  'key-scene-b': { x: 960, y: 290 },
 
-  // ===== TRACK KEYS (T1-T8) — bottom area, above the trigs =====
-  // Single 1x8 row across the left 480px of the panel
-  // (Physical layout: 4+4 flanking LCD is the MKI arrangement; MKII MKII
-  // groups them 1x8 below the LCD. Follow-up session can verify and
-  // re-arrange if needed.)
-  // Positions generated in loop below.
-
-  // ===== TRIG KEYS (TRIG1-TRIG16) — bottom row across full panel =====
-  // Positions generated in loop below.
-
-  // ===== CUE key — near T8 on the right edge of tracks row =====
-  'key-track-cue': { x: 530, y: 345 },
+  // ===== PAGE KEY — far right of trig row, next to TRIG 16 =====
+  'key-nav-page': { x: 945, y: 440 },
 };
 
-// Track keys: 1x8 horizontal row
-const TRACK_Y = 345;
-const TRACK_X_START = 35;
-const TRACK_SPACING = 60;
-for (let i = 1; i <= 8; i++) {
+// Track keys T1-T4: vertical column on LEFT of the LCD
+const TRACK_LEFT_X = 395;
+const TRACK_RIGHT_X = 665;
+const TRACK_Y_START = 65;
+const TRACK_Y_SPACING = 35;
+for (let i = 1; i <= 4; i++) {
   CONTROL_POSITIONS[`key-track-${i}`] = {
-    x: TRACK_X_START + (i - 1) * TRACK_SPACING,
-    y: TRACK_Y,
+    x: TRACK_LEFT_X,
+    y: TRACK_Y_START + (i - 1) * TRACK_Y_SPACING,
+  };
+}
+// Track keys T5-T8: vertical column on RIGHT of the LCD
+for (let i = 5; i <= 8; i++) {
+  CONTROL_POSITIONS[`key-track-${i}`] = {
+    x: TRACK_RIGHT_X,
+    y: TRACK_Y_START + (i - 5) * TRACK_Y_SPACING,
   };
 }
 
-// Trig keys: 1x16 horizontal row at the bottom of the panel
-const TRIG_Y = 445;
-const TRIG_X_START = 40;
-const TRIG_SPACING = 60;
+// Trig keys: 1x16 horizontal row at the bottom with a small gap between
+// trig 8 and trig 9 (matches physical panel's T1-T8/T1-T8 split bracket).
+const TRIG_Y = 440;
+const TRIG_X_START = 30;
+const TRIG_SPACING = 55;
+const TRIG_GAP = 15; // extra pixels between trig 8 and trig 9
 for (let i = 1; i <= 16; i++) {
+  const offset = (i - 1) * TRIG_SPACING;
+  const extra = i >= 9 ? TRIG_GAP : 0;
   CONTROL_POSITIONS[`key-trig-${i}`] = {
-    x: TRIG_X_START + (i - 1) * TRIG_SPACING,
+    x: TRIG_X_START + offset + extra,
     y: TRIG_Y,
   };
 }
@@ -603,8 +612,9 @@ function LCDComponent({
   highlighted?: boolean;
   highlightColor?: 'blue' | 'amber';
 }) {
-  const width = 420;
-  const height = 120;
+  // Smaller, more squarish LCD — central anchor flanked by T1-T4 / T5-T8.
+  const width = 200;
+  const height = 155;
 
   return (
     <g id={id} data-control-id={id} transform={`translate(${x}, ${y})`}>
@@ -627,15 +637,30 @@ function LCDComponent({
       <line x1={(2 * width) / 3} y1={8} x2={(2 * width) / 3} y2={height - 8} stroke="#4a4a3a" strokeWidth={0.5} strokeDasharray="2,3" />
       <line x1={8} y1={height / 2} x2={width - 8} y2={height / 2} stroke="#4a4a3a" strokeWidth={0.5} strokeDasharray="2,3" />
       {/* Placeholder text */}
-      <text x={width / 2} y={height / 2 - 20} style={styles.lcdText}>
+      <text x={width / 2} y={height / 2 - 14} style={styles.lcdText}>
         OCTATRACK
       </text>
       <text
         x={width / 2}
-        y={height / 2 + 12}
-        style={{ ...styles.lcdText, fontSize: '7px', fill: '#8a7a40' }}
+        y={height / 2 + 6}
+        style={{ ...styles.lcdText, fontSize: '6px', fill: '#8a7a40' }}
       >
-        PTN A01  PART 1  BPM 120.0
+        PTN A01 PART 1
+      </text>
+      <text
+        x={width / 2}
+        y={height / 2 + 18}
+        style={{ ...styles.lcdText, fontSize: '6px', fill: '#8a7a40' }}
+      >
+        BPM 120.0
+      </text>
+      {/* "Octatrack MKII" wordmark at bottom of screen area */}
+      <text
+        x={width / 2}
+        y={height - 10}
+        style={{ ...styles.lcdText, fontSize: '7px', fill: '#8a7a40', fontWeight: 700 }}
+      >
+        Octatrack MKII
       </text>
     </g>
   );
@@ -663,9 +688,9 @@ function CrossfaderComponent({
   onChange?: (controlId: string, value: number) => void;
 }) {
   const dragHandlers = useHorizontalSliderDrag(id, value, onChange);
-  const trackWidth = 380;
+  const trackWidth = 190;
   const trackHeight = 8;
-  const thumbWidth = 20;
+  const thumbWidth = 18;
   const thumbHeight = 22;
   const pos = midiToSliderPosition(value);
   const thumbX = x + pos * trackWidth - thumbWidth / 2;
@@ -855,10 +880,12 @@ function OctatrackPanelInner({
         <rect style={styles.panelBorder} x={0} y={0} width={1000} height={500} />
 
         {/* Horizontal divider bars separating functional rows */}
-        <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={160} width={1000} height={10} />
+        {/* Below the top cluster (LCD, knobs, transport-ish), above param/func row */}
         <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={215} width={1000} height={6} />
-        <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={315} width={1000} height={6} />
-        <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={405} width={1000} height={6} />
+        {/* Below function/param row, above transport + nav + scene/crossfader row */}
+        <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={265} width={1000} height={4} />
+        {/* Above the trig row */}
+        <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={400} width={1000} height={6} />
 
         {/* activeSections tint rectangles */}
         {activeSections?.map((section) => {

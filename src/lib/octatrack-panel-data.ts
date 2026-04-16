@@ -147,39 +147,49 @@ export const CONTROL_METADATA: Record<string, OctatrackControlMeta> = {
  * Section bounds for the Octatrack modules.
  * ViewBox: 0 0 1000 500 (horizontal panel aspect close to the real MKII).
  *
- * Physical layout (left-to-right, top-to-bottom):
- *   Upper-left:   Volume knob + HP Vol + MAIN label (main module)
- *   Upper-center: LCD display (wide, central anchor)
- *   Upper-right:  6 data entry knobs A-F + transport cluster + tempo
- *   Middle:       Function row (FUNC PROJ PART AED MIX ARR MIDI) +
- *                 track parameter keys (SRC AMP LFO FX1 FX2)
- *   Middle-below: Scene A / crossfader / Scene B + track level +
- *                 navigation arrows + YES/NO + pattern/bank/page +
- *                 rec1/2/3 + cue
- *   Bottom row:   8 track keys T1-T8 + 16 trig keys TRIG1-16
+ * Physical layout (matches MKII panel photo):
+ *   Top row (y=30-200):
+ *     - main: HP Vol + Volume knobs (x=10-130)
+ *     - rec: REC1/REC2/REC3 (x=130-310)
+ *     - track (left): T1-T4 vertical column (x=370-420)
+ *     - lcd: compact central LCD (x=420-640)
+ *     - track (right): T5-T8 vertical column (x=640-690)
+ *     - main LEVEL + data A-C knobs: x=700-1000 top
+ *     - tempo + data D-F knobs: x=700-1000 below
+ *   Middle row (y=220-265):
+ *     - func (MIDI/PROJ/PART/AED/MIX/ARR): x=10-330
+ *     - param (SRC/AMP/LFO/FX1/FX2): x=420-650
+ *   Lower-middle row (y=270-340):
+ *     - func (FUNC/CUE/PTN/BANK): x=10-130
+ *     - nav (YES/NO + arrows): x=180-360
+ *     - transport (STOP/PLAY/REC): x=440-640
+ *     - scene (A/crossfader/B): x=700-1000
+ *   Bottom row (y=405-480):
+ *     - trig (TRIG 1-16): x=0-930
+ *     - nav page key: x=920-990
  *
  * Bounds are approximate containers so SECTION_BOUNDS entries exist for
  * every module (used by activeSections tints and zoomSections viewBox math).
  */
 export const SECTION_BOUNDS: Record<string, { x: number; y: number; width: number; height: number }> = {
-  main:      { x: 10,  y: 15,  width: 110, height: 110 },
-  lcd:       { x: 130, y: 20,  width: 420, height: 130 },
-  data:      { x: 560, y: 20,  width: 220, height: 130 },
-  transport: { x: 790, y: 20,  width: 200, height: 70 },
-  tempo:     { x: 790, y: 100, width: 100, height: 50 },
-  card:      { x: 130, y: 5,   width: 60,  height: 12 },
+  main:      { x: 10,  y: 45,  width: 120, height: 60 },
+  rec:       { x: 135, y: 45,  width: 170, height: 60 },
+  card:      { x: 475, y: 5,   width: 70,  height: 15 },
+  lcd:       { x: 425, y: 40,  width: 210, height: 165 },
+  track:     { x: 370, y: 45,  width: 310, height: 160 },
+  data:      { x: 770, y: 45,  width: 220, height: 140 },
+  tempo:     { x: 700, y: 115, width: 60,  height: 50 },
+  transport: { x: 440, y: 275, width: 200, height: 55 },
 
-  func:      { x: 130, y: 165, width: 420, height: 40 },
-  param:     { x: 560, y: 165, width: 220, height: 40 },
+  func:      { x: 10,  y: 215, width: 330, height: 150 },
+  param:     { x: 425, y: 215, width: 215, height: 45 },
 
-  scene:     { x: 10,  y: 220, width: 110, height: 80 },
-  mix:       { x: 130, y: 220, width: 420, height: 60 },
+  nav:       { x: 180, y: 270, width: 180, height: 80 },
 
-  rec:       { x: 560, y: 220, width: 150, height: 50 },
-  nav:       { x: 720, y: 220, width: 270, height: 100 },
+  scene:     { x: 700, y: 270, width: 300, height: 80 },
+  mix:       { x: 745, y: 280, width: 210, height: 50 },
 
-  track:     { x: 10,  y: 320, width: 470, height: 80 },
-  trig:      { x: 10,  y: 410, width: 980, height: 80 },
+  trig:      { x: 5,   y: 410, width: 915, height: 70 },
 };
 
 /**
