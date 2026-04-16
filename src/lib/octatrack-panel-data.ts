@@ -181,8 +181,15 @@ export const SECTION_BOUNDS: Record<string, { x: number; y: number; width: numbe
   tempo:     { x: 700, y: 115, width: 60,  height: 50 },
   transport: { x: 440, y: 275, width: 200, height: 55 },
 
-  func:      { x: 10,  y: 215, width: 330, height: 150 },
-  param:     { x: 425, y: 215, width: 215, height: 45 },
+  // func cluster spans the LEFT SIDE of the panel across multiple clusters:
+  //   - MIDI alone at y=130 (upper-left, below REC row)
+  //   - PROJ/PART/AED/MIX/ARR row at y=185 (mid-upper)
+  //   - FUNC/CUE at y=290 (lower-middle)
+  //   - PTN/BANK at y=325 (lower)
+  // Bounding box covers all four sub-clusters so activeSections tint makes
+  // sense when "func" is highlighted.
+  func:      { x: 10,  y: 115, width: 380, height: 230 },
+  param:     { x: 425, y: 220, width: 215, height: 40 },
 
   nav:       { x: 180, y: 270, width: 180, height: 80 },
 

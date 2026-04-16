@@ -126,22 +126,36 @@ const CONTROL_POSITIONS: Record<string, ControlPosition> = {
   'key-transport-record': { x: 600, y: 295 },
 
   // ===== TRACK PARAMETER KEYS (SRC AMP LFO FX1 FX2 directly below LCD) =====
-  'key-param-src': { x: 445, y: 235 },
-  'key-param-amp': { x: 490, y: 235 },
-  'key-param-lfo': { x: 535, y: 235 },
-  'key-param-fx1': { x: 580, y: 235 },
-  'key-param-fx2': { x: 625, y: 235 },
+  // Sits just below LCD bottom (LCD ends at y=200), slightly below the
+  // PROJ-ARR row (y=185). The SRC cluster is its own cluster below the LCD,
+  // not in the same horizontal row as the PROJ strip.
+  'key-param-src': { x: 445, y: 230 },
+  'key-param-amp': { x: 490, y: 230 },
+  'key-param-lfo': { x: 535, y: 230 },
+  'key-param-fx1': { x: 580, y: 230 },
+  'key-param-fx2': { x: 625, y: 230 },
 
   // ===== FUNCTION CLUSTER — left side =====
-  // Top row: MIDI + PROJ PART AED MIX ARR  (matches panel "Save Proj, Part Edit,
-  // Slice Grid, Click, Arr Mode" label row)
-  'key-func-midi': { x: 40,  y: 235 },
-  'key-func-proj': { x: 100, y: 235 },
-  'key-func-part': { x: 150, y: 235 },
-  'key-func-aed':  { x: 200, y: 235 },
-  'key-func-mix':  { x: 250, y: 235 },
-  'key-func-arr':  { x: 300, y: 235 },
-  // Lower row: FUNC + CUE
+  // Elektron panels use CLUSTERS, not grids. The MIDI button sits in its
+  // own row between REC row and the PROJ row (mid-upper area of panel).
+  // The PROJ-ARR strip is DIRECTLY BELOW the REC1/REC2/REC3 strip (still
+  // in the upper half), not in the lower-middle area.
+  //
+  // Row layout (top to bottom):
+  //   y=70  — REC1 REC2 REC3 (already placed above)
+  //   y=130 — MIDI (alone on left column)
+  //   y=185 — PROJ PART AED MIX ARR (extends past REC3)
+  //   y=290 — FUNC CUE (separate lower-left cluster)
+  //   y=325 — PTN BANK
+  'key-func-midi': { x: 70,  y: 130 },
+
+  'key-func-proj': { x: 80,  y: 185 },
+  'key-func-part': { x: 145, y: 185 },
+  'key-func-aed':  { x: 210, y: 185 },
+  'key-func-mix':  { x: 275, y: 185 },
+  'key-func-arr':  { x: 340, y: 185 },
+
+  // Lower-left cluster (below the upper PROJ strip, separated by vertical gap)
   'key-func-func':  { x: 40,  y: 290 },
   'key-track-cue':  { x: 100, y: 290 },
 
@@ -879,10 +893,12 @@ function OctatrackPanelInner({
         <rect style={styles.panelBg} x={0} y={0} width={1000} height={500} />
         <rect style={styles.panelBorder} x={0} y={0} width={1000} height={500} />
 
-        {/* Horizontal divider bars separating functional rows */}
-        {/* Below the top cluster (LCD, knobs, transport-ish), above param/func row */}
-        <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={215} width={1000} height={6} />
-        {/* Below function/param row, above transport + nav + scene/crossfader row */}
+        {/* Horizontal divider bars separating functional clusters.
+            Elektron panels use clusters, not uniform grids, so dividers only
+            appear where there's genuine horizontal separation of cluster
+            groups — not between every row of controls. */}
+        {/* Below upper cluster (LCD, PROJ row, data knobs) and above the
+            lower-left lower-middle clusters (FUNC/CUE, nav, transport). */}
         <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={265} width={1000} height={4} />
         {/* Above the trig row */}
         <rect fill="#1a1a1a" stroke="#333" strokeWidth={0.5} x={0} y={400} width={1000} height={6} />

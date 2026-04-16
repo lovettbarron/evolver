@@ -229,7 +229,7 @@ The `>` character in cable syntax (`jack-source>jack-dest`) breaks naive HTML at
 
 ## Layout Rules
 
-### Row Structure
+### Row Structure (synthesizers / modular instruments)
 Panels are organized in horizontal rows separated by thin bars:
 ```
 Top strip:   FX/Output controls, or logo/display area
@@ -240,6 +240,28 @@ Row 3:       Oscillators, envelopes
 
 Evolver uses two rows (top: modulators/sequencer/display, bottom: oscillators/filters/output).
 Cascadia uses four zones (top strip + 3 rows) with a grid-breaking left column.
+
+### Cluster Structure (Elektron instruments — MD / MM / OT / Digi series)
+
+Elektron devices do **not** lay out in horizontal rows like modular synths. They use **clusters** — self-contained groups of buttons/knobs with internal alignment but irregular spacing between clusters.
+
+A cluster:
+- Is internally grid-aligned (buttons within a cluster share a y-coordinate and even x-spacing)
+- Sits at a position that's **independent of other clusters** (not "row 2 of a global grid")
+- Often has its own mini-separator or label bracket (e.g., Octatrack's "Track Trigs" / "Sample/MIDI Trigs" brackets beneath the trig row)
+
+Example — Octatrack MKII upper-left has four distinct clusters vertically stacked:
+```
+Cluster 1 (y=70):   REC1 REC2 REC3             (3 buttons, 60px spacing)
+Cluster 2 (y=130):  MIDI                       (1 button, own row)
+Cluster 3 (y=185):  PROJ PART AED MIX ARR      (5 buttons, 65px spacing, wider than cluster 1)
+Cluster 4 (y=290):  FUNC CUE                   (2 buttons)
+                    PTN  BANK                  (2 buttons, y=325)
+```
+
+These four clusters are NOT a 4-row grid. Do not try to align their widths, button sizes, or horizontal offsets. Hand-place each cluster's origin based on the photo; only use loops for repeating patterns WITHIN a single cluster (e.g., the 16 trig row).
+
+Horizontal dividers (`<rect fill="#1a1a1a">`) should appear **only** between genuinely separate cluster groups, not between every row of buttons within a cluster.
 
 ### Grid-Breaking Sections
 Some modules span multiple rows on one side. Handle with:
