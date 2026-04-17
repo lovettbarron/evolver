@@ -1,6 +1,7 @@
 import {
   SYNTHETIC_JOURNEY_WEEKS,
   SYNTHETIC_CASCADIA_JOURNEY_WEEKS,
+  SYNTHETIC_OCTATRACK_JOURNEY_WEEKS,
 } from './synthetic-daily-notes';
 
 /**
@@ -43,13 +44,17 @@ export function getActiveWeeks(completionDates: Date[]): number {
  * Returns a Map of session number -> ISO date string (YYYY-MM-DD).
  */
 export function getSyntheticCompletionDates(instrument?: string): Map<number, string> {
-  const weeks = instrument === 'cascadia'
-    ? SYNTHETIC_CASCADIA_JOURNEY_WEEKS
-    : SYNTHETIC_JOURNEY_WEEKS;
+  const weeks = instrument === 'octatrack'
+    ? SYNTHETIC_OCTATRACK_JOURNEY_WEEKS
+    : instrument === 'cascadia'
+      ? SYNTHETIC_CASCADIA_JOURNEY_WEEKS
+      : SYNTHETIC_JOURNEY_WEEKS;
 
-  const referenceStart = instrument === 'cascadia'
-    ? new Date('2026-02-22')
-    : new Date('2026-02-01');
+  const referenceStart = instrument === 'octatrack'
+    ? new Date('2026-03-10')
+    : instrument === 'cascadia'
+      ? new Date('2026-02-22')
+      : new Date('2026-02-01');
 
   const dates = new Map<number, string>();
 

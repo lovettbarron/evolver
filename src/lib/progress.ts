@@ -4,7 +4,7 @@ import { glob } from 'glob';
 import { listSessions, listPatches } from './content/reader';
 import { groupByModule } from './sessions';
 import type { AppConfig } from './content/schemas';
-import { SYNTHETIC_COMPLETED_SESSIONS, SYNTHETIC_CASCADIA_COMPLETED_SESSIONS } from './synthetic-daily-notes';
+import { SYNTHETIC_COMPLETED_SESSIONS, SYNTHETIC_CASCADIA_COMPLETED_SESSIONS, SYNTHETIC_OCTATRACK_COMPLETED_SESSIONS } from './synthetic-daily-notes';
 
 export interface ProgressData {
   sessionsCompleted: number;
@@ -102,6 +102,9 @@ export async function computeProgress(
 export function getSyntheticCompletedSessions(instrument?: string): Set<number> {
   if (instrument === 'cascadia') {
     return SYNTHETIC_CASCADIA_COMPLETED_SESSIONS;
+  }
+  if (instrument === 'octatrack') {
+    return SYNTHETIC_OCTATRACK_COMPLETED_SESSIONS;
   }
   return SYNTHETIC_COMPLETED_SESSIONS;
 }

@@ -86,3 +86,53 @@ export const SYNTHETIC_CASCADIA_JOURNEY_WEEKS = [
   { week: 5, sessions: [8, 9, 10], note: 'Back with renewed energy' },
   { week: 6, sessions: [11, 12], note: 'Current position, modules 1-4 done' },
 ] as const;
+
+/**
+ * Synthetic Octatrack daily note data simulating ~7 weeks of practice.
+ *
+ * Models an experienced learner (third instrument) with faster ramp-up:
+ * - Starts ~5 weeks after Cascadia (reference: 2026-03-10)
+ * - Faster initial pace (experienced with the framework)
+ * - Week 1: Fast foundations (4 sessions)
+ * - Week 2: Through machines and into effects (5 sessions)
+ * - Week 3: Effects module, normal pace (3 sessions)
+ * - Week 4: Sequencer deep dive, slowing down (3 sessions)
+ * - Week 5: Finishing modulation (3 sessions)
+ * - Week 6: Scene-and-crossfader depth, focus module (3 sessions)
+ * - Week 7: Current position, mid-Parts-module (2 sessions)
+ *
+ * Result: Modules 1-7 complete (21 sessions), Module 8 partway (sessions 22-23 done,
+ * 24 pending). 23/31 = 74%.
+ *
+ * Module-to-session mapping:
+ *   Module 1 "Foundations": sessions 1-3
+ *   Module 2 "Sample Management": sessions 4-6
+ *   Module 3 "Machines & Playback": sessions 7-9
+ *   Module 4 "Effects": sessions 10-12
+ *   Module 5 "Sequencer": sessions 13-16
+ *   Module 6 "Modulation": sessions 17-18
+ *   Module 7 "Scenes & Crossfader": sessions 19-21
+ *   Module 8 "Parts": sessions 22-24 (partway -- 22-23 done)
+ *   Module 9 "Live Looping": sessions 25-28 (not started)
+ *   Module 10 "Arrangement": sessions 29-31 (not started)
+ */
+export const SYNTHETIC_OCTATRACK_COMPLETED_SESSIONS: Set<number> = new Set([
+  1, 2, 3,           // Module 1 Foundations
+  4, 5, 6,           // Module 2 Sample Management
+  7, 8, 9,           // Module 3 Machines & Playback
+  10, 11, 12,        // Module 4 Effects
+  13, 14, 15, 16,    // Module 5 Sequencer
+  17, 18,            // Module 6 Modulation
+  19, 20, 21,        // Module 7 Scenes & Crossfader (focus module — complete)
+  22, 23,            // Module 8 Parts (focus module — partway)
+]);
+
+export const SYNTHETIC_OCTATRACK_JOURNEY_WEEKS = [
+  { week: 1, sessions: [1, 2, 3, 4], note: 'Experienced learner — third instrument, fast foundations' },
+  { week: 2, sessions: [5, 6, 7, 8, 9], note: 'Through machines and into effects' },
+  { week: 3, sessions: [10, 11, 12], note: 'Effects module, normal pace' },
+  { week: 4, sessions: [13, 14, 15], note: 'Sequencer deep dive — slowing down' },
+  { week: 5, sessions: [16, 17, 18], note: 'Finishing modulation' },
+  { week: 6, sessions: [19, 20, 21], note: 'Scene-and-crossfader depth (focus module)' },
+  { week: 7, sessions: [22, 23], note: 'Current position, mid-Parts-module' },
+] as const;
