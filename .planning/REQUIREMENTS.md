@@ -11,10 +11,10 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 - [x] **DATA-01**: ModuleConfigSchema validates HP width, manufacturer, power specs, and multi-category array
 - [x] **DATA-02**: Module content directories (`modules/<slug>/`) discovered by reader functions parallel to instruments
-- [ ] **DATA-03**: SessionSchema `module` field renamed to `section` across all 95 existing sessions and schema definitions
-- [ ] **DATA-04**: Module sessions use `instrument_type: eurorack_module` to distinguish from instrument sessions in queries and routing
+- [x] **DATA-03**: SessionSchema `module` field renamed to `section` across all 95 existing sessions and schema definitions
+- [x] **DATA-04**: Module sessions use `instrument_type: eurorack_module` to distinguish from instrument sessions in queries and routing
 - [x] **DATA-05**: Triple-write pipeline supports module content (working tree, `src/content/modules/`, `~/song/modules/`)
-- [ ] **DATA-06**: Module manuals downloaded to `references/` for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie)
+- [x] **DATA-06**: Module manuals downloaded to `references/` for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie)
 
 ### Navigation
 
@@ -81,12 +81,12 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 | REQ-ID | Phase | Plan | Status |
 |--------|-------|------|--------|
-| DATA-01 | Phase 26 | — | Pending |
-| DATA-02 | Phase 26 | — | Pending |
-| DATA-03 | Phase 26 | — | Pending |
-| DATA-04 | Phase 26 | — | Pending |
-| DATA-05 | Phase 26 | — | Pending |
-| DATA-06 | Phase 26 | — | Pending |
+| DATA-01 | Phase 26 | 26-02 | Complete |
+| DATA-02 | Phase 26 | 26-02 | Complete |
+| DATA-03 | Phase 26 | 26-01 | Complete |
+| DATA-04 | Phase 26 | 26-01 | Complete |
+| DATA-05 | Phase 26 | 26-02 | Complete |
+| DATA-06 | Phase 26 | 26-03 | Complete (2 PDFs + 5 placeholders) |
 | NAV-01 | Phase 27 | — | Pending |
 | NAV-02 | Phase 27 | — | Pending |
 | NAV-03 | Phase 27 | — | Pending |

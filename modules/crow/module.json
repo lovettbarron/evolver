@@ -13,7 +13,7 @@
   "reference_pdfs": [
     {
       "label": "Crow Documentation",
-      "file": "crow-docs.pdf"
+      "file": "crow-docs.txt"
     }
   ]
 }
