@@ -69,7 +69,7 @@ export function SearchDropdown({
                   <span className="text-sm text-text">
                     #{s.sessionNumber} {s.title}
                   </span>
-                  <span className="text-[13px] text-muted ml-auto">{s.module}</span>
+                  <span className="text-[13px] text-muted ml-auto">{s.section}</span>
                 </div>
               </Link>
             );

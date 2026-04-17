@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-17)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 26 — data-model-content-pipeline
+**Current focus:** Phase 27 — module-navigation-routing
 
 ## Current Position
 
-Phase: 26 (data-model-content-pipeline) — EXECUTING
+Phase: 27 (module-navigation-routing) — EXECUTING
 Plan: 2 of 3
-Status: Ready to execute
+Status: Executing Phase 27
 Last activity: 2026-04-17
 
 Progress: [░░░░░░░░░░] 0% (v2.0 milestone)

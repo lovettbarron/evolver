@@ -30,7 +30,7 @@ export function getCurrentModule(
   for (const group of groups) {
     for (const session of group.sessions) {
       if (!completedSessions.has(session.data.session_number)) {
-        return group.module;
+        return group.section;
       }
     }
   }

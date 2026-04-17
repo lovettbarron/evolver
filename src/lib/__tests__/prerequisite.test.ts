@@ -40,21 +40,21 @@ describe('getSessionState', () => {
 describe('getCurrentModule', () => {
   const mockGroups: ModuleGroup[] = [
     {
-      module: 'Module 1: Foundations',
+      section: 'Module 1: Foundations',
       sessions: [
         { data: { session_number: 1 } as never, content: '', slug: '01-intro' },
         { data: { session_number: 2 } as never, content: '', slug: '02-basics' },
       ],
     },
     {
-      module: 'Module 2: Oscillators',
+      section: 'Module 2: Oscillators',
       sessions: [
         { data: { session_number: 3 } as never, content: '', slug: '03-osc-a' },
         { data: { session_number: 4 } as never, content: '', slug: '04-osc-b' },
       ],
     },
     {
-      module: 'Module 3: Filters',
+      section: 'Module 3: Filters',
       sessions: [
         { data: { session_number: 5 } as never, content: '', slug: '05-filter-a' },
         { data: { session_number: 6 } as never, content: '', slug: '06-filter-b' },

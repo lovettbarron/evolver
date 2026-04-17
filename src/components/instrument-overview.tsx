@@ -35,7 +35,7 @@ export interface InstrumentOverviewProps {
   moduleCount?: number;
   hasTroubleshooting?: boolean;
   vaultCompletions?: number[];
-  sessionsForResumeBar?: Array<{ slug: string; data: { session_number: number; title: string; module: string } }>;
+  sessionsForResumeBar?: Array<{ slug: string; data: { session_number: number; title: string; section: string } }>;
   isDemo?: boolean;
 }
 

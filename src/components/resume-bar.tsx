@@ -9,7 +9,7 @@ import { mergeCompletions, computeNextSession } from '@/lib/learner-utils';
 interface ResumeBarProps {
   instrumentSlug: string;
   vaultCompletions: number[];
-  sessions: Array<{ slug: string; data: { session_number: number; title: string; module: string } }>;
+  sessions: Array<{ slug: string; data: { session_number: number; title: string; section: string } }>;
   isDemo: boolean;
 }
 

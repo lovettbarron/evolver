@@ -51,7 +51,7 @@ export default async function InstrumentPage({ params }: { params: Promise<{ slu
     data: {
       session_number: s.data.session_number,
       title: s.data.title,
-      module: s.data.module,
+      section: s.data.section,
     },
   }));
 

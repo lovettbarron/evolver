@@ -15,8 +15,8 @@ export function SessionList({ groups, instrumentSlug }: SessionListProps) {
   return (
     <div className="flex flex-col gap-2xl">
       {groups.map((group) => (
-        <section key={group.module}>
-          <ModuleHeader module={group.module} />
+        <section key={group.section}>
+          <ModuleHeader module={group.section} />
           <div className="flex flex-col">
             {group.sessions.map((session) => (
               <SessionRow

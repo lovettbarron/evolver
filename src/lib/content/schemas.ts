@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const SessionSchema = z.object({
   title: z.string(),
-  module: z.string(),
+  section: z.string(),
   session_number: z.number().int().positive(),
   duration: z.number().int().min(5).max(30),
   prerequisite: z.union([z.number(), z.null()]),
@@ -10,6 +10,7 @@ export const SessionSchema = z.object({
   difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
   tags: z.array(z.string()),
   instrument: z.string(),
+  instrument_type: z.enum(['instrument', 'eurorack_module']).default('instrument'),
   reference: z.string().optional(),
 }).passthrough();
 

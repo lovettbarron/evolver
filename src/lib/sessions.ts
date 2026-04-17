@@ -7,7 +7,7 @@ export interface SessionWithMeta {
 }
 
 export interface ModuleGroup {
-  module: string;
+  section: string;
   sessions: SessionWithMeta[];
 }
 
@@ -22,7 +22,7 @@ export function groupByModule(sessions: SessionWithMeta[]): ModuleGroup[] {
   const groupMap = new Map<string, SessionWithMeta[]>();
 
   for (const session of sessions) {
-    const mod = session.data.module;
+    const mod = session.data.section;
     if (!groupMap.has(mod)) {
       groupMap.set(mod, []);
     }
@@ -36,7 +36,7 @@ export function groupByModule(sessions: SessionWithMeta[]): ModuleGroup[] {
 
   // Convert to array and sort groups by the first session_number in each group
   const groups: ModuleGroup[] = Array.from(groupMap.entries()).map(
-    ([module, sessions]) => ({ module, sessions }),
+    ([section, sessions]) => ({ section, sessions }),
   );
 
   groups.sort(

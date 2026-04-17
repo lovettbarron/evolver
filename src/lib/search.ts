@@ -3,7 +3,7 @@ import type { Session, Patch } from '@/lib/content/types';
 export interface SearchableSession {
   slug: string;
   title: string;
-  module: string;
+  section: string;
   tags: string[];
   difficulty: string;
   sessionNumber: number;
@@ -30,7 +30,7 @@ export interface PatchFilterOptions {
  * Search sessions and patches by case-insensitive substring matching
  * against frontmatter fields, scoped to a specific instrument.
  *
- * Sessions: title, module, tags, difficulty
+ * Sessions: title, section, tags, difficulty
  * Patches: name, description, tags, type
  */
 export function searchItems(
@@ -49,7 +49,7 @@ export function searchItems(
     if (s.instrument !== instrumentSlug) return false;
     return (
       s.title.toLowerCase().includes(q) ||
-      s.module.toLowerCase().includes(q) ||
+      s.section.toLowerCase().includes(q) ||
       s.tags.some((t) => t.toLowerCase().includes(q)) ||
       s.difficulty.toLowerCase().includes(q)
     );
@@ -130,7 +130,7 @@ export function toSearchableSession(s: {
   return {
     slug: s.slug,
     title: s.data.title,
-    module: s.data.module,
+    section: s.data.section,
     tags: s.data.tags,
     difficulty: s.data.difficulty,
     sessionNumber: s.data.session_number,
