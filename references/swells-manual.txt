@@ -1,0 +1,3 @@
+Intellijel Swells Manual
+Download from: https://intellijel.com/shop/eurorack/swells/ (Manual tab)
+Note: Intellijel site requires browser download, curl returns HTML wrapper

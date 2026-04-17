@@ -1,0 +1,4 @@
+Make Noise Maths Manual
+Download from: https://www.makenoisemusic.com/modules/maths (Downloads section)
+File: MATHS manual 2020 PDF
+Note: Site requires browser download, curl returns HTML wrapper

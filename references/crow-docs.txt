@@ -1,0 +1,5 @@
+Monome Crow Documentation
+Primary docs: https://monome.org/docs/crow/
+Reference: https://monome.org/docs/crow/reference/
+Scripting: https://monome.org/docs/crow/scripting/
+Note: Crow documentation is web-only at monome.org, no standalone PDF

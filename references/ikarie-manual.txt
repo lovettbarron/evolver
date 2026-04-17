@@ -1,0 +1,3 @@
+Bastl Instruments Ikarie Manual
+Download from: https://bastl-instruments.com/eurorack/modules/ikarie (Downloads section)
+Note: Site requires browser download, curl returns HTML wrapper
