@@ -92,11 +92,11 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. All 95 existing sessions use `section` (not `module`) in their frontmatter and the SessionSchema definition reflects this rename
   4. Module sessions with `instrument_type: eurorack_module` are distinguishable from instrument sessions in reader queries
   5. Reference PDFs for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie) exist in `references/`
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 Plans:
 - [x] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
 - [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
-- [ ] 26-03-PLAN.md — Download 7 module reference manuals
+- [x] 26-03-PLAN.md — Download 7 module reference manuals
 
 ### Phase 27: Module Navigation + Routing
 **Goal**: Users can browse eurorack modules by category and navigate to individual module pages with per-module visual identity
@@ -126,7 +126,7 @@ Plans:
   4. Session content can embed panel annotations via `data-module-panel` markers that highlight relevant controls — same interaction pattern as Evolver/Cascadia panels
 **Plans:** 3 plans
 Plans:
-- [ ] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
+- [x] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
 - [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
 - [ ] 26-03-PLAN.md — Download 7 module reference manuals
 **UI hint**: yes
@@ -229,7 +229,7 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 23. Panel & Progress Polish | v1.3 | 4/4 | Complete | 2026-04-12 |
 | 24. Instrument Color Identity | v1.3 | 1/1 | Complete | 2026-04-13 |
 | 25. Octatrack Curriculum + Site Integration | v1.3 | 7/7 | Complete | 2026-04-17 |
-| 26. Data Model + Content Pipeline | v2.0 | 1/3 | In Progress|  |
+| 26. Data Model + Content Pipeline | v2.0 | 2/3 | In Progress|  |
 | 27. Module Navigation + Routing | v2.0 | 3/3 | Complete   | 2026-04-17 |
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
 | 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
