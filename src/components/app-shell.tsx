@@ -22,8 +22,9 @@ export function AppShell({
   searchPatches: SearchablePatch[];
 }) {
   const pathname = usePathname();
-  const slugMatch = pathname.match(/\/instruments\/([^/]+)/);
-  const instrumentSlug = slugMatch?.[1] ?? '';
+  const instrumentMatch = pathname.match(/\/instruments\/([^/]+)/);
+  const moduleMatch = pathname.match(/\/modules\/([^/]+)/);
+  const instrumentSlug = instrumentMatch?.[1] ?? moduleMatch?.[1] ?? '';
 
   const navInstruments = instruments.map((i) => ({
     slug: i.slug,

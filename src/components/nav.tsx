@@ -94,6 +94,20 @@ export function Nav({
           )}
         </span>
         <InstrumentSwitcher instruments={instruments} currentSlug={currentSlug} />
+        <Link
+          href="/modules"
+          className={clsx(
+            'text-sm whitespace-nowrap h-[60px] flex items-center transition-colors duration-150 relative focus:outline-2 focus:outline-accent focus:outline-offset-2',
+            pathname.startsWith('/modules')
+              ? 'text-text'
+              : 'text-muted hover:text-text',
+          )}
+        >
+          Modules
+          {pathname.startsWith('/modules') && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent" aria-hidden="true" />
+          )}
+        </Link>
         <SearchBar />
         <button
           ref={toggleRef}
@@ -163,6 +177,19 @@ export function Nav({
                 </Link>
               );
             })}
+            <Link
+              href="/modules"
+              aria-current={pathname.startsWith('/modules') ? 'page' : undefined}
+              className={clsx(
+                'text-sm h-[48px] flex items-center transition-colors duration-150 relative pl-md',
+                pathname.startsWith('/modules') ? 'text-text' : 'text-muted hover:text-text',
+              )}
+            >
+              {pathname.startsWith('/modules') && (
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-[24px] bg-accent" aria-hidden="true" />
+              )}
+              Modules
+            </Link>
           </div>
         </div>
       )}
