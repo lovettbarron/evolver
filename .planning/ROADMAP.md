@@ -108,7 +108,7 @@ Plans:
   3. User sees a "Modules" entry in the main navigation alongside the existing instrument selector
   4. Multi-category modules (e.g., Maths as function generator + envelope + LFO) appear under every category they belong to in filtered views
   5. Each module page uses its own color identity via the `[data-instrument]` CSS cascade — 7 distinct palettes
-**Plans:** 3/3 plans complete
+**Plans:** 4/4 plans complete
 Plans:
 - [x] 27-01-PLAN.md — Color palettes (7 modules), app-shell slug detection, Modules nav link
 - [x] 27-02-PLAN.md — /modules listing page with category tabs, ModuleCard, HpOutline
@@ -230,7 +230,7 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 24. Instrument Color Identity | v1.3 | 1/1 | Complete | 2026-04-13 |
 | 25. Octatrack Curriculum + Site Integration | v1.3 | 7/7 | Complete | 2026-04-17 |
 | 26. Data Model + Content Pipeline | v2.0 | 3/3 | Complete   | 2026-04-17 |
-| 27. Module Navigation + Routing | v2.0 | 3/3 | Complete   | 2026-04-17 |
+| 27. Module Navigation + Routing | v2.0 | 4/4 | Complete   | 2026-04-17 |
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
 | 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
 | 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 0/? | Not started | - |

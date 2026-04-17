@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
 status: executing
-stopped_at: Completed 26-02-PLAN.md
-last_updated: "2026-04-17T21:14:39.831Z"
+stopped_at: Completed 27-04-PLAN.md
+last_updated: "2026-04-17T21:16:21.480Z"
 last_activity: 2026-04-17
 progress:
   total_phases: 7
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-17)
 ## Current Position
 
 Phase: 27 (module-navigation-routing) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-04-17
 
@@ -57,6 +57,7 @@ Recent decisions affecting current work:
 - [Phase 27]: Dual URL prefix detection: /instruments/ and /modules/ both feed data-instrument attribute
 - [Phase 27]: Sub-pages are static components without redundant loadModuleConfig calls -- layout handles all data loading
 - [Phase 26]: ModuleConfigSchema uses power_specs (required) not power (optional), Zod-inferred type replaces manual interface
+- [Phase 27]: InstrumentModuleCard links to /instruments/{slug}/modules/{moduleSlug}, keeping instrument sub-module routing separate from eurorack /modules/{slug}
 
 ### Pending Todos
 
@@ -70,6 +71,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-17T21:14:39.828Z
-Stopped at: Completed 26-02-PLAN.md
+Last session: 2026-04-17T21:16:21.477Z
+Stopped at: Completed 27-04-PLAN.md
 Resume file: None
