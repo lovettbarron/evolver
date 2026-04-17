@@ -207,3 +207,50 @@ export async function getTroubleshooting(
     return null;
   }
 }
+
+/**
+ * Module content types and readers.
+ * These provide the module browsing data for /modules page.
+ * Phase 26-02 will add full Zod schema validation; these are
+ * minimal readers that load module.json files directly.
+ */
+
+export interface ModuleConfig {
+  display_name: string;
+  manufacturer: string;
+  hp_width: number;
+  categories: string[];
+  power?: { plus_12v_ma: number; minus_12v_ma: number; plus_5v_ma?: number };
+  reference_pdfs?: Array<{ label: string; file: string }>;
+}
+
+/**
+ * Discover all module slugs by scanning the modules/ directory.
+ * Returns an array of directory names (slugs).
+ */
+export async function discoverModules(config: AppConfig): Promise<string[]> {
+  const root = getContentRoot(config);
+  const modulesDir = path.join(root, 'modules');
+  try {
+    const entries = await fs.readdir(modulesDir, { withFileTypes: true });
+    return entries
+      .filter(e => e.isDirectory())
+      .map(e => e.name)
+      .sort();
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Load a single module's config from modules/<slug>/module.json.
+ */
+export async function loadModuleConfig(
+  slug: string,
+  config: AppConfig,
+): Promise<ModuleConfig> {
+  const root = getContentRoot(config);
+  const configPath = path.join(root, 'modules', slug, 'module.json');
+  const raw = await fs.readFile(configPath, 'utf-8');
+  return JSON.parse(raw) as ModuleConfig;
+}
