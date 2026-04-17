@@ -1,290 +1,308 @@
-# Stack Research: v1.3 Visual Redesign
+# Stack Research: v2.0 Eurorack Module Learning
 
-**Project:** Evolver Deep Learning
-**Milestone:** v1.3 Visual Redesign
-**Researched:** 2026-04-06
+**Domain:** Eurorack module learning system (extending existing instrument mastery app)
+**Researched:** 2026-04-16
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This milestone needs exactly two new dependencies: **Motion** (animation library, formerly Framer Motion) and **@tailwindcss/typography** (prose styling plugin). Everything else -- color system, texture/grain, spacing tokens, typography scale -- is achieved through Tailwind v4's existing `@theme` directive with zero new packages.
+This milestone requires **zero new npm dependencies**. The existing stack (Next.js 15, React 19, Tailwind v4, Zod, Zustand 5, Motion, clsx) handles everything needed for eurorack module support. The work is schema extensions, new data files, new panel components, and new routes -- not new libraries.
 
-The key insight: Tailwind v4's CSS-first `@theme` system IS the design token layer. There is no need for a separate design token tool, CSS-in-JS library, or component framework. The visual redesign is a styling overhaul, not a structural one -- the 51 existing components stay, they just get restyled.
+The key architectural insight: eurorack modules are structurally simpler than integrated instruments (fewer controls, no signal-flow documents, no SysEx/patch-memory), but categorically more complex (multi-category taxonomy, cross-module interactions, variable HP widths). The schema needs a new `ModuleConfigSchema` alongside the existing `InstrumentConfigSchema`, and the content pipeline needs a `modules/` top-level directory parallel to `instruments/`.
 
 ## Existing Stack (Unchanged)
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| Next.js | 15.5.14 | App framework |
-| React | 19.2.4 | UI library |
-| Tailwind CSS | 4.2.2 | Styling (CSS-first via `@theme`) |
-| clsx | 2.1.1 | Conditional class merging |
-| Lucide React | 1.7.0 | Icons |
-| Inter + JetBrains Mono | next/font/google | Typography |
-| Zustand | 5.0.12 | Client state |
-| unified/remark/rehype | 11.x | Markdown pipeline |
+| Next.js | ^15.5.14 | App framework (App Router, server components) |
+| React | ^19.2.4 | UI library |
+| Tailwind CSS | 4.x | Styling (OKLCH design system, `@theme`) |
+| Zod | ^3.23.0 | Schema validation at content boundaries |
+| Zustand | ^5.0.12 | Client-side learner state with persist middleware |
+| Motion | ^12.38.0 | Animation (panel interactions, transitions) |
+| clsx | ^2.1.1 | Conditional class merging |
+| unified/remark/rehype | 11.x | Markdown content pipeline |
+| @tailwindcss/typography | ^0.5.19 | Prose rendering |
 
-## Recommended Additions
+## What's New (No New Dependencies)
 
-### 1. Motion (formerly Framer Motion) -- Animation
+### 1. Schema Extensions (Zod)
 
-| Technology | Version | Purpose | Why Recommended |
-|------------|---------|---------|-----------------|
-| `motion` | ^12.38.0 | Component animation, page transitions, micro-interactions | The standard React animation library. Rebranded from framer-motion in mid-2025. Full React 19 + Next.js 15 App Router support. Hardware-accelerated scroll animations in v12. Spring physics, layout animations, gesture handling. 30M+ monthly npm downloads. Nothing else comes close for declarative React animation |
+**New schema: `ModuleConfigSchema`** -- parallel to `InstrumentConfigSchema` but tuned for individual eurorack modules.
 
-**Import path:** `motion/react` (NOT the old `framer-motion` package)
-
-**Specific uses in this redesign:**
-- Page route transition animations (fade/slide between sessions)
-- Card hover micro-interactions (lift, scale, subtle glow)
-- Stagger animations for list rendering (session lists, patch grids)
-- Layout animations when filtering/sorting patches (items reflow smoothly)
-- Scroll-linked effects for hero/landing sections (parallax, reveal)
-- SVG panel control highlight animations (pulse, focus ring)
-- Accordion/expand animations (session quick-ref, troubleshooting)
-- Button press feedback (scale down on press, spring back)
-
-**Key APIs for this project:**
-- `motion.div` -- basic animation wrapper for any element
-- `AnimatePresence` -- exit animations, page transitions
-- `useScroll` + `useTransform` -- hardware-accelerated scroll-linked effects (new in v12)
-- `LayoutGroup` -- shared layout animations when filtering patch lists
-- `spring` transition type -- natural-feeling motion (synth knob tactile feel)
-- `whileHover`, `whileTap` -- gesture-driven micro-interactions
-
-**Server/client boundary:** All Motion components require `"use client"`. Wrap animated elements in client components; keep data fetching in server component parents. This matches the existing pattern in the codebase.
-
-### 2. @tailwindcss/typography -- Prose Styling
-
-| Technology | Version | Purpose | Why Recommended |
-|------------|---------|---------|-----------------|
-| `@tailwindcss/typography` | ^0.5.19 | Professional markdown/prose rendering | Official Tailwind plugin. Provides battle-tested typographic defaults for rendered markdown content. The project currently hand-rolls ~100 lines of `.prose` styles in globals.css (lines 37-196). This plugin replaces that with a professional, customizable baseline |
-
-**Integration with Tailwind v4:**
-```css
-/* In globals.css, add after @import "tailwindcss": */
-@plugin "@tailwindcss/typography";
+```typescript
+// In schemas.ts -- NEW
+export const ModuleConfigSchema = z.object({
+  display_name: z.string(),
+  tagline: z.string(),
+  manufacturer: z.string(),
+  hp_width: z.number().int().min(2).max(84),     // Panel width in HP units
+  depth_mm: z.number().int().optional(),           // Module depth in mm
+  categories: z.array(z.enum([
+    'vco', 'filter', 'effects', 'modulator',
+    'function-generator', 'utility', 'sequencer',
+  ])).min(1),                                       // Multi-category taxonomy
+  primary_category: z.enum([                        // For default routing/display
+    'vco', 'filter', 'effects', 'modulator',
+    'function-generator', 'utility', 'sequencer',
+  ]),
+  sysex: z.literal(false),                         // Eurorack modules: always false
+  patch_memory: z.literal(false),                   // Eurorack modules: always false
+  companion_modules: z.array(z.string()).optional(), // e.g., crow pairs with just-friends
+  reference_pdfs: z.array(z.object({
+    label: z.string(),
+    file: z.string(),
+    url: z.string().url().optional(),               // Source URL for downloading
+  })),
+}).passthrough();
 ```
 
-**Migration strategy:**
-The existing hand-rolled `.prose` styles in globals.css should be progressively replaced by typography plugin defaults. The plugin provides:
-- `prose-invert` for dark backgrounds (replaces manual dark color overrides)
-- Responsive sizing (`prose-sm`, `prose-lg`, `prose-xl`)
-- Color theming via CSS custom properties
-- Heading hierarchy, paragraph spacing, list styling
-- Code block and inline code styling
-- Table base styling, blockquote styling
+**Why a separate schema instead of extending `InstrumentConfigSchema`:** Instruments have capabilities (sysex, patch_memory, sampler, sequencer) that modules never have. Modules have HP width and multi-category taxonomy that instruments don't need. Separate schemas keep validation precise and avoid optional-field sprawl.
 
-**What the plugin replaces (currently manual in globals.css):**
-- `.prose h1/h2/h3/h4` sizing and spacing (lines 38-45)
-- `.prose p` margins (line 53)
-- `.prose a` link styling (lines 55-65)
-- `.prose ul/ol/li` list styling (lines 67-69)
-- `.prose code` and `.prose pre` code styling (lines 71-91)
-- `.prose table/th/td` base table styling (lines 93-119)
+**Schema extension for `SessionSchema`:** Add optional `module_slug` field to distinguish eurorack module sessions from instrument sessions, since both use the same session format:
 
-**What stays custom (domain-specific, keep in globals.css):**
-- `.param-table` styling -- synth parameter dump tables are unique to this domain
-- `.callout` variants -- challenge, tip, warning callouts
-- `.mermaid-placeholder` -- diagram container styling
-- Task list checkbox accent color
-- `.quick-ref-prose` compact heading overrides
-
-### 3. OKLCH Color System via @theme (No New Dependency)
-
-| Technology | Version | Purpose | Why Recommended |
-|------------|---------|---------|-----------------|
-| Tailwind v4 `@theme` | 4.2.2 (installed) | Design token system with OKLCH color scales | No new dependency. Tailwind v4's `@theme` IS the design token system. OKLCH provides perceptually uniform lightness steps -- critical for generating cohesive shade scales |
-
-**Current state:** 6 flat hex colors in `@theme`:
-```css
---color-bg: #0a0a0a;
---color-surface: #161616;
---color-text: #e8e8e8;
---color-muted: #737373;
---color-accent: #c8ff00;
---color-param: #a3e635;
+```typescript
+// Extend existing SessionSchema
+module_slug: z.string().optional(),  // e.g., "plaits", "maths" -- set for eurorack module sessions
 ```
 
-This is too few for a polished design system. A redesign needs intermediate shades for borders, raised surfaces, hover states, focus rings, and text hierarchy.
+### 2. Content Directory Structure
 
-**Recommended expansion pattern:**
-```css
-@theme {
-  /* Neutral scale -- warm-tinted for synth hardware feel */
-  /* Using OKLCH: consistent lightness steps, slight warm hue */
-  --color-neutral-50: oklch(0.98 0.005 80);
-  --color-neutral-100: oklch(0.94 0.008 80);
-  --color-neutral-200: oklch(0.85 0.010 80);
-  --color-neutral-300: oklch(0.70 0.012 80);
-  --color-neutral-400: oklch(0.55 0.010 80);
-  --color-neutral-500: oklch(0.42 0.008 80);
-  --color-neutral-600: oklch(0.30 0.008 80);
-  --color-neutral-700: oklch(0.22 0.008 80);
-  --color-neutral-800: oklch(0.16 0.006 80);
-  --color-neutral-900: oklch(0.10 0.005 80);
-  --color-neutral-950: oklch(0.06 0.004 80);
+**New top-level `modules/` directory** parallel to `instruments/`:
 
-  /* Accent scale -- generated from base accent hue */
-  --color-accent-50: oklch(0.97 0.04 110);
-  --color-accent-100: oklch(0.93 0.08 110);
-  /* ... through 900 */
+```
+evolver/
+├── instruments/          # Existing -- complete instruments
+│   ├── evolver/
+│   ├── cascadia/
+│   └── octatrack/
+├── modules/              # NEW -- individual eurorack modules
+│   ├── swells/
+│   │   ├── module.json   # ModuleConfigSchema
+│   │   └── overview.md   # Module description + controls
+│   ├── plaits/
+│   ├── beads/
+│   ├── just-friends/
+│   ├── crow/             # Companion to just-friends
+│   ├── maths/
+│   └── ikarie/
+├── sessions/
+│   ├── evolver/          # Existing
+│   ├── cascadia/         # Existing
+│   ├── octatrack/        # Existing
+│   ├── swells/           # NEW -- module sessions
+│   ├── plaits/
+│   ├── beads/
+│   ├── just-friends/
+│   ├── maths/
+│   └── ikarie/
+└── patches/
+    ├── evolver/          # Existing
+    ├── cascadia/         # Existing
+    └── modules/          # NEW -- module patches (shared space, tagged by module)
+```
 
-  /* Semantic aliases -- maps to scale values */
-  --color-bg: var(--color-neutral-950);
-  --color-surface: var(--color-neutral-900);
-  --color-surface-raised: var(--color-neutral-800);
-  --color-border: var(--color-neutral-700);
-  --color-text: var(--color-neutral-100);
-  --color-text-muted: var(--color-neutral-400);
-  --color-text-subtle: var(--color-neutral-500);
+**Why `modules/` not under `instruments/`:** Modules are a conceptually different entity. An instrument is a self-contained learning journey. A module is one piece of a system. The content pipeline (`discoverInstruments`) scans `instruments/` -- a new `discoverModules` function scans `modules/` independently, returning items validated against `ModuleConfigSchema` instead of `InstrumentConfigSchema`.
+
+### 3. Panel SVG Components (Per Module)
+
+Each module gets its own panel data file and React component, following the established pattern:
+
+| File | Purpose | Pattern Source |
+|------|---------|----------------|
+| `src/lib/{slug}-panel-data.ts` | Control metadata (IDs, names, types, positions) | `evolver-panel-data.ts` |
+| `src/components/{slug}-panel.tsx` | SVG renderer with highlights, tooltips, interaction | `evolver-panel.tsx` |
+
+**Control type interface for modules** -- extends the Cascadia pattern (most flexible):
+
+```typescript
+export interface ModuleControlMeta {
+  id: string;
+  name: string;
+  type: 'knob' | 'slider' | 'switch' | 'jack-in' | 'jack-out' | 'led' | 'button';
+  signalType?: 'audio' | 'cv' | 'gate' | 'modulation';
 }
 ```
 
-**Why OKLCH over hex:** Current hex values (`#0a0a0a`, `#161616`, `#737373`) have no mathematical relationship. OKLCH defines a hue angle and varies only lightness/chroma, producing scales that feel cohesive. Tailwind v4 natively supports OKLCH in all color utilities.
+No `module` field needed (unlike Cascadia which has 17 internal modules) -- a eurorack module IS the module.
 
-**Why NOT a design token tool (Style Dictionary, Tokens Studio):** The project has one theme. Tailwind v4's `@theme` handles token definition, utility generation, and runtime CSS variable access in a single mechanism. External token tools add complexity for multi-platform or multi-brand scenarios that don't apply here.
+**Panel dimension handling:** Eurorack panels have variable widths measured in HP (1 HP = 5.08mm = 0.2 inches). The SVG viewBox should scale proportionally:
 
-### 4. Texture/Grain Overlay (No Dependency)
+```typescript
+// Standard eurorack panel dimensions
+const HP_TO_PX = 20;  // 1 HP = 20px in SVG space (convenient integer)
+const PANEL_HEIGHT_PX = 256; // 3U = 128.5mm, scaled to ~256px
 
-| Technology | Version | Purpose | Why Recommended |
-|------------|---------|---------|-----------------|
-| CSS + pre-rendered noise tile | N/A (native) | Subtle noise/grain texture overlay inspired by Hologram Electronics aesthetic | Zero dependencies. Generate a small noise tile (64x64px WebP) once using fffuel.co/nnnoise, use as a repeating CSS background on a pseudo-element |
-
-**Implementation approach:**
-```css
-.texture-grain::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.03;
-  pointer-events: none;
-  background-image: url('/textures/grain.webp');
-  background-repeat: repeat;
-  mix-blend-mode: overlay;
-  z-index: 1;
+function panelViewBox(hpWidth: number): string {
+  return `0 0 ${hpWidth * HP_TO_PX} ${PANEL_HEIGHT_PX}`;
 }
 ```
 
-**Why pre-rendered tile over inline SVG feTurbulence:** SVG `feTurbulence` is CPU-rendered on every paint. A pre-rendered 64x64 WebP tile (~2KB) is GPU-composited and costs nothing at runtime. The grain should be subtle (opacity 0.02-0.05) -- it adds warmth and texture without calling attention to itself.
+### 4. Category Taxonomy System
 
-**Asset to generate:** One `grain.webp` file (64x64px), placed in `public/textures/`. Generate using fffuel.co/nnnoise with low frequency, monochrome, and export as WebP.
+Categories live in the Zod schema (see above) and in a shared constant for UI rendering:
 
-### 5. Spacing/Typography Scale via @theme (No Dependency)
-
-The existing spacing tokens (`--spacing-xs` through `--spacing-3xl`) cover basic needs but the redesign should expand them:
-
-```css
-@theme {
-  /* Extended spacing for layout */
-  --spacing-4xl: 96px;
-  --spacing-5xl: 128px;
-
-  /* Typography scale (if overriding plugin defaults) */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-
-  /* Border radius scale */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
-}
+```typescript
+// src/lib/module-categories.ts
+export const MODULE_CATEGORIES = {
+  'vco': { label: 'Oscillators', color: 'oklch(0.75 0.15 150)' },
+  'filter': { label: 'Filters', color: 'oklch(0.75 0.15 30)' },
+  'effects': { label: 'Effects', color: 'oklch(0.75 0.15 270)' },
+  'modulator': { label: 'Modulators', color: 'oklch(0.75 0.15 60)' },
+  'function-generator': { label: 'Function Generators', color: 'oklch(0.75 0.15 200)' },
+  'utility': { label: 'Utilities', color: 'oklch(0.65 0.05 80)' },
+  'sequencer': { label: 'Sequencers', color: 'oklch(0.75 0.15 320)' },
+} as const;
 ```
 
-No dependency needed -- these are native Tailwind v4 theme tokens.
+No external taxonomy library needed. The category set is small (7 values), closed (not user-extensible), and validated by Zod enum.
+
+### 5. Module Manual PDFs
+
+Manuals are stored in `references/modules/` and referenced from `module.json`:
+
+```
+references/
+├── Evo_Key_Manual_1.3.pdf          # Existing
+├── evolverguide.pdf                # Existing
+├── cascadia_manual_v1.1.pdf        # Existing
+└── modules/                        # NEW
+    ├── swells-manual.pdf
+    ├── plaits-quickstart.pdf
+    ├── beads-quickstart.pdf
+    ├── just-friends-technical-map.pdf
+    ├── maths-manual.pdf
+    ├── maths-illustrated-supplement.pdf
+    └── ikarie-manual.pdf
+```
+
+## Module Specifications
+
+### Panel Dimensions and Manual Sources
+
+| Module | Manufacturer | HP Width | Depth | Manual Source URL | Confidence |
+|--------|-------------|----------|-------|-------------------|------------|
+| Swells | Intellijel | 20 HP | -- | [intellijel.com/downloads/manuals/swells_manual_v1.0_2026.04.09.pdf](https://intellijel.com/downloads/manuals/swells_manual_v1.0_2026.04.09.pdf) | HIGH |
+| Plaits | Mutable Instruments | 12 HP | 25mm | [pichenettes.github.io/.../plaits_quickstart.pdf](https://pichenettes.github.io/mutable-instruments-documentation/modules/plaits/downloads/plaits_quickstart.pdf) | HIGH |
+| Beads | Mutable Instruments | 14 HP | 25mm | [pichenettes.github.io/.../beads_quickstart.pdf](https://pichenettes.github.io/mutable-instruments-documentation/modules/beads/downloads/beads_quickstart.pdf) | HIGH |
+| Just Friends | Mannequins / Whimsical Raps | 14 HP | 32mm | [github.com/whimsicalraps/Mannequins-Technical-Maps/.../just-friends.pdf](https://github.com/whimsicalraps/Mannequins-Technical-Maps/blob/main/just-friends/just-friends.pdf) | HIGH |
+| Crow | Monome / Whimsical Raps | 2 HP | 41mm | [monome.org/docs/crow/](https://monome.org/docs/crow/) (web docs, no PDF) | MEDIUM |
+| Maths | Make Noise | 20 HP | 24mm | [makenoisemusic.com/.../MATHSmanual2013.pdf](https://www.makenoisemusic.com/wp-content/uploads/2024/03/MATHSmanual2013.pdf) | HIGH |
+| Ikarie | Casper x Bastl | 8 HP | -- | [bastl-instruments.com/files/manual-ikarie-web.pdf](https://bastl-instruments.com/files/manual-ikarie-web.pdf) | HIGH |
+
+**Maths bonus resource:** The [Illustrated Supplement by Demonam](https://w2.mat.ucsb.edu/mat276n/resources/systems/CREATE_teachingSynth/manuals/8c_Maths2013-V1.11-printable.pdf) covers 34 patch ideas with illustrations -- excellent curriculum reference.
+
+### Category Assignments
+
+| Module | Categories | Primary Category |
+|--------|-----------|-----------------|
+| Swells | effects | effects |
+| Plaits | vco | vco |
+| Beads | effects | effects |
+| Just Friends | modulator, vco, function-generator | modulator |
+| Crow | utility | utility |
+| Maths | function-generator, modulator, utility | function-generator |
+| Ikarie | filter | filter |
+
+### Approximate Control Counts (for panel data planning)
+
+| Module | HP | Knobs | Switches | Jacks (in) | Jacks (out) | LEDs | Total |
+|--------|----|-------|----------|------------|-------------|------|-------|
+| Swells | 20 | ~8 | ~2 | ~4 | ~2 | ~4 | ~20 |
+| Plaits | 12 | ~4 | 0 | ~4 | ~4 | ~2 | ~14 |
+| Beads | 14 | ~6 | ~2 | ~4 | ~4 | ~4 | ~20 |
+| Just Friends | 14 | ~7 | ~2 | ~4 | ~6 | 0 | ~19 |
+| Crow | 2 | 0 | 0 | 2 | 4 | ~2 | ~8 |
+| Maths | 20 | ~8 | ~4 | ~8 | ~8 | ~2 | ~30 |
+| Ikarie | 8 | ~6 | ~2 | ~4 | ~4 | ~2 | ~18 |
+
+Total: ~129 controls across 7 modules (compare: Evolver 110, Cascadia 179, Octatrack 78).
+
+**Note:** These are estimates from web search. Exact counts must be verified against the downloaded manuals during panel-building. The synth-panel-builder skill requires reference-first hand-placement.
 
 ## What NOT to Add
 
 | Avoid | Why | Use Instead |
 |-------|-----|-------------|
-| styled-components / Emotion | CSS-in-JS adds runtime cost, poor RSC support in Next.js 15, conflicts with Tailwind v4's CSS-first model | Tailwind v4 `@theme` + utility classes |
-| Radix UI / shadcn/ui | Adds a component abstraction layer over 51 existing working components. This is a visual refresh, not a structural rewrite. Adopting a component library means rewriting every component for cosmetic changes | Restyle existing components with Tailwind utilities |
-| GSAP | Overkill for UI micro-interactions. GSAP excels at timeline-heavy marketing animations and scroll stories. Motion covers all needed React animation patterns with better integration | Motion (`motion/react`) |
-| tailwindcss-animate | Motion handles all animation needs with more control. tailwindcss-animate adds CSS-only keyframe utilities that duplicate what Motion does better and what CSS `@keyframes` already handles | Motion for complex, CSS `@keyframes` for simple (pulse, spin) |
-| Custom font files / self-hosted fonts | Inter and JetBrains Mono via `next/font/google` are already optimal -- automatic subsetting, zero layout shift, CDN caching | Keep existing `next/font/google` setup |
-| CSS Modules | Tailwind v4 with `@theme` provides all scoping. CSS Modules would fragment the styling approach across two systems | Tailwind utility classes + globals.css for custom prose/domain styles |
-| Sass/SCSS | Tailwind v4 uses Lightning CSS which handles nesting, custom properties, and all modern CSS features. SCSS adds build complexity with zero benefit over native CSS | Native CSS nesting (supported via Lightning CSS in Tailwind v4) |
-| react-spring | Smaller community, less React 19 polish, more verbose API than Motion | Motion |
-| Style Dictionary / Tokens Studio | Design token management tools for multi-platform, multi-brand systems. This is a single web app with one theme | Tailwind v4 `@theme` in globals.css |
-| Chakra UI / Mantine | Full component libraries. Wrong tool for restyling an existing component set | Keep existing components, apply new design tokens |
+| Database (SQLite, PostgreSQL) | Content is markdown in a vault. Adding a database for 7 modules and <50 sessions is massive overengineering | Continue with filesystem content pipeline |
+| CMS (Contentful, Sanity) | Same as above -- Obsidian IS the CMS | Vault reader pattern |
+| SVG generation library (D3, Rough.js) | Panel SVGs are hand-placed from reference images per CLAUDE.md rules. Auto-generation produces wrong layouts | Manual SVG with data-driven rendering (existing pattern) |
+| GraphQL (Apollo, URQL) | No complex relational queries needed. Modules have a flat category array, not a graph | Zod schemas + simple array filtering |
+| State management library (Redux, Jotai) | Zustand 5 already handles learner state perfectly | Extend existing Zustand store |
+| Component library (shadcn/ui, Radix) | 51+ existing components already styled. Adding a component library for 6 new module pages is backwards | Extend existing component set |
+| react-pdf / pdf.js | Manuals are downloadable references, not rendered inline. A `<a href>` download link is sufficient | Native browser PDF viewing via link |
+| Taxonomy library (taxonomy-js, etc.) | 7 categories, 7 modules. A Zod enum and a constant object is the right level of abstraction | Zod enum + MODULE_CATEGORIES constant |
+
+## Integration Points with Existing System
+
+### Content Reader Extensions
+
+```typescript
+// New functions needed in reader.ts (parallel to existing instrument functions)
+export async function discoverModules(config: AppConfig): Promise<string[]>;
+export async function loadModuleConfig(slug: string, config: AppConfig): Promise<ModuleConfig>;
+export async function listModuleSessions(moduleSlug: string, config: AppConfig): Promise<...>;
+export async function listModulesByCategory(category: string, config: AppConfig): Promise<...>;
+```
+
+### Zustand Store Extension
+
+The existing learner store tracks completions keyed by `{instrument}/{sessionSlug}`. Module completions follow the same pattern: `modules/{moduleSlug}/{sessionSlug}`. No schema change needed -- just a naming convention.
+
+### Routing
+
+```
+/instruments/[slug]/...          # Existing instrument routes (unchanged)
+/modules/                        # NEW -- module browser (category grid)
+/modules/[slug]/                 # NEW -- module overview + panel
+/modules/[slug]/sessions/        # NEW -- module session list
+/modules/[slug]/sessions/[id]/   # NEW -- individual session
+```
+
+### Demo Mode
+
+Module demo data follows the same pattern as instrument demo data: bundled content in `src/content/modules/` with synthetic learner journeys.
+
+### Per-Module Color Identity
+
+Each module gets a color identity derived from its manufacturer, following the OKLCH pattern established in v1.3:
+
+| Manufacturer | Hue Range | Rationale |
+|-------------|-----------|-----------|
+| Intellijel | ~200 (blue-cyan) | Matches Cascadia identity already in the system |
+| Mutable Instruments | ~280 (purple) | Distinctive, MI's brand color leans purple |
+| Mannequins | ~50 (gold) | Gold Clouds edition aesthetic |
+| Monome | ~50 (gold) | Same ecosystem as Mannequins |
+| Make Noise | ~0 (warm red) | Make Noise's bold red/black branding |
+| Bastl | ~150 (teal-green) | Bastl's green brand color |
 
 ## Installation
 
 ```bash
-# New dependencies for v1.3 Visual Redesign
-npm install motion@^12.38.0 @tailwindcss/typography@^0.5.19
+# No new packages to install.
+# The existing stack handles all v2.0 requirements.
 ```
-
-Two packages. That is all.
-
-## Configuration Changes
-
-### globals.css (modified, not new):
-```css
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
-
-@theme {
-  /* Expanded OKLCH color system */
-  /* Extended spacing scale */
-  /* Typography scale tokens */
-  /* Border radius scale */
-  /* Keep existing font-sans and font-mono */
-}
-
-/* Existing domain-specific prose overrides stay */
-/* New: grain texture utility class */
-```
-
-### No new config files:
-- No `tailwind.config.ts` -- Tailwind v4 is CSS-first, `@theme` replaces it
-- No motion config -- Motion works out of the box with zero configuration
-- `postcss.config.mjs` stays unchanged
-
-### Asset to create:
-- `public/textures/grain.webp` -- 64x64px noise tile, generated once from fffuel.co/nnnoise
-
-## Alternatives Considered
-
-| Recommended | Alternative | When to Use Alternative |
-|-------------|-------------|-------------------------|
-| Motion | CSS `@keyframes` only | If bundle size is the top priority and you only need opacity/transform transitions. Motion adds ~18KB gzipped but provides springs, layout animations, gesture handling, and scroll-linked effects that CSS cannot replicate |
-| @tailwindcss/typography | Keep hand-rolled prose styles | If you need zero plugin opinions. But the current hand-rolled styles are converging on what the plugin provides -- why maintain 100+ lines manually when the plugin does it better and handles edge cases (nested lists, code in headings, etc.) |
-| OKLCH in @theme | Keep 6 flat hex values | If you genuinely only need 6 colors. But a visual redesign inherently needs shade scales for hover states, borders, raised surfaces, focus rings, and text hierarchy levels |
-| Pre-rendered grain tile | SVG feTurbulence filter | If you want animated/moving grain (film-like). For static subtle texture, a pre-rendered tile is vastly more performant |
-| Pre-rendered grain tile | grained.js library | If you specifically want animated grain with configurable parameters at runtime. For a static texture, a 2KB WebP tile beats a JavaScript library |
 
 ## Version Compatibility
 
-| Package | Compatible With | Notes |
-|---------|-----------------|-------|
-| `motion@^12.38.0` | React 19.2.x, Next.js 15.x | Full RSC awareness. Components using `motion.*` must be in `"use client"` files. `AnimatePresence` works with App Router. Hardware-accelerated `useScroll` in v12 |
-| `@tailwindcss/typography@^0.5.19` | Tailwind CSS 4.2.x | Must use `@plugin` directive in CSS (not JS config). Dark mode supported via `prose-invert` class. Customization via CSS custom properties or `@config` directive |
-
-Both packages are ESM-compatible and tree-shakeable.
+No new packages means no new compatibility concerns. The existing lockfile is stable.
 
 ## Sources
 
-- [Motion npm](https://www.npmjs.com/package/motion) -- v12.38.0, published March 2026 (HIGH confidence)
-- [Motion official docs](https://motion.dev/docs/react) -- React 19 support, hardware-accelerated scroll (HIGH confidence)
-- [Motion changelog](https://motion.dev/changelog) -- v12 release notes, OKLCH animation support (HIGH confidence)
-- [Tailwind CSS v4 @theme docs](https://tailwindcss.com/docs/theme) -- CSS-first configuration, OKLCH support (HIGH confidence)
-- [@tailwindcss/typography npm](https://www.npmjs.com/package/@tailwindcss/typography) -- v0.5.19, last published Oct 2025 (HIGH confidence)
-- [Tailwind v4 @plugin directive](https://github.com/tailwindlabs/tailwindcss/discussions/15904) -- Typography plugin v4 integration (HIGH confidence)
-- [CSS-Tricks: Grainy Gradients](https://css-tricks.com/grainy-gradients/) -- SVG feTurbulence technique and performance (HIGH confidence)
-- [fffuel nnnoise](https://www.fffuel.co/nnnoise/) -- SVG noise texture generation tool (HIGH confidence)
-- [Hologram Electronics](https://hologramelectronics.com) -- Design reference: warm cream palette, custom typography, textured imagery (fetched and analyzed)
-- [Learning Synths (Ableton)](https://learningsynths.ableton.com) -- Design reference: dark mode, interactive element integration, educational content layout (fetched and analyzed)
-- [Da Vinci's Digital](https://davincis.digital) -- Design reference: scroll-triggered animations, parallax, dynamic typography (fetched and analyzed)
+- [Intellijel Swells product page](https://intellijel.com/shop/eurorack/swells/) -- HP width, manual PDF (HIGH confidence)
+- [ModularGrid: Plaits](https://modulargrid.net/e/mutable-instruments-plaits) -- HP width, depth (HIGH confidence)
+- [Mutable Instruments Documentation: Plaits](https://pichenettes.github.io/mutable-instruments-documentation/modules/plaits/) -- Manual, specs (HIGH confidence)
+- [ModularGrid: Beads](https://modulargrid.net/e/mutable-instruments-beads) -- HP width, depth (HIGH confidence)
+- [Mutable Instruments Documentation: Beads](https://pichenettes.github.io/mutable-instruments-documentation/modules/beads/) -- Manual, specs (HIGH confidence)
+- [ModularGrid: Just Friends](https://modulargrid.net/e/mannequins-just-friends) -- HP width, depth (HIGH confidence)
+- [Whimsical Raps Technical Maps (GitHub)](https://github.com/whimsicalraps/Mannequins-Technical-Maps) -- Just Friends PDF documentation (HIGH confidence)
+- [Monome Crow docs](https://monome.org/docs/crow/) -- Crow specs, i2c, Lua scripting (HIGH confidence)
+- [ModularGrid: Crow](https://modulargrid.net/e/monome-crow) -- HP width, depth (HIGH confidence)
+- [Make Noise Maths product page](https://www.makenoisemusic.com/modules/maths/) -- HP width, manual PDF (HIGH confidence)
+- [Maths Illustrated Supplement](https://w2.mat.ucsb.edu/mat276n/resources/systems/CREATE_teachingSynth/manuals/8c_Maths2013-V1.11-printable.pdf) -- 34 patch ideas (HIGH confidence)
+- [Bastl Ikarie product page](https://bastl-instruments.com/eurorack/modules/ikarie) -- HP width, manual link (HIGH confidence)
+- Existing codebase: `src/lib/content/schemas.ts`, `src/lib/evolver-panel-data.ts`, `src/lib/cascadia-panel-data.ts`, `src/lib/content/reader.ts` -- established patterns (HIGH confidence)
 
 ---
-*Stack research for: v1.3 Visual Redesign*
-*Researched: 2026-04-06*
+*Stack research for: v2.0 Eurorack Module Learning*
+*Researched: 2026-04-16*

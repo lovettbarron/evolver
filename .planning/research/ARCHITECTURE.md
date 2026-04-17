@@ -1,330 +1,620 @@
-# Architecture Patterns: Visual Redesign Integration
+# Architecture Patterns
 
-**Domain:** Visual redesign of a Next.js 15 synth learning app with Tailwind v4 + CSS variable architecture
-**Researched:** 2026-04-06
+**Domain:** Eurorack module learning integration into existing instrument mastery app
+**Researched:** 2026-04-16
 
 ## Recommended Architecture
 
-The redesign operates as a **layered token replacement** on top of the existing component tree. No structural changes to routing, data flow, or server/client boundaries. The existing architecture (App Router server components reading Obsidian vault, client components for interactivity) remains untouched. The redesign is purely the visual layer: tokens, styles, and component presentation.
+Eurorack modules are a **new top-level content type**, not nested under `instruments/`. They share infrastructure (reader, schemas, panel components, session/patch pipeline) but have their own discovery, routing, and data model. The key structural difference: instruments are monolithic (one panel, one set of sessions), while modules are small, category-tagged, and designed for cross-referencing.
 
-### Core Principle: Three-Layer Token System
-
-The current `@theme` block has 6 colors and 6 spacing values inline. This is workable for a small app but breaks down during a redesign because every token change requires auditing all 51 components. Replace with a three-layer system:
+### Content Layout
 
 ```
-Layer 1: Primitive tokens (raw palette values)
-Layer 2: Semantic tokens (purpose-driven: what it means)
-Layer 3: Component tokens (scoped overrides, optional)
+modules/                          # NEW -- top-level, parallel to instruments/
+  plaits/
+    module.json                   # ModuleConfigSchema (replaces instrument.json)
+    overview.md                   # InstrumentFileSchema reused (type: 'overview')
+    signal-flow.md
+  beads/
+    module.json
+    overview.md
+    signal-flow.md
+  maths/
+    module.json
+    overview.md
+    signal-flow.md
+  just-friends/
+    module.json
+    overview.md
+    signal-flow.md
+  swells/
+    module.json
+    overview.md
+    signal-flow.md
+  ikarie/
+    module.json
+    overview.md
+    signal-flow.md
+
+sessions/                         # EXISTING -- modules get their own subdirectory
+  evolver/                        # existing
+  cascadia/                       # existing
+  octatrack/                      # existing
+  plaits/                         # NEW -- module sessions follow same pattern
+  beads/
+  maths/
+  just-friends/
+  swells/
+  ikarie/
+
+patches/                          # EXISTING -- same pattern
+  plaits/                         # NEW
+  beads/
+  ...
 ```
 
-This is the standard pattern for Tailwind v4 design systems in 2026, validated by the `@theme` directive's CSS-first approach.
+### Why Top-Level `modules/` Instead of `instruments/`
+
+1. **Semantic clarity.** The Evolver is an instrument. Plaits is a module. Mixing them under `instruments/` creates a false equivalence and confuses the nav hierarchy.
+2. **Different data model.** Modules have HP width, categories (multiple), power requirements, jack/control counts typical of eurorack. Instruments have SysEx, patch memory, sequencer flags. Separate schemas keep both clean.
+3. **Category browsing.** Modules need a category taxonomy layer (`/modules?category=vco`) that instruments don't. A separate top-level section makes this natural.
+4. **Sessions and patches reuse existing paths.** `sessions/<slug>/` and `patches/<slug>/` already work for any slug. No changes needed to the file layout -- just the discovery/reader functions.
 
 ### Component Boundaries
 
-| Component Layer | Count | Redesign Impact | Strategy |
-|----------------|-------|-----------------|----------|
-| Layout shell (AppShell, Nav, layout.tsx) | 3 | HIGH - structural visual changes | Modify in-place, token-first |
-| Page containers (13 route pages) | 13 | MEDIUM - max-width, spacing, padding | Batch update after tokens land |
-| Content cards (HeroCard, PatchCard, ModuleCard, CountCard, InstrumentCard) | 5 | HIGH - primary visual identity | Redesign with new tokens, same props |
-| Data display (tables, lists, session rows) | 8 | MEDIUM - typography and spacing | Token cascade handles most changes |
-| Interactive (SearchBar, PatchFilterBar, CompletionToggle) | 5 | MEDIUM - input styling, states | Update focus/hover/active states |
-| Panel visualizers (EvolverPanel, CascadiaPanel) | 2 | LOW-MEDIUM - self-contained SVG | Isolated; touch only outer container |
-| Prose/markdown (.prose CSS rules) | 1 (globals.css) | HIGH - 80+ lines of prose styling | Rewrite prose block with new tokens |
-| Supporting (tooltips, banners, dialogs) | 15+ | LOW - cascade from token changes | Minimal manual intervention |
+| Component | Responsibility | Communicates With |
+|-----------|---------------|-------------------|
+| `modules/<slug>/module.json` | Module identity, categories, HP, manufacturer, power | Schema validation, reader |
+| `src/lib/content/reader.ts` | NEW functions: `discoverModules()`, `loadModuleConfig()`, `listModulesByCategory()` | Existing content pipeline |
+| `src/lib/content/schemas.ts` | NEW `ModuleConfigSchema` | reader.ts, route pages |
+| `src/app/modules/page.tsx` | Module index with category filter tabs | reader, nav |
+| `src/app/modules/[slug]/page.tsx` | Module overview (mirrors instrument page) | reader, panel, sessions |
+| `src/app/modules/[slug]/sessions/page.tsx` | Module sessions list | Reuses `SessionListClient` |
+| `src/app/modules/[slug]/patches/page.tsx` | Module patches list | Reuses patch components |
+| `src/app/modules/[slug]/panel/page.tsx` | Module panel visualizer | New per-module panel components |
+| `src/components/module-panel.tsx` | Generic SVG panel renderer for modules | Per-module panel data files |
+| `src/lib/modules/<slug>-panel-data.ts` | Per-module control metadata (hand-placed) | Panel component |
+| `src/components/nav.tsx` | Add "Modules" top-level link + module context | discoverModules(), route |
+| `src/components/category-filter.tsx` | NEW: category tab/pill filter for module index | Module index page |
 
-### Data Flow for Design Tokens
+### Data Flow
 
 ```
-globals.css @theme block
+Vault (~/song/) or bundled (src/content/)
+    |
+    +-- modules/<slug>/module.json    --> ModuleConfigSchema.parse()
+    +-- modules/<slug>/*.md           --> InstrumentFileSchema.parse() (reused)
+    +-- sessions/<slug>/*.md          --> SessionSchema.parse() (reused, no changes)
+    +-- patches/<slug>/*.md           --> PatchSchema.parse() (reused)
     |
     v
-Tailwind v4 utility generation (bg-surface, text-muted, etc.)
+reader.ts (new functions alongside existing ones)
     |
-    +---> Component className strings (all 51 components)
+    v
+Server Components (module pages)
     |
-    +---> .prose CSS rules (markdown rendering)
-    |
-    +---> SVG panel inline styles (ISOLATED - hardcoded hex values)
+    v
+Client Components (panels, session lists, patch library -- reused)
 ```
 
-**Key insight:** The SVG panels do NOT use CSS variables. They use a `const styles = {}` object with hardcoded hex values (`#111`, `#333`, `#999`, etc.). This is intentional -- SVG panel colors represent physical hardware appearance and should NOT change with a theme redesign. The panel visualizers are a visual simulation of physical instruments, not UI chrome.
+## Schema Design
+
+### ModuleConfigSchema (NEW)
+
+```typescript
+// src/lib/content/schemas.ts -- ADD alongside InstrumentConfigSchema
+
+export const MODULE_CATEGORIES = [
+  'vco', 'vcf', 'vca', 'envelope', 'lfo', 'modulator',
+  'function-generator', 'effects', 'utilities', 'sequencer',
+] as const;
+
+export type ModuleCategory = typeof MODULE_CATEGORIES[number];
+
+export const ModuleConfigSchema = z.object({
+  display_name: z.string(),
+  tagline: z.string(),
+  manufacturer: z.string(),
+  hp: z.number().int().positive(),             // Panel width in HP (e.g., 16, 12, 18)
+  categories: z.array(z.enum(MODULE_CATEGORIES)).min(1),
+  primary_category: z.enum(MODULE_CATEGORIES), // Default sorting/display category
+  power: z.object({
+    plus_12v: z.number().int(),                // mA on +12V
+    minus_12v: z.number().int(),               // mA on -12V
+    plus_5v: z.number().int().optional(),      // mA on +5V (rare)
+  }).optional(),
+  depth_mm: z.number().int().optional(),       // Module depth in mm
+  reference_pdfs: z.array(z.object({
+    label: z.string(),
+    file: z.string(),
+  })),
+  // Eurorack modules never have SysEx or patch memory
+  // so those fields are intentionally absent (not false -- absent)
+}).passthrough();
+
+export type ModuleConfig = z.infer<typeof ModuleConfigSchema>;
+```
+
+### Example module.json Files
+
+```json
+// modules/maths/module.json
+{
+  "display_name": "Maths",
+  "tagline": "Analog function generator, envelope, LFO, slew, and utilities",
+  "manufacturer": "Make Noise",
+  "hp": 20,
+  "categories": ["function-generator", "envelope", "lfo", "utilities"],
+  "primary_category": "function-generator",
+  "power": { "plus_12v": 60, "minus_12v": 50 },
+  "depth_mm": 24,
+  "reference_pdfs": [
+    { "label": "Maths Illustrated Supplement", "file": "maths-illustrated-supplement.pdf" }
+  ]
+}
+```
+
+```json
+// modules/plaits/module.json
+{
+  "display_name": "Plaits",
+  "tagline": "Macro oscillator with 16 synthesis models",
+  "manufacturer": "Mutable Instruments",
+  "hp": 12,
+  "categories": ["vco"],
+  "primary_category": "vco",
+  "power": { "plus_12v": 50, "minus_12v": 5 },
+  "depth_mm": 25,
+  "reference_pdfs": [
+    { "label": "Plaits Manual", "file": "plaits-manual.pdf" }
+  ]
+}
+```
+
+```json
+// modules/just-friends/module.json
+{
+  "display_name": "Just Friends",
+  "tagline": "6-channel function generator, oscillator bank, and envelope shaper",
+  "manufacturer": "Mannequins",
+  "hp": 10,
+  "categories": ["modulator", "vco", "envelope"],
+  "primary_category": "modulator",
+  "power": { "plus_12v": 50, "minus_12v": 40 },
+  "depth_mm": 26,
+  "reference_pdfs": [
+    { "label": "Just Friends Manual", "file": "just-friends-manual.pdf" }
+  ]
+}
+```
+
+### Schema Backward Compatibility
+
+- **SessionSchema** -- No changes needed. `instrument: z.string()` already accepts any slug (including module slugs like `"plaits"`). The field name is slightly misleading but the data shape is correct, and renaming it would break all existing content.
+- **PatchSchema** -- No changes needed. Same reasoning. The `cable_routing` and `knob_settings` optional fields are useful for module patches too.
+- **InstrumentFileSchema** -- Reusable for module overview/signal-flow markdown (type: 'overview', type: 'signal-flow'). The `category` field on this schema (sound-source, shaper, modulator, utility) is for Cascadia sub-modules, not eurorack categories -- don't conflate them.
+- **InstrumentConfigSchema** -- NOT modified. Modules use `ModuleConfigSchema` instead. No shared base type needed -- the shapes are different enough.
+- **ConfigSchema** -- No changes. `vaultPath` determines content root for both instruments and modules.
+
+## Route Structure
+
+### Recommended Routes
+
+```
+/modules                           # Module index with category filter tabs
+/modules/[slug]                    # Module overview page
+/modules/[slug]/sessions           # Module sessions
+/modules/[slug]/sessions/[session] # Individual session
+/modules/[slug]/patches            # Module patches
+/modules/[slug]/panel              # Module panel visualizer
+```
+
+### Why `/modules/` Not `/eurorack/`
+
+- `/modules` is shorter and more direct
+- If non-eurorack modules ever appear (e.g., 500-series, or Cascadia sub-modules linked independently), the route still works
+- Matches the content directory name (`modules/`)
+- Avoids `/eurorack/plaits` which sounds like a manufacturer directory
+
+### Category Filtering -- NOT Category Routes
+
+Do NOT create `/modules/vco/plaits` nested routes. Instead:
+
+- `/modules` shows all modules with category filter tabs/pills at the top
+- `/modules?category=vco` pre-selects the VCO tab (URL-persisted state)
+- Multi-category modules (Maths, Just Friends) appear under every matching tab
+- This avoids duplicate routes and the "which category is canonical?" problem
+- Follow the same pattern as the existing patch filter bar which uses URL query params
+
+### Navigation Changes
+
+The `Nav` component currently builds sub-links from `pathname.match(/\/instruments\/([^/]+)/)`. Add a parallel pattern:
+
+```typescript
+// In nav.tsx
+const moduleMatch = pathname.match(/\/modules\/([^/]+)/);
+const currentModuleSlug = moduleMatch ? moduleMatch[1] : '';
+```
+
+Add "Modules" as a top-level nav item. When on a module page, show Sessions, Patches, Panel sub-links scoped to the module. The existing `InstrumentSwitcher` pattern can be adapted into a `ModuleSwitcher` component.
+
+The `[data-instrument]` CSS attribute for color identity continues to work -- set `data-instrument={moduleSlug}` on module pages. No rename to `data-entity` or similar needed.
+
+## Reader Extensions
+
+### New Functions in reader.ts
+
+```typescript
+// Discover modules by scanning modules/ directory
+export async function discoverModules(config: AppConfig): Promise<string[]> {
+  const root = getContentRoot(config);
+  const modulesDir = path.join(root, 'modules');
+  try {
+    const entries = await fs.readdir(modulesDir, { withFileTypes: true });
+    return entries
+      .filter((e) => e.isDirectory() && !e.name.startsWith('.'))
+      .map((e) => e.name)
+      .sort();
+  } catch {
+    return []; // No modules directory yet -- graceful degradation
+  }
+}
+
+// Load module config
+export async function loadModuleConfig(
+  slug: string,
+  config: AppConfig,
+): Promise<ModuleConfig> {
+  const root = getContentRoot(config);
+  const configPath = path.join(root, 'modules', slug, 'module.json');
+  const raw = await fs.readFile(configPath, 'utf-8');
+  return ModuleConfigSchema.parse(JSON.parse(raw));
+}
+
+// List all modules with their configs (for index page)
+export async function listAllModules(
+  config: AppConfig,
+): Promise<Array<{ slug: string; config: ModuleConfig }>> {
+  const slugs = await discoverModules(config);
+  return Promise.all(
+    slugs.map(async (slug) => ({
+      slug,
+      config: await loadModuleConfig(slug, config),
+    })),
+  );
+}
+
+// List modules filtered by category
+export async function listModulesByCategory(
+  category: ModuleCategory,
+  config: AppConfig,
+): Promise<Array<{ slug: string; config: ModuleConfig }>> {
+  const all = await listAllModules(config);
+  return all.filter((m) => m.config.categories.includes(category));
+}
+
+// List module overview/signal-flow files (reuses InstrumentFileSchema)
+export async function listModuleFiles(
+  slug: string,
+  config: AppConfig,
+): Promise<Array<{ data: InstrumentFile; content: string; slug: string }>> {
+  const root = getContentRoot(config);
+  const pattern = path.join(root, 'modules', slug, '*.md');
+  const files = await glob(pattern);
+  return Promise.all(
+    files.map(async (filePath) => {
+      const raw = await fs.readFile(filePath, 'utf-8');
+      const { data, content } = matter(raw);
+      const validated = InstrumentFileSchema.parse(data);
+      const fileSlug = path.basename(filePath, '.md');
+      return { data: validated, content, slug: fileSlug };
+    }),
+  );
+}
+```
+
+### Session and Patch Functions -- No Changes Needed
+
+`listSessions(slug, config)` and `listPatches(slug, config)` already work with any slug because they read from `sessions/<slug>/` and `patches/<slug>/`. Module sessions just need to exist at `sessions/plaits/`, `sessions/maths/`, etc. Zero code changes.
+
+## Panel Component Pattern for Modules
+
+### How Module Panels Differ From Instrument Panels
+
+| Aspect | Instrument Panels | Module Panels |
+|--------|-------------------|---------------|
+| Size | 800-1200px wide, 400-600px tall | HP-proportional: `hp * 15px` wide, ~400px tall |
+| Controls | 110-179 controls | 5-30 controls |
+| Complexity | Multiple sections, section tints, tooltips | Single faceplate, no section divisions |
+| Jacks | Cascadia: 95 jacks; Evolver/Octatrack: 0 | 4-20 jacks on front plate |
+| Data file | 300-800 lines | 30-150 lines |
+| Component file | 400-800 lines | 100-300 lines (generic renderer) |
+
+### Panel Sizing Convention
+
+Use HP as the sizing primitive. Standard eurorack HP = 5.08mm. In the SVG:
+
+```typescript
+const HP_TO_PX = 15; // Rendering scale factor
+const panelWidth = hp * HP_TO_PX;
+const panelHeight = 400; // Standard 3U height in px
+```
+
+This means a 20HP Maths panel renders at 300px wide, a 12HP Plaits at 180px. Compact enough to inline in sessions.
+
+### Generic Module Panel Component
+
+Create ONE `ModulePanel` component that renders any module from its data file. This differs from the instrument approach (one component per instrument) because module panels are simpler and structurally similar (faceplate with knobs, jacks, switches).
+
+```typescript
+// src/components/module-panel.tsx
+interface ModulePanelProps {
+  slug: string;
+  hp: number;
+  controls: Record<string, ModuleControlMeta>;
+  highlights?: Array<{ controlId: string; color: 'blue' | 'amber' }>;
+  className?: string;
+}
+```
+
+The component handles: rendering knobs/jacks/switches at given x,y positions, highlight overlays, tooltips. The data file with coordinates is per-module and hand-authored per CLAUDE.md's "reference-first, hand-placed" principle.
+
+### Panel Data Structure
+
+```typescript
+// src/lib/modules/panel-types.ts -- shared interface
+export interface ModuleControlMeta {
+  id: string;
+  name: string;
+  type: 'knob' | 'slider' | 'switch' | 'jack-in' | 'jack-out' | 'led' | 'button';
+  x: number;  // Position within HP-scaled SVG
+  y: number;
+  signalType?: 'audio' | 'cv' | 'gate' | 'modulation';
+}
+
+// src/lib/modules/plaits-panel-data.ts -- per-module (hand-placed from manual photo)
+import type { ModuleControlMeta } from './panel-types';
+
+export const PLAITS_CONTROLS: Record<string, ModuleControlMeta> = {
+  'knob-plaits-harmonics': { id: 'knob-plaits-harmonics', name: 'Harmonics', type: 'knob', x: 45, y: 80 },
+  'knob-plaits-timbre': { id: 'knob-plaits-timbre', name: 'Timbre', type: 'knob', x: 135, y: 80 },
+  // ... hand-placed from manual photo
+};
+```
+
+### File Structure for Panels
+
+```
+src/lib/modules/                    # NEW directory
+  panel-types.ts                    # Shared ModuleControlMeta interface
+  plaits-panel-data.ts              # Hand-placed coordinates
+  beads-panel-data.ts
+  maths-panel-data.ts
+  just-friends-panel-data.ts
+  swells-panel-data.ts
+  ikarie-panel-data.ts
+
+src/components/
+  module-panel.tsx                  # Generic renderer (one component for all modules)
+```
+
+## Cross-Module Interaction in the Content Model
+
+### Session Cross-References
+
+Add optional `related_modules` to session frontmatter (backward-compatible via `.passthrough()`):
+
+```yaml
+---
+title: "Granular textures from Plaits"
+module: "sound-design"
+session_number: 3
+instrument: "beads"
+related_modules: ["plaits"]
+tags: ["cross-module", "granular", "vco"]
+---
+```
+
+The `instrument` field is the primary/owning module. `related_modules` lists other modules referenced. The UI can show "Also uses: Plaits" with a link. No schema change needed -- `.passthrough()` accepts extra fields silently.
+
+### Category-Based Suggestions
+
+On module pages, show "Related modules in this category" using the category data from `module.json`. This is a read-time computation, not stored data:
+
+```typescript
+// On the Plaits overview page (categories: ['vco']):
+const relatedVCOs = await listModulesByCategory('vco', config);
+// Filter out self, display the rest
+```
+
+## Per-Module Color Identity
+
+The existing `[data-instrument="<slug>"]` CSS cascade for OKLCH colors works for modules too:
+
+```css
+[data-instrument="plaits"]       { --instrument-hue: 45; }   /* Mutable gold */
+[data-instrument="beads"]        { --instrument-hue: 280; }  /* Mutable purple */
+[data-instrument="maths"]        { --instrument-hue: 200; }  /* Make Noise teal */
+[data-instrument="just-friends"] { --instrument-hue: 340; }  /* Mannequins pink */
+[data-instrument="swells"]       { --instrument-hue: 220; }  /* Intellijel blue */
+[data-instrument="ikarie"]       { --instrument-hue: 30; }   /* Bastl orange */
+```
+
+No refactoring of the attribute name needed. The CSS cascade does not care whether the slug is an instrument or module.
 
 ## Patterns to Follow
 
-### Pattern 1: Layered Token Architecture in @theme
+### Pattern 1: Filesystem Discovery (Proven)
 
-**What:** Replace flat token list with primitive + semantic layers. Primitives are the raw palette; semantics map intent.
+**What:** `discoverModules()` mirrors `discoverInstruments()` -- scan a directory, return slugs.
+**When:** Module index page, nav component, anywhere that lists available modules.
+**Why:** Already proven for instruments. No database, no config array to maintain. Add a directory with `module.json` = it appears.
 
-**When:** First step of the redesign. Everything else depends on this.
+### Pattern 2: Schema Per Content Type, Readers Per Content Location
 
-**Example:**
-```css
-@theme {
-  /* === Primitives (raw palette) === */
-  --color-neutral-950: #0a0a0a;
-  --color-neutral-900: #161616;
-  --color-neutral-800: #1e1e1e;
-  --color-neutral-400: #737373;
-  --color-neutral-200: #e8e8e8;
-  --color-lime-400: #c8ff00;
-  --color-lime-300: #a3e635;
+**What:** `ModuleConfigSchema` validates `module.json`. `InstrumentFileSchema` validates module markdown files. Readers know where files live (path patterns).
+**When:** Any new content type.
+**Why:** Schemas define shape; readers define location. This separation keeps schemas reusable across content types.
 
-  /* === Semantic (what it means) === */
-  --color-bg: var(--color-neutral-950);
-  --color-surface: var(--color-neutral-900);
-  --color-surface-raised: var(--color-neutral-800);
-  --color-border: var(--color-neutral-800);
-  --color-border-subtle: color-mix(in srgb, var(--color-neutral-900) 80%, var(--color-neutral-400));
-  --color-text: var(--color-neutral-200);
-  --color-text-muted: var(--color-neutral-400);
-  --color-accent: var(--color-lime-400);
-  --color-accent-soft: var(--color-lime-300);
+### Pattern 3: Capability-Gated UI
 
-  /* === Typography === */
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains-mono);
+**What:** Show/hide nav links based on what data exists (just as MIDI link only shows for sysex instruments).
+**When:** Module pages -- only show "Panel" link if panel data exists for that module. Only show "Patches" if patches directory has content.
+**Why:** Modules will be added incrementally. A module without a panel yet should not show a broken link.
 
-  /* === Spacing (keep existing, add semantic) === */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-  --spacing-3xl: 64px;
+### Pattern 4: URL Query Params for Filtering (Proven)
 
-  /* === Radii === */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 12px;
-  --radius-full: 9999px;
-
-  /* === Shadows === */
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.3);
-  --shadow-card-hover: 0 4px 12px rgba(200,255,0,0.08);
-
-  /* === Content widths === */
-  --content-narrow: 720px;
-  --content-wide: 960px;
-}
-```
-
-**Why this structure:**
-- Changing the accent color means editing ONE primitive; all semantics cascade
-- Adding `--color-surface-raised` and `--color-border` fills real gaps (currently components use `border-surface` which is invisible against `bg-surface`)
-- `--radius-*` tokens eliminate the inconsistent `rounded-[6px]` / `rounded-lg` / `rounded` scattered across components
-- `--content-narrow` / `--content-wide` replaces the hardcoded `max-w-[720px]` repeated in every page
-
-### Pattern 2: Component Visual Layer Separation
-
-**What:** Separate component structure (props, logic, layout) from visual presentation (colors, spacing, borders). The redesign only touches the visual layer.
-
-**When:** Every component update during the redesign.
-
-**Example of current pattern (PatchCard):**
-```tsx
-// Structure and visual are interleaved
-<Link className="block bg-surface rounded-[6px] p-lg border border-transparent hover:border-accent transition-colors">
-```
-
-**Redesigned (same structure, updated visual):**
-```tsx
-// Same structure, tokens do the work
-<Link className="block bg-surface rounded-md p-lg border border-border hover:border-accent transition-colors shadow-card hover:shadow-card-hover">
-```
-
-The key is that no props change, no data flow changes, no test breakage. Only className strings update.
-
-### Pattern 3: Prose Styling as Design System Expression
-
-**What:** The `.prose` rules in globals.css are the most impactful visual surface -- they render ALL session content, patch descriptions, and instrument overviews. Treat prose styling as first-class design system work, not an afterthought.
-
-**When:** After token system is in place, before component visual refresh.
-
-**Current problem:** Prose uses hardcoded `font-size: 36px`, `margin-top: 2em` etc. These should reference tokens or at minimum use a consistent typographic scale.
-
-**Target approach:**
-```css
-.prose h2 {
-  font-size: 1.5rem;
-  margin-top: var(--spacing-2xl);
-  margin-bottom: var(--spacing-md);
-  letter-spacing: -0.01em;
-}
-
-.prose table td {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-bottom: 1px solid var(--color-border-subtle);
-}
-
-.prose .callout {
-  background-color: var(--color-surface);
-  border-left: 3px solid var(--color-accent);
-  padding: var(--spacing-md);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-}
-```
-
-### Pattern 4: Content Width Standardization
-
-**What:** Every page currently repeats `max-w-[720px] mx-auto px-lg lg:px-xl py-2xl`. Extract this into a reusable pattern.
-
-**When:** During layout restructuring phase.
-
-**Approach:** A CSS utility class or a thin wrapper component:
-
-```css
-/* In globals.css */
-.page-container {
-  max-width: var(--content-narrow);
-  margin-inline: auto;
-  padding-inline: var(--spacing-lg);
-  padding-block: var(--spacing-2xl);
-}
-
-@media (min-width: 1024px) {
-  .page-container { padding-inline: var(--spacing-xl); }
-}
-```
-
-This is simpler than a React component wrapper because it's purely presentational. 13 pages can be updated with find-and-replace.
+**What:** Use `?category=vco` on the module index, not nested routes.
+**When:** Category filtering on `/modules`.
+**Why:** Already proven with patch filter bar. Supports multi-category membership without route duplication. Browser back button works. Shareable URLs.
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Touching SVG Panel Internals During Redesign
+### Anti-Pattern 1: Modules as Sub-Instruments
 
-**What:** Changing the hardcoded hex values inside `evolver-panel.tsx` and `cascadia-panel.tsx` styles objects to use CSS variables.
+**What:** Putting modules inside `instruments/modules/` or treating them as instruments with special flags.
+**Why bad:** Forces instrument-shaped data onto module-shaped things. Category taxonomy doesn't fit instrument routing. The nav becomes confusing ("is Plaits an instrument?"). InstrumentConfigSchema would need optional eurorack fields that real instruments never use.
+**Instead:** Separate top-level `modules/` directory with its own schema and routes.
 
-**Why bad:** The panel visualizers simulate physical hardware. Their colors (#111 panel background, #999 labels, #555 knob strokes) represent the actual instrument appearance. Making them theme-responsive would break the skeuomorphic accuracy that is the entire point of these components. Additionally, these are the two most complex components in the codebase (~800+ lines each with 110-179 controls). Any change risks breaking interaction behavior.
+### Anti-Pattern 2: Category Routes Creating Duplicate Pages
 
-**Instead:** Only touch the outer container styling (the `className` prop on the top-level `<div>`) for integration with the page layout. Leave all internal SVG styles untouched.
+**What:** `/modules/vco/plaits` AND `/modules/effects/beads` AND `/modules/beads` -- multiple routes to the same content.
+**Why bad:** SEO confusion, stale links, unclear canonical URL, maintenance burden, "which category page do I link to for Maths?"
+**Instead:** Single `/modules/[slug]` route. Categories are a filter on the index page via query params.
 
-### Anti-Pattern 2: Big-Bang Component Rewrite
+### Anti-Pattern 3: Generic Panel Without Hand-Placed Data
 
-**What:** Rewriting all 51 components simultaneously with new visual styles.
+**What:** Algorithmically computing control positions from a list (evenly spacing knobs in a grid).
+**Why bad:** Real eurorack panels have intentional, non-uniform layouts. Algorithmic placement looks wrong and violates the reference-first principle from CLAUDE.md.
+**Instead:** Generic renderer component, but per-module data files with hand-placed x,y coordinates from manual photos.
 
-**Why bad:** No way to verify visual correctness incrementally. Regression risk is enormous. You cannot tell which component broke the layout.
+### Anti-Pattern 4: Separate Session/Patch Schemas for Modules
 
-**Instead:** Follow the dependency order: tokens first, then prose, then shell/nav, then cards, then interactive elements, then supporting components. Each layer can be visually verified before moving to the next.
+**What:** Creating `ModuleSessionSchema`, `ModulePatchSchema` parallel to the existing schemas.
+**Why bad:** Sessions and patches are structurally identical whether they belong to an instrument or module. Duplicating schemas creates drift and doubles validation logic.
+**Instead:** Reuse `SessionSchema` and `PatchSchema` as-is. The `instrument` field holds the module slug.
 
-### Anti-Pattern 3: Adding a Component Library or CSS-in-JS
+### Anti-Pattern 5: Shared Base Schema for Instruments and Modules
 
-**What:** Introducing Radix Themes, shadcn/ui, Chakra, or styled-components as part of the redesign.
+**What:** Creating `EntityConfigSchema` that both `InstrumentConfigSchema` and `ModuleConfigSchema` extend.
+**Why bad:** The overlap is minimal (display_name, tagline, manufacturer, reference_pdfs). The differences are significant (sysex/patch_memory/sampler vs hp/categories/power). A shared base adds complexity for minimal deduplication.
+**Instead:** Two independent schemas. Copy the 4 shared fields. Clarity over DRY.
 
-**Why bad:** The app already has 51 working components with consistent patterns. Adding a component library means either replacing them (massive rewrite) or running two systems in parallel (inconsistency). The existing Tailwind v4 + CSS variables approach is the right architecture for this app's scale.
+## Integration Points: New vs Modified
 
-**Instead:** Use the existing pattern: Tailwind utilities + CSS variable tokens + clsx for conditional classes. The redesign is about better tokens and better visual choices, not different tooling.
+### New Files (Create)
 
-### Anti-Pattern 4: Introducing a Separate Theme File
+| File | Purpose |
+|------|---------|
+| `src/lib/content/schemas.ts` (additions) | `ModuleConfigSchema`, `MODULE_CATEGORIES`, `ModuleCategory` |
+| `src/lib/content/reader.ts` (additions) | `discoverModules()`, `loadModuleConfig()`, `listAllModules()`, `listModulesByCategory()`, `listModuleFiles()` |
+| `src/app/modules/page.tsx` | Module index with category tabs |
+| `src/app/modules/[slug]/page.tsx` | Module overview |
+| `src/app/modules/[slug]/sessions/page.tsx` | Module sessions list |
+| `src/app/modules/[slug]/sessions/[session]/page.tsx` | Individual module session |
+| `src/app/modules/[slug]/patches/page.tsx` | Module patches |
+| `src/app/modules/[slug]/panel/page.tsx` | Module panel visualizer |
+| `src/components/module-panel.tsx` | Generic module panel renderer |
+| `src/components/category-filter.tsx` | Category tab/pill filter |
+| `src/lib/modules/panel-types.ts` | Shared panel control interface |
+| `src/lib/modules/<slug>-panel-data.ts` | Per-module panel data (6 files) |
+| `modules/<slug>/module.json` | Per-module config (6 files) |
+| `modules/<slug>/overview.md` | Per-module overview (6 files) |
 
-**What:** Creating a `theme.ts` or `design-tokens.json` that generates CSS.
+### Modified Files
 
-**Why bad:** Tailwind v4's entire philosophy is CSS-first configuration. The `@theme` block IS the theme file. Adding a JavaScript theme layer reintroduces the build-time indirection that v4 was designed to eliminate.
+| File | Change |
+|------|--------|
+| `src/components/nav.tsx` | Add "Modules" link, module-context sub-links |
+| `src/app/globals.css` | Add module color identity CSS rules |
+| `src/app/page.tsx` | Add modules section to home page |
+| `src/app/layout.tsx` | Pass modules to Nav alongside instruments |
 
-**Instead:** Keep everything in `globals.css` `@theme`. It is inspectable in DevTools, requires no build step, and is the canonical Tailwind v4 approach.
+### Unchanged Files
 
-## Integration Points: New vs Modified Components
-
-### New Components (create during redesign)
-
-| Component | Purpose | Depends On |
-|-----------|---------|------------|
-| None required | The redesign is visual-only; no new components needed | - |
-
-**Important:** This is a redesign, not a feature addition. Every component already exists. The work is updating className strings and CSS rules, not creating new React components. If the redesign scope creeps into new components, that is a feature milestone, not a visual redesign.
-
-### Modified Components (update during redesign)
-
-**Tier 1 - Token Foundation (must land first):**
-- `globals.css` -- expanded @theme block, rewritten .prose rules
-
-**Tier 2 - Layout Shell (sets the visual frame):**
-- `app-shell.tsx` -- footer styling, overall page chrome
-- `nav.tsx` -- navigation bar, active states, search integration
-- `layout.tsx` -- font loading (potentially add/change fonts)
-
-**Tier 3 - Primary Content (highest visual impact):**
-- `hero-card.tsx` -- landing experience
-- `instrument-card.tsx` -- instrument selection
-- `patch-card.tsx` -- patch browsing
-- `module-card.tsx` -- module browsing
-- `count-card.tsx` -- progress dashboard
-- `session-row.tsx` -- session list items
-- `instrument-overview.tsx` -- instrument landing page
-
-**Tier 4 - Interactive Elements:**
-- `search-bar.tsx` -- input styling, dropdown
-- `search-dropdown.tsx` -- results presentation
-- `patch-filter-bar.tsx` -- pill buttons, sort dropdown
-- `completion-toggle.tsx` -- toggle states
-- `resume-bar.tsx` -- progress indicator
-
-**Tier 5 - Supporting (cascade from tokens):**
-- `prerequisite-banner.tsx`, `sticky-header.tsx`, `prev-next-nav.tsx`, `source-ref.tsx`, `confirm-dialog.tsx`, `status-indicator.tsx`, etc.
-- Most of these will look correct just from token changes without explicit modification.
-
-### Untouched Components (do not modify)
-
-- `evolver-panel.tsx` -- internal SVG rendering
-- `cascadia-panel.tsx` -- internal SVG rendering
-- `evolver-panel-tooltip.tsx` -- tooltip content (already minimal)
-- `mermaid-renderer.tsx` -- third-party rendering
-- `midi-connection.tsx`, `capture-panel.tsx`, `send-panel.tsx`, `diff-view.tsx`, `diff-picker.tsx` -- MIDI functionality pages (low traffic, functional-first)
-- All test files
+- All instrument panel components and data files
+- `SessionSchema`, `PatchSchema`, `InstrumentConfigSchema` (schemas unchanged)
+- `listSessions()`, `listPatches()` (reader functions unchanged)
+- `evolver.config.json` (no new config needed)
+- All existing instrument routes and content
 
 ## Suggested Build Order
 
-This order minimizes risk and maximizes visual feedback at each step.
+### Wave 1: Data Model + Content Pipeline (Foundation)
 
-### Phase 1: Token Foundation
-1. Expand `@theme` block with primitive + semantic layers
-2. Ensure zero visual regression (new tokens map to same values initially)
-3. Add missing tokens: `--color-surface-raised`, `--color-border`, `--color-border-subtle`, `--radius-*`, `--shadow-*`, `--content-*`
+1. Add `ModuleConfigSchema`, `MODULE_CATEGORIES` to `schemas.ts`
+2. Add reader functions to `reader.ts`
+3. Create first `modules/plaits/module.json` as test fixture
+4. Create `modules/plaits/overview.md` with basic content
+5. Verify vault triple-write works for `modules/` directory
 
-### Phase 2: Prose Overhaul
-1. Rewrite `.prose` rules using new semantic tokens
-2. Refine typography scale (heading sizes, line heights, letter spacing)
-3. Improve table, callout, code block, and list styling
-4. Verify with actual session content (markdown rendering is the primary content surface)
+**Tests:** Schema validation, reader discovery, category filtering.
+**Exit criteria:** `discoverModules()` returns `['plaits']`, `loadModuleConfig('plaits')` parses successfully.
 
-### Phase 3: Layout Shell
-1. Update Nav (height, spacing, active indicator style, search bar integration)
-2. Update AppShell footer
-3. Standardize page containers (introduce `.page-container` pattern)
-4. Update `layout.tsx` if fonts change
+### Wave 2: Routes + Navigation
 
-### Phase 4: Card and Content Components
-1. Update all card components (hero, instrument, patch, module, count, session-row)
-2. Apply new border, shadow, radius, and hover tokens
-3. Update instrument-overview page layout
+6. Module index page (`/modules`) with category filter
+7. Module detail page (`/modules/[slug]`) mirroring instrument overview
+8. Module sessions page (reusing `SessionListClient`)
+9. Module patches page (reusing patch components)
+10. Nav updates -- "Modules" link, module sub-links
 
-### Phase 5: Interactive Elements
-1. Search bar input and dropdown styling
-2. Filter bar pills and sort dropdown
-3. Completion toggle, resume bar
-4. Focus and hover state consistency pass
+**Tests:** Route rendering, category filter URL persistence, nav link generation.
+**Exit criteria:** Can navigate to `/modules`, filter by category, click into Plaits overview.
 
-### Phase 6: Motion and Polish
-1. Add transition tokens if needed
-2. Micro-interactions (hover lifts, focus rings, state transitions)
-3. Reduced-motion variants
-4. Cross-page visual consistency audit
+### Wave 3: Panel System
+
+11. `ModuleControlMeta` interface and `panel-types.ts`
+12. Generic `ModulePanel` component
+13. First panel data -- `plaits-panel-data.ts` (hand-placed from manual photo)
+14. Panel route (`/modules/[slug]/panel`)
+15. Session inline panel markers (`[data-module-panel]`)
+
+**Tests:** Panel rendering, control highlighting, HP-based sizing.
+**Exit criteria:** Plaits panel renders at correct HP width with all controls positioned.
+
+### Wave 4: Content Authoring (Per Module, Parallelizable)
+
+16-21. For each of the 6 modules:
+    - `module.json` with categories and metadata
+    - `overview.md` and `signal-flow.md`
+    - Panel data file (hand-placed from manual photo)
+    - 3-5 initial sessions
+    - 1-2 demo patches
+
+**Suggested order within Wave 4:**
+1. Plaits (most popular, simplest panel, single category)
+2. Maths (most versatile, many categories, well-documented)
+3. Beads (granular -- good for cross-module sessions with Plaits)
+4. Ikarie (stereo filter -- straightforward)
+5. Swells (reverb -- simple module)
+6. Just Friends (most complex -- dual module with Crow, 3 categories)
+
+### Wave 5: Cross-Module Features + Polish
+
+22. Related modules display in session pages
+23. Category-based module suggestions on overview pages
+24. Demo mode synthetic data for modules
+25. Home page modules section
+26. Color identity CSS rules for all 6 modules
 
 ## Scalability Considerations
 
-| Concern | Current (6 tokens) | After Redesign (~25 tokens) | Future (themes/dark-light) |
-|---------|--------------------|-----------------------------|----------------------------|
-| Token management | Flat list, easy to scan | Layered but still one file | Swap primitive layer per theme |
-| Component updates | Edit className strings | Same mechanism | Same mechanism |
-| SVG panels | Hardcoded, isolated | Unchanged | Could add theme layer later |
-| Prose rendering | Inline values | Token-referenced | Theme-responsive automatically |
+| Concern | At 6 modules | At 20 modules | At 100 modules |
+|---------|-------------|---------------|----------------|
+| Discovery | `readdir` instant | `readdir` still fast | Consider build-time manifest |
+| Category index | Filter in memory | Filter in memory | Pre-compute at build time |
+| Panel data | 6 files, static imports | Dynamic imports by slug | Same -- each file is small |
+| Nav | "Modules" link + switcher | Category sub-menu | Searchable module picker |
+| Sessions | Same as instruments | Same | Consider pagination |
 
-The layered token architecture is specifically chosen to make future theming trivial: swap the primitive layer values, and all semantic + component tokens cascade automatically. This is not needed now (the app is dark-only) but the architecture does not preclude it.
+At the 6-module scale, no performance concerns. The filesystem discovery pattern scales to dozens of modules without issues.
 
 ## Sources
 
-- [Tailwind CSS v4 Theme Variables](https://tailwindcss.com/docs/theme) -- official @theme documentation (HIGH confidence)
-- [Design Tokens That Scale in 2026 (Tailwind v4 + CSS Variables)](https://www.maviklabs.com/blog/design-tokens-tailwind-v4-2026) -- three-layer token pattern (MEDIUM confidence)
-- [Epic Web Dev: Tailwind CSS Color Tokens](https://www.epicweb.dev/tutorials/tailwind-color-tokens) -- semantic color token patterns (MEDIUM confidence)
-- [Tailwind CSS v4.0 Release](https://tailwindcss.com/blog/tailwindcss-v4) -- CSS-first configuration philosophy (HIGH confidence)
-- Codebase analysis of 51 components, globals.css, and 2 SVG panel visualizers (HIGH confidence)
+- Existing codebase: `src/lib/content/reader.ts` -- filesystem discovery and content reading patterns (HIGH confidence)
+- Existing codebase: `src/lib/content/schemas.ts` -- Zod schema patterns, `.passthrough()` usage (HIGH confidence)
+- Existing codebase: `src/components/evolver-panel.tsx`, `src/lib/cascadia-panel-data.ts` -- panel component architecture (HIGH confidence)
+- Existing codebase: `src/app/instruments/[slug]/page.tsx` -- routing and page composition pattern (HIGH confidence)
+- CLAUDE.md: reference-first panel design principles, triple-write pipeline, session conventions (HIGH confidence)
+- PROJECT.md: v2.0 milestone definition, 6 target modules with categories (HIGH confidence)
