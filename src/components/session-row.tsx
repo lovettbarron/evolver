@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react';
 import Link from 'next/link';
 import type { SessionState } from '@/lib/prerequisite';
 
@@ -77,7 +78,7 @@ function LockIcon() {
   );
 }
 
-const STATE_ICONS: Record<SessionState, () => JSX.Element> = {
+const STATE_ICONS: Record<SessionState, () => ReactElement> = {
   completed: CheckCircleIcon,
   available: OpenCircleIcon,
   locked: LockIcon,

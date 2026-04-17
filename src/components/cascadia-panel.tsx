@@ -22,7 +22,7 @@ interface CascadiaPanelProps {
   cables?: Array<{
     sourceId: string;
     destId: string;
-    signalType: 'audio' | 'cv' | 'modulation' | 'default';
+    signalType: 'audio' | 'cv' | 'gate' | 'modulation' | 'default';
     purpose?: string;
   }>;
   onKnobChange?: (controlId: string, value: number) => void;
@@ -34,6 +34,7 @@ interface CascadiaPanelProps {
 const CABLE_COLORS: Record<string, string> = {
   audio: '#ff6644',
   cv: '#3388ff',
+  gate: '#44cc66',
   modulation: '#ffaa33',
   default: '#888888',
 };
@@ -535,7 +536,7 @@ function computeZoomViewBox(sections: string[]): string | null {
 interface CablePathProps {
   sourceId: string;
   destId: string;
-  signalType: 'audio' | 'cv' | 'modulation' | 'default';
+  signalType: 'audio' | 'cv' | 'gate' | 'modulation' | 'default';
   purpose?: string;
 }
 
