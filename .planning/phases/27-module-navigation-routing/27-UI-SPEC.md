@@ -55,13 +55,14 @@ Exceptions: none. All values match existing `--spacing-*` tokens in `globals.css
 | Display (page title "Modules") | clamp(1.75rem, 1.2rem + 2vw, 2.4375rem) | 700 | 1.15 | Space Grotesk |
 
 Additional type specs for this phase:
-- Category tab labels: 14px, weight 600, Inter, line-height 1.0 (single-line tabs)
+- Category tab labels: 14px, weight 400 (inactive) / weight 700 (active), Inter, line-height 1.0 (single-line tabs). Active weight provides visual affordance without a third weight
 - Module sub-page tab labels: 14px, weight 400, Inter, line-height 1.0
 - HP badge: 14px, weight 400, JetBrains Mono, `--color-param` (font distinguishes from Inter labels at same size)
 - Manufacturer name: 14px, weight 400, Inter, `--color-muted`
-- Category tag text: 14px, weight 600, Inter, uppercase, letter-spacing 0.05em (uppercase + letter-spacing distinguishes from body text at same size)
+- Category tag text: 14px, weight 400, Inter, uppercase, letter-spacing 0.05em (uppercase + letter-spacing provides sufficient visual distinction at same weight)
 
 **Total font sizes: 4** — 14px (label/meta/tags/badge), 16px (body), 20px (heading), clamp display.
+**Total font weights: 2** — 400 (body, labels, meta, tags, badge, manufacturer, inactive tabs, sub-page tabs) and 700 (headings, display, active category tabs).
 
 ---
 
@@ -176,7 +177,7 @@ Repeat the pattern for all 7 modules using their respective hue, accent L/C, and
 
 - **State:** Query param `?category=<slug>` drives active tab. "All" tab clears the param (D-02)
 - **Tabs:** All | VCO | Filter | Effects | Modulator | Function Generator
-- **Style:** Pill-shaped buttons in a horizontal scroll row. Active tab: `bg-accent text-bg font-semibold`. Inactive: `bg-surface-raised text-muted hover:text-text`
+- **Style:** Pill-shaped buttons in a horizontal scroll row. Active tab: `bg-accent text-bg font-bold`. Inactive: `bg-surface-raised text-muted font-normal hover:text-text`
 - **Sizing:** Height 36px, horizontal padding 16px, border-radius `--radius-full` (9999px)
 - **Spacing:** 8px gap between tabs, 16px bottom margin below tab row
 - **Interaction:** Click updates URL query param. No page reload — `useSearchParams` + `router.push` with shallow navigation
@@ -189,7 +190,7 @@ Repeat the pattern for all 7 modules using their respective hue, accent L/C, and
 - **HP Outline Placeholder** (D-05): Proportional-width rectangle at card top. Width = `(hp / 20) * 100%` of card width, capped at 100%. Height 48px. Background: `--color-accent` at 15% opacity. Border: 1px solid `--color-accent` at 30% opacity. Border-radius: `--radius-sm` (4px)
 - **Module name:** 20px Space Grotesk bold, `--color-text`
 - **Manufacturer:** 14px Inter regular, `--color-muted`
-- **Category tags:** Inline row of small pill badges. 14px uppercase with letter-spacing 0.05em, `--color-accent` text, `bg-accent/10`, border-radius `--radius-full`, padding `4px 8px`
+- **Category tags:** Inline row of small pill badges. 14px uppercase with letter-spacing 0.05em, weight 400, `--color-accent` text, `bg-accent/10`, border-radius `--radius-full`, padding `4px 8px`
 - **Stat line:** 14px JetBrains Mono, `--color-param`. Format: `{hp}HP / {sessionCount} sessions`
 - **CTA:** "Explore {name}" link, 14px, `--color-accent`, underline, underline-offset 2px
 - **Hover:** Border transitions to `--color-accent` (existing `.card:hover` behavior). Wrapped in `SpringCard` for spring-physics lift
