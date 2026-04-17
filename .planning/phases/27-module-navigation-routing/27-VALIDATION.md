@@ -2,9 +2,10 @@
 phase: 27
 slug: module-navigation-routing
 status: draft
-nyquist_compliant: false
-wave_0_complete: false
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-04-17
+updated: 2026-04-17
 ---
 
 # Phase 27 — Validation Strategy
@@ -38,11 +39,13 @@ created: 2026-04-17
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 27-01-01 | 01 | 1 | NAV-01 | integration | `npx vitest run src/app/modules/` | ❌ W0 | ⬜ pending |
-| 27-01-02 | 01 | 1 | NAV-04 | unit | `npx vitest run src/components/module-category-tabs` | ❌ W0 | ⬜ pending |
-| 27-02-01 | 02 | 1 | NAV-02 | integration | `npx vitest run src/app/modules/` | ❌ W0 | ⬜ pending |
-| 27-02-02 | 02 | 1 | NAV-03 | unit | `npx vitest run src/components/nav` | ❌ W0 | ⬜ pending |
-| 27-03-01 | 03 | 1 | NAV-05 | manual-only | Visual inspection — CSS custom properties in globals.css | N/A | ⬜ pending |
+| 27-01-01 | 01 | 1 | NAV-05 | grep | `grep -c 'data-instrument=' src/app/globals.css` | N/A (CSS) | ⬜ pending |
+| 27-01-02 | 01 | 1 | NAV-03 | unit | `npx vitest run 2>&1 \| tail -5` | ✅ existing | ⬜ pending |
+| 27-02-00 | 02 | 1 | NAV-01,NAV-04 | stub | `npx tsc --noEmit` (test stubs compile) | ✅ W0 | ⬜ pending |
+| 27-02-01 | 02 | 1 | NAV-01 | unit | `npx vitest run src/components/__tests__/module-card.test.tsx src/components/__tests__/hp-outline.test.tsx` | ✅ W0 | ⬜ pending |
+| 27-02-02 | 02 | 1 | NAV-04 | unit | `npx vitest run src/components/__tests__/module-category-tabs.test.tsx` | ✅ W0 | ⬜ pending |
+| 27-03-01 | 03 | 2 | NAV-02 | typecheck | `npx tsc --noEmit 2>&1 \| tail -5` | N/A | ⬜ pending |
+| 27-03-02 | 03 | 2 | NAV-02 | typecheck+suite | `npx tsc --noEmit && npx vitest run` | N/A | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -50,11 +53,11 @@ created: 2026-04-17
 
 ## Wave 0 Requirements
 
-- [ ] `src/app/modules/__tests__/` — test directory for module routes (NAV-01, NAV-02)
-- [ ] `src/components/__tests__/module-category-tabs.test.tsx` — filter logic (NAV-04)
-- [ ] `src/components/__tests__/module-card.test.tsx` — card rendering (NAV-01)
+- [x] `src/components/__tests__/hp-outline.test.tsx` — HP outline rendering (NAV-01) — **Plan 27-02, Task 0**
+- [x] `src/components/__tests__/module-card.test.tsx` — card rendering (NAV-01) — **Plan 27-02, Task 0**
+- [x] `src/components/__tests__/module-category-tabs.test.tsx` — filter logic (NAV-04) — **Plan 27-02, Task 0**
 
-*Existing infrastructure covers test framework — only test file stubs needed.*
+*All Wave 0 stubs are created in Plan 27-02 Task 0, before implementation tasks.*
 
 ---
 
@@ -68,11 +71,11 @@ created: 2026-04-17
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 15s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 15s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved (revised 2026-04-17)
