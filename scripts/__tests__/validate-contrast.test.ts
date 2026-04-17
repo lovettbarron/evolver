@@ -9,8 +9,8 @@ import {
 
 describe('validate-contrast', () => {
   describe('WCAG AA contrast pairings', () => {
-    it('has exactly 8 critical pairings from UI-SPEC', () => {
-      expect(PAIRINGS).toHaveLength(8);
+    it('has all critical pairings including octatrack-specific tokens', () => {
+      expect(PAIRINGS).toHaveLength(28);
     });
 
     it('checks text/bg pairing', () => {
