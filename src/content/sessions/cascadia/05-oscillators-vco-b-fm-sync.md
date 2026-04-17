@@ -1,14 +1,22 @@
 ---
-title: "Session 05: VCO B, FM Synthesis & Sync"
-module: "Oscillators"
+title: 'Session 05: VCO B, FM Synthesis & Sync'
 session_number: 5
 duration: 25
 prerequisite: 4
 output_type: patch
 difficulty: beginner
-tags: [oscillators, vco-b, fm-synthesis, through-zero-fm, sync, bell, curriculum-patch]
+tags:
+  - oscillators
+  - vco-b
+  - fm-synthesis
+  - through-zero-fm
+  - sync
+  - bell
+  - curriculum-patch
 instrument: cascadia
-reference: "Cascadia Manual pp. 17-20"
+reference: Cascadia Manual pp. 17-20
+section: Oscillators
+instrument_type: instrument
 ---
 
 # Session 05: VCO B, FM Synthesis & Sync

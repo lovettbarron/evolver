@@ -1,14 +1,21 @@
 ---
-title: "Session 31: Composition Workflow — From Idea to Finished Piece"
-module: "Songwriting & Arrangement"
+title: 'Session 31: Composition Workflow — From Idea to Finished Piece'
 session_number: 31
 duration: 25
 prerequisite: 30
 output_type: composition
 difficulty: advanced
-tags: [composition, songwriting, workflow, arrangement, documentation, capstone]
+tags:
+  - composition
+  - songwriting
+  - workflow
+  - arrangement
+  - documentation
+  - capstone
 instrument: octatrack
-reference: "Elektron Manual Ch. 9, 10, 12, 14, 15"
+reference: 'Elektron Manual Ch. 9, 10, 12, 14, 15'
+section: Songwriting & Arrangement
+instrument_type: instrument
 ---
 
 # Session 31: Composition Workflow — From Idea to Finished Piece

@@ -1,14 +1,23 @@
 ---
-title: "Session 30: Drums and Percussion -- Kick, Snare, and Hats"
-module: "Sound Design Recipes"
+title: 'Session 30: Drums and Percussion -- Kick, Snare, and Hats'
 session_number: 30
 duration: 25
 prerequisite: 29
 output_type: patch
 difficulty: advanced
-tags: [recipes, drums, percussion, kick, snare, hats, sequencer, sound-design]
+tags:
+  - recipes
+  - drums
+  - percussion
+  - kick
+  - snare
+  - hats
+  - sequencer
+  - sound-design
 instrument: evolver
-reference: "Anu Kirk p.95-98 (drum synthesis), DSI Manual p.15-19, p.27-32"
+reference: 'Anu Kirk p.95-98 (drum synthesis), DSI Manual p.15-19, p.27-32'
+section: Sound Design Recipes
+instrument_type: instrument
 ---
 
 # Session 30: Drums and Percussion -- Kick, Snare, and Hats

@@ -1,14 +1,22 @@
 ---
-title: "Session 11: Lowpass Filter Basics -- Cutoff, Resonance, Poles"
-module: "Filters & Envelopes"
+title: 'Session 11: Lowpass Filter Basics -- Cutoff, Resonance, Poles'
 session_number: 11
 duration: 20
 prerequisite: 6
 output_type: patch
 difficulty: beginner
-tags: [filters, lowpass, cutoff, resonance, 2-pole, 4-pole, subtractive]
+tags:
+  - filters
+  - lowpass
+  - cutoff
+  - resonance
+  - 2-pole
+  - 4-pole
+  - subtractive
 instrument: evolver
-reference: "Anu Kirk p.42-45, DSI Manual p.17-18"
+reference: 'Anu Kirk p.42-45, DSI Manual p.17-18'
+section: Filters & Envelopes
+instrument_type: instrument
 ---
 
 # Session 11: Lowpass Filter Basics -- Cutoff, Resonance, Poles

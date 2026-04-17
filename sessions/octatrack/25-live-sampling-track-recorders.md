@@ -1,14 +1,20 @@
 ---
-title: "Session 25: Track Recorder Basics — Capture External Audio"
-module: "Live Sampling & Looping"
+title: 'Session 25: Track Recorder Basics — Capture External Audio'
 session_number: 25
 duration: 25
 prerequisite: 24
 output_type: recording
 difficulty: intermediate
-tags: [track-recorder, live-sampling, recording, sampling, flex-machine]
+tags:
+  - track-recorder
+  - live-sampling
+  - recording
+  - sampling
+  - flex-machine
 instrument: octatrack
-reference: "Elektron Manual Ch. 9.1-9.2, 17.1.1-17.1.3; Merlin Ch. 9"
+reference: 'Elektron Manual Ch. 9.1-9.2, 17.1.1-17.1.3; Merlin Ch. 9'
+section: Live Sampling & Looping
+instrument_type: instrument
 ---
 
 # Session 25: Track Recorder Basics — Capture External Audio

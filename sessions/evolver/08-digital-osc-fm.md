@@ -1,14 +1,20 @@
 ---
-title: "Session 08: FM Synthesis Basics"
-module: "Digital Oscillators"
+title: 'Session 08: FM Synthesis Basics'
 session_number: 8
 duration: 25
 prerequisite: 7
 output_type: patch
 difficulty: intermediate
-tags: [digital-oscillators, fm-synthesis, frequency-modulation, bells, metallic]
+tags:
+  - digital-oscillators
+  - fm-synthesis
+  - frequency-modulation
+  - bells
+  - metallic
 instrument: evolver
-reference: "Anu Kirk p.26-32, DSI Manual p.16"
+reference: 'Anu Kirk p.26-32, DSI Manual p.16'
+section: Digital Oscillators
+instrument_type: instrument
 ---
 
 # Session 08: FM Synthesis Basics

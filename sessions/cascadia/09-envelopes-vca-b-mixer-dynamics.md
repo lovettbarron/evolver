@@ -1,14 +1,24 @@
 ---
-title: "Session 09: VCA B, Low Pass Gate & Mixer Dynamics"
-module: "Envelopes & Amplitude"
+title: 'Session 09: VCA B, Low Pass Gate & Mixer Dynamics'
 session_number: 9
 duration: 25
 prerequisite: 8
 output_type: patch
 difficulty: intermediate
-tags: [lpg, low-pass-gate, vca, west-coast, percussion, bongo, mixer, noise, curriculum]
+tags:
+  - lpg
+  - low-pass-gate
+  - vca
+  - west-coast
+  - percussion
+  - bongo
+  - mixer
+  - noise
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 32-34, 20-21"
+reference: 'Cascadia Manual pp. 32-34, 20-21'
+section: Envelopes & Amplitude
+instrument_type: instrument
 ---
 
 # Session 09: VCA B, Low Pass Gate & Mixer Dynamics

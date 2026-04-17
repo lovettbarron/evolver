@@ -1,14 +1,20 @@
 ---
-title: "Session 20: Tuned Feedback and Karplus-Strong Synthesis"
-module: "Effects"
+title: 'Session 20: Tuned Feedback and Karplus-Strong Synthesis'
 session_number: 20
 duration: 25
 prerequisite: 19
 output_type: patch
 difficulty: intermediate
-tags: [effects, feedback, karplus-strong, physical-modeling, plucked-string]
+tags:
+  - effects
+  - feedback
+  - karplus-strong
+  - physical-modeling
+  - plucked-string
 instrument: evolver
-reference: "Anu Kirk p.55-56, p.66-67, DSI Manual p.19"
+reference: 'Anu Kirk p.55-56, p.66-67, DSI Manual p.19'
+section: Effects
+instrument_type: instrument
 ---
 
 # Session 20: Tuned Feedback and Karplus-Strong Synthesis

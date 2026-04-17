@@ -1,14 +1,21 @@
 ---
-title: "Session 20: XVOL, XLEV, and Mix Scenes"
-module: "Scenes & Crossfader"
+title: 'Session 20: XVOL, XLEV, and Mix Scenes'
 session_number: 20
 duration: 20
 prerequisite: 19
 output_type: patch
 difficulty: intermediate
-tags: [scenes, xvol, xlev, mix-fade, performance, track-volume]
+tags:
+  - scenes
+  - xvol
+  - xlev
+  - mix-fade
+  - performance
+  - track-volume
 instrument: octatrack
-reference: "Elektron Manual Ch. 10.3.4"
+reference: Elektron Manual Ch. 10.3.4
+section: Scenes & Crossfader
+instrument_type: instrument
 ---
 
 # Session 20: XVOL, XLEV, and Mix Scenes

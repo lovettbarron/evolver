@@ -1,14 +1,21 @@
 ---
-title: "Session 10: Filters & EQ — Multi Mode, Parametric, DJ Kill"
-module: "Effects"
+title: 'Session 10: Filters & EQ — Multi Mode, Parametric, DJ Kill'
 session_number: 10
 duration: 25
 prerequisite: 9
 output_type: patch
 difficulty: intermediate
-tags: [effects, filter, multi-mode, parametric-eq, dj-kill-eq, fx1]
+tags:
+  - effects
+  - filter
+  - multi-mode
+  - parametric-eq
+  - dj-kill-eq
+  - fx1
 instrument: octatrack
-reference: "Elektron Manual Ch. 11.4.10, Appendix B"
+reference: 'Elektron Manual Ch. 11.4.10, Appendix B'
+section: Effects
+instrument_type: instrument
 ---
 
 # Session 10: Filters & EQ — Multi Mode, Parametric, DJ Kill

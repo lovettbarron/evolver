@@ -1,14 +1,22 @@
 ---
-title: "Session 08: Envelope B — The Triple-Mode Function Generator"
-module: "Envelopes & Amplitude"
+title: 'Session 08: Envelope B — The Triple-Mode Function Generator'
 session_number: 8
 duration: 25
 prerequisite: 7
 output_type: technique
 difficulty: intermediate
-tags: [envelopes, function-generator, lfo, burst, filter-modulation, lfv, curriculum]
+tags:
+  - envelopes
+  - function-generator
+  - lfo
+  - burst
+  - filter-modulation
+  - lfv
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 29-31"
+reference: Cascadia Manual pp. 29-31
+section: Envelopes & Amplitude
+instrument_type: instrument
 ---
 
 # Session 08: Envelope B — The Triple-Mode Function Generator

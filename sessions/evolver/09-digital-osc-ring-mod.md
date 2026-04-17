@@ -1,14 +1,20 @@
 ---
-title: "Session 09: Ring Modulation"
-module: "Digital Oscillators"
+title: 'Session 09: Ring Modulation'
 session_number: 9
 duration: 20
 prerequisite: 7
 output_type: patch
 difficulty: intermediate
-tags: [digital-oscillators, ring-modulation, metallic, inharmonic, textures]
+tags:
+  - digital-oscillators
+  - ring-modulation
+  - metallic
+  - inharmonic
+  - textures
 instrument: evolver
-reference: "Anu Kirk p.33-35, DSI Manual p.16"
+reference: 'Anu Kirk p.33-35, DSI Manual p.16'
+section: Digital Oscillators
+instrument_type: instrument
 ---
 
 # Session 09: Ring Modulation

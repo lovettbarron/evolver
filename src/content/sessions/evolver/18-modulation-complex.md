@@ -1,14 +1,21 @@
 ---
-title: "Session 18: Complex Modulation -- Stacking Sources"
-module: "Modulation"
+title: 'Session 18: Complex Modulation -- Stacking Sources'
 session_number: 18
 duration: 30
 prerequisite: 16
 output_type: patch
 difficulty: advanced
-tags: [modulation, complex, stacking, evolving, texture, advanced]
+tags:
+  - modulation
+  - complex
+  - stacking
+  - evolving
+  - texture
+  - advanced
 instrument: evolver
-reference: "Anu Kirk p.68-74, DSI Manual p.21-23"
+reference: 'Anu Kirk p.68-74, DSI Manual p.21-23'
+section: Modulation
+instrument_type: instrument
 ---
 
 # Session 18: Complex Modulation -- Stacking Sources

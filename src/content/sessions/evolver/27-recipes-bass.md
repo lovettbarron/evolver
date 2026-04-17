@@ -1,14 +1,21 @@
 ---
-title: "Session 27: Bass Sounds -- Sub, Acid, and FM"
-module: "Sound Design Recipes"
+title: 'Session 27: Bass Sounds -- Sub, Acid, and FM'
 session_number: 27
 duration: 25
 prerequisite: 26
 output_type: patch
 difficulty: advanced
-tags: [recipes, bass, sub-bass, acid, fm-bass, sound-design]
+tags:
+  - recipes
+  - bass
+  - sub-bass
+  - acid
+  - fm-bass
+  - sound-design
 instrument: evolver
-reference: "Anu Kirk p.95-98, DSI Manual p.15-19"
+reference: 'Anu Kirk p.95-98, DSI Manual p.15-19'
+section: Sound Design Recipes
+instrument_type: instrument
 ---
 
 # Session 27: Bass Sounds -- Sub, Acid, and FM

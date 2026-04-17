@@ -1,14 +1,22 @@
 ---
-title: "Session 32: External Processing -- Evolver as Effects Box"
-module: "Performance & Expression"
+title: 'Session 32: External Processing -- Evolver as Effects Box'
 session_number: 32
 duration: 20
 prerequisite: 31
 output_type: patch
 difficulty: advanced
-tags: [performance, external-input, effects-processor, envelope-follower, signal-processing]
+tags:
+  - performance
+  - external-input
+  - effects-processor
+  - envelope-follower
+  - signal-processing
 instrument: evolver
-reference: "Anu Kirk p.99-101 (external processing), DSI Manual p.7-8 (signal flow), p.16 (external in), p.22 (env follower)"
+reference: >-
+  Anu Kirk p.99-101 (external processing), DSI Manual p.7-8 (signal flow), p.16
+  (external in), p.22 (env follower)
+section: Performance & Expression
+instrument_type: instrument
 ---
 
 # Session 32: External Processing -- Evolver as Effects Box

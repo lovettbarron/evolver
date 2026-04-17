@@ -1,14 +1,21 @@
 ---
-title: "Session 14: Highpass Filter & Stereo Split"
-module: "Filters & Envelopes"
+title: 'Session 14: Highpass Filter & Stereo Split'
 session_number: 14
 duration: 20
 prerequisite: 11
 output_type: patch
 difficulty: intermediate
-tags: [filters, highpass, stereo-split, bandpass, hpf, lpf]
+tags:
+  - filters
+  - highpass
+  - stereo-split
+  - bandpass
+  - hpf
+  - lpf
 instrument: evolver
-reference: "Anu Kirk p.50-53, DSI Manual p.18-19, p.26"
+reference: 'Anu Kirk p.50-53, DSI Manual p.18-19, p.26'
+section: Filters & Envelopes
+instrument_type: instrument
 ---
 
 # Session 14: Highpass Filter & Stereo Split

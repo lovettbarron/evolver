@@ -1,13 +1,18 @@
 ---
-title: "Session 36: Partial Recipe -- Growling Bass"
-module: "Transitional"
+title: 'Session 36: Partial Recipe -- Growling Bass'
 session_number: 36
 duration: 25
 prerequisite: 35
 output_type: patch
 difficulty: advanced
-tags: [partial-recipe, transitional, sound-design, bass]
+tags:
+  - partial-recipe
+  - transitional
+  - sound-design
+  - bass
 instrument: evolver
+section: Transitional
+instrument_type: instrument
 ---
 
 # Session 36: Partial Recipe -- Growling Bass

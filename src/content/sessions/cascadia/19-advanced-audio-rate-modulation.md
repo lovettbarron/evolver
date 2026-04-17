@@ -1,14 +1,22 @@
 ---
-title: "Session 19: Audio-Rate Modulation Mastery"
-module: "Advanced Patching"
+title: 'Session 19: Audio-Rate Modulation Mastery'
 session_number: 19
 duration: 25
 prerequisite: 18
 output_type: technique
 difficulty: advanced
-tags: [audio-rate, fm, ring-mod, modulation, sidebands, advanced, curriculum]
+tags:
+  - audio-rate
+  - fm
+  - ring-mod
+  - modulation
+  - sidebands
+  - advanced
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 11-18, 24-27, 35-36"
+reference: 'Cascadia Manual pp. 11-18, 24-27, 35-36'
+section: Advanced Patching
+instrument_type: instrument
 ---
 
 # Session 19: Audio-Rate Modulation Mastery

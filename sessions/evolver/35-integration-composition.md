@@ -1,14 +1,23 @@
 ---
-title: "Session 35: Capstone -- Compose with the Evolver"
-module: "Integration & Composition"
+title: 'Session 35: Capstone -- Compose with the Evolver'
 session_number: 35
 duration: 30
 prerequisite: 34
 output_type: recording
 difficulty: advanced
-tags: [integration, composition, capstone, song-sketch, performance, culmination]
+tags:
+  - integration
+  - composition
+  - capstone
+  - song-sketch
+  - performance
+  - culmination
 instrument: evolver
-reference: "All previous sessions, Anu Kirk p.95-101 (sound design and performance), DSI Manual full reference"
+reference: >-
+  All previous sessions, Anu Kirk p.95-101 (sound design and performance), DSI
+  Manual full reference
+section: Integration & Composition
+instrument_type: instrument
 ---
 
 # Session 35: Capstone -- Compose with the Evolver

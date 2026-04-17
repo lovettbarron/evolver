@@ -1,14 +1,21 @@
 ---
-title: "Session 14: Parameter Locks & Sample Locks"
-module: "Sequencer Deep Dive"
+title: 'Session 14: Parameter Locks & Sample Locks'
 session_number: 14
 duration: 25
 prerequisite: 13
 output_type: patch
 difficulty: intermediate
-tags: [sequencer, p-locks, parameter-locks, sample-locks, melodic-sequence, per-step]
+tags:
+  - sequencer
+  - p-locks
+  - parameter-locks
+  - sample-locks
+  - melodic-sequence
+  - per-step
 instrument: octatrack
-reference: "Elektron Manual Ch. 12; Merlin Ch. 4 (parameter locks)"
+reference: Elektron Manual Ch. 12; Merlin Ch. 4 (parameter locks)
+section: Sequencer Deep Dive
+instrument_type: instrument
 ---
 
 # Session 14: Parameter Locks & Sample Locks

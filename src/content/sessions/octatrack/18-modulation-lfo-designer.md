@@ -1,14 +1,21 @@
 ---
-title: "Session 18: LFO Designer & Advanced Modulation"
-module: "Modulation & LFOs"
+title: 'Session 18: LFO Designer & Advanced Modulation'
 session_number: 18
 duration: 25
 prerequisite: 17
 output_type: patch
 difficulty: advanced
-tags: [lfo-designer, custom-lfo, sample-scrub, tremolo, p-lock-lfo, advanced-modulation]
+tags:
+  - lfo-designer
+  - custom-lfo
+  - sample-scrub
+  - tremolo
+  - p-lock-lfo
+  - advanced-modulation
 instrument: octatrack
-reference: "Elektron Manual Ch. 11.4.9"
+reference: Elektron Manual Ch. 11.4.9
+section: Modulation & LFOs
+instrument_type: instrument
 ---
 
 # Session 18: LFO Designer & Advanced Modulation

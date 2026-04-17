@@ -1,14 +1,21 @@
 ---
-title: "Session 21: Scene Stacking for Smooth Progressions"
-module: "Scenes & Crossfader"
+title: 'Session 21: Scene Stacking for Smooth Progressions'
 session_number: 21
 duration: 25
 prerequisite: 20
 output_type: patch
 difficulty: advanced
-tags: [scenes, scene-stacking, progressions, live-set, tension-release, crossfader-gestures]
+tags:
+  - scenes
+  - scene-stacking
+  - progressions
+  - live-set
+  - tension-release
+  - crossfader-gestures
 instrument: octatrack
-reference: "Merlin Ch. 6 (scene stacking)"
+reference: Merlin Ch. 6 (scene stacking)
+section: Scenes & Crossfader
+instrument_type: instrument
 ---
 
 # Session 21: Scene Stacking for Smooth Progressions

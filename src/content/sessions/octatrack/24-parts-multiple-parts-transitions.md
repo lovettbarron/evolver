@@ -1,14 +1,21 @@
 ---
-title: "Session 24: Multiple Parts for Radical Transitions"
-module: "Parts & Pattern Workflow"
+title: 'Session 24: Multiple Parts for Radical Transitions'
 session_number: 24
 duration: 25
 prerequisite: 23
 output_type: composition
 difficulty: advanced
-tags: [parts, transitions, song-structure, radical-change, multi-part, bank-structure]
+tags:
+  - parts
+  - transitions
+  - song-structure
+  - radical-change
+  - multi-part
+  - bank-structure
 instrument: octatrack
-reference: "Elektron Manual Ch. 10.1-10.2, 12; Merlin Ch. 7"
+reference: 'Elektron Manual Ch. 10.1-10.2, 12; Merlin Ch. 7'
+section: Parts & Pattern Workflow
+instrument_type: instrument
 ---
 
 # Session 24: Multiple Parts for Radical Transitions

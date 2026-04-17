@@ -1,14 +1,21 @@
 ---
-title: "Session 23: Multiple Patterns, One Part — Pattern Variations"
-module: "Parts & Pattern Workflow"
+title: 'Session 23: Multiple Patterns, One Part — Pattern Variations'
 session_number: 23
 duration: 25
 prerequisite: 22
 output_type: patch
 difficulty: intermediate
-tags: [patterns, variations, intro-verse-chorus, copy-pattern, pattern-chain, same-part]
+tags:
+  - patterns
+  - variations
+  - intro-verse-chorus
+  - copy-pattern
+  - pattern-chain
+  - same-part
 instrument: octatrack
-reference: "Elektron Manual Ch. 12"
+reference: Elektron Manual Ch. 12
+section: Parts & Pattern Workflow
+instrument_type: instrument
 ---
 
 # Session 23: Multiple Patterns, One Part — Pattern Variations

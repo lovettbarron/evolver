@@ -1,14 +1,21 @@
 ---
-title: "Session 15: LFO Basics -- Shapes, Rates, Destinations"
-module: "Modulation"
+title: 'Session 15: LFO Basics -- Shapes, Rates, Destinations'
 session_number: 15
 duration: 25
 prerequisite: 11
 output_type: patch
 difficulty: beginner
-tags: [modulation, lfo, vibrato, tremolo, filter-animation, movement]
+tags:
+  - modulation
+  - lfo
+  - vibrato
+  - tremolo
+  - filter-animation
+  - movement
 instrument: evolver
-reference: "Anu Kirk p.70-71, DSI Manual p.22"
+reference: 'Anu Kirk p.70-71, DSI Manual p.22'
+section: Modulation
+instrument_type: instrument
 ---
 
 # Session 15: LFO Basics -- Shapes, Rates, Destinations

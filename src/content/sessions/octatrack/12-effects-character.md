@@ -1,14 +1,22 @@
 ---
-title: "Session 12: Character FX — Lo-Fi, Compressor, Comb Filter, Spatializer"
-module: "Effects"
+title: 'Session 12: Character FX — Lo-Fi, Compressor, Comb Filter, Spatializer'
 session_number: 12
 duration: 25
 prerequisite: 11
 output_type: patch
 difficulty: intermediate
-tags: [effects, lo-fi, compressor, comb-filter, spatializer, dynamix, character]
+tags:
+  - effects
+  - lo-fi
+  - compressor
+  - comb-filter
+  - spatializer
+  - dynamix
+  - character
 instrument: octatrack
-reference: "Elektron Manual Ch. 11.4.10, Appendix B"
+reference: 'Elektron Manual Ch. 11.4.10, Appendix B'
+section: Effects
+instrument_type: instrument
 ---
 
 # Session 12: Character FX — Lo-Fi, Compressor, Comb Filter, Spatializer

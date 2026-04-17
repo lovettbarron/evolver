@@ -1,14 +1,21 @@
 ---
-title: "Session 17: Self-Patching and Feedback Loops"
-module: "Advanced Patching"
+title: 'Session 17: Self-Patching and Feedback Loops'
 session_number: 17
 duration: 25
 prerequisite: 16
 output_type: technique
 difficulty: advanced
-tags: [self-patching, feedback, resonance, chaos, advanced, curriculum]
+tags:
+  - self-patching
+  - feedback
+  - resonance
+  - chaos
+  - advanced
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 24-27, 28-29"
+reference: 'Cascadia Manual pp. 24-27, 28-29'
+section: Advanced Patching
+instrument_type: instrument
 ---
 
 # Session 17: Self-Patching and Feedback Loops

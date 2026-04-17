@@ -1,14 +1,21 @@
 ---
-title: "Session 23: Pitch Sequences -- Melodies and Basslines"
-module: "Sequencer"
+title: 'Session 23: Pitch Sequences -- Melodies and Basslines'
 session_number: 23
 duration: 25
 prerequisite: 22
 output_type: patch
 difficulty: intermediate
-tags: [sequencer, pitch, melody, bassline, polyphony, transposition]
+tags:
+  - sequencer
+  - pitch
+  - melody
+  - bassline
+  - polyphony
+  - transposition
 instrument: evolver
-reference: "Anu Kirk p.80-86, p.103, DSI Manual p.27-30"
+reference: 'Anu Kirk p.80-86, p.103, DSI Manual p.27-30'
+section: Sequencer
+instrument_type: instrument
 ---
 
 # Session 23: Pitch Sequences -- Melodies and Basslines

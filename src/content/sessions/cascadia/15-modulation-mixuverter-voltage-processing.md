@@ -1,14 +1,21 @@
 ---
-title: "Session 15: Mixuverter and Voltage Processing"
-module: "Modulation & Utilities"
+title: 'Session 15: Mixuverter and Voltage Processing'
 session_number: 15
 duration: 20
 prerequisite: 14
 output_type: technique
 difficulty: intermediate
-tags: [mixuverter, attenuverter, voltage-processing, cv, offset, curriculum]
+tags:
+  - mixuverter
+  - attenuverter
+  - voltage-processing
+  - cv
+  - offset
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 37-38"
+reference: Cascadia Manual pp. 37-38
+section: Modulation & Utilities
+instrument_type: instrument
 ---
 
 # Session 15: Mixuverter and Voltage Processing

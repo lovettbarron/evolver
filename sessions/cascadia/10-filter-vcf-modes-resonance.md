@@ -1,14 +1,21 @@
 ---
-title: "Session 10: VCF Modes and Resonance"
-module: "Filters & LPG"
+title: 'Session 10: VCF Modes and Resonance'
 session_number: 10
 duration: 25
 prerequisite: 9
 output_type: technique
 difficulty: intermediate
-tags: [filter, vcf, multimode, resonance, self-oscillation, curriculum]
+tags:
+  - filter
+  - vcf
+  - multimode
+  - resonance
+  - self-oscillation
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 24-27"
+reference: Cascadia Manual pp. 24-27
+section: Filters & LPG
+instrument_type: instrument
 ---
 
 # Session 10: VCF Modes and Resonance

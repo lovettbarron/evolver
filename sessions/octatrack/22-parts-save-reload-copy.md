@@ -1,14 +1,22 @@
 ---
-title: "Session 22: Parts Deep Dive — Save, Reload, Copy"
-module: "Parts & Pattern Workflow"
+title: 'Session 22: Parts Deep Dive — Save, Reload, Copy'
 session_number: 22
 duration: 25
 prerequisite: 21
 output_type: technique
 difficulty: intermediate
-tags: [parts, pattern-workflow, save, reload, copy, part-vs-pattern, mental-model]
+tags:
+  - parts
+  - pattern-workflow
+  - save
+  - reload
+  - copy
+  - part-vs-pattern
+  - mental-model
 instrument: octatrack
-reference: "Elektron Manual Ch. 10.1-10.2; Merlin Ch. 7"
+reference: Elektron Manual Ch. 10.1-10.2; Merlin Ch. 7
+section: Parts & Pattern Workflow
+instrument_type: instrument
 ---
 
 # Session 22: Parts Deep Dive — Save, Reload, Copy

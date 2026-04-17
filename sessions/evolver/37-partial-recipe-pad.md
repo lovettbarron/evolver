@@ -1,13 +1,18 @@
 ---
-title: "Session 37: Partial Recipe -- Evolving Pad"
-module: "Transitional"
+title: 'Session 37: Partial Recipe -- Evolving Pad'
 session_number: 37
 duration: 25
 prerequisite: 36
 output_type: patch
 difficulty: advanced
-tags: [partial-recipe, transitional, sound-design, pad]
+tags:
+  - partial-recipe
+  - transitional
+  - sound-design
+  - pad
 instrument: evolver
+section: Transitional
+instrument_type: instrument
 ---
 
 # Session 37: Partial Recipe -- Evolving Pad

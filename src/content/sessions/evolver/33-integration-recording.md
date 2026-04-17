@@ -1,14 +1,24 @@
 ---
-title: "Session 33: Recording Workflow -- MIDI and Audio in Your DAW"
-module: "Integration & Composition"
+title: 'Session 33: Recording Workflow -- MIDI and Audio in Your DAW'
 session_number: 33
 duration: 25
 prerequisite: 32
 output_type: recording
 difficulty: advanced
-tags: [integration, recording, daw, midi, audio, workflow, template]
+tags:
+  - integration
+  - recording
+  - daw
+  - midi
+  - audio
+  - workflow
+  - template
 instrument: evolver
-reference: "DSI Manual p.9-14 (basic operations), p.36-40 (MIDI implementation), p.41-45 (SysEx)"
+reference: >-
+  DSI Manual p.9-14 (basic operations), p.36-40 (MIDI implementation), p.41-45
+  (SysEx)
+section: Integration & Composition
+instrument_type: instrument
 ---
 
 # Session 33: Recording Workflow -- MIDI and Audio in Your DAW

@@ -1,14 +1,21 @@
 ---
-title: "Session 22: Sequencer Basics -- Steps, Destinations, Triggers"
-module: "Sequencer"
+title: 'Session 22: Sequencer Basics -- Steps, Destinations, Triggers'
 session_number: 22
 duration: 25
 prerequisite: 21
 output_type: patch
 difficulty: intermediate
-tags: [sequencer, steps, destinations, triggers, basics, melody]
+tags:
+  - sequencer
+  - steps
+  - destinations
+  - triggers
+  - basics
+  - melody
 instrument: evolver
-reference: "Anu Kirk p.75-79, DSI Manual p.27-32"
+reference: 'Anu Kirk p.75-79, DSI Manual p.27-32'
+section: Sequencer
+instrument_type: instrument
 ---
 
 # Session 22: Sequencer Basics -- Steps, Destinations, Triggers

@@ -1,14 +1,21 @@
 ---
-title: "Session 21: Lead Sound Design"
-module: "Sound Design"
+title: 'Session 21: Lead Sound Design'
 session_number: 21
 duration: 25
 prerequisite: 20
 output_type: patch
 difficulty: advanced
-tags: [lead, sound-design, recipe, detune, wave-folder, curriculum]
+tags:
+  - lead
+  - sound-design
+  - recipe
+  - detune
+  - wave-folder
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 11-18, 24-27, 28-29"
+reference: 'Cascadia Manual pp. 11-18, 24-27, 28-29'
+section: Sound Design
+instrument_type: instrument
 ---
 
 # Session 21: Lead Sound Design

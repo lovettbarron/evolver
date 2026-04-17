@@ -1,14 +1,21 @@
 ---
-title: "Session 19: Digital Delay -- Time, Taps, and Sync"
-module: "Effects"
+title: 'Session 19: Digital Delay -- Time, Taps, and Sync'
 session_number: 19
 duration: 25
 prerequisite: 18
 output_type: patch
 difficulty: intermediate
-tags: [effects, delay, multi-tap, sync, rhythmic, feedback]
+tags:
+  - effects
+  - delay
+  - multi-tap
+  - sync
+  - rhythmic
+  - feedback
 instrument: evolver
-reference: "Anu Kirk p.58-65, DSI Manual p.20-21"
+reference: 'Anu Kirk p.58-65, DSI Manual p.20-21'
+section: Effects
+instrument_type: instrument
 ---
 
 # Session 19: Digital Delay -- Time, Taps, and Sync

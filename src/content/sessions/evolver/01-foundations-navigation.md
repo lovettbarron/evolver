@@ -1,14 +1,20 @@
 ---
-title: "Session 01: Navigation & The Basic Patch"
-module: "Foundations"
+title: 'Session 01: Navigation & The Basic Patch'
 session_number: 1
 duration: 20
 prerequisite: null
 output_type: patch
 difficulty: beginner
-tags: [navigation, basic-patch, save, recall, foundations]
+tags:
+  - navigation
+  - basic-patch
+  - save
+  - recall
+  - foundations
 instrument: evolver
-reference: "Anu Kirk p.5-8, DSI Manual p.1-3, p.9-14"
+reference: 'Anu Kirk p.5-8, DSI Manual p.1-3, p.9-14'
+section: Foundations
+instrument_type: instrument
 ---
 
 # Session 01: Navigation & The Basic Patch

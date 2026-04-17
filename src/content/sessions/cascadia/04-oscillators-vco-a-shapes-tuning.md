@@ -1,14 +1,23 @@
 ---
-title: "Session 04: VCO A Waveshapes & Tuning"
-module: "Oscillators"
+title: 'Session 04: VCO A Waveshapes & Tuning'
 session_number: 4
 duration: 20
 prerequisite: 3
 output_type: technique
 difficulty: beginner
-tags: [oscillators, waveshapes, tuning, vco-a, saw, pulse, sine, triangle]
+tags:
+  - oscillators
+  - waveshapes
+  - tuning
+  - vco-a
+  - saw
+  - pulse
+  - sine
+  - triangle
 instrument: cascadia
-reference: "Cascadia Manual pp. 17-19"
+reference: Cascadia Manual pp. 17-19
+section: Oscillators
+instrument_type: instrument
 ---
 
 # Session 04: VCO A Waveshapes & Tuning

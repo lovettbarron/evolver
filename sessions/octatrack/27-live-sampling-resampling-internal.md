@@ -1,14 +1,21 @@
 ---
-title: "Session 27: Live Resampling — Recording Internal Audio"
-module: "Live Sampling & Looping"
+title: 'Session 27: Live Resampling — Recording Internal Audio'
 session_number: 27
 duration: 20
 prerequisite: 26
 output_type: recording
 difficulty: intermediate
-tags: [resampling, internal-audio, track-recorder, main-output, self-sampling, slice]
+tags:
+  - resampling
+  - internal-audio
+  - track-recorder
+  - main-output
+  - self-sampling
+  - slice
 instrument: octatrack
-reference: "Elektron Manual Ch. 17.2"
+reference: Elektron Manual Ch. 17.2
+section: Live Sampling & Looping
+instrument_type: instrument
 ---
 
 # Session 27: Live Resampling — Recording Internal Audio

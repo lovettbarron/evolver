@@ -1,14 +1,20 @@
 ---
-title: "Session 01: Orientation & First Sound"
-module: "Foundations"
+title: 'Session 01: Orientation & First Sound'
 session_number: 1
 duration: 20
 prerequisite: null
 output_type: technique
 difficulty: beginner
-tags: [foundations, normalling, first-sound, orientation, signal-path]
+tags:
+  - foundations
+  - normalling
+  - first-sound
+  - orientation
+  - signal-path
 instrument: cascadia
-reference: "Cascadia Manual pp. 11-12"
+reference: Cascadia Manual pp. 11-12
+section: Foundations
+instrument_type: instrument
 ---
 
 # Session 01: Orientation & First Sound

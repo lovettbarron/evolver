@@ -1,14 +1,21 @@
 ---
-title: "Session 11: Filter FM and Filter as Sound Source"
-module: "Filters & LPG"
+title: 'Session 11: Filter FM and Filter as Sound Source'
 session_number: 11
 duration: 25
 prerequisite: 10
 output_type: technique
 difficulty: intermediate
-tags: [filter, fm, frequency-modulation, self-oscillation, keyboard-tracking, curriculum]
+tags:
+  - filter
+  - fm
+  - frequency-modulation
+  - self-oscillation
+  - keyboard-tracking
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 24-27"
+reference: Cascadia Manual pp. 24-27
+section: Filters & LPG
+instrument_type: instrument
 ---
 
 # Session 11: Filter FM and Filter as Sound Source

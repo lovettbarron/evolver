@@ -1,14 +1,21 @@
 ---
-title: "Session 26: Multi-Track Sequences -- 4 Tracks at Once"
-module: "Sequencer"
+title: 'Session 26: Multi-Track Sequences -- 4 Tracks at Once'
 session_number: 26
 duration: 25
 prerequisite: 25
 output_type: patch
 difficulty: advanced
-tags: [sequencer, multi-track, generative, self-playing, polyrhythm, advanced]
+tags:
+  - sequencer
+  - multi-track
+  - generative
+  - self-playing
+  - polyrhythm
+  - advanced
 instrument: evolver
-reference: "Anu Kirk p.87-93, DSI Manual p.27-32"
+reference: 'Anu Kirk p.87-93, DSI Manual p.27-32'
+section: Sequencer
+instrument_type: instrument
 ---
 
 # Session 26: Multi-Track Sequences -- 4 Tracks at Once

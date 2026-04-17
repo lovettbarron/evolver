@@ -1,14 +1,21 @@
 ---
-title: "Session 28: Improvisation Workflow — Combining It All"
-module: "Live Sampling & Looping"
+title: 'Session 28: Improvisation Workflow — Combining It All'
 session_number: 28
 duration: 25
 prerequisite: 27
 output_type: recording
 difficulty: advanced
-tags: [improvisation, live-performance, looping, sampling, composition, workflow]
+tags:
+  - improvisation
+  - live-performance
+  - looping
+  - sampling
+  - composition
+  - workflow
 instrument: octatrack
-reference: "Elektron Manual Ch. 9, 16, 17; Merlin Ch. 7, 9"
+reference: 'Elektron Manual Ch. 9, 16, 17; Merlin Ch. 7, 9'
+section: Live Sampling & Looping
+instrument_type: instrument
 ---
 
 # Session 28: Improvisation Workflow — Combining It All

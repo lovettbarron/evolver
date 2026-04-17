@@ -1,14 +1,21 @@
 ---
-title: "Session 14: Sample & Hold and Slew Limiter"
-module: "Modulation & Utilities"
+title: 'Session 14: Sample & Hold and Slew Limiter'
 session_number: 14
 duration: 25
 prerequisite: 13
 output_type: technique
 difficulty: intermediate
-tags: [sample-hold, slew, random, generative, voltage-processing, curriculum]
+tags:
+  - sample-hold
+  - slew
+  - random
+  - generative
+  - voltage-processing
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 37-38"
+reference: Cascadia Manual pp. 37-38
+section: Modulation & Utilities
+instrument_type: instrument
 ---
 
 # Session 14: Sample & Hold and Slew Limiter

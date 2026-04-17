@@ -1,14 +1,20 @@
 ---
-title: "Session 16: Mod Slots -- Flexible Routing"
-module: "Modulation"
+title: 'Session 16: Mod Slots -- Flexible Routing'
 session_number: 16
 duration: 20
 prerequisite: 15
 output_type: patch
 difficulty: intermediate
-tags: [modulation, mod-slots, routing, audio-rate, creative-routing]
+tags:
+  - modulation
+  - mod-slots
+  - routing
+  - audio-rate
+  - creative-routing
 instrument: evolver
-reference: "Anu Kirk p.72-74, DSI Manual p.23"
+reference: 'Anu Kirk p.72-74, DSI Manual p.23'
+section: Modulation
+instrument_type: instrument
 ---
 
 # Session 16: Mod Slots -- Flexible Routing

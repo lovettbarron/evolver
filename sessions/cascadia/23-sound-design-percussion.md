@@ -1,14 +1,22 @@
 ---
-title: "Session 23: Percussion Sound Design"
-module: "Sound Design"
+title: 'Session 23: Percussion Sound Design'
 session_number: 23
 duration: 30
 prerequisite: 22
 output_type: patch
 difficulty: advanced
-tags: [percussion, drum, sound-design, recipe, lpg, ring-mod, curriculum]
+tags:
+  - percussion
+  - drum
+  - sound-design
+  - recipe
+  - lpg
+  - ring-mod
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 20-21, 32-34"
+reference: 'Cascadia Manual pp. 20-21, 32-34'
+section: Sound Design
+instrument_type: instrument
 ---
 
 # Session 23: Percussion Sound Design

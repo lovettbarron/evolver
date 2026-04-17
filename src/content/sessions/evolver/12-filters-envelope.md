@@ -1,14 +1,22 @@
 ---
-title: "Session 12: Filter Envelope & VCA -- Classic Subtractive Shapes"
-module: "Filters & Envelopes"
+title: 'Session 12: Filter Envelope & VCA -- Classic Subtractive Shapes'
 session_number: 12
 duration: 25
 prerequisite: 11
 output_type: patch
 difficulty: beginner
-tags: [filters, envelope, adsr, vca, pluck, pad, subtractive]
+tags:
+  - filters
+  - envelope
+  - adsr
+  - vca
+  - pluck
+  - pad
+  - subtractive
 instrument: evolver
-reference: "Anu Kirk p.38-41, p.46-49, DSI Manual p.17-18"
+reference: 'Anu Kirk p.38-41, p.46-49, DSI Manual p.17-18'
+section: Filters & Envelopes
+instrument_type: instrument
 ---
 
 # Session 12: Filter Envelope & VCA -- Classic Subtractive Shapes

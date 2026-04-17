@@ -1,14 +1,21 @@
 ---
-title: "Session 05: Audio Editor — Trim, Loop, Attributes"
-module: "Sample Management"
+title: 'Session 05: Audio Editor — Trim, Loop, Attributes'
 session_number: 5
 duration: 25
 prerequisite: 4
 output_type: technique
 difficulty: beginner
-tags: [aed, audio-editor, trim, loop-points, gain, sample-attributes]
+tags:
+  - aed
+  - audio-editor
+  - trim
+  - loop-points
+  - gain
+  - sample-attributes
 instrument: octatrack
-reference: "Elektron Manual Ch. 13"
+reference: Elektron Manual Ch. 13
+section: Sample Management
+instrument_type: instrument
 ---
 
 # Session 05: Audio Editor — Trim, Loop, Attributes

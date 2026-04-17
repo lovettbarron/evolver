@@ -1,14 +1,22 @@
 ---
-title: "Session 24: Texture Sound Design"
-module: "Sound Design"
+title: 'Session 24: Texture Sound Design'
 session_number: 24
 duration: 25
 prerequisite: 23
 output_type: patch
 difficulty: advanced
-tags: [texture, sound-design, recipe, noise, sample-hold, wave-folder, curriculum]
+tags:
+  - texture
+  - sound-design
+  - recipe
+  - noise
+  - sample-hold
+  - wave-folder
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 20-21, 24-27, 28-29, 37-38"
+reference: 'Cascadia Manual pp. 20-21, 24-27, 28-29, 37-38'
+section: Sound Design
+instrument_type: instrument
 ---
 
 # Session 24: Texture Sound Design

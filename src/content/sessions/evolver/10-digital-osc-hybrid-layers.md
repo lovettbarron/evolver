@@ -1,14 +1,20 @@
 ---
-title: "Session 10: Analog + Digital Hybrid Combinations"
-module: "Digital Oscillators"
+title: 'Session 10: Analog + Digital Hybrid Combinations'
 session_number: 10
 duration: 25
 prerequisite: 7
 output_type: patch
 difficulty: intermediate
-tags: [digital-oscillators, analog-digital, hybrid, shape-sequence, layering]
+tags:
+  - digital-oscillators
+  - analog-digital
+  - hybrid
+  - shape-sequence
+  - layering
 instrument: evolver
-reference: "Anu Kirk p.36, DSI Manual p.16-17"
+reference: 'Anu Kirk p.36, DSI Manual p.16-17'
+section: Digital Oscillators
+instrument_type: instrument
 ---
 
 # Session 10: Analog + Digital Hybrid Combinations

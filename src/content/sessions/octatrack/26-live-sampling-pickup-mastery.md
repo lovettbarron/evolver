@@ -1,14 +1,21 @@
 ---
-title: "Session 26: Pickup Machine Mastery — Loop, Overdub, Multiply"
-module: "Live Sampling & Looping"
+title: 'Session 26: Pickup Machine Mastery — Loop, Overdub, Multiply'
 session_number: 26
 duration: 25
 prerequisite: 25
 output_type: recording
 difficulty: intermediate
-tags: [pickup-machines, master-slave, overdub, multiply, live-looping, loop-length]
+tags:
+  - pickup-machines
+  - master-slave
+  - overdub
+  - multiply
+  - live-looping
+  - loop-length
 instrument: octatrack
-reference: "Elektron Manual Ch. 17.1.4-17.1.5; Merlin Ch. 9"
+reference: Elektron Manual Ch. 17.1.4-17.1.5; Merlin Ch. 9
+section: Live Sampling & Looping
+instrument_type: instrument
 ---
 
 # Session 26: Pickup Machine Mastery — Loop, Overdub, Multiply

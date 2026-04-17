@@ -1,14 +1,21 @@
 ---
-title: "Session 25: Ambient Sound Design"
-module: "Sound Design"
+title: 'Session 25: Ambient Sound Design'
 session_number: 25
 duration: 30
 prerequisite: 24
 output_type: patch
 difficulty: advanced
-tags: [ambient, sound-design, recipe, evolving, capstone, curriculum]
+tags:
+  - ambient
+  - sound-design
+  - recipe
+  - evolving
+  - capstone
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 11-40"
+reference: Cascadia Manual pp. 11-40
+section: Sound Design
+instrument_type: instrument
 ---
 
 # Session 25: Ambient Sound Design

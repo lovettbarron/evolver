@@ -1,14 +1,21 @@
 ---
-title: "Session 08: Thru & Neighbor Machines"
-module: "Machines & Playback"
+title: 'Session 08: Thru & Neighbor Machines'
 session_number: 8
 duration: 20
 prerequisite: 7
 output_type: technique
 difficulty: intermediate
-tags: [machines, thru, neighbor, effects-processor, external-audio, input]
+tags:
+  - machines
+  - thru
+  - neighbor
+  - effects-processor
+  - external-audio
+  - input
 instrument: octatrack
-reference: "Elektron Manual Ch. 11.1.3-11.1.4"
+reference: Elektron Manual Ch. 11.1.3-11.1.4
+section: Machines & Playback
+instrument_type: instrument
 ---
 
 # Session 08: Thru & Neighbor Machines

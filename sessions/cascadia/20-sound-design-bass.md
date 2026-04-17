@@ -1,14 +1,19 @@
 ---
-title: "Session 20: Bass Sound Design"
-module: "Sound Design"
+title: 'Session 20: Bass Sound Design'
 session_number: 20
 duration: 25
 prerequisite: 19
 output_type: patch
 difficulty: advanced
-tags: [bass, sound-design, recipe, curriculum]
+tags:
+  - bass
+  - sound-design
+  - recipe
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 11-18, 24-27"
+reference: 'Cascadia Manual pp. 11-18, 24-27'
+section: Sound Design
+instrument_type: instrument
 ---
 
 # Session 20: Bass Sound Design

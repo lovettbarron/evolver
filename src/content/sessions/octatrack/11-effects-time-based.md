@@ -1,14 +1,23 @@
 ---
-title: "Session 11: Time-Based FX — Delay, Reverb, Chorus, Phaser, Flanger"
-module: "Effects"
+title: 'Session 11: Time-Based FX — Delay, Reverb, Chorus, Phaser, Flanger'
 session_number: 11
 duration: 25
 prerequisite: 10
 output_type: patch
 difficulty: intermediate
-tags: [effects, delay, reverb, chorus, phaser, flanger, echo-freeze, fx2]
+tags:
+  - effects
+  - delay
+  - reverb
+  - chorus
+  - phaser
+  - flanger
+  - echo-freeze
+  - fx2
 instrument: octatrack
-reference: "Elektron Manual Ch. 11.4.10, Appendix B"
+reference: 'Elektron Manual Ch. 11.4.10, Appendix B'
+section: Effects
+instrument_type: instrument
 ---
 
 # Session 11: Time-Based FX — Delay, Reverb, Chorus, Phaser, Flanger

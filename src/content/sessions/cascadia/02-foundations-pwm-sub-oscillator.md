@@ -1,14 +1,20 @@
 ---
-title: "Session 02: Pulse Width Modulation & Sub-Oscillator"
-module: "Foundations"
+title: 'Session 02: Pulse Width Modulation & Sub-Oscillator'
 session_number: 2
 duration: 25
 prerequisite: 1
 output_type: technique
 difficulty: beginner
-tags: [foundations, pwm, sub-oscillator, pulse-wave, thickness]
+tags:
+  - foundations
+  - pwm
+  - sub-oscillator
+  - pulse-wave
+  - thickness
 instrument: cascadia
-reference: "Cascadia Manual pp. 12-13"
+reference: Cascadia Manual pp. 12-13
+section: Foundations
+instrument_type: instrument
 ---
 
 # Session 02: Pulse Width Modulation & Sub-Oscillator

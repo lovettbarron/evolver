@@ -1,13 +1,18 @@
 ---
-title: "Session 26: Partial Recipe -- Metallic Texture"
-module: "Transitional"
+title: 'Session 26: Partial Recipe -- Metallic Texture'
 session_number: 26
 duration: 25
 prerequisite: 25
 output_type: patch
 difficulty: advanced
-tags: [partial-recipe, transitional, sound-design, texture]
+tags:
+  - partial-recipe
+  - transitional
+  - sound-design
+  - texture
 instrument: cascadia
+section: Transitional
+instrument_type: instrument
 ---
 
 # Session 26: Partial Recipe -- Metallic Texture

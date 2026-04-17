@@ -1,14 +1,21 @@
 ---
-title: "Session 16: FM Chains and Cross-Modulation"
-module: "Advanced Patching"
+title: 'Session 16: FM Chains and Cross-Modulation'
 session_number: 16
 duration: 25
 prerequisite: 15
 output_type: technique
 difficulty: advanced
-tags: [fm, cross-modulation, ring-mod, sidebands, advanced, curriculum]
+tags:
+  - fm
+  - cross-modulation
+  - ring-mod
+  - sidebands
+  - advanced
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 11-18, 24-27"
+reference: 'Cascadia Manual pp. 11-18, 24-27'
+section: Advanced Patching
+instrument_type: instrument
 ---
 
 # Session 16: FM Chains and Cross-Modulation

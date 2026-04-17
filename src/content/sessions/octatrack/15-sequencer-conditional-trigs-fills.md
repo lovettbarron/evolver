@@ -1,14 +1,20 @@
 ---
-title: "Session 15: Conditional Trigs & Fill Mode"
-module: "Sequencer Deep Dive"
+title: 'Session 15: Conditional Trigs & Fill Mode'
 session_number: 15
 duration: 20
 prerequisite: 14
 output_type: recording
 difficulty: intermediate
-tags: [sequencer, conditional-trigs, fill-mode, generative, probability]
+tags:
+  - sequencer
+  - conditional-trigs
+  - fill-mode
+  - generative
+  - probability
 instrument: octatrack
-reference: "Elektron Manual Ch. 12.5"
+reference: Elektron Manual Ch. 12.5
+section: Sequencer Deep Dive
+instrument_type: instrument
 ---
 
 # Session 15: Conditional Trigs & Fill Mode

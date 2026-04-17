@@ -1,14 +1,20 @@
 ---
-title: "Session 02: Demo Patterns & Factory Tour"
-module: "Foundations"
+title: 'Session 02: Demo Patterns & Factory Tour'
 session_number: 2
 duration: 20
 prerequisite: 1
 output_type: technique
 difficulty: beginner
-tags: [foundations, demo-patterns, crossfader, 8-track, orientation]
+tags:
+  - foundations
+  - demo-patterns
+  - crossfader
+  - 8-track
+  - orientation
 instrument: octatrack
-reference: "Elektron Manual Ch. 1-3; Merlin Ch. 1"
+reference: Elektron Manual Ch. 1-3; Merlin Ch. 1
+section: Foundations
+instrument_type: instrument
 ---
 
 # Session 02: Demo Patterns & Factory Tour

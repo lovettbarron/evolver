@@ -1,14 +1,20 @@
 ---
-title: "Session 06: Detuning, Oscillator Slop & Stereo Layering"
-module: "Analog Oscillators"
+title: 'Session 06: Detuning, Oscillator Slop & Stereo Layering'
 session_number: 6
 duration: 20
 prerequisite: 3
 output_type: patch
 difficulty: beginner
-tags: [analog-oscillators, detuning, osc-slop, stereo, fat-sounds]
+tags:
+  - analog-oscillators
+  - detuning
+  - osc-slop
+  - stereo
+  - fat-sounds
 instrument: evolver
-reference: "Anu Kirk p.11, p.16-17, DSI Manual p.15, p.26"
+reference: 'Anu Kirk p.11, p.16-17, DSI Manual p.15, p.26'
+section: Analog Oscillators
+instrument_type: instrument
 ---
 
 # Session 06: Detuning, Oscillator Slop & Stereo Layering

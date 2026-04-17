@@ -1,14 +1,20 @@
 ---
-title: "Session 04: Loading & Assigning Samples"
-module: "Sample Management"
+title: 'Session 04: Loading & Assigning Samples'
 session_number: 4
 duration: 20
 prerequisite: 3
 output_type: technique
 difficulty: beginner
-tags: [samples, flex, static, quick-assign, src-setup]
+tags:
+  - samples
+  - flex
+  - static
+  - quick-assign
+  - src-setup
 instrument: octatrack
-reference: "Elektron Manual Ch. 8, 11.3"
+reference: 'Elektron Manual Ch. 8, 11.3'
+section: Sample Management
+instrument_type: instrument
 ---
 
 # Session 04: Loading & Assigning Samples

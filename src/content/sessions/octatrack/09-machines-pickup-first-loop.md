@@ -1,14 +1,20 @@
 ---
-title: "Session 09: Pickup Machines — Your First Loop"
-module: "Machines & Playback"
+title: 'Session 09: Pickup Machines — Your First Loop'
 session_number: 9
 duration: 25
 prerequisite: 8
 output_type: recording
 difficulty: beginner
-tags: [pickup-machine, looping, live-recording, overdub, machines]
+tags:
+  - pickup-machine
+  - looping
+  - live-recording
+  - overdub
+  - machines
 instrument: octatrack
-reference: "Elektron Manual Ch. 9.3, 17.1.4-17.1.5; Merlin Ch. 9"
+reference: 'Elektron Manual Ch. 9.3, 17.1.4-17.1.5; Merlin Ch. 9'
+section: Machines & Playback
+instrument_type: instrument
 ---
 
 # Session 09: Pickup Machines — Your First Loop

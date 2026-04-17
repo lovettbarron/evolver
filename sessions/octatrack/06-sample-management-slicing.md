@@ -1,14 +1,21 @@
 ---
-title: "Session 06: Slicing & Slice Playback"
-module: "Sample Management"
+title: 'Session 06: Slicing & Slice Playback'
 session_number: 6
 duration: 25
 prerequisite: 5
 output_type: patch
 difficulty: intermediate
-tags: [slicing, slices, start-param, flex, drum-loop, slice-menu]
+tags:
+  - slicing
+  - slices
+  - start-param
+  - flex
+  - drum-loop
+  - slice-menu
 instrument: octatrack
-reference: "Elektron Manual Ch. 13.5; Merlin Ch. 3"
+reference: Elektron Manual Ch. 13.5; Merlin Ch. 3
+section: Sample Management
+instrument_type: instrument
 ---
 
 # Session 06: Slicing & Slice Playback

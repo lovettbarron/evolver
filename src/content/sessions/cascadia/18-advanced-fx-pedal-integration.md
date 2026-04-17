@@ -1,14 +1,21 @@
 ---
-title: "Session 18: FX Pedal Integration"
-module: "Advanced Patching"
+title: 'Session 18: FX Pedal Integration'
 session_number: 18
 duration: 20
 prerequisite: 17
 output_type: technique
 difficulty: intermediate
-tags: [fx, effects, pedal, send-return, advanced, curriculum]
+tags:
+  - fx
+  - effects
+  - pedal
+  - send-return
+  - advanced
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 39-40"
+reference: Cascadia Manual pp. 39-40
+section: Advanced Patching
+instrument_type: instrument
 ---
 
 # Session 18: FX Pedal Integration

@@ -1,14 +1,22 @@
 ---
-title: "Session 12: LPG Deep Dive and Percussion Palette"
-module: "Filters & LPG"
+title: 'Session 12: LPG Deep Dive and Percussion Palette'
 session_number: 12
 duration: 25
 prerequisite: 11
 output_type: technique
 difficulty: intermediate
-tags: [lpg, low-pass-gate, percussion, west-coast, vca-b, envelope, curriculum]
+tags:
+  - lpg
+  - low-pass-gate
+  - percussion
+  - west-coast
+  - vca-b
+  - envelope
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 32-34, 20-21"
+reference: 'Cascadia Manual pp. 32-34, 20-21'
+section: Filters & LPG
+instrument_type: instrument
 ---
 
 # Session 12: LPG Deep Dive and Percussion Palette

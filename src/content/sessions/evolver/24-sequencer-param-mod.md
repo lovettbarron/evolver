@@ -1,14 +1,20 @@
 ---
-title: "Session 24: Parameter Modulation Sequences"
-module: "Sequencer"
+title: 'Session 24: Parameter Modulation Sequences'
 session_number: 24
 duration: 20
 prerequisite: 23
 output_type: patch
 difficulty: intermediate
-tags: [sequencer, parameter-modulation, filter-sequence, rhythmic, timbral]
+tags:
+  - sequencer
+  - parameter-modulation
+  - filter-sequence
+  - rhythmic
+  - timbral
 instrument: evolver
-reference: "Anu Kirk p.91-93, DSI Manual p.27-32"
+reference: 'Anu Kirk p.91-93, DSI Manual p.27-32'
+section: Sequencer
+instrument_type: instrument
 ---
 
 # Session 24: Parameter Modulation Sequences

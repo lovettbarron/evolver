@@ -1,14 +1,21 @@
 ---
-title: "Session 03: Project Setup & File Management"
-module: "Foundations"
+title: 'Session 03: Project Setup & File Management'
 session_number: 3
 duration: 25
 prerequisite: 2
 output_type: technique
 difficulty: beginner
-tags: [foundations, projects, sets, cf-card, audio-pool, sample-organization]
+tags:
+  - foundations
+  - projects
+  - sets
+  - cf-card
+  - audio-pool
+  - sample-organization
 instrument: octatrack
-reference: "Elektron Manual Ch. 6-8"
+reference: Elektron Manual Ch. 6-8
+section: Foundations
+instrument_type: instrument
 ---
 
 # Session 03: Project Setup & File Management

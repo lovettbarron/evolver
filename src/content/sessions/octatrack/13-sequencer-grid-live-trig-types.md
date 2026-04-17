@@ -1,14 +1,22 @@
 ---
-title: "Session 13: Grid & Live Recording — All Trig Types"
-module: "Sequencer Deep Dive"
+title: 'Session 13: Grid & Live Recording — All Trig Types'
 session_number: 13
 duration: 20
 prerequisite: 12
 output_type: recording
 difficulty: intermediate
-tags: [sequencer, grid-recording, live-recording, trig-types, sample-trigs, note-trigs, lock-trigs]
+tags:
+  - sequencer
+  - grid-recording
+  - live-recording
+  - trig-types
+  - sample-trigs
+  - note-trigs
+  - lock-trigs
 instrument: octatrack
-reference: "Elektron Manual Ch. 12; Merlin Ch. 4"
+reference: Elektron Manual Ch. 12; Merlin Ch. 4
+section: Sequencer Deep Dive
+instrument_type: instrument
 ---
 
 # Session 13: Grid & Live Recording — All Trig Types

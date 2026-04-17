@@ -1,14 +1,21 @@
 ---
-title: "Session 22: Pad Sound Design"
-module: "Sound Design"
+title: 'Session 22: Pad Sound Design'
 session_number: 22
 duration: 25
 prerequisite: 21
 output_type: patch
 difficulty: advanced
-tags: [pad, sound-design, recipe, lfo, evolving, curriculum]
+tags:
+  - pad
+  - sound-design
+  - recipe
+  - lfo
+  - evolving
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 11-18, 24-27, 35-38"
+reference: 'Cascadia Manual pp. 11-18, 24-27, 35-38'
+section: Sound Design
+instrument_type: instrument
 ---
 
 # Session 22: Pad Sound Design

@@ -1,14 +1,21 @@
 ---
-title: "Session 21: Distortion, Grunge, and Output Hack"
-module: "Effects"
+title: 'Session 21: Distortion, Grunge, and Output Hack'
 session_number: 21
 duration: 20
 prerequisite: 20
 output_type: patch
 difficulty: intermediate
-tags: [effects, distortion, grunge, output-hack, bit-crushing, noise-gate]
+tags:
+  - effects
+  - distortion
+  - grunge
+  - output-hack
+  - bit-crushing
+  - noise-gate
 instrument: evolver
-reference: "Anu Kirk p.54-57, DSI Manual p.19, p.21, p.26"
+reference: 'Anu Kirk p.54-57, DSI Manual p.19, p.21, p.26'
+section: Effects
+instrument_type: instrument
 ---
 
 # Session 21: Distortion, Grunge, and Output Hack

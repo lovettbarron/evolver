@@ -1,14 +1,21 @@
 ---
-title: "Session 03: Analog Oscillator Waveshapes"
-module: "Analog Oscillators"
+title: 'Session 03: Analog Oscillator Waveshapes'
 session_number: 3
 duration: 20
 prerequisite: 1
 output_type: technique
 difficulty: beginner
-tags: [analog-oscillators, waveshapes, sawtooth, triangle, pulse, timbre]
+tags:
+  - analog-oscillators
+  - waveshapes
+  - sawtooth
+  - triangle
+  - pulse
+  - timbre
 instrument: evolver
-reference: "Anu Kirk p.9-16, DSI Manual p.15"
+reference: 'Anu Kirk p.9-16, DSI Manual p.15'
+section: Analog Oscillators
+instrument_type: instrument
 ---
 
 # Session 03: Analog Oscillator Waveshapes

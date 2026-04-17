@@ -1,14 +1,22 @@
 ---
-title: "Session 13: LFO Deep Dive"
-module: "Modulation & Utilities"
+title: 'Session 13: LFO Deep Dive'
 session_number: 13
 duration: 25
 prerequisite: 12
 output_type: technique
 difficulty: intermediate
-tags: [lfo, modulation, polyrhythm, rate-divider, vibrato, pwm, curriculum]
+tags:
+  - lfo
+  - modulation
+  - polyrhythm
+  - rate-divider
+  - vibrato
+  - pwm
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 35-36"
+reference: Cascadia Manual pp. 35-36
+section: Modulation & Utilities
+instrument_type: instrument
 ---
 
 # Session 13: LFO Deep Dive

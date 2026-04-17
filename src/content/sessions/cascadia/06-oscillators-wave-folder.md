@@ -1,14 +1,21 @@
 ---
-title: "Session 06: Wave Folder as Sound Shaper"
-module: "Oscillators"
+title: 'Session 06: Wave Folder as Sound Shaper'
 session_number: 6
 duration: 20
 prerequisite: 5
 output_type: technique
 difficulty: intermediate
-tags: [oscillators, wave-folder, west-coast, harmonics, patching, lfo-modulation]
+tags:
+  - oscillators
+  - wave-folder
+  - west-coast
+  - harmonics
+  - patching
+  - lfo-modulation
 instrument: cascadia
-reference: "Cascadia Manual pp. 22-23"
+reference: Cascadia Manual pp. 22-23
+section: Oscillators
+instrument_type: instrument
 ---
 
 # Session 06: Wave Folder as Sound Shaper

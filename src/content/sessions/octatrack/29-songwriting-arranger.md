@@ -1,14 +1,21 @@
 ---
-title: "Session 29: The Arranger — Sequencing Patterns Into Songs"
-module: "Songwriting & Arrangement"
+title: 'Session 29: The Arranger — Sequencing Patterns Into Songs'
 session_number: 29
 duration: 25
 prerequisite: 28
 output_type: composition
 difficulty: intermediate
-tags: [arranger, song-mode, songwriting, composition, arrangement, structure]
+tags:
+  - arranger
+  - song-mode
+  - songwriting
+  - composition
+  - arrangement
+  - structure
 instrument: octatrack
-reference: "Elektron Manual Ch. 14"
+reference: Elektron Manual Ch. 14
+section: Songwriting & Arrangement
+instrument_type: instrument
 ---
 
 # Session 29: The Arranger — Sequencing Patterns Into Songs

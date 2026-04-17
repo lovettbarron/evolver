@@ -1,14 +1,22 @@
 ---
-title: "Session 04: Pulse Width Modulation -- Strings & Horn"
-module: "Analog Oscillators"
+title: 'Session 04: Pulse Width Modulation -- Strings & Horn'
 session_number: 4
 duration: 20
 prerequisite: 3
 output_type: patch
 difficulty: beginner
-tags: [analog-oscillators, pwm, pulse-width, lfo, strings, horn, modulation]
+tags:
+  - analog-oscillators
+  - pwm
+  - pulse-width
+  - lfo
+  - strings
+  - horn
+  - modulation
 instrument: evolver
-reference: "Anu Kirk p.13-16, DSI Manual p.15, p.22"
+reference: 'Anu Kirk p.13-16, DSI Manual p.15, p.22'
+section: Analog Oscillators
+instrument_type: instrument
 ---
 
 # Session 04: Pulse Width Modulation -- Strings & Horn

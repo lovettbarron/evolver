@@ -1,13 +1,18 @@
 ---
-title: "Session 27: Partial Recipe -- Modular Drum Hit"
-module: "Transitional"
+title: 'Session 27: Partial Recipe -- Modular Drum Hit'
 session_number: 27
 duration: 25
 prerequisite: 26
 output_type: patch
 difficulty: advanced
-tags: [partial-recipe, transitional, sound-design, percussion]
+tags:
+  - partial-recipe
+  - transitional
+  - sound-design
+  - percussion
 instrument: cascadia
+section: Transitional
+instrument_type: instrument
 ---
 
 # Session 27: Partial Recipe -- Modular Drum Hit

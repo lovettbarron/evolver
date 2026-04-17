@@ -1,14 +1,24 @@
 ---
-title: "Session 31: Performance Mappings -- Wheel, Pressure, and Pedal"
-module: "Performance & Expression"
+title: 'Session 31: Performance Mappings -- Wheel, Pressure, and Pedal'
 session_number: 31
 duration: 25
 prerequisite: 30
 output_type: patch
 difficulty: advanced
-tags: [performance, expression, mod-wheel, aftertouch, pedal, velocity, mappings]
+tags:
+  - performance
+  - expression
+  - mod-wheel
+  - aftertouch
+  - pedal
+  - velocity
+  - mappings
 instrument: evolver
-reference: "Anu Kirk p.99-101 (performance tips), DSI Manual p.12-13 (global params), p.23-24 (modulators)"
+reference: >-
+  Anu Kirk p.99-101 (performance tips), DSI Manual p.12-13 (global params),
+  p.23-24 (modulators)
+section: Performance & Expression
+instrument_type: instrument
 ---
 
 # Session 31: Performance Mappings -- Wheel, Pressure, and Pedal

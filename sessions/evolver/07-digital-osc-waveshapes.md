@@ -1,14 +1,20 @@
 ---
-title: "Session 07: Digital Oscillator Waveshapes"
-module: "Digital Oscillators"
+title: 'Session 07: Digital Oscillator Waveshapes'
 session_number: 7
 duration: 20
 prerequisite: 3
 output_type: technique
 difficulty: beginner
-tags: [digital-oscillators, waveshapes, prophet-vs, aliasing, timbre]
+tags:
+  - digital-oscillators
+  - waveshapes
+  - prophet-vs
+  - aliasing
+  - timbre
 instrument: evolver
-reference: "Anu Kirk p.22-25, DSI Manual p.16"
+reference: 'Anu Kirk p.22-25, DSI Manual p.16'
+section: Digital Oscillators
+instrument_type: instrument
 ---
 
 # Session 07: Digital Oscillator Waveshapes

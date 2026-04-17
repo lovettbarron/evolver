@@ -1,14 +1,22 @@
 ---
-title: "Session 28: Lead Sounds -- Sync, FM, and Filtered"
-module: "Sound Design Recipes"
+title: 'Session 28: Lead Sounds -- Sync, FM, and Filtered'
 session_number: 28
 duration: 20
 prerequisite: 27
 output_type: patch
 difficulty: advanced
-tags: [recipes, leads, sync-lead, fm-lead, filtered-lead, performance, sound-design]
+tags:
+  - recipes
+  - leads
+  - sync-lead
+  - fm-lead
+  - filtered-lead
+  - performance
+  - sound-design
 instrument: evolver
-reference: "Anu Kirk p.17-21, p.26-32, p.95-98, DSI Manual p.15-17, p.23-24"
+reference: 'Anu Kirk p.17-21, p.26-32, p.95-98, DSI Manual p.15-17, p.23-24'
+section: Sound Design Recipes
+instrument_type: instrument
 ---
 
 # Session 28: Lead Sounds -- Sync, FM, and Filtered

@@ -1,14 +1,20 @@
 ---
-title: "Session 01: Orientation & First Sound"
-module: "Foundations"
+title: 'Session 01: Orientation & First Sound'
 session_number: 1
 duration: 20
 prerequisite: null
 output_type: patch
 difficulty: beginner
-tags: [navigation, first-sound, project, save, foundations]
+tags:
+  - navigation
+  - first-sound
+  - project
+  - save
+  - foundations
 instrument: octatrack
-reference: "Elektron Manual Ch. 1-6, Merlin Ch. 1"
+reference: 'Elektron Manual Ch. 1-6, Merlin Ch. 1'
+section: Foundations
+instrument_type: instrument
 ---
 
 # Session 01: Orientation & First Sound

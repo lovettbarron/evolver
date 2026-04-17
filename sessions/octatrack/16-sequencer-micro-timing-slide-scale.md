@@ -1,14 +1,22 @@
 ---
-title: "Session 16: Micro Timing, Slide Trigs, Scale Settings"
-module: "Sequencer Deep Dive"
+title: 'Session 16: Micro Timing, Slide Trigs, Scale Settings'
 session_number: 16
 duration: 25
 prerequisite: 15
 output_type: recording
 difficulty: advanced
-tags: [sequencer, micro-timing, slide-trigs, scale, polymetric, swing, time-signature]
+tags:
+  - sequencer
+  - micro-timing
+  - slide-trigs
+  - scale
+  - polymetric
+  - swing
+  - time-signature
 instrument: octatrack
-reference: "Elektron Manual Ch. 12.6-12.7"
+reference: Elektron Manual Ch. 12.6-12.7
+section: Sequencer Deep Dive
+instrument_type: instrument
 ---
 
 # Session 16: Micro Timing, Slide Trigs, Scale Settings

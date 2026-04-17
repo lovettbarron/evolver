@@ -1,14 +1,19 @@
 ---
-title: "Session 02: Factory Tour & Favorites"
-module: "Foundations"
+title: 'Session 02: Factory Tour & Favorites'
 session_number: 2
 duration: 25
 prerequisite: 1
 output_type: technique
 difficulty: beginner
-tags: [factory-presets, favorites, listening, foundations]
+tags:
+  - factory-presets
+  - favorites
+  - listening
+  - foundations
 instrument: evolver
-reference: "Anu Kirk p.6, DSI Manual p.3"
+reference: 'Anu Kirk p.6, DSI Manual p.3'
+section: Foundations
+instrument_type: instrument
 ---
 
 # Session 02: Factory Tour & Favorites

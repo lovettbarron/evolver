@@ -1,14 +1,22 @@
 ---
-title: "Session 03: Filter Envelope, Wave Folding, FM & FX"
-module: "Foundations"
+title: 'Session 03: Filter Envelope, Wave Folding, FM & FX'
 session_number: 3
 duration: 25
 prerequisite: 2
 output_type: patch
 difficulty: beginner
-tags: [foundations, filter, envelope, wave-folding, fm, fx, curriculum-patch]
+tags:
+  - foundations
+  - filter
+  - envelope
+  - wave-folding
+  - fm
+  - fx
+  - curriculum-patch
 instrument: cascadia
-reference: "Cascadia Manual pp. 13-16"
+reference: Cascadia Manual pp. 13-16
+section: Foundations
+instrument_type: instrument
 ---
 
 # Session 03: Filter Envelope, Wave Folding, FM & FX

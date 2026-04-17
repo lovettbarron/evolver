@@ -1,14 +1,21 @@
 ---
-title: "Session 13: Self-Oscillation & Audio Mod"
-module: "Filters & Envelopes"
+title: 'Session 13: Self-Oscillation & Audio Mod'
 session_number: 13
 duration: 20
 prerequisite: 11
 output_type: patch
 difficulty: intermediate
-tags: [filters, self-oscillation, audio-mod, resonance, sine-wave, extreme]
+tags:
+  - filters
+  - self-oscillation
+  - audio-mod
+  - resonance
+  - sine-wave
+  - extreme
 instrument: evolver
-reference: "Anu Kirk p.45-48, DSI Manual p.17-18"
+reference: 'Anu Kirk p.45-48, DSI Manual p.17-18'
+section: Filters & Envelopes
+instrument_type: instrument
 ---
 
 # Session 13: Self-Oscillation & Audio Mod

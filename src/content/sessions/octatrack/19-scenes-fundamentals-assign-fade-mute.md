@@ -1,14 +1,20 @@
 ---
-title: "Session 19: Scene Fundamentals — Assign, Fade, Mute"
-module: "Scenes & Crossfader"
+title: 'Session 19: Scene Fundamentals — Assign, Fade, Mute'
 session_number: 19
 duration: 25
 prerequisite: 18
 output_type: technique
 difficulty: intermediate
-tags: [scenes, crossfader, parameter-snapshots, scene-mute, performance]
+tags:
+  - scenes
+  - crossfader
+  - parameter-snapshots
+  - scene-mute
+  - performance
 instrument: octatrack
-reference: "Elektron Manual Ch. 10.3; Merlin Ch. 6"
+reference: Elektron Manual Ch. 10.3; Merlin Ch. 6
+section: Scenes & Crossfader
+instrument_type: instrument
 ---
 
 # Session 19: Scene Fundamentals — Assign, Fade, Mute

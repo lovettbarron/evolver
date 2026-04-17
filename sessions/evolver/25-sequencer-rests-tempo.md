@@ -1,14 +1,22 @@
 ---
-title: "Session 25: Rests, Tempo, Clock Division, and Variable Lengths"
-module: "Sequencer"
+title: 'Session 25: Rests, Tempo, Clock Division, and Variable Lengths'
 session_number: 25
 duration: 25
 prerequisite: 24
 output_type: patch
 difficulty: intermediate
-tags: [sequencer, rests, tempo, clock-divide, swing, rhythm, variable-length]
+tags:
+  - sequencer
+  - rests
+  - tempo
+  - clock-divide
+  - swing
+  - rhythm
+  - variable-length
 instrument: evolver
-reference: "Anu Kirk p.79, p.84-86, DSI Manual p.24-25, p.27-32"
+reference: 'Anu Kirk p.79, p.84-86, DSI Manual p.24-25, p.27-32'
+section: Sequencer
+instrument_type: instrument
 ---
 
 # Session 25: Rests, Tempo, Clock Division, and Variable Lengths

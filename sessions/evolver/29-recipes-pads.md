@@ -1,14 +1,24 @@
 ---
-title: "Session 29: Pads and Textures -- PWM, Waveshape, and Modulated"
-module: "Sound Design Recipes"
+title: 'Session 29: Pads and Textures -- PWM, Waveshape, and Modulated'
 session_number: 29
 duration: 25
 prerequisite: 28
 output_type: patch
 difficulty: advanced
-tags: [recipes, pads, textures, pwm, waveshape, modulation, sound-design]
+tags:
+  - recipes
+  - pads
+  - textures
+  - pwm
+  - waveshape
+  - modulation
+  - sound-design
 instrument: evolver
-reference: "Anu Kirk p.13-15 (PWM), p.22-25 (waveshapes), p.70-74 (mod routing), DSI Manual p.15-17, p.21-23"
+reference: >-
+  Anu Kirk p.13-15 (PWM), p.22-25 (waveshapes), p.70-74 (mod routing), DSI
+  Manual p.15-17, p.21-23
+section: Sound Design Recipes
+instrument_type: instrument
 ---
 
 # Session 29: Pads and Textures -- PWM, Waveshape, and Modulated

@@ -1,14 +1,22 @@
 ---
-title: "Session 34: Mixing the Evolver -- Frequency Planning and Stereo"
-module: "Integration & Composition"
+title: 'Session 34: Mixing the Evolver -- Frequency Planning and Stereo'
 session_number: 34
 duration: 25
 prerequisite: 33
 output_type: recording
 difficulty: advanced
-tags: [integration, mixing, frequency, stereo, effects, daw, production]
+tags:
+  - integration
+  - mixing
+  - frequency
+  - stereo
+  - effects
+  - daw
+  - production
 instrument: evolver
-reference: "DSI Manual p.19-21 (output, delay, pan), p.15-17 (oscillator ranges)"
+reference: 'DSI Manual p.19-21 (output, delay, pan), p.15-17 (oscillator ranges)'
+section: Integration & Composition
+instrument_type: instrument
 ---
 
 # Session 34: Mixing the Evolver -- Frequency Planning and Stereo

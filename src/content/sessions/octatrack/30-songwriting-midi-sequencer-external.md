@@ -1,14 +1,22 @@
 ---
-title: "Session 30: MIDI Sequencer — Controlling External Gear"
-module: "Songwriting & Arrangement"
+title: 'Session 30: MIDI Sequencer — Controlling External Gear'
 session_number: 30
 duration: 25
 prerequisite: 29
 output_type: technique
 difficulty: advanced
-tags: [midi, midi-sequencer, external-gear, cc, arpeggiator, brain, integration]
+tags:
+  - midi
+  - midi-sequencer
+  - external-gear
+  - cc
+  - arpeggiator
+  - brain
+  - integration
 instrument: octatrack
-reference: "Elektron Manual Ch. 15"
+reference: Elektron Manual Ch. 15
+section: Songwriting & Arrangement
+instrument_type: instrument
 ---
 
 # Session 30: MIDI Sequencer — Controlling External Gear

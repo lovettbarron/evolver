@@ -1,14 +1,20 @@
 ---
-title: "Session 05: Hard Sync -- The Classic Sound"
-module: "Analog Oscillators"
+title: 'Session 05: Hard Sync -- The Classic Sound'
 session_number: 5
 duration: 25
 prerequisite: 3
 output_type: patch
 difficulty: intermediate
-tags: [analog-oscillators, hard-sync, sync-lead, prophet, timbre]
+tags:
+  - analog-oscillators
+  - hard-sync
+  - sync-lead
+  - prophet
+  - timbre
 instrument: evolver
-reference: "Anu Kirk p.17-21, DSI Manual p.15"
+reference: 'Anu Kirk p.17-21, DSI Manual p.15'
+section: Analog Oscillators
+instrument_type: instrument
 ---
 
 # Session 05: Hard Sync -- The Classic Sound

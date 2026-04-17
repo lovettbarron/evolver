@@ -1,14 +1,21 @@
 ---
-title: "Session 17: LFO Basics — 3 LFOs Per Track"
-module: "Modulation & LFOs"
+title: 'Session 17: LFO Basics — 3 LFOs Per Track'
 session_number: 17
 duration: 20
 prerequisite: 16
 output_type: patch
 difficulty: intermediate
-tags: [lfo, modulation, wobble, sync, free-running, per-track]
+tags:
+  - lfo
+  - modulation
+  - wobble
+  - sync
+  - free-running
+  - per-track
 instrument: octatrack
-reference: "Elektron Manual Ch. 11.4.7-11.4.9"
+reference: Elektron Manual Ch. 11.4.7-11.4.9
+section: Modulation & LFOs
+instrument_type: instrument
 ---
 
 # Session 17: LFO Basics — 3 LFOs Per Track

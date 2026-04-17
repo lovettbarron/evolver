@@ -1,14 +1,22 @@
 ---
-title: "Session 17: Velocity, Aftertouch & Mod Wheel"
-module: "Modulation"
+title: 'Session 17: Velocity, Aftertouch & Mod Wheel'
 session_number: 17
 duration: 25
 prerequisite: 15
 output_type: patch
 difficulty: intermediate
-tags: [modulation, velocity, aftertouch, pressure, mod-wheel, expression, performance]
+tags:
+  - modulation
+  - velocity
+  - aftertouch
+  - pressure
+  - mod-wheel
+  - expression
+  - performance
 instrument: evolver
-reference: "Anu Kirk p.40-41, p.50, DSI Manual p.23-24, p.12-13"
+reference: 'Anu Kirk p.40-41, p.50, DSI Manual p.23-24, p.12-13'
+section: Modulation
+instrument_type: instrument
 ---
 
 # Session 17: Velocity, Aftertouch & Mod Wheel

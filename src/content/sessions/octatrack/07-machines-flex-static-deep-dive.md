@@ -1,14 +1,20 @@
 ---
-title: "Session 07: Flex & Static Machines Deep Dive"
-module: "Machines & Playback"
+title: 'Session 07: Flex & Static Machines Deep Dive'
 session_number: 7
 duration: 25
 prerequisite: 6
 output_type: patch
 difficulty: intermediate
-tags: [machines, flex, static, sample-swap, long-sample]
+tags:
+  - machines
+  - flex
+  - static
+  - sample-swap
+  - long-sample
 instrument: octatrack
-reference: "Elektron Manual Ch. 11.1-11.2; Merlin Ch. 4"
+reference: Elektron Manual Ch. 11.1-11.2; Merlin Ch. 4
+section: Machines & Playback
+instrument_type: instrument
 ---
 
 # Session 07: Flex & Static Machines Deep Dive

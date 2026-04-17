@@ -1,14 +1,22 @@
 ---
-title: "Session 07: Envelope A and VCA A — Shaping Every Note"
-module: "Envelopes & Amplitude"
+title: 'Session 07: Envelope A and VCA A — Shaping Every Note'
 session_number: 7
 duration: 20
 prerequisite: 6
 output_type: patch
 difficulty: intermediate
-tags: [envelopes, adsr, vca, amplitude, dynamics, velocity, curriculum]
+tags:
+  - envelopes
+  - adsr
+  - vca
+  - amplitude
+  - dynamics
+  - velocity
+  - curriculum
 instrument: cascadia
-reference: "Cascadia Manual pp. 26-28"
+reference: Cascadia Manual pp. 26-28
+section: Envelopes & Amplitude
+instrument_type: instrument
 ---
 
 # Session 07: Envelope A and VCA A — Shaping Every Note
