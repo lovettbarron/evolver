@@ -19,7 +19,7 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 ### Navigation
 
 - [x] **NAV-01**: Top-level "Modules" section at `/modules` lists all eurorack modules with category filter (`?category=vco`)
-- [ ] **NAV-02**: Per-module routes at `/modules/[slug]/` with overview, sessions, and patches pages
+- [x] **NAV-02**: Per-module routes at `/modules/[slug]/` with overview, sessions, and patches pages
 - [x] **NAV-03**: Module selector in main nav alongside instrument selector
 - [x] **NAV-04**: Multi-category modules appear under each category they belong to in filtered views
 - [x] **NAV-05**: Per-module color identity via `[data-instrument]` CSS cascade (7 distinct palettes)

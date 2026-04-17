@@ -73,7 +73,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 **Milestone Goal:** Extend the instrument mastery system to teach individual eurorack modules — each with its own front plate SVG, sessions, patches, and category-based organization — starting with 7 modules across 5 functional categories.
 
 - [ ] **Phase 26: Data Model + Content Pipeline** - ModuleConfigSchema, reader functions, module-to-section rename, triple-write pipeline, reference manuals
-- [ ] **Phase 27: Module Navigation + Routing** - /modules routes, category filtering, module selector, per-module color identity
+- [x] **Phase 27: Module Navigation + Routing** - /modules routes, category filtering, module selector, per-module color identity (completed 2026-04-17)
 - [ ] **Phase 28: Panel System + First Panel** - Generic ModulePanel renderer, HP-aware sizing, session annotations, Plaits panel proof
 - [ ] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation
 - [ ] **Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels** - Four module curricula and panels following proven pattern
@@ -108,11 +108,11 @@ Plans:
   3. User sees a "Modules" entry in the main navigation alongside the existing instrument selector
   4. Multi-category modules (e.g., Maths as function generator + envelope + LFO) appear under every category they belong to in filtered views
   5. Each module page uses its own color identity via the `[data-instrument]` CSS cascade — 7 distinct palettes
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 27-01-PLAN.md — Color palettes (7 modules), app-shell slug detection, Modules nav link
 - [x] 27-02-PLAN.md — /modules listing page with category tabs, ModuleCard, HpOutline
-- [ ] 27-03-PLAN.md — Per-module routes /modules/[slug]/ with layout, sub-nav, 4 sub-pages
+- [x] 27-03-PLAN.md — Per-module routes /modules/[slug]/ with layout, sub-nav, 4 sub-pages
 **UI hint**: yes
 
 ### Phase 28: Panel System + First Panel
@@ -230,7 +230,7 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 24. Instrument Color Identity | v1.3 | 1/1 | Complete | 2026-04-13 |
 | 25. Octatrack Curriculum + Site Integration | v1.3 | 7/7 | Complete | 2026-04-17 |
 | 26. Data Model + Content Pipeline | v2.0 | 1/3 | In Progress|  |
-| 27. Module Navigation + Routing | v2.0 | 2/3 | In Progress|  |
+| 27. Module Navigation + Routing | v2.0 | 3/3 | Complete   | 2026-04-17 |
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
 | 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
 | 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 0/? | Not started | - |
