@@ -88,6 +88,33 @@ export const InstrumentConfigSchema = z.object({
 
 export type InstrumentConfig = z.infer<typeof InstrumentConfigSchema>;
 
+// Module category taxonomy (D-07, D-08)
+export const ModuleCategoryEnum = z.enum([
+  'vco', 'filter', 'effects', 'modulator',
+  'function-generator', 'envelope-generator',
+]);
+
+export type ModuleCategory = z.infer<typeof ModuleCategoryEnum>;
+
+// Eurorack module configuration (D-01, D-02)
+export const ModuleConfigSchema = z.object({
+  display_name: z.string(),
+  tagline: z.string(),
+  manufacturer: z.string(),
+  hp_width: z.number().int().positive(),
+  categories: z.array(ModuleCategoryEnum).min(1),
+  power_specs: z.object({
+    plus_12v_ma: z.number().int().nonnegative(),
+    minus_12v_ma: z.number().int().nonnegative(),
+  }),
+  reference_pdfs: z.array(z.object({
+    label: z.string(),
+    file: z.string(),
+  })),
+}).passthrough();
+
+export type ModuleConfig = z.infer<typeof ModuleConfigSchema>;
+
 // Config schema (also used by config.ts)
 export const ConfigSchema = z.object({
   vaultPath: z.string().optional(),

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { SessionSchema, PatchSchema, InstrumentFileSchema, ConfigSchema, InstrumentConfigSchema } from '../schemas.js';
+import { SessionSchema, PatchSchema, InstrumentFileSchema, ConfigSchema, InstrumentConfigSchema, ModuleConfigSchema, ModuleCategoryEnum } from '../schemas.js';
 import { ZodError } from 'zod';
 
 describe('SessionSchema', () => {
@@ -489,6 +489,63 @@ describe('InstrumentConfigSchema', () => {
     };
     const result = InstrumentConfigSchema.parse(data);
     expect(result.future_field).toBe('hello');
+  });
+});
+
+describe('ModuleConfigSchema', () => {
+  const validMathsConfig = {
+    display_name: 'Maths',
+    tagline: 'Analog computer for control voltage',
+    manufacturer: 'Make Noise',
+    hp_width: 20,
+    categories: ['function-generator', 'envelope-generator', 'modulator'],
+    power_specs: { plus_12v_ma: 60, minus_12v_ma: 50 },
+    reference_pdfs: [{ label: 'Maths Manual (2020 Rev)', file: 'maths-manual.pdf' }],
+  };
+
+  it('parses valid Maths config', () => {
+    const result = ModuleConfigSchema.parse(validMathsConfig);
+    expect(result.display_name).toBe('Maths');
+    expect(result.hp_width).toBe(20);
+    expect(result.categories).toHaveLength(3);
+  });
+
+  it('rejects empty object (missing required fields)', () => {
+    expect(() => ModuleConfigSchema.parse({})).toThrow(ZodError);
+  });
+
+  it('rejects hp_width: -1 (must be positive int)', () => {
+    expect(() => ModuleConfigSchema.parse({ ...validMathsConfig, hp_width: -1 })).toThrow(ZodError);
+  });
+
+  it('rejects empty categories array (min 1)', () => {
+    expect(() => ModuleConfigSchema.parse({ ...validMathsConfig, categories: [] })).toThrow(ZodError);
+  });
+
+  it('accepts multi-category module', () => {
+    const result = ModuleConfigSchema.parse(validMathsConfig);
+    expect(result.categories).toContain('function-generator');
+    expect(result.categories).toContain('envelope-generator');
+    expect(result.categories).toContain('modulator');
+  });
+
+  it('passes through unknown fields', () => {
+    const result = ModuleConfigSchema.parse({ ...validMathsConfig, future_field: 'test' });
+    expect(result.future_field).toBe('test');
+  });
+});
+
+describe('ModuleCategoryEnum', () => {
+  const validCategories = ['vco', 'filter', 'effects', 'modulator', 'function-generator', 'envelope-generator'];
+
+  it('accepts all 6 valid categories', () => {
+    for (const cat of validCategories) {
+      expect(ModuleCategoryEnum.parse(cat)).toBe(cat);
+    }
+  });
+
+  it('rejects invalid category string', () => {
+    expect(() => ModuleCategoryEnum.parse('invalid-category')).toThrow(ZodError);
   });
 });
 

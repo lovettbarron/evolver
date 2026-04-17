@@ -1,0 +1,14 @@
+{
+  "display_name": "Test Module",
+  "tagline": "A test eurorack module",
+  "manufacturer": "Test Manufacturer",
+  "hp_width": 12,
+  "categories": ["vco"],
+  "power_specs": {
+    "plus_12v_ma": 50,
+    "minus_12v_ma": 30
+  },
+  "reference_pdfs": [
+    { "label": "Test Manual", "file": "test-manual.pdf" }
+  ]
+}

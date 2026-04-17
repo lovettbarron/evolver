@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import path from 'path';
 import { ZodError } from 'zod';
-import { readContentFile, discoverInstruments, listSessions, listPatches, listModules, listInstrumentFiles, getContentRoot, loadInstrumentConfig, getTroubleshooting } from '../reader.js';
+import { readContentFile, discoverInstruments, listSessions, listPatches, listModules, listInstrumentFiles, getContentRoot, loadInstrumentConfig, getTroubleshooting, discoverModules, loadModuleConfig } from '../reader.js';
 import { InstrumentFileSchema, SessionSchema, PatchSchema, TroubleshootingSchema } from '../schemas.js';
 import type { AppConfig } from '../schemas.js';
 
@@ -221,5 +221,35 @@ describe('listInstrumentFiles', () => {
     const files = await listInstrumentFiles('cascadia', config);
     expect(files.length).toBeGreaterThanOrEqual(1);
     expect(files[0].data.type).toBe('overview');
+  });
+});
+
+describe('discoverModules', () => {
+  it('returns ["test-module"] when __fixtures__/modules/test-module/ exists', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const modules = await discoverModules(config);
+    expect(modules).toContain('test-module');
+  });
+
+  it('returns [] when modules/ directory does not exist (no crash)', async () => {
+    const config: AppConfig = { vaultPath: '/nonexistent/path', instrument: 'evolver' };
+    const modules = await discoverModules(config);
+    expect(modules).toEqual([]);
+  });
+});
+
+describe('loadModuleConfig', () => {
+  it('parses __fixtures__/modules/test-module/module.json', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    const result = await loadModuleConfig('test-module', config);
+    expect(result.display_name).toBe('Test Module');
+    expect(result.hp_width).toBe(12);
+    expect(result.categories).toContain('vco');
+    expect(result.manufacturer).toBe('Test Manufacturer');
+  });
+
+  it('throws for nonexistent module', async () => {
+    const config: AppConfig = { vaultPath: FIXTURES_DIR, instrument: 'evolver' };
+    await expect(loadModuleConfig('nonexistent', config)).rejects.toThrow();
   });
 });
