@@ -24,6 +24,8 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 
 **v1.3 shipped:** Visual Redesign — OKLCH design system, typography, layout shell, cards, motion, per-instrument color identity, Octatrack curriculum (31 sessions, 5 patches, Elektron-orange identity, demo mode)
 
+**v2.0 in progress:** Phase 27 complete — Module navigation + routing with /modules listing, category filter tabs, per-module routes (/modules/[slug]/), 7 OKLCH color palettes, ModuleCard/InstrumentModuleCard component split
+
 ## Current Milestone: v2.0 Eurorack Module Learning
 
 **Goal:** Extend the instrument mastery system to teach individual eurorack modules — each with its own front plate SVG, sessions, patches, and category-based organization — starting with 6 modules across 5 functional categories.
@@ -174,4 +176,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-17 — Milestone v2.0 Eurorack Module Learning started*
+*Last updated: 2026-04-17 — Phase 27 (Module Navigation + Routing) complete*
