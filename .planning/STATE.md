@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Visual Redesign
 status: executing
-stopped_at: Completed 25-03b-PLAN.md
-last_updated: "2026-04-17T05:17:08.772Z"
+stopped_at: Completed 25-04-PLAN.md
+last_updated: "2026-04-17T05:25:01.319Z"
 last_activity: 2026-04-17
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 25
-  completed_plans: 23
+  completed_plans: 24
   percent: 55
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-07)
 ## Current Position
 
 Phase: 25 (complete-the-octatrack-curriculum-work-so-that-it-is-ready-to-add-to-the-evolver-site-focus-on-song-writing-and-arrangement-and-live-sessions-and-looping) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Status: Ready to execute
 Last activity: 2026-04-17
 
@@ -83,6 +83,7 @@ Recent decisions affecting current work:
 - [Phase 25]: Plan 25-02: PatchDetail tests must filter SVGs by viewBox to skip lucide icons — container.querySelector('svg') returns the 24x24 ChevronLeft, not the 1000x500 panel. Pattern: Array.from(querySelectorAll('svg')).find(s => s.getAttribute('viewBox') === '<expected>')
 - [Phase 25-complete-the-octatrack-curriculum-work-so-that-it-is-ready-to-add-to-the-evolver-site-focus-on-song-writing-and-arrangement-and-live-sessions-and-looping]: Plan 25-03a: Authored 16 octatrack sessions (Modules 1-6) with --no-verify per-task commits to enable parallel execution alongside 25-03b. Sparse marker discipline held: 0.94 markers/session avg (target <2). Conceptual teaching of firmware-variant gestures (slide trigs, sample-lock menus, LFO Designer access) instead of pinning to specific OS versions.
 - [Phase 25]: key-func-cue is not a valid control ID; CUE button is key-track-cue (module: track). Session 26 authored by prior executor but never committed; committed and triple-written in continuation run.
+- [Phase 25]: Project-state patch format for Octatrack: sample list + track config + pattern map + scene notes + performance tips; no parameter-dump fields (patch_memory: false)
 
 ### Pending Todos
 
@@ -109,9 +110,10 @@ None yet.
 | Phase 25 P02 | 7min | 2 tasks | 18 files |
 | Phase 25-complete-the-octatrack-curriculum-work-so-that-it-is-ready-to-add-to-the-evolver-site-focus-on-song-writing-and-arrangement-and-live-sessions-and-looping P03a | 15min | 3 tasks | 32 files |
 | Phase 25 P03b | 4min | 3 tasks | 18 files |
+| Phase 25 P04 | 5min | 2 tasks | 10 files |
 
 ## Session Continuity
 
-Last session: 2026-04-17T05:17:08.769Z
-Stopped at: Completed 25-03b-PLAN.md
+Last session: 2026-04-17T05:25:01.314Z
+Stopped at: Completed 25-04-PLAN.md
 Resume file: None
