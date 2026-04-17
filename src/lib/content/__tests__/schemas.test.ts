@@ -6,7 +6,7 @@ describe('SessionSchema', () => {
   it('parses valid session data', () => {
     const data = {
       title: 'Session 01: Navigation',
-      module: 'Foundations',
+      section: 'Foundations',
       session_number: 1,
       duration: 20,
       prerequisite: null,
@@ -24,7 +24,7 @@ describe('SessionSchema', () => {
   it('rejects duration over 30', () => {
     const data = {
       title: 'Bad',
-      module: 'Foundations',
+      section: 'Foundations',
       session_number: 1,
       duration: 60,
       prerequisite: null,
@@ -44,7 +44,7 @@ describe('SessionSchema', () => {
   it('allows extra fields via passthrough', () => {
     const data = {
       title: 'Session 01: Navigation',
-      module: 'Foundations',
+      section: 'Foundations',
       session_number: 1,
       duration: 20,
       prerequisite: null,

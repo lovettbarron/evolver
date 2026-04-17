@@ -48,7 +48,7 @@ vi.mock('lucide-react', () => ({
 
 const baseSession = {
   title: 'Analog Oscillator Basics',
-  module: 'Module 1: Oscillator Foundations',
+  section: 'Module 1: Oscillator Foundations',
   session_number: 1,
   duration: 20,
   prerequisite: null,
@@ -56,6 +56,7 @@ const baseSession = {
   difficulty: 'beginner' as const,
   tags: ['oscillator'],
   instrument: 'evolver',
+  instrument_type: 'instrument' as const,
 };
 
 describe('SessionDetail', () => {

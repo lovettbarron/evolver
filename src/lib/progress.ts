@@ -12,7 +12,7 @@ export interface ProgressData {
   modulesDone: number;
   challengesCompleted: number;
   totalModules: number;
-  moduleCompletionMap: Array<{ module: string; complete: boolean }>;
+  moduleCompletionMap: Array<{ section: string; complete: boolean }>;
 }
 
 export interface CompletedSessions {
@@ -75,8 +75,8 @@ export async function computeProgress(
 
   const modules = groupByModule(sessions);
 
-  const moduleCompletionMap = modules.map(({ module, sessions: moduleSessions }) => ({
-    module,
+  const moduleCompletionMap = modules.map(({ section, sessions: moduleSessions }) => ({
+    section,
     complete: moduleSessions.every(s => completedSessionNumbers.has(s.data.session_number)),
   }));
 

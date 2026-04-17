@@ -2,21 +2,21 @@ export function ModuleJourney({
   modules,
   currentModule,
 }: {
-  modules: Array<{ module: string; complete: boolean }>;
+  modules: Array<{ section: string; complete: boolean }>;
   currentModule: string | null;
 }) {
   return (
     <div className="bg-surface p-lg rounded-lg">
       <div className="flex items-center gap-sm overflow-x-auto min-h-[44px]">
         {modules.map((m, i) => {
-          const isCurrent = m.module === currentModule;
+          const isCurrent = m.section === currentModule;
           const dotClass = m.complete
             ? 'bg-accent'
             : isCurrent
               ? 'bg-accent animate-pulse-glow'
               : 'bg-surface border border-muted';
           return (
-            <span key={i} title={m.module} aria-current={isCurrent ? 'true' : undefined}>
+            <span key={i} title={m.section} aria-current={isCurrent ? 'true' : undefined}>
               <span
                 className={`block w-[12px] h-[12px] rounded-full flex-shrink-0 ${dotClass}`}
               />

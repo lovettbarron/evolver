@@ -3,17 +3,17 @@ import { render } from '@testing-library/react';
 import { ModuleJourney } from '@/components/module-journey';
 
 const mockModules = [
-  { module: 'Foundations', complete: true },
-  { module: 'Oscillators', complete: true },
-  { module: 'Modulation', complete: false },
-  { module: 'Effects', complete: false },
+  { section: 'Foundations', complete: true },
+  { section: 'Oscillators', complete: true },
+  { section: 'Modulation', complete: false },
+  { section: 'Effects', complete: false },
 ];
 
 const allCompleteModules = [
-  { module: 'Foundations', complete: true },
-  { module: 'Oscillators', complete: true },
-  { module: 'Modulation', complete: true },
-  { module: 'Effects', complete: true },
+  { section: 'Foundations', complete: true },
+  { section: 'Oscillators', complete: true },
+  { section: 'Modulation', complete: true },
+  { section: 'Effects', complete: true },
 ];
 
 describe('ModuleJourney', () => {

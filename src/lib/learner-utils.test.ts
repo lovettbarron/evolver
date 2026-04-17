@@ -22,7 +22,7 @@ describe('mergeCompletions', () => {
 });
 
 function mockSession(num: number, slug: string, title: string, mod: string) {
-  return { slug, data: { session_number: num, title, module: mod } };
+  return { slug, data: { session_number: num, title, section: mod } };
 }
 
 const sessions = [
@@ -40,7 +40,7 @@ describe('computeNextSession', () => {
       new Set([1]),
       sessions,
     );
-    expect(result).toEqual({ slug: 'osc', sessionNumber: 2, title: 'Oscillators', module: 'Foundations' });
+    expect(result).toEqual({ slug: 'osc', sessionNumber: 2, title: 'Oscillators', section: 'Foundations' });
   });
 
   it('returns first incomplete when lastVisited is complete', () => {
@@ -49,7 +49,7 @@ describe('computeNextSession', () => {
       new Set([1, 2]),
       sessions,
     );
-    expect(result).toEqual({ slug: 'filter', sessionNumber: 3, title: 'Filter Basics', module: 'Filter' });
+    expect(result).toEqual({ slug: 'filter', sessionNumber: 3, title: 'Filter Basics', section: 'Filter' });
   });
 
   it('returns null when all sessions are complete', () => {
@@ -63,12 +63,12 @@ describe('computeNextSession', () => {
 
   it('returns first incomplete when no lastVisited', () => {
     const result = computeNextSession(undefined, new Set([1]), sessions);
-    expect(result).toEqual({ slug: 'osc', sessionNumber: 2, title: 'Oscillators', module: 'Foundations' });
+    expect(result).toEqual({ slug: 'osc', sessionNumber: 2, title: 'Oscillators', section: 'Foundations' });
   });
 
   it('returns first session when no lastVisited and no completions', () => {
     const result = computeNextSession(undefined, new Set(), sessions);
-    expect(result).toEqual({ slug: 'intro', sessionNumber: 1, title: 'Introduction', module: 'Foundations' });
+    expect(result).toEqual({ slug: 'intro', sessionNumber: 1, title: 'Introduction', section: 'Foundations' });
   });
 
   it('returns null for empty sessions list', () => {
@@ -82,7 +82,7 @@ describe('computeNextSession', () => {
       new Set([1]),
       sessions,
     );
-    expect(result).toEqual({ slug: 'osc', sessionNumber: 2, title: 'Oscillators', module: 'Foundations' });
+    expect(result).toEqual({ slug: 'osc', sessionNumber: 2, title: 'Oscillators', section: 'Foundations' });
   });
 
   it('handles lastVisited complete with all others also complete except last', () => {
@@ -91,6 +91,6 @@ describe('computeNextSession', () => {
       new Set([1, 2, 3, 4]),
       sessions,
     );
-    expect(result).toEqual({ slug: 'lfo', sessionNumber: 5, title: 'LFO Modulation', module: 'Modulation' });
+    expect(result).toEqual({ slug: 'lfo', sessionNumber: 5, title: 'LFO Modulation', section: 'Modulation' });
   });
 });

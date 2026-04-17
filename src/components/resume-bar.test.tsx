@@ -32,9 +32,9 @@ vi.mock('@/lib/learner-utils', () => ({
 }));
 
 const mockSessions = [
-  { slug: '01-basics', data: { session_number: 1, title: 'Basics', module: 'Foundations' } },
-  { slug: '02-oscillators', data: { session_number: 2, title: 'Oscillators', module: 'Foundations' } },
-  { slug: '03-filters', data: { session_number: 3, title: 'Filters', module: 'Sound Shaping' } },
+  { slug: '01-basics', data: { session_number: 1, title: 'Basics', section: 'Foundations' } },
+  { slug: '02-oscillators', data: { session_number: 2, title: 'Oscillators', section: 'Foundations' } },
+  { slug: '03-filters', data: { session_number: 3, title: 'Filters', section: 'Sound Shaping' } },
 ];
 
 describe('ResumeBar', () => {
@@ -53,7 +53,7 @@ describe('ResumeBar', () => {
       slug: '02-oscillators',
       sessionNumber: 2,
       title: 'Oscillators',
-      module: 'Foundations',
+      section: 'Foundations',
     });
 
     render(
@@ -69,7 +69,7 @@ describe('ResumeBar', () => {
       slug: '01-basics',
       sessionNumber: 1,
       title: 'Basics',
-      module: 'Foundations',
+      section: 'Foundations',
     });
 
     render(
@@ -100,7 +100,7 @@ describe('ResumeBar', () => {
       slug: '02-oscillators',
       sessionNumber: 2,
       title: 'Oscillators',
-      module: 'Foundations',
+      section: 'Foundations',
     });
 
     render(
@@ -130,7 +130,7 @@ describe('ResumeBar', () => {
       slug: '01-basics',
       sessionNumber: 1,
       title: 'Basics',
-      module: 'Foundations',
+      section: 'Foundations',
     });
 
     const { container } = render(

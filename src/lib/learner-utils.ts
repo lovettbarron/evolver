@@ -11,14 +11,14 @@ export function mergeCompletions(
 
 interface SessionRef {
   slug: string;
-  data: { session_number: number; title: string; module: string };
+  data: { session_number: number; title: string; section: string };
 }
 
 interface NextSessionResult {
   slug: string;
   sessionNumber: number;
   title: string;
-  module: string;
+  section: string;
 }
 
 /**
@@ -44,7 +44,7 @@ export function computeNextSession(
         slug: found.slug,
         sessionNumber: found.data.session_number,
         title: found.data.title,
-        module: found.data.module,
+        section: found.data.section,
       };
     }
   }
@@ -60,6 +60,6 @@ export function computeNextSession(
     slug: firstIncomplete.slug,
     sessionNumber: firstIncomplete.data.session_number,
     title: firstIncomplete.data.title,
-    module: firstIncomplete.data.module,
+    section: firstIncomplete.data.section,
   };
 }

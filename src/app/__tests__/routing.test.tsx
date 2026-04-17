@@ -12,12 +12,12 @@ vi.mock('next/link', () => ({
 
 const mockGroups: ModuleGroup[] = [
   {
-    module: 'Module 1: Oscillator Foundations',
+    section: 'Module 1: Oscillator Foundations',
     sessions: [
       {
         data: {
           title: 'Analog Oscillator Basics',
-          module: 'Module 1: Oscillator Foundations',
+          section: 'Module 1: Oscillator Foundations',
           session_number: 1,
           duration: 20,
           prerequisite: null,
@@ -25,6 +25,7 @@ const mockGroups: ModuleGroup[] = [
           difficulty: 'beginner',
           tags: ['oscillator'],
           instrument: 'evolver',
+          instrument_type: 'instrument' as const,
         },
         content: '',
         slug: '01-oscillator-basics',
@@ -32,7 +33,7 @@ const mockGroups: ModuleGroup[] = [
       {
         data: {
           title: 'Digital Oscillators',
-          module: 'Module 1: Oscillator Foundations',
+          section: 'Module 1: Oscillator Foundations',
           session_number: 2,
           duration: 25,
           prerequisite: 1,
@@ -40,6 +41,7 @@ const mockGroups: ModuleGroup[] = [
           difficulty: 'beginner',
           tags: ['oscillator'],
           instrument: 'evolver',
+          instrument_type: 'instrument' as const,
         },
         content: '',
         slug: '02-digital-oscillators',
@@ -47,12 +49,12 @@ const mockGroups: ModuleGroup[] = [
     ],
   },
   {
-    module: 'Module 2: Filters',
+    section: 'Module 2: Filters',
     sessions: [
       {
         data: {
           title: 'Filter Basics',
-          module: 'Module 2: Filters',
+          section: 'Module 2: Filters',
           session_number: 3,
           duration: 15,
           prerequisite: 2,
@@ -60,6 +62,7 @@ const mockGroups: ModuleGroup[] = [
           difficulty: 'beginner',
           tags: ['filter'],
           instrument: 'evolver',
+          instrument_type: 'instrument' as const,
         },
         content: '',
         slug: '03-filter-basics',

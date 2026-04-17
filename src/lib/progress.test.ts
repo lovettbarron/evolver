@@ -125,11 +125,11 @@ describe('computeProgress', () => {
     // 3 sessions in "Foundations" (session_numbers 1, 2, 3)
     // 2 sessions in "Analog Oscillators" (session_numbers 4, 5)
     mockedListSessions.mockResolvedValue([
-      { data: { title: 'S1', module: 'Foundations', session_number: 1, duration: 15, prerequisite: null, output_type: 'patch', difficulty: 'beginner', tags: [], instrument: 'evolver' }, content: '', slug: '01-foundations-s1' },
-      { data: { title: 'S2', module: 'Foundations', session_number: 2, duration: 15, prerequisite: 1, output_type: 'technique', difficulty: 'beginner', tags: [], instrument: 'evolver' }, content: '', slug: '02-foundations-s2' },
-      { data: { title: 'S3', module: 'Foundations', session_number: 3, duration: 15, prerequisite: 2, output_type: 'patch', difficulty: 'beginner', tags: [], instrument: 'evolver' }, content: '', slug: '03-foundations-s3' },
-      { data: { title: 'S4', module: 'Analog Oscillators', session_number: 4, duration: 20, prerequisite: 3, output_type: 'patch', difficulty: 'intermediate', tags: [], instrument: 'evolver' }, content: '', slug: '04-analog-s4' },
-      { data: { title: 'S5', module: 'Analog Oscillators', session_number: 5, duration: 20, prerequisite: 4, output_type: 'technique', difficulty: 'intermediate', tags: [], instrument: 'evolver' }, content: '', slug: '05-analog-s5' },
+      { data: { title: 'S1', section: 'Foundations', session_number: 1, duration: 15, prerequisite: null, output_type: 'patch', difficulty: 'beginner', tags: [], instrument: 'evolver' }, content: '', slug: '01-foundations-s1' },
+      { data: { title: 'S2', section: 'Foundations', session_number: 2, duration: 15, prerequisite: 1, output_type: 'technique', difficulty: 'beginner', tags: [], instrument: 'evolver' }, content: '', slug: '02-foundations-s2' },
+      { data: { title: 'S3', section: 'Foundations', session_number: 3, duration: 15, prerequisite: 2, output_type: 'patch', difficulty: 'beginner', tags: [], instrument: 'evolver' }, content: '', slug: '03-foundations-s3' },
+      { data: { title: 'S4', section: 'Analog Oscillators', session_number: 4, duration: 20, prerequisite: 3, output_type: 'patch', difficulty: 'intermediate', tags: [], instrument: 'evolver' }, content: '', slug: '04-analog-s4' },
+      { data: { title: 'S5', section: 'Analog Oscillators', session_number: 5, duration: 20, prerequisite: 4, output_type: 'technique', difficulty: 'intermediate', tags: [], instrument: 'evolver' }, content: '', slug: '05-analog-s5' },
     ] as any);
 
     // 2 patches: one with challenge_id, one without
@@ -141,12 +141,12 @@ describe('computeProgress', () => {
     mockedGroupByModule.mockImplementation((sessions) => {
       const map = new Map<string, any[]>();
       for (const s of sessions) {
-        const mod = s.data.module;
+        const mod = s.data.section;
         if (!map.has(mod)) map.set(mod, []);
         map.get(mod)!.push(s);
       }
-      return Array.from(map.entries()).map(([module, sess]) => ({
-        module,
+      return Array.from(map.entries()).map(([section, sess]) => ({
+        section,
         sessions: sess.sort((a: any, b: any) => a.data.session_number - b.data.session_number),
       }));
     });
@@ -180,8 +180,8 @@ describe('computeProgress', () => {
   it('has moduleCompletionMap with correct structure', async () => {
     const result = await computeProgress('evolver', mockConfig, new Set([1, 2, 3]));
     expect(result.moduleCompletionMap).toEqual([
-      { module: 'Foundations', complete: true },
-      { module: 'Analog Oscillators', complete: false },
+      { section: 'Foundations', complete: true },
+      { section: 'Analog Oscillators', complete: false },
     ]);
   });
 

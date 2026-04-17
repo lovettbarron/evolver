@@ -10,9 +10,9 @@ import {
 } from '../search';
 
 const sessions: SearchableSession[] = [
-  { slug: "01-osc-basics", title: "Oscillator Basics", module: "oscillators", tags: ["analog", "waveform"], difficulty: "beginner", sessionNumber: 1, instrument: "evolver" },
-  { slug: "02-filter-sweep", title: "Filter Sweep Techniques", module: "filters", tags: ["filter", "resonance"], difficulty: "intermediate", sessionNumber: 2, instrument: "evolver" },
-  { slug: "01-vco-intro", title: "VCO Introduction", module: "vco", tags: ["analog"], difficulty: "beginner", sessionNumber: 1, instrument: "cascadia" },
+  { slug: "01-osc-basics", title: "Oscillator Basics", section: "oscillators", tags: ["analog", "waveform"], difficulty: "beginner", sessionNumber: 1, instrument: "evolver" },
+  { slug: "02-filter-sweep", title: "Filter Sweep Techniques", section: "filters", tags: ["filter", "resonance"], difficulty: "intermediate", sessionNumber: 2, instrument: "evolver" },
+  { slug: "01-vco-intro", title: "VCO Introduction", section: "vco", tags: ["analog"], difficulty: "beginner", sessionNumber: 1, instrument: "cascadia" },
 ];
 
 const patches: SearchablePatch[] = [
@@ -153,7 +153,7 @@ describe("toSearchableSession", () => {
       slug: "01-osc-basics",
       data: {
         title: "Oscillator Basics",
-        module: "oscillators",
+        section: "oscillators",
         session_number: 1,
         duration: 20,
         prerequisite: null,
@@ -161,12 +161,13 @@ describe("toSearchableSession", () => {
         difficulty: "beginner" as const,
         tags: ["analog", "waveform"],
         instrument: "evolver",
+        instrument_type: "instrument" as const,
       },
     });
     expect(result).toEqual({
       slug: "01-osc-basics",
       title: "Oscillator Basics",
-      module: "oscillators",
+      section: "oscillators",
       tags: ["analog", "waveform"],
       difficulty: "beginner",
       sessionNumber: 1,
