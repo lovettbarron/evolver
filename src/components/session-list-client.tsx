@@ -21,7 +21,8 @@ export function SessionListClient({
   vaultCompletedSessions,
 }: SessionListClientProps) {
   const hydrated = useHydrated();
-  const manualCompletions = useLearnerStore((s) => s.getCompletedSessions(instrumentSlug));
+  const manualCompletionsList = useLearnerStore((s) => s.completions[instrumentSlug]);
+  const manualCompletions = new Set(manualCompletionsList ?? []);
 
   const vaultSet = new Set(vaultCompletedSessions);
   const mergedCompletions = hydrated
