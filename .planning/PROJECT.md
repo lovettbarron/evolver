@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A structured instrument mastery system with an Obsidian-as-source-of-truth data layer and a Next.js frontend for session browsing, patch library, and progress tracking. Starting with the Dave Smith Mono Evolver keyboard, extensible to any electronic instrument (Intellijel Cascadia next). Designed for ADHD brains that buy great gear but never go deep enough to use it fluently in compositions.
+A structured instrument mastery system with an Obsidian-as-source-of-truth data layer and a Next.js frontend for session browsing, patch library, and progress tracking. Covers complete instruments (Dave Smith Mono Evolver, Intellijel Cascadia, Elektron Octatrack MKII) and individual eurorack modules, organized by functional category. Designed for ADHD brains that buy great gear but never go deep enough to use it fluently in compositions.
 
 ## Core Value
 
@@ -10,8 +10,8 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 
 ## Current State
 
-**Shipped:** v1.2 Learner Experience & Discovery (2026-04-07)
-- Two instruments fully supported: Evolver (37 sessions) and Cascadia (27 sessions)
+**Shipped:** v1.3 Visual Redesign (2026-04-17)
+- Three instruments fully supported: Evolver (37 sessions), Cascadia (27 sessions), Octatrack MKII (31 sessions)
 - Interactive panel visualizers for both instruments with 289 total controls
 - 36 documented patches (23 Evolver + 13 Cascadia) across all categories
 - MIDI SysEx integration (Evolver only — Cascadia is CV-only)
@@ -22,26 +22,20 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - Content: troubleshooting guides and partial recipe transitional sessions for both instruments
 - Tech stack: Next.js 15, React 19, Tailwind v4, TypeScript, Zod, ~55K LOC
 
-**v1.3 in progress:** Visual Redesign
-- Phase 18: Token foundation (OKLCH color palette, spacing scale, semantic tokens) — Complete
-- Phase 19: Prose & typography (@tailwindcss/typography, editorial prose rules) — Complete
-- Phase 20: Layout shell & navigation (AppShell, NarrowShell/WideShell, sticky nav, mobile menu) — Complete
-- Phase 21: Cards & content components (unified .card CSS class, :focus-visible global, editorial prose styling) — Complete
-- Phase 22: Motion & micro-interactions (ScrollReveal, SpringCard, completion-toggle animations) — Complete
-- Phase 23: Panel & progress polish (motion.svg viewBox zoom tween, PracticeHeatmap, per-instrument accent identity) — Complete
-- Phase 24: Instrument color identity (per-instrument color palettes + surface tinting, lime removal) — Complete
+**v1.3 shipped:** Visual Redesign — OKLCH design system, typography, layout shell, cards, motion, per-instrument color identity, Octatrack curriculum (31 sessions, 5 patches, Elektron-orange identity, demo mode)
 
-## Current Milestone: v1.3 Visual Redesign
+## Current Milestone: v2.0 Eurorack Module Learning
 
-**Goal:** Comprehensive visual and layout redesign of the existing app — new design system, typography, color palette, layout structure, interactive element styling, and polished markdown rendering that feels native, not like raw markdown.
+**Goal:** Extend the instrument mastery system to teach individual eurorack modules — each with its own front plate SVG, sessions, patches, and category-based organization — starting with 6 modules across 5 functional categories.
 
 **Target features:**
-- Design system overhaul (color palette, typography, spacing tokens)
-- Layout restructuring (navigation, page shells, content flow)
-- Component visual refresh (cards, tables, panels, forms)
-- Interactive element styling (search, filters, panel visualizers)
-- Motion and micro-interactions
-- Complete markdown rendering — styled prose that looks designed, not like a markdown viewer
+- Eurorack modules as a new top-level section, separate from integrated instruments
+- Category-based taxonomy (VCO, Filter, Effects, Modulator, Function Generator) with modules belonging to multiple categories
+- Front plate SVG panel visualizers for each of the 6 modules (reference-first, hand-placed from manuals)
+- Per-module learning sessions following the existing 15-30 min ADHD-friendly framework
+- Cross-module interaction guidance referencing categories (e.g., "VCO into stereo filter")
+- Module manuals downloaded as references
+- 6 launch modules: Intellijel Swells (reverb), Mutable Instruments Plaits (VCO), Mutable Instruments Beads (granular), Mannequins Just Friends + Crow (modulator/VCO/EG), Make Noise Maths (function generator), Casper x Bastl Ikarie (stereo filter)
 
 ## Requirements
 
@@ -61,6 +55,10 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 - ✓ Cascadia patch system (cable routing + knob settings schemas, 13 demo patches) — v1.1
 - ✓ 25-session Cascadia curriculum across 7 modules — v1.1
 - ✓ Cascadia demo mode (synthetic journey, content bundling, both instruments) — v1.1
+- ✓ 31-session Octatrack MKII curriculum across 10 modules — v1.3
+- ✓ Octatrack demo mode (synthetic journey, 23/31 sessions, Elektron-orange identity) — v1.3
+- ✓ OKLCH design system with per-instrument color identity — v1.3
+- ✓ Typography, layout shell, motion, cards, prose rendering — v1.3
 - ✓ Evolver panel visualizer (110 controls, drag interaction, tooltips, 4 integration contexts) — v1.1
 - ✓ Cascadia panel visualizer (179 controls, cable rendering, session annotations) — v1.1
 - ✓ Persistent learner state (Zustand store, completion toggle, vault+manual merge) — v1.2
@@ -119,6 +117,10 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 **Instruments**:
 - Dave Smith Mono Evolver keyboard (v1.0 complete — 35/35 sessions, full SysEx integration)
 - Intellijel Cascadia (v1.1 — semi-modular, CV-only, no patch memory/SysEx, 100+ patch points)
+- Elektron Octatrack MKII (v1.3 — sampler/sequencer, 31/31 sessions, project-state patches, no SysEx)
+
+**Eurorack Modules** (v2.0 — individual modules, category-organized):
+- Intellijel Swells (reverb), Mutable Instruments Plaits (VCO), Mutable Instruments Beads (granular processor), Mannequins Just Friends + Crow (modulator/VCO/EG), Make Noise Maths (function generator), Casper x Bastl Ikarie (stereo filter)
 
 **Practice cadence**: 2-3 sessions per week → ~10 week Evolver curriculum.
 
@@ -172,4 +174,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-13 after Phase 24 (Instrument Color Identity) completed*
+*Last updated: 2026-04-17 — Milestone v2.0 Eurorack Module Learning started*
