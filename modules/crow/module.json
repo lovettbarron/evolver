@@ -1,0 +1,19 @@
+{
+  "display_name": "Crow",
+  "tagline": "Scriptable USB-CV bridge with i2c",
+  "manufacturer": "Monome",
+  "hp_width": 2,
+  "categories": [
+    "modulator"
+  ],
+  "power_specs": {
+    "plus_12v_ma": 50,
+    "minus_12v_ma": 0
+  },
+  "reference_pdfs": [
+    {
+      "label": "Crow Documentation",
+      "file": "crow-docs.pdf"
+    }
+  ]
+}

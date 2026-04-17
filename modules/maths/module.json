@@ -1,0 +1,21 @@
+{
+  "display_name": "Maths",
+  "tagline": "Analog computer for control voltage",
+  "manufacturer": "Make Noise",
+  "hp_width": 20,
+  "categories": [
+    "function-generator",
+    "envelope-generator",
+    "modulator"
+  ],
+  "power_specs": {
+    "plus_12v_ma": 60,
+    "minus_12v_ma": 50
+  },
+  "reference_pdfs": [
+    {
+      "label": "Maths Manual (2020 Rev)",
+      "file": "maths-manual.pdf"
+    }
+  ]
+}

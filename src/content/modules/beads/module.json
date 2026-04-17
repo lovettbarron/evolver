@@ -1,0 +1,19 @@
+{
+  "display_name": "Beads",
+  "tagline": "Granular texture synthesizer",
+  "manufacturer": "Mutable Instruments",
+  "hp_width": 14,
+  "categories": [
+    "effects"
+  ],
+  "power_specs": {
+    "plus_12v_ma": 100,
+    "minus_12v_ma": 10
+  },
+  "reference_pdfs": [
+    {
+      "label": "Beads Manual",
+      "file": "beads-manual.pdf"
+    }
+  ]
+}

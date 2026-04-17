@@ -1,0 +1,19 @@
+{
+  "display_name": "Ikarie",
+  "tagline": "Stereo dual-peak resonant filter with envelope follower",
+  "manufacturer": "Bastl Instruments",
+  "hp_width": 8,
+  "categories": [
+    "filter"
+  ],
+  "power_specs": {
+    "plus_12v_ma": 50,
+    "minus_12v_ma": 40
+  },
+  "reference_pdfs": [
+    {
+      "label": "Ikarie Manual",
+      "file": "ikarie-manual.pdf"
+    }
+  ]
+}

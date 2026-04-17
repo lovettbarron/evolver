@@ -1,0 +1,21 @@
+{
+  "display_name": "Just Friends",
+  "tagline": "Six-channel function generator and oscillator",
+  "manufacturer": "Mannequins",
+  "hp_width": 14,
+  "categories": [
+    "vco",
+    "modulator",
+    "envelope-generator"
+  ],
+  "power_specs": {
+    "plus_12v_ma": 55,
+    "minus_12v_ma": 20
+  },
+  "reference_pdfs": [
+    {
+      "label": "Just Friends Manual",
+      "file": "just-friends-manual.pdf"
+    }
+  ]
+}

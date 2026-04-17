@@ -1,0 +1,19 @@
+{
+  "display_name": "Plaits",
+  "tagline": "Macro oscillator with 16 synthesis models",
+  "manufacturer": "Mutable Instruments",
+  "hp_width": 12,
+  "categories": [
+    "vco"
+  ],
+  "power_specs": {
+    "plus_12v_ma": 50,
+    "minus_12v_ma": 5
+  },
+  "reference_pdfs": [
+    {
+      "label": "Plaits Manual",
+      "file": "plaits-manual.pdf"
+    }
+  ]
+}
