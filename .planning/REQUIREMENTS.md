@@ -81,4 +81,38 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 | REQ-ID | Phase | Plan | Status |
 |--------|-------|------|--------|
-| — | — | — | Pending roadmap creation |
+| DATA-01 | Phase 26 | — | Pending |
+| DATA-02 | Phase 26 | — | Pending |
+| DATA-03 | Phase 26 | — | Pending |
+| DATA-04 | Phase 26 | — | Pending |
+| DATA-05 | Phase 26 | — | Pending |
+| DATA-06 | Phase 26 | — | Pending |
+| NAV-01 | Phase 27 | — | Pending |
+| NAV-02 | Phase 27 | — | Pending |
+| NAV-03 | Phase 27 | — | Pending |
+| NAV-04 | Phase 27 | — | Pending |
+| NAV-05 | Phase 27 | — | Pending |
+| PANEL-01 | Phase 28 | — | Pending |
+| PANEL-02 | Phase 30 | — | Pending |
+| PANEL-03 | Phase 28 | — | Pending |
+| PANEL-04 | Phase 30 | — | Pending |
+| PANEL-05 | Phase 31 | — | Pending |
+| PANEL-06 | Phase 31 | — | Pending |
+| PANEL-07 | Phase 29 | — | Pending |
+| PANEL-08 | Phase 30 | — | Pending |
+| PANEL-09 | Phase 28 | — | Pending |
+| PANEL-10 | Phase 28 | — | Pending |
+| CURR-01 | Phase 29 | — | Pending |
+| CURR-02 | Phase 30 | — | Pending |
+| CURR-03 | Phase 30 | — | Pending |
+| CURR-04 | Phase 31 | — | Pending |
+| CURR-05 | Phase 31 | — | Pending |
+| CURR-06 | Phase 30 | — | Pending |
+| CURR-07 | Phase 30 | — | Pending |
+| CURR-08 | Phase 29 | — | Pending |
+| CURR-09 | Phase 29 | — | Pending |
+| PROG-01 | Phase 32 | — | Pending |
+| PROG-02 | Phase 32 | — | Pending |
+| PROG-03 | Phase 32 | — | Pending |
+| XMOD-01 | Phase 32 | — | Pending |
+| XMOD-02 | Phase 32 | — | Pending |

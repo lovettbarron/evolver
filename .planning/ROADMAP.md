@@ -5,7 +5,8 @@
 - ✅ **v1.0 Evolver Learning Platform** — Phases 1-6 (shipped 2026-03-30)
 - ✅ **v1.1 Cascadia Instrument Support** — Phases 7-13.1 (shipped 2026-04-05)
 - ✅ **v1.2 Learner Experience & Discovery** — Phases 14-17 (shipped 2026-04-07)
-- 🚧 **v1.3 Visual Redesign** — Phases 18-24 (in progress)
+- ✅ **v1.3 Visual Redesign** — Phases 18-25 (shipped 2026-04-17)
+- 🚧 **v2.0 Eurorack Module Learning** — Phases 26-32 (in progress)
 
 ## Phases
 
@@ -51,134 +52,126 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 
 </details>
 
-### 🚧 v1.3 Visual Redesign (In Progress)
+<details>
+<summary>✅ v1.3 Visual Redesign (Phases 18-25) — SHIPPED 2026-04-17</summary>
 
-**Milestone Goal:** Comprehensive visual and layout redesign — new design system, typography, color palette, layout structure, interactive element styling, and polished markdown rendering that feels native, not like raw markdown.
+- [x] Phase 18: Token Foundation (3/3 plans) — completed 2026-04-07
+- [x] Phase 19: Prose & Typography (2/2 plans) — completed 2026-04-08
+- [x] Phase 20: Layout Shell & Navigation (3/3 plans) — completed 2026-04-10
+- [x] Phase 21: Cards & Content Components (2/2 plans) — completed 2026-04-11
+- [x] Phase 22: Interactive Elements & Motion (3/3 plans) — completed 2026-04-11
+- [x] Phase 23: Panel & Progress Polish (4/4 plans) — completed 2026-04-12
+- [x] Phase 24: Instrument Color Identity (1/1 plans) — completed 2026-04-13
+- [x] Phase 25: Octatrack Curriculum + Site Integration (7/7 plans) — completed 2026-04-17
 
-- [x] **Phase 18: Token Foundation** - OKLCH color palette, spacing scale, contrast validation, warm dark surface elevations (completed 2026-04-07)
-- [x] **Phase 19: Prose & Typography** - Modular type scale, polished markdown rendering via @tailwindcss/typography with domain overrides (completed 2026-04-08)
-- [x] **Phase 20: Layout Shell & Navigation** - Navigation bar redesign, responsive page shells, footer, instrument-aware layout variation (completed 2026-04-10)
-- [x] **Phase 21: Cards & Content Components** - Unified card visual language, focus states, editorial session layout with designed markers (completed 2026-04-11)
-- [x] **Phase 22: Interactive Elements & Motion** - Micro-interactions, scroll reveals, spring transitions via motion package (completed 2026-04-11)
-- [x] **Phase 23: Panel & Progress Polish** - Panel visualizer container polish, progress data visualization, instrument accent colors (completed 2026-04-12)
-- [x] **Phase 24: Instrument Color Identity** - Per-instrument color palettes (Evolver blue, Cascadia gray), Intellijel aluminum neutral base (completed 2026-04-13)
+Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
+
+</details>
+
+### 🚧 v2.0 Eurorack Module Learning (In Progress)
+
+**Milestone Goal:** Extend the instrument mastery system to teach individual eurorack modules — each with its own front plate SVG, sessions, patches, and category-based organization — starting with 7 modules across 5 functional categories.
+
+- [ ] **Phase 26: Data Model + Content Pipeline** - ModuleConfigSchema, reader functions, module-to-section rename, triple-write pipeline, reference manuals
+- [ ] **Phase 27: Module Navigation + Routing** - /modules routes, category filtering, module selector, per-module color identity
+- [ ] **Phase 28: Panel System + First Panel** - Generic ModulePanel renderer, HP-aware sizing, session annotations, Plaits panel proof
+- [ ] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation
+- [ ] **Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels** - Four module curricula and panels following proven pattern
+- [ ] **Phase 31: Just Friends + Crow** - Two separate modules with i2c integration, standalone + combined sessions
+- [ ] **Phase 32: Progress, Demo + Cross-Module Polish** - Per-module progress tracking, demo mode, cross-module references and category suggestions
 
 ## Phase Details
 
-### Phase 18: Token Foundation
-**Goal**: Every page renders with a warm dark palette, consistent spacing, and verified accessible contrast — the visual foundation all subsequent phases inherit
-**Depends on**: Phase 17 (v1.2 complete)
-**Requirements**: TOKEN-01, TOKEN-03, TOKEN-04, TOKEN-05
+### Phase 26: Data Model + Content Pipeline
+**Goal**: Module content can be authored, validated, and read by the app — the `module` naming collision is resolved and all reference manuals are available
+**Depends on**: Phase 25 (v1.3 complete)
+**Requirements**: DATA-01, DATA-02, DATA-03, DATA-04, DATA-05, DATA-06
 **Success Criteria** (what must be TRUE):
-  1. User sees 5+ distinct surface elevation levels (bg, sunken, surface, raised, overlay) with warm olive/brown undertones instead of cold grays
-  2. User sees consistent spacing rhythm across all existing pages — no page has mismatched padding or margin patterns
-  3. All text/background combinations pass WCAG AA contrast (4.5:1 minimum) as verified by automated tooling
-  4. Existing app functionality is visually unchanged in structure — only color temperature, surface depth, and spacing are different
-**Plans**: 3 plans
-Plans:
-- [x] 18-01-PLAN.md — OKLCH token swap + contrast validation + grain texture
-- [x] 18-02-PLAN.md — Spacing migration (all 29 components to token references)
-- [x] 18-03-PLAN.md — /dev/tokens verification page + visual checkpoint
+  1. A `modules/plaits/module.json` file passes ModuleConfigSchema validation with HP width, manufacturer, power specs, and a multi-category array (e.g., `["vco"]`)
+  2. The `discoverModules()` reader function finds module directories under `modules/` and returns their configs — parallel to `discoverInstruments()`
+  3. All 95 existing sessions use `section` (not `module`) in their frontmatter and the SessionSchema definition reflects this rename
+  4. Module sessions with `instrument_type: eurorack_module` are distinguishable from instrument sessions in reader queries
+  5. Reference PDFs for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie) exist in `references/`
+**Plans**: TBD
 
-### Phase 19: Prose & Typography
-**Goal**: Session and patch content reads as polished editorial prose with clear typographic hierarchy — not a markdown viewer
-**Depends on**: Phase 18
-**Requirements**: TOKEN-02, CONTENT-01
+### Phase 27: Module Navigation + Routing
+**Goal**: Users can browse eurorack modules by category and navigate to individual module pages with per-module visual identity
+**Depends on**: Phase 26
+**Requirements**: NAV-01, NAV-02, NAV-03, NAV-04, NAV-05
 **Success Criteria** (what must be TRUE):
-  1. User sees distinct heading and body typefaces with a modular scale that creates clear visual hierarchy across h1-h4, body, and caption text
-  2. User sees markdown tables, code blocks, callouts, and task lists rendered with designed styling (borders, backgrounds, spacing) that matches the warm dark palette
-  3. User sees consistent prose rendering across all 60+ session files and 36+ patch documents — no unstyled or broken markdown elements
-  4. Domain-specific prose elements (`.param-table`, `.callout`, `.quick-ref-prose`) retain their specialized styling within the new typography system
-**Plans**: 2 plans
-Plans:
-- [x] 19-01-PLAN.md — Font setup + typography plugin + type scale + prose color overrides
-- [x] 19-02-PLAN.md — Domain element editorial restyling + visual checkpoint
+  1. User can visit `/modules` and see all modules listed, with category filter tabs that show only matching modules (e.g., `?category=vco` shows Plaits and Just Friends)
+  2. User can navigate to `/modules/plaits/` and see overview, sessions, and patches pages for that module
+  3. User sees a "Modules" entry in the main navigation alongside the existing instrument selector
+  4. Multi-category modules (e.g., Maths as function generator + envelope + LFO) appear under every category they belong to in filtered views
+  5. Each module page uses its own color identity via the `[data-instrument]` CSS cascade — 7 distinct palettes
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 20: Layout Shell & Navigation
-**Goal**: The app has a visually weighted navigation bar, responsive page containers, a designed footer, and subtle per-instrument layout variation
-**Depends on**: Phase 19
-**Requirements**: LAYOUT-01, LAYOUT-02, LAYOUT-03, LAYOUT-04
+### Phase 28: Panel System + First Panel
+**Goal**: A generic panel renderer displays any module's front plate SVG from data files, and the first panel (Plaits) proves the pattern works end-to-end including session annotations
+**Depends on**: Phase 27
+**Requirements**: PANEL-01, PANEL-03, PANEL-09, PANEL-10
 **Success Criteria** (what must be TRUE):
-  1. User sees a navigation bar with brand expression, visual weight beyond a minimal strip, and clear active state indicators for the current page
-  2. User sees mobile-optimized layouts where session pages use narrow content widths and grid pages (patches, modules) use wider widths appropriate to their content type
-  3. User sees a footer with project identity and instrument navigation links — not an empty bottom edge
-  4. User sees visually distinct page shells when browsing Evolver vs Cascadia content — subtle accent/color variation signals which instrument context they are in
-**Plans**: 3 plans
-Plans:
-- [x] 20-01-PLAN.md — Nav restyle with tokens, brand wordmark, active indicators
-- [x] 20-02-PLAN.md — Footer extraction and page shell components
-- [x] 20-03-PLAN.md — Mobile hamburger menu and data-instrument wiring
+  1. A single `ModulePanel` component renders any module's panel from a per-module data file — no per-module React components needed
+  2. The Plaits panel (12HP) displays with correct control placement matching the physical module photo — hand-placed, not algorithmic
+  3. Panels render at correct relative widths based on HP (12HP Plaits visibly narrower than a 20HP module) using HP-to-px scaling
+  4. Session content can embed panel annotations via `data-module-panel` markers that highlight relevant controls — same interaction pattern as Evolver/Cascadia panels
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 21: Cards & Content Components
-**Goal**: All card types share a unified visual language and session content uses editorial layout with designed inline elements
-**Depends on**: Phase 20
-**Requirements**: COMP-01, COMP-02, CONTENT-02
+### Phase 29: Maths Curriculum + Panel
+**Goal**: Users can learn Make Noise Maths through a complete curriculum — the most complex module proves the framework handles the hardest case
+**Depends on**: Phase 28
+**Requirements**: CURR-01, CURR-08, CURR-09, PANEL-07
 **Success Criteria** (what must be TRUE):
-  1. User sees consistent borders, padding, hover states, and border-radius across all card types (hero, patch, module, instrument, count, session-row)
-  2. User sees intentional focus states (keyboard navigation outlines, focus rings) on all interactive elements that match the warm dark design system
-  3. User sees session content with parameter callouts as styled inline elements, numbered steps as designed markers, and section dividers — not raw markdown structure
-**Plans**: 2 plans
-Plans:
-- [x] 21-01-PLAN.md — CSS foundation: .card base class, :focus-visible global, editorial prose rules
-- [x] 21-02-PLAN.md — Component className migration + visual checkpoint
+  1. User can browse 10-12 Maths sessions covering envelope generation, LFO, slew limiting, audio-rate oscillation, and utility uses — each 15-30 minutes with a tangible output
+  2. The Maths overview page shows module architecture, controls reference, and recommended init state — matching the pattern established for instruments
+  3. The Maths panel SVG (20HP, ~30 controls) renders with hand-placed controls matching the physical module
+  4. All Maths sessions follow ADHD-friendly format: zero activation energy start, warm-up referencing previous session, hard stop, and documented output
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 22: Interactive Elements & Motion
-**Goal**: Interactive elements respond with spring-physics micro-interactions and content reveals itself subtly on scroll
-**Depends on**: Phase 21
-**Requirements**: COMP-03, COMP-04
+### Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels
+**Goal**: Four additional modules have complete curricula and panels, following the pattern proven by Maths
+**Depends on**: Phase 29
+**Requirements**: CURR-02, CURR-03, CURR-06, CURR-07, PANEL-02, PANEL-04, PANEL-08
 **Success Criteria** (what must be TRUE):
-  1. User sees hover interactions on cards and buttons with scale transforms and spring transitions — not instant CSS jumps
-  2. User sees completion celebrations (subtle animation feedback) when toggling session completion
-  3. User sees content sections fade in subtly as they scroll into the viewport — no jarring pop-in or lateral movement
-  4. User with `prefers-reduced-motion` enabled sees no animations — all motion respects the accessibility preference
-**Plans**: 3 plans
-Plans:
-- [x] 22-00-PLAN.md — Wave 0: vitest test stubs for all motion components (Nyquist compliance)
-- [x] 22-01-PLAN.md — Motion foundation: install motion, SpringCard wrapper, MotionProvider, card spring hover wiring
-- [ ] 22-02-PLAN.md — ScrollReveal + StaggerGroup wrappers, grid/list/section reveal, completion celebration
+  1. User can browse Plaits curriculum (8-10 sessions across 16 synthesis modes), Beads curriculum (6-8 sessions covering 3 grain modes), Swells curriculum (5-7 sessions covering 9 reverb models), and Ikarie curriculum (5-7 sessions for filter modes and envelope follower)
+  2. Each module has a hand-placed panel SVG at correct HP width (Plaits 12HP, Beads 14HP, Swells 20HP, Ikarie 8HP) with controls matching the physical module
+  3. All sessions across all four modules follow the 15-30 min ADHD format with tangible output
+  4. Each module has an overview page with architecture, controls reference, and init state
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 23: Panel & Progress Polish
-**Goal**: Panel visualizers have polished zoom transitions, progress data is visualized not just listed, and each instrument has its own accent color identity
-**Depends on**: Phase 22
-**Requirements**: SPEC-01, SPEC-02, TOKEN-06
+### Phase 31: Just Friends + Crow
+**Goal**: Users can learn Mannequins Just Friends and Monome Crow as separate modules with optional combined sessions showing i2c integration
+**Depends on**: Phase 30
+**Requirements**: CURR-04, CURR-05, PANEL-05, PANEL-06
 **Success Criteria** (what must be TRUE):
-  1. User sees smooth zoom transitions on panel visualizers with contextual dimming of non-relevant sections — panel SVG internals remain untouched
-  2. User sees the progress page with data visualization elements (charts, visual metrics) instead of plain stat cards
-  3. User sees subtly different accent colors for Evolver vs Cascadia sections throughout the app (nav highlights, card accents, progress indicators)
-  4. All pages pass an ADHD 5-second test: single clear visual hierarchy, no competing animated elements, same or fewer clicks to any destination as before the redesign
-**Plans**: 4 plans
-Plans:
-- [x] 23-00-PLAN.md — Wave 0: test stubs for heatmap, panel viewBox, and accent audit (Nyquist)
-- [x] 23-01-PLAN.md — Panel viewBox tween via motion.svg + accent color audit fixes
-- [x] 23-02-PLAN.md — PracticeHeatmap component + progress page wiring
-- [x] 23-03-PLAN.md — Full verification + visual checkpoint (ADHD 5-second test)
+  1. User can browse Just Friends curriculum (8-10 sessions covering Shape, Cycle, and Sound modes) as a standalone module
+  2. User can browse Crow curriculum (4-6 sessions covering scripting, i2c, and standalone I/O) as a standalone module
+  3. Both modules have separate panel SVGs (Just Friends 14HP, Crow 2HP), separate `module.json` configs, and separate overview pages
+  4. Combined JF+Crow sessions exist as optional extensions demonstrating i2c integration — clearly marked as requiring both modules
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 24: Instrument Color Identity
-
-**Goal**: Each instrument has its own color palette derived from its brand identity (Evolver blue, Cascadia gray), with an Intellijel eurorack aluminum neutral base replacing the current lime-centric palette
-**Depends on:** Phase 23
-**Requirements**: COLOR-01, COLOR-02, COLOR-03, COLOR-04, COLOR-05, COLOR-06
+### Phase 32: Progress, Demo + Cross-Module Polish
+**Goal**: Module learning progress is tracked and visible, demo mode showcases the system, and modules reference each other by category
+**Depends on**: Phase 31
+**Requirements**: PROG-01, PROG-02, PROG-03, XMOD-01, XMOD-02
 **Success Criteria** (what must be TRUE):
-  1. User sees a neutral aluminum accent on the home page and non-instrument routes instead of lime green
-  2. User sees blue accent colors on Evolver pages reflecting the DSI blue Lexan panel identity
-  3. User sees cool gray accent colors on Cascadia pages reflecting the Intellijel aluminum panel identity
-  4. User sees per-instrument inline code/parameter colors that are visibly lighter than their accent counterparts
-  5. All accent and param text passes WCAG AA 4.5:1 contrast against all surface backgrounds
-  6. No lime or teal green remnants visible anywhere in the app
-**Plans:** 1/1 plans complete
-Plans:
-- [x] 24-01-PLAN.md — Per-instrument color primitives, semantic defaults, cascade overrides, test updates, visual checkpoint
+  1. User can toggle session completion per module and see cumulative practice metrics in the Zustand store — same interaction pattern as instruments
+  2. Prerequisite badges within module curricula show locked/available/completed states with soft visual gating
+  3. Demo mode includes synthetic learner journeys for Maths and Plaits — visitors see realistic progress without local vault data
+  4. Session pages show cross-references to related sessions in other modules (e.g., "Maths envelope into Ikarie filter")
+  5. Module overview pages show category-based suggestions ("Other modules you own in this category: ...")
+**Plans**: TBD
 **UI hint**: yes
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25
+Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -200,36 +193,18 @@ Phases execute in numeric order: 18 → 19 → 20 → 21 → 22 → 23 → 24 �
 | 15. Navigation & Progress Enhancements | v1.2 | 3/3 | Complete | 2026-04-06 |
 | 16. Search & Filtering | v1.2 | 3/3 | Complete | 2026-04-06 |
 | 17. Content & Pedagogy | v1.2 | 3/3 | Complete | 2026-04-07 |
-| 18. Token Foundation | v1.3 | 3/3 | Complete    | 2026-04-07 |
-| 19. Prose & Typography | v1.3 | 2/2 | Complete    | 2026-04-08 |
-| 20. Layout Shell & Navigation | v1.3 | 3/3 | Complete    | 2026-04-10 |
-| 21. Cards & Content Components | v1.3 | 2/2 | Complete    | 2026-04-11 |
-| 22. Interactive Elements & Motion | v1.3 | 1/3 | Complete    | 2026-04-11 |
-| 23. Panel & Progress Polish | v1.3 | 4/4 | Complete    | 2026-04-12 |
-| 24. Instrument Color Identity | v1.3 | 1/1 | Complete    | 2026-04-13 |
-| 25. Octatrack Curriculum + Site Integration | v1.3 | 7/7 | Complete    | 2026-04-17 |
-
-### Phase 25: Complete the Octatrack curriculum work so that it is ready to add to the evolver site. Focus on song writing and arrangement, and live sessions and looping.
-
-**Goal:** Take the Octatrack MKII from "metadata + 6 of 31 sessions + panel SVG" to full Cascadia-parity on the evolver site — complete 31-session curriculum, triple-write pipeline, full site integration (instrument selector, nav, capability-gated routes, demo mode), new sampler capability profile, Elektron-orange color identity with surface tinting, and 5 demo project-state patches.
-**Requirements**: Decisions D-01 through D-22 from 25-CONTEXT.md (no REQ-IDs — CONTEXT decisions are the authoritative requirements)
-**Depends on:** Phase 24
-**Success Criteria** (what must be TRUE):
-  1. All 31 Octatrack sessions exist in all three content locations with valid frontmatter (duration ≤ 30 min ADHD cap)
-  2. Octatrack appears as a first-class instrument on home, nav, selector, session browser, patches, panel route, global search
-  3. Capability gates correct: MIDI/SysEx page hidden for Octatrack, patch pages render project-state format (no cable routing, no knob settings)
-  4. Color identity visible: Elektron orange accent + subtle warm surface tint on octatrack routes, WCAG AA readable
-  5. 5 demo patches render from the patches index (basic-project + 4 focus-module demos)
-  6. Demo mode shows a realistic Octatrack synthetic journey (~23/31 complete, partway through Module 8)
-  7. Full test suite green + validate-content green + validate-contrast green + check-triple-write green + npm run build green
-  8. D-22 guard: `src/components/octatrack-panel.tsx` and `src/lib/octatrack-panel-data.ts` unchanged throughout the phase
-**Plans:** 7/7 plans complete
-
-Plans:
-- [x] 25-00-PLAN.md — Wave 0: test fixtures + test stubs + validate-contrast TOKEN_MAP refresh + check-triple-write.sh
-- [x] 25-01-PLAN.md — Wave 1: Schema extension (sampler/sequencer/midi_sequencer optional flags) + globals.css orange primitives + [data-instrument="octatrack"] cascade + panel-route regression test
-- [x] 25-02-PLAN.md — Wave 2: Bootstrap 9 content directories + write instruments/octatrack/instrument.json + triple-write existing content + flip Wave 0 todos to real tests
-- [x] 25-03a-PLAN.md — Wave 3 (parallel): Author 16 Module 1-6 sessions with sparse markers + triple-write
-- [x] 25-03b-PLAN.md — Wave 3 (parallel): Author 9 focus-module sessions (19-24, 26, 27, 30) with dense panel markers + triple-write
-- [x] 25-04-PLAN.md — Wave 4: Author 5 demo patches (basic-project + 4 focus-module demos) in project-state format + triple-write
-- [x] 25-05-PLAN.md — Wave 5: Extend synthetic-daily-notes.ts with Octatrack journey + wire dispatchers + manual UAT checkpoint
+| 18. Token Foundation | v1.3 | 3/3 | Complete | 2026-04-07 |
+| 19. Prose & Typography | v1.3 | 2/2 | Complete | 2026-04-08 |
+| 20. Layout Shell & Navigation | v1.3 | 3/3 | Complete | 2026-04-10 |
+| 21. Cards & Content Components | v1.3 | 2/2 | Complete | 2026-04-11 |
+| 22. Interactive Elements & Motion | v1.3 | 3/3 | Complete | 2026-04-11 |
+| 23. Panel & Progress Polish | v1.3 | 4/4 | Complete | 2026-04-12 |
+| 24. Instrument Color Identity | v1.3 | 1/1 | Complete | 2026-04-13 |
+| 25. Octatrack Curriculum + Site Integration | v1.3 | 7/7 | Complete | 2026-04-17 |
+| 26. Data Model + Content Pipeline | v2.0 | 0/? | Not started | - |
+| 27. Module Navigation + Routing | v2.0 | 0/? | Not started | - |
+| 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
+| 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
+| 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 0/? | Not started | - |
+| 31. Just Friends + Crow | v2.0 | 0/? | Not started | - |
+| 32. Progress, Demo + Cross-Module Polish | v2.0 | 0/? | Not started | - |
