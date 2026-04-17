@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
 status: executing
-stopped_at: Completed 27-02-PLAN.md
-last_updated: "2026-04-17T19:23:52.125Z"
+stopped_at: Completed 27-01-PLAN.md
+last_updated: "2026-04-17T19:29:15.523Z"
 last_activity: 2026-04-17
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 6
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-04-17)
 ## Current Position
 
 Phase: 27 (module-navigation-routing) — EXECUTING
-Plan: 2 of 3
-Status: Executing Phase 27
+Plan: 3 of 3
+Status: Ready to execute
 Last activity: 2026-04-17
 
 Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
@@ -53,6 +53,8 @@ Recent decisions affecting current work:
 - [v2.0 Research]: Just Friends and Crow are separate modules with separate configs/panels
 - [Phase 27]: Added discoverModules/loadModuleConfig stubs to reader.ts (Rule 3 - Phase 26-02 not yet complete)
 - [Phase 27]: Category list is fixed constant per UI-SPEC D-01, not derived from module data
+- [Phase 27]: Module palettes use inline oklch() values, not @theme primitives
+- [Phase 27]: Dual URL prefix detection: /instruments/ and /modules/ both feed data-instrument attribute
 
 ### Pending Todos
 
@@ -66,6 +68,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-17T19:23:52.122Z
-Stopped at: Completed 27-02-PLAN.md
+Last session: 2026-04-17T19:29:15.520Z
+Stopped at: Completed 27-01-PLAN.md
 Resume file: None
