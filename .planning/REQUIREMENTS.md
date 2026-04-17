@@ -9,11 +9,11 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 ### Data Model
 
-- [ ] **DATA-01**: ModuleConfigSchema validates HP width, manufacturer, power specs, and multi-category array
-- [ ] **DATA-02**: Module content directories (`modules/<slug>/`) discovered by reader functions parallel to instruments
+- [x] **DATA-01**: ModuleConfigSchema validates HP width, manufacturer, power specs, and multi-category array
+- [x] **DATA-02**: Module content directories (`modules/<slug>/`) discovered by reader functions parallel to instruments
 - [ ] **DATA-03**: SessionSchema `module` field renamed to `section` across all 95 existing sessions and schema definitions
 - [ ] **DATA-04**: Module sessions use `instrument_type: eurorack_module` to distinguish from instrument sessions in queries and routing
-- [ ] **DATA-05**: Triple-write pipeline supports module content (working tree, `src/content/modules/`, `~/song/modules/`)
+- [x] **DATA-05**: Triple-write pipeline supports module content (working tree, `src/content/modules/`, `~/song/modules/`)
 - [ ] **DATA-06**: Module manuals downloaded to `references/` for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie)
 
 ### Navigation

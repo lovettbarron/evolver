@@ -72,7 +72,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 
 **Milestone Goal:** Extend the instrument mastery system to teach individual eurorack modules — each with its own front plate SVG, sessions, patches, and category-based organization — starting with 7 modules across 5 functional categories.
 
-- [ ] **Phase 26: Data Model + Content Pipeline** - ModuleConfigSchema, reader functions, module-to-section rename, triple-write pipeline, reference manuals
+- [x] **Phase 26: Data Model + Content Pipeline** - ModuleConfigSchema, reader functions, module-to-section rename, triple-write pipeline, reference manuals (completed 2026-04-17)
 - [x] **Phase 27: Module Navigation + Routing** - /modules routes, category filtering, module selector, per-module color identity (completed 2026-04-17)
 - [ ] **Phase 28: Panel System + First Panel** - Generic ModulePanel renderer, HP-aware sizing, session annotations, Plaits panel proof
 - [ ] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation
@@ -92,10 +92,10 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. All 95 existing sessions use `section` (not `module`) in their frontmatter and the SessionSchema definition reflects this rename
   4. Module sessions with `instrument_type: eurorack_module` are distinguishable from instrument sessions in reader queries
   5. Reference PDFs for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie) exist in `references/`
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
-- [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
+- [x] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
 - [x] 26-03-PLAN.md — Download 7 module reference manuals
 
 ### Phase 27: Module Navigation + Routing
@@ -128,7 +128,7 @@ Plans:
 Plans:
 - [x] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
 - [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
-- [ ] 26-03-PLAN.md — Download 7 module reference manuals
+- [x] 26-03-PLAN.md — Download 7 module reference manuals
 **UI hint**: yes
 
 ### Phase 29: Maths Curriculum + Panel
@@ -142,7 +142,7 @@ Plans:
   4. All Maths sessions follow ADHD-friendly format: zero activation energy start, warm-up referencing previous session, hard stop, and documented output
 **Plans:** 3 plans
 Plans:
-- [ ] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
+- [x] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
 - [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
 - [ ] 26-03-PLAN.md — Download 7 module reference manuals
 **UI hint**: yes
@@ -229,7 +229,7 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 23. Panel & Progress Polish | v1.3 | 4/4 | Complete | 2026-04-12 |
 | 24. Instrument Color Identity | v1.3 | 1/1 | Complete | 2026-04-13 |
 | 25. Octatrack Curriculum + Site Integration | v1.3 | 7/7 | Complete | 2026-04-17 |
-| 26. Data Model + Content Pipeline | v2.0 | 2/3 | In Progress|  |
+| 26. Data Model + Content Pipeline | v2.0 | 3/3 | Complete   | 2026-04-17 |
 | 27. Module Navigation + Routing | v2.0 | 3/3 | Complete   | 2026-04-17 |
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
 | 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
