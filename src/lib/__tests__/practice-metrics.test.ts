@@ -1,5 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { getSessionsThisMonth, getActiveWeeks, getSyntheticCompletionDates, getHeatmapData } from '@/lib/practice-metrics';
+import { getSyntheticCompletedSessions } from '@/lib/progress';
 
 describe('getSessionsThisMonth', () => {
   test('returns 0 for empty array', () => {
@@ -78,6 +79,43 @@ describe('getSyntheticCompletionDates', () => {
   test('defaults to evolver when no instrument specified', () => {
     const dates = getSyntheticCompletionDates();
     expect(dates.size).toBe(21);
+  });
+});
+
+describe('getSyntheticCompletedSessions - octatrack', () => {
+  test('returns octatrack set with 23 completed sessions', () => {
+    const result = getSyntheticCompletedSessions('octatrack');
+    expect(result).toBeInstanceOf(Set);
+    expect(result.size).toBe(23);
+    expect(result.has(21)).toBe(true);  // Module 7 complete
+    expect(result.has(23)).toBe(true);  // Module 8 partway
+    expect(result.has(24)).toBe(false); // Module 8 pending
+  });
+
+  test('does not affect existing evolver or cascadia dispatches', () => {
+    const evolver = getSyntheticCompletedSessions();
+    expect(evolver.size).toBe(21);
+    const cascadia = getSyntheticCompletedSessions('cascadia');
+    expect(cascadia.size).toBe(12);
+  });
+});
+
+describe('getSyntheticCompletionDates - octatrack', () => {
+  test('returns 23 dates spanning 7 weeks for octatrack', () => {
+    const dates = getSyntheticCompletionDates('octatrack');
+    expect(dates.size).toBe(23);
+    expect(dates.get(1)).toBeDefined();
+    expect(dates.get(23)).toBeDefined();
+    // First date < last date
+    const firstDate = new Date(dates.get(1)!);
+    const lastDate = new Date(dates.get(23)!);
+    expect(lastDate.getTime()).toBeGreaterThan(firstDate.getTime());
+  });
+
+  test('returns ISO date strings for octatrack', () => {
+    const dates = getSyntheticCompletionDates('octatrack');
+    const firstDate = dates.get(1);
+    expect(firstDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 });
 
