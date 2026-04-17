@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ModuleCard } from './module-card';
+import { InstrumentModuleCard } from './instrument-module-card';
 import { WideShell } from '@/components/page-shell';
 import { ScrollReveal } from '@/components/motion/scroll-reveal';
 import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group';
@@ -83,7 +83,7 @@ export function ModuleIndex({ instrumentSlug, instrumentName, modules }: ModuleI
                 <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-md">
                   {group.modules.map((mod) => (
                     <StaggerItem key={mod.slug}>
-                      <ModuleCard
+                      <InstrumentModuleCard
                         instrumentSlug={instrumentSlug}
                         {...mod}
                       />
@@ -98,7 +98,7 @@ export function ModuleIndex({ instrumentSlug, instrumentName, modules }: ModuleI
         <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-md" key={filter}>
           {filteredModules.map((mod) => (
             <StaggerItem key={mod.slug}>
-              <ModuleCard
+              <InstrumentModuleCard
                 instrumentSlug={instrumentSlug}
                 {...mod}
               />

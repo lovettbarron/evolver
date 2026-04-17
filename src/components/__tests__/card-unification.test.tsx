@@ -2,7 +2,7 @@ import { describe, test, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { HeroCard } from '@/components/hero-card';
 import { PatchCard } from '@/components/patch-card';
-import { ModuleCard } from '@/components/module-card';
+import { InstrumentModuleCard } from '@/components/instrument-module-card';
 import { InstrumentCard } from '@/components/instrument-card';
 import { CountCard } from '@/components/count-card';
 import { SessionRow } from '@/components/session-row';
@@ -60,9 +60,9 @@ describe('Card Unification — .card CSS class adoption', () => {
     expect(link.className).toContain('card');
   });
 
-  test('ModuleCard link element includes "card" class', () => {
+  test('InstrumentModuleCard link element includes "card" class', () => {
     render(
-      <ModuleCard
+      <InstrumentModuleCard
         slug="test"
         instrumentSlug="evolver"
         title="Test"
