@@ -1,108 +1,84 @@
-# Requirements: Instrument Deep Learning — v1.3 Visual Redesign
+# Requirements: Instrument Deep Learning — v2.0 Eurorack Module Learning
 
-**Defined:** 2026-04-07
+**Defined:** 2026-04-17
 **Core Value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
 
-## v1.3 Requirements
+## v2.0 Requirements
 
-Requirements for the visual redesign milestone. Each maps to roadmap phases.
+Requirements for the eurorack module learning milestone. Each maps to roadmap phases.
 
-### Design Tokens
+### Data Model
 
-- [x] **TOKEN-01**: User sees a warm dark color palette with 5+ surface elevation levels (bg, sunken, surface, raised, overlay)
-- [ ] **TOKEN-02**: User sees a modular typography scale with distinct heading and body typefaces
-- [ ] **TOKEN-03**: User sees consistent spacing applied uniformly across all pages and components
-- [x] **TOKEN-04**: User sees all text/background combinations meeting WCAG AA contrast ratios (4.5:1 minimum)
-- [x] **TOKEN-05**: User sees warm dark tones (olive/brown undertones) instead of cold pure grays
-- [x] **TOKEN-06**: User sees subtly different accent colors for Evolver vs Cascadia instrument sections
+- [ ] **DATA-01**: ModuleConfigSchema validates HP width, manufacturer, power specs, and multi-category array
+- [ ] **DATA-02**: Module content directories (`modules/<slug>/`) discovered by reader functions parallel to instruments
+- [ ] **DATA-03**: SessionSchema `module` field renamed to `section` across all 95 existing sessions and schema definitions
+- [ ] **DATA-04**: Module sessions use `instrument_type: eurorack_module` to distinguish from instrument sessions in queries and routing
+- [ ] **DATA-05**: Triple-write pipeline supports module content (working tree, `src/content/modules/`, `~/song/modules/`)
+- [ ] **DATA-06**: Module manuals downloaded to `references/` for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie)
 
-### Layout
+### Navigation
 
-- [x] **LAYOUT-01**: User sees a navigation bar with visual weight, brand expression, and clear active state indicators
-- [x] **LAYOUT-02**: User sees mobile-optimized layouts with appropriate content widths per page type (narrow for sessions, wider for grids)
-- [x] **LAYOUT-03**: User sees a designed footer with project identity and instrument navigation links
-- [x] **LAYOUT-04**: User sees visually distinct page shells for each instrument (subtle color/accent variation)
+- [ ] **NAV-01**: Top-level "Modules" section at `/modules` lists all eurorack modules with category filter (`?category=vco`)
+- [ ] **NAV-02**: Per-module routes at `/modules/[slug]/` with overview, sessions, and patches pages
+- [ ] **NAV-03**: Module selector in main nav alongside instrument selector
+- [ ] **NAV-04**: Multi-category modules appear under each category they belong to in filtered views
+- [ ] **NAV-05**: Per-module color identity via `[data-instrument]` CSS cascade (7 distinct palettes)
 
-### Content
+### Panels
 
-- [x] **CONTENT-01**: User sees markdown content rendered as polished prose — styled headings, tables, code blocks, callouts, and task lists that look designed
-- [x] **CONTENT-02**: User sees session content with editorial layout — parameter callouts as styled inline elements, numbered steps as designed markers, section dividers
+- [ ] **PANEL-01**: Generic `ModulePanel` component renders any module from per-module data files
+- [ ] **PANEL-02**: Hand-placed SVG panel for Intellijel Swells (20HP, reverb)
+- [ ] **PANEL-03**: Hand-placed SVG panel for Mutable Instruments Plaits (12HP, VCO)
+- [ ] **PANEL-04**: Hand-placed SVG panel for Mutable Instruments Beads (14HP, granular)
+- [ ] **PANEL-05**: Hand-placed SVG panel for Mannequins Just Friends (14HP, modulator/VCO/EG)
+- [ ] **PANEL-06**: Hand-placed SVG panel for Monome Crow (2HP, scriptable I/O)
+- [ ] **PANEL-07**: Hand-placed SVG panel for Make Noise Maths (20HP, function generator)
+- [ ] **PANEL-08**: Hand-placed SVG panel for Casper x Bastl Ikarie (8HP, stereo filter)
+- [ ] **PANEL-09**: HP-width-aware rendering (panels display at correct relative sizes)
+- [ ] **PANEL-10**: Session annotation markers work on module panels (same `data-*-panel` pattern)
 
-### Components
+### Curricula
 
-- [x] **COMP-01**: User sees unified visual language across all card types (consistent borders, padding, hover states, border-radius)
-- [x] **COMP-02**: User sees intentional focus states on all interactive elements matching the design system
-- [x] **COMP-03**: User sees micro-interactions on hover (scale transforms, spring transitions) and completion celebrations
-- [x] **COMP-04**: User sees content sections fade in subtly as they enter the viewport on scroll
+- [ ] **CURR-01**: Maths curriculum (10-12 sessions covering envelope, LFO, slew, audio-rate, utilities)
+- [ ] **CURR-02**: Plaits curriculum (8-10 sessions across 16 synthesis modes in 2 banks)
+- [ ] **CURR-03**: Beads curriculum (6-8 sessions covering 3 grain modes, quality settings, attenurandomizers)
+- [ ] **CURR-04**: Just Friends curriculum (8-10 sessions for Shape/Cycle/Sound modes)
+- [ ] **CURR-05**: Crow curriculum (4-6 sessions for scripting, i2c, standalone I/O)
+- [ ] **CURR-06**: Swells curriculum (5-7 sessions covering 9 reverb models, Swell Generator, Freeze/Reverse)
+- [ ] **CURR-07**: Ikarie curriculum (5-7 sessions for filter modes, stereo/dual-peak, envelope follower)
+- [ ] **CURR-08**: Module overview pages per module (architecture, controls reference, init state)
+- [ ] **CURR-09**: All sessions follow 15-30 min ADHD-friendly format with tangible output
 
-### Specialized
+### Progress & Demo
 
-- [x] **SPEC-01**: User sees smooth panel visualizer zoom transitions and contextual dimming of non-relevant sections
-- [x] **SPEC-02**: User sees an elevated progress page with data visualization instead of plain stat cards
+- [ ] **PROG-01**: Progress tracking per module in Zustand store (completion toggle, practice metrics)
+- [ ] **PROG-02**: Prerequisite badges within module curricula (same soft-gating pattern)
+- [ ] **PROG-03**: Demo mode with synthetic learner journeys for at least 2 modules (Maths + Plaits)
 
-### Color Identity
+### Cross-Module
 
-- [x] **COLOR-01**: User sees a neutral aluminum accent on the home page and non-instrument routes (not lime green)
-- [x] **COLOR-02**: User sees blue accent colors on Evolver pages reflecting the DSI blue Lexan panel identity
-- [x] **COLOR-03**: User sees cool gray accent colors on Cascadia pages reflecting the Intellijel aluminum panel identity
-- [x] **COLOR-04**: User sees per-instrument inline code/parameter colors (--color-param) that are visibly lighter than their accent counterparts
-- [x] **COLOR-05**: All accent and param text passes WCAG AA 4.5:1 contrast against all surface backgrounds
-- [x] **COLOR-06**: No lime or teal green color remnants visible anywhere in the app
+- [ ] **XMOD-01**: Session cross-references between modules (e.g., "Maths envelope → Ikarie filter")
+- [ ] **XMOD-02**: Category-based suggestions on module pages ("Other Sound Sources you own: Plaits, Just Friends")
 
 ## Future Requirements
 
-### v1.4+ Candidates
-
-- **VIS-01**: Progress page as explorable data art (module map, practice heat map)
-- **VIS-02**: Page transition animations between routes
-- **VIS-03**: Per-instrument custom imagery/photography in headers
+- Rack context awareness (user configures "my rack" for personalized patching suggestions)
+- Eurorack fundamentals sessions (signal levels, CV vs audio vs gate, power, HP)
+- Patch recipe sessions combining multiple modules
+- Module comparison within category
+- Full rack planner / ModularGrid integration
 
 ## Out of Scope
 
-| Feature | Reason |
-|---------|--------|
-| Light mode / theme toggle | Dark mode is brand identity; doubles design work for single-user app |
-| Parallax scrolling | Conflicts with ADHD focus; causes motion sickness |
-| Custom cursor / pointer effects | Breaks accessibility, adds no information |
-| Glassmorphism / frosted glass | Reduces readability on dark backgrounds, ages quickly |
-| Neon / retrowave aesthetics | Cliche for synth apps; Hologram's understated approach preferred |
-| Skeleton loading screens | Over-engineering for local-first filesystem reads |
-| SVG panel internal restyling | 289 hand-placed controls simulate hardware; high risk, zero reward |
+- ModularGrid clone or universal module database — focus on curated learning for owned modules
+- Audio-rate patch simulation — this is a learning tool, not a VST
+- Video tutorials — text + audio only per project constraints
+- Calendar-based practice scheduling — violates ADHD design principle
+- Automated CV/signal routing visualization — too complex, physical patching is manual
+- Module purchase recommendations — stay focused on "learn what you own"
 
 ## Traceability
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| TOKEN-01 | Phase 18 | Complete |
-| TOKEN-02 | Phase 19 | Pending |
-| TOKEN-03 | Phase 18 | Pending |
-| TOKEN-04 | Phase 18 | Complete |
-| TOKEN-05 | Phase 18 | Complete |
-| TOKEN-06 | Phase 23 | Complete |
-| LAYOUT-01 | Phase 20 | Complete |
-| LAYOUT-02 | Phase 20 | Complete |
-| LAYOUT-03 | Phase 20 | Complete |
-| LAYOUT-04 | Phase 20 | Complete |
-| CONTENT-01 | Phase 19 | Complete |
-| CONTENT-02 | Phase 21 | Complete |
-| COMP-01 | Phase 21 | Complete |
-| COMP-02 | Phase 21 | Complete |
-| COMP-03 | Phase 22 | Complete |
-| COMP-04 | Phase 22 | Complete |
-| SPEC-01 | Phase 23 | Complete |
-| SPEC-02 | Phase 23 | Complete |
-| COLOR-01 | Phase 24 | Complete |
-| COLOR-02 | Phase 24 | Complete |
-| COLOR-03 | Phase 24 | Complete |
-| COLOR-04 | Phase 24 | Complete |
-| COLOR-05 | Phase 24 | Complete |
-| COLOR-06 | Phase 24 | Complete |
-
-**Coverage:**
-- v1.3 requirements: 24 total
-- Mapped to phases: 24
-- Unmapped: 0
-
----
-*Requirements defined: 2026-04-07*
-*Last updated: 2026-04-12 after Phase 24 planning*
+| REQ-ID | Phase | Plan | Status |
+|--------|-------|------|--------|
+| — | — | — | Pending roadmap creation |
