@@ -33,8 +33,8 @@ Declared values (must be multiples of 4):
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| xs | 4px | Icon gaps, inline padding, category tag internal padding |
-| sm | 8px | Gap between category tags, compact element spacing |
+| xs | 4px | Icon gaps, inline padding, category tag vertical padding |
+| sm | 8px | Gap between category tags, compact element spacing, category tag horizontal padding |
 | md | 16px | Card internal padding, tab gap, default element spacing |
 | lg | 24px | Card content padding, section padding |
 | xl | 32px | Grid gap between module cards |
@@ -57,9 +57,11 @@ Exceptions: none. All values match existing `--spacing-*` tokens in `globals.css
 Additional type specs for this phase:
 - Category tab labels: 14px, weight 600, Inter, line-height 1.0 (single-line tabs)
 - Module sub-page tab labels: 14px, weight 400, Inter, line-height 1.0
-- HP badge: 13px, weight 400, JetBrains Mono, `--color-param`
+- HP badge: 14px, weight 400, JetBrains Mono, `--color-param` (font distinguishes from Inter labels at same size)
 - Manufacturer name: 14px, weight 400, Inter, `--color-muted`
-- Category tag text: 12px, weight 600, Inter, uppercase, letter-spacing 0.05em
+- Category tag text: 14px, weight 600, Inter, uppercase, letter-spacing 0.05em (uppercase + letter-spacing distinguishes from body text at same size)
+
+**Total font sizes: 4** — 14px (label/meta/tags/badge), 16px (body), 20px (heading), clamp display.
 
 ---
 
@@ -187,7 +189,7 @@ Repeat the pattern for all 7 modules using their respective hue, accent L/C, and
 - **HP Outline Placeholder** (D-05): Proportional-width rectangle at card top. Width = `(hp / 20) * 100%` of card width, capped at 100%. Height 48px. Background: `--color-accent` at 15% opacity. Border: 1px solid `--color-accent` at 30% opacity. Border-radius: `--radius-sm` (4px)
 - **Module name:** 20px Space Grotesk bold, `--color-text`
 - **Manufacturer:** 14px Inter regular, `--color-muted`
-- **Category tags:** Inline row of small pill badges. 12px uppercase, `--color-accent` text, `bg-accent/10`, border-radius `--radius-full`, padding 2px 8px
+- **Category tags:** Inline row of small pill badges. 14px uppercase with letter-spacing 0.05em, `--color-accent` text, `bg-accent/10`, border-radius `--radius-full`, padding `4px 8px`
 - **Stat line:** 14px JetBrains Mono, `--color-param`. Format: `{hp}HP / {sessionCount} sessions`
 - **CTA:** "Explore {name}" link, 14px, `--color-accent`, underline, underline-offset 2px
 - **Hover:** Border transitions to `--color-accent` (existing `.card:hover` behavior). Wrapped in `SpringCard` for spring-physics lift
