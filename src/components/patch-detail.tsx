@@ -12,6 +12,7 @@ import { CascadiaPanel } from './cascadia-panel';
 import { OctatrackPanel } from './octatrack-panel';
 import { PlaitsPanel } from './plaits-panel';
 import { BeadsPanel } from './beads-panel';
+import { SwellsPanel } from './swells-panel';
 import { resolveCascadiaCableId, getCascadiaCableSignalType } from '@/lib/cascadia-cable-lookup';
 import type { CableConnection, KnobSetting } from '@/lib/content/schemas';
 
@@ -157,6 +158,13 @@ export function PatchDetail({
           <div className="mt-xl">
             <h3 className="text-lg font-semibold mb-md">Panel View</h3>
             <BeadsPanel />
+          </div>
+        )}
+
+        {instrumentSlug === 'swells' && (
+          <div className="mt-xl">
+            <h3 className="text-lg font-semibold mb-md">Panel View</h3>
+            <SwellsPanel />
           </div>
         )}
       </div>
