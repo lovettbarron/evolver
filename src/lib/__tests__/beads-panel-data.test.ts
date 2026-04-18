@@ -10,8 +10,9 @@ const VALID_TYPES = new Set(['knob', 'button', 'jack-in', 'jack-out', 'led']);
 const VALID_SIGNAL_TYPES = new Set(['audio', 'cv', 'gate', 'modulation']);
 
 describe('beads-panel-data', () => {
-  test('CONTROL_METADATA has at least 28 entries', () => {
-    expect(Object.keys(CONTROL_METADATA).length).toBeGreaterThanOrEqual(28);
+  test('CONTROL_METADATA has at least 25 entries', () => {
+    // 28 original minus 3 non-physical knobs (feedback, dry-wet, reverb) = 25 visible controls
+    expect(Object.keys(CONTROL_METADATA).length).toBeGreaterThanOrEqual(25);
   });
 
   test('every entry has non-empty id, name, module, and type fields', () => {

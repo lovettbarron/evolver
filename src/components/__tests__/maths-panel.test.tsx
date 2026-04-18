@@ -31,10 +31,10 @@ describe('MathsPanel', () => {
     expect(svg).toBeTruthy();
   });
 
-  test('renders SVG with correct default viewBox (0 0 300 700)', () => {
+  test('renders SVG with correct default viewBox (0 0 300 380)', () => {
     const { container } = render(<MathsPanel />);
     const svg = container.querySelector('svg');
-    expect(svg?.getAttribute('viewBox')).toContain('0 0 300 700');
+    expect(svg?.getAttribute('viewBox')).toContain('0 0 300 380');
   });
 
   test('exports MathsPanel component', () => {

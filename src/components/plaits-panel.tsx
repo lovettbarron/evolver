@@ -569,7 +569,7 @@ function PlaitsPanelInner({
 
   const viewBox =
     (zoomSections?.length ? computeZoomViewBox(zoomSections) : null) ??
-    '0 0 180 560';
+    '0 0 180 380';
 
   // Event delegation for hover
   const findControlId = useCallback(
@@ -606,7 +606,7 @@ function PlaitsPanelInner({
       <motion.svg
         ref={svgRef}
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 180 560"
+        viewBox="0 0 180 380"
         whileInView={{ viewBox: viewBox }}
         viewport={{ once: true, amount: 0.7 }}
         transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
@@ -637,8 +637,8 @@ function PlaitsPanelInner({
         </defs>
 
         {/* Panel background -- Plaits has a light grey/silver panel */}
-        <rect style={styles.panelBg} x="0" y="0" width="180" height="560" rx="4" />
-        <rect style={styles.panelBorder} x="0" y="0" width="180" height="560" rx="4" />
+        <rect style={styles.panelBg} x="0" y="0" width="180" height="380" rx="4" />
+        <rect style={styles.panelBorder} x="0" y="0" width="180" height="380" rx="4" />
 
         {/* Brand and title */}
         <text style={styles.brandText} x={12} y={16}>Mutable Instruments</text>
@@ -663,17 +663,25 @@ function PlaitsPanelInner({
           );
         })}
 
-        {/* Section dividers */}
-        {/* Below model buttons/LEDs */}
-        <text style={styles.sectionLabel} x={90} y={168}>FREQUENCY                                HARMONICS</text>
+        {/* Signal flow routing line: MODEL ——— HARMO */}
+        <line x1={30} y1={248} x2={90} y2={248} stroke="#666" strokeWidth={0.6} />
+        <line x1={90} y1={248} x2={150} y2={248} stroke="#666" strokeWidth={0.6} />
+        <text style={{ ...styles.sectionLabel, fontSize: '4px' }} x={18} y={248}>MODEL</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '4px', textAnchor: 'end' }} x={162} y={248}>HARMO</text>
 
-        {/* Jack row labels */}
-        <text style={{ ...styles.sectionLabel, fontSize: '4px' }} x={25} y={355}>MODEL</text>
-        <text style={{ ...styles.sectionLabel, fontSize: '4px' }} x={155} y={355}>HARMO</text>
+        {/* Attenuverter ± labels */}
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={44} y={195}>-</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={66} y={195}>+</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '4px' }} x={90} y={228}>FM</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={79} y={215}>-</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={101} y={215}>+</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={114} y={195}>-</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={136} y={195}>+</text>
 
-        {/* Output labels on jack row */}
-        <text style={{ ...styles.sectionLabel, fontSize: '4px', fill: '#16a085' }} x={120} y={507}>OUT</text>
-        <text style={{ ...styles.sectionLabel, fontSize: '4px', fill: '#16a085' }} x={155} y={507}>AUX</text>
+        {/* Dashed lines from attenuverters to their CV jacks */}
+        <line x1={55} y1={203} x2={58} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
+        <line x1={90} y1={223} x2={98} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
+        <line x1={125} y1={203} x2={162} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
 
         {/* Render all controls */}
         {Object.values(CONTROL_METADATA).map((ctrl) => {

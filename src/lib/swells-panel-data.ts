@@ -87,82 +87,81 @@ export const CONTROL_METADATA: Record<string, SwellsControlMeta> = {
   'jack-swells-swell-cv': { id: 'jack-swells-swell-cv', name: 'Swell CV', module: 'swells', type: 'jack-out', signalType: 'cv' },
 };
 
-// ===== Placeholder control positions — hand-place from manual PDF when available =====
-// ViewBox: 0 0 420 380 (20HP eurorack module)
+// ===== Hand-placed control positions matching the physical Intellijel Swells panel =====
+// ViewBox: 0 0 300 380 (20HP eurorack module, ~4:5 aspect ratio)
 //
-// Approximate layout (to be refined with PDF):
+// Physical layout from reference photo (top to bottom):
 //
-// Top row (y ~30-40):   Model select buttons, algorithm display LEDs
-// Row 1 (y ~60-170):    8 reverb parameter faders (PRE-DELAY through FLOW)
-// Row 2 (y ~180-220):   INPUT/MIX faders, DRIVE/TRIM knobs, performance buttons
-// Row 3 (y ~230-270):   Swell Generator knobs (RISE, FALL, THRESHOLD, EF GAIN, EF HIGH CUT)
-// Row 4 (y ~280-310):   Switches (LO-FI, EF SOURCE)
-// Bottom (y ~320-360):  CV input jacks, Audio I/O jacks, SWELL CV output
+// Row 1 (y ~22):       Top jack row: IN L, IN R, TRIG, SC, LEVEL, SWELL btn, OUT L, OUT R
+// Row 2 (y ~48):       8 attenuverter knobs (small, with ± labels) aligned to jacks above
+// Row 3 (y ~80-160):   8 vertical faders: PREDLY, SIZE, DECAY, [saw/damp], DAMP, EBB, FLOW, EQ
+// Row 4 (y ~175):      Labels: PREDLY, SIZE, DECAY, DAMP, EBB, FLOW, EQ
+// Row 5 (y ~200):      LEVEL knob (left), MODEL selector, LO-FI switch, LEVEL knob (right)
+// Row 6 (y ~215):      LED indicator dots (right edge)
+// Row 7 (y ~260-280):  INPUT TRIM (large knob, left), center controls, MIX/VERB (large knob, right)
+// Row 8 (y ~330):      Bottom buttons: FREEZE, REVERSE, RISE, EF SRC switch, THRESH, SWELL MODE, FALL, BURST, ALT
+// Row 9 (y ~360):      Brand: "intellijel"
 
 export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
-  // ===== Reverb Parameter Faders — top row (y: 80-150, spaced across width) =====
-  'slider-swells-pre-delay': { x: 30, y: 100 },
-  'slider-swells-size':      { x: 75, y: 100 },
-  'slider-swells-decay':     { x: 120, y: 100 },
-  'slider-swells-hi-damp':   { x: 165, y: 100 },
-  'slider-swells-lo-damp':   { x: 210, y: 100 },
-  'slider-swells-eq':        { x: 255, y: 100 },
-  'slider-swells-ebb':       { x: 300, y: 100 },
-  'slider-swells-flow':      { x: 345, y: 100 },
+  // ===== Top jack row (y: 22) — IN L, IN R, TRIG, SC, LEVEL, SWELL, OUT L, OUT R =====
+  'jack-swells-in-l':         { x: 22, y: 22 },
+  'jack-swells-in-r':         { x: 56, y: 22 },
+  'jack-swells-trig':         { x: 90, y: 22 },
+  'jack-swells-sidechain':    { x: 124, y: 22 },
+  'jack-swells-ef-in':        { x: 158, y: 22 },
+  'button-swells-swell':      { x: 192, y: 22 },
+  'jack-swells-out-l':        { x: 237, y: 22 },
+  'jack-swells-out-r':        { x: 271, y: 22 },
 
-  // ===== Level Faders + Drive/Trim (y: 100, right side) =====
-  'slider-swells-input':     { x: 30, y: 200 },
-  'slider-swells-mix':       { x: 75, y: 200 },
-  'knob-swells-drive':       { x: 120, y: 200 },
-  'knob-swells-trim':        { x: 165, y: 200 },
+  // ===== Attenuverter knobs row (y: 48) — small knobs below each top jack =====
+  'jack-swells-pre-delay-cv': { x: 22, y: 48 },
+  'jack-swells-size-cv':      { x: 56, y: 48 },
+  'jack-swells-decay-cv':     { x: 90, y: 48 },
+  'jack-swells-hi-damp-cv':   { x: 124, y: 48 },
+  'jack-swells-lo-damp-cv':   { x: 158, y: 48 },
+  'jack-swells-ebb-cv':       { x: 192, y: 48 },
+  'jack-swells-flow-cv':      { x: 226, y: 48 },
+  'jack-swells-swell-cv':     { x: 260, y: 48 },
 
-  // ===== Performance Buttons (y: 200, center-right) =====
-  'button-swells-swell':     { x: 220, y: 200 },
-  'button-swells-freeze':    { x: 260, y: 200 },
-  'button-swells-burst':     { x: 300, y: 200 },
-  'button-swells-reverse':   { x: 340, y: 200 },
+  // ===== 8 vertical faders (y: 120 = center of fader travel) =====
+  'slider-swells-pre-delay':  { x: 22, y: 120 },
+  'slider-swells-size':       { x: 56, y: 120 },
+  'slider-swells-decay':      { x: 90, y: 120 },
+  'slider-swells-hi-damp':    { x: 124, y: 120 },
+  'slider-swells-lo-damp':    { x: 158, y: 120 },
+  'slider-swells-ebb':        { x: 192, y: 120 },
+  'slider-swells-flow':       { x: 226, y: 120 },
+  'slider-swells-eq':         { x: 260, y: 120 },
 
-  // ===== Model Select Buttons (y: 35) =====
-  'button-swells-model-up':  { x: 380, y: 35 },
-  'button-swells-model-down': { x: 380, y: 60 },
+  // ===== Level faders (y: 210) — left and right of center controls =====
+  'slider-swells-input':      { x: 55, y: 210 },
+  'slider-swells-mix':        { x: 260, y: 210 },
 
-  // ===== Swell Generator Knobs (y: 260) =====
-  'knob-swells-rise':        { x: 50, y: 260 },
-  'knob-swells-fall':        { x: 100, y: 260 },
-  'knob-swells-threshold':   { x: 150, y: 260 },
-  'knob-swells-ef-gain':     { x: 210, y: 260 },
-  'knob-swells-ef-high-cut': { x: 270, y: 260 },
+  // ===== Model/Lo-Fi controls (y: 235, center) =====
+  'button-swells-model-up':   { x: 120, y: 228 },
+  'button-swells-model-down': { x: 140, y: 242 },
+  'switch-swells-lo-fi':      { x: 175, y: 235 },
 
-  // ===== Switches (y: 260, right side) =====
-  'switch-swells-lo-fi':     { x: 340, y: 250 },
-  'switch-swells-ef-source': { x: 390, y: 250 },
+  // ===== Large knobs — INPUT TRIM (left) and MIX/VERB (right) =====
+  'knob-swells-trim':         { x: 25, y: 290 },
+  'knob-swells-drive':        { x: 275, y: 290 },
 
-  // ===== CV Input Jacks — bottom area (y: 320) =====
-  'jack-swells-pre-delay-cv': { x: 30, y: 320 },
-  'jack-swells-size-cv':      { x: 65, y: 320 },
-  'jack-swells-decay-cv':     { x: 100, y: 320 },
-  'jack-swells-hi-damp-cv':   { x: 135, y: 320 },
-  'jack-swells-lo-damp-cv':   { x: 170, y: 320 },
-  'jack-swells-ebb-cv':       { x: 205, y: 320 },
-  'jack-swells-flow-cv':      { x: 240, y: 320 },
-  'jack-swells-trig':         { x: 275, y: 320 },
-  'jack-swells-ef-in':        { x: 310, y: 320 },
-
-  // ===== Audio I/O Jacks — bottom row (y: 355) =====
-  'jack-swells-in-l':         { x: 50, y: 355 },
-  'jack-swells-in-r':         { x: 90, y: 355 },
-  'jack-swells-sidechain':    { x: 140, y: 355 },
-  'jack-swells-out-l':        { x: 230, y: 355 },
-  'jack-swells-out-r':        { x: 270, y: 355 },
-
-  // ===== Other Output Jacks =====
-  'jack-swells-swell-cv':     { x: 340, y: 355 },
+  // ===== Bottom controls row (y: 330) =====
+  'button-swells-freeze':     { x: 18, y: 330 },
+  'button-swells-reverse':    { x: 52, y: 330 },
+  'knob-swells-rise':         { x: 95, y: 330 },
+  'switch-swells-ef-source':  { x: 140, y: 330 },
+  'knob-swells-threshold':    { x: 170, y: 330 },
+  'knob-swells-ef-gain':      { x: 205, y: 330 },
+  'knob-swells-fall':         { x: 235, y: 330 },
+  'button-swells-burst':      { x: 265, y: 330 },
+  'knob-swells-ef-high-cut':  { x: 290, y: 330 },
 };
 
 // ===== Section bounds for zoom and tint calculations =====
 
 export const SECTION_BOUNDS: Record<string, { x: number; y: number; width: number; height: number }> = {
-  'swells': { x: 0, y: 0, width: 420, height: 380 },
+  'swells': { x: 0, y: 0, width: 300, height: 380 },
 };
 
 /**

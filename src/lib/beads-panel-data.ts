@@ -44,11 +44,10 @@ export const CONTROL_METADATA: Record<string, BeadsControlMeta> = {
   'knob-beads-pitch': { id: 'knob-beads-pitch', name: 'Pitch', module: 'beads', type: 'knob' },
   'knob-beads-size': { id: 'knob-beads-size', name: 'Size', module: 'beads', type: 'knob' },
 
-  // ===== Medium knobs (4) — controls H, J, K, L =====
+  // ===== SHAPE knob (visible on panel, same size as SIZE) =====
   'knob-beads-shape': { id: 'knob-beads-shape', name: 'Shape', module: 'beads', type: 'knob' },
-  'knob-beads-feedback': { id: 'knob-beads-feedback', name: 'Feedback', module: 'beads', type: 'knob' },
-  'knob-beads-dry-wet': { id: 'knob-beads-dry-wet', name: 'Dry/Wet', module: 'beads', type: 'knob' },
-  'knob-beads-reverb': { id: 'knob-beads-reverb', name: 'Reverb', module: 'beads', type: 'knob' },
+  // NOTE: Feedback, Dry/Wet, Reverb are secondary functions (hold Quality button),
+  // not physical knobs on the panel. Omitted from metadata.
 
   // ===== Attenurandomizers (4) — control I (group of 4 small knobs) =====
   'knob-beads-time-atten': { id: 'knob-beads-time-atten', name: 'Time Att', module: 'beads', type: 'knob' },
@@ -80,63 +79,74 @@ export const CONTROL_METADATA: Record<string, BeadsControlMeta> = {
   'led-beads-input-level': { id: 'led-beads-input-level', name: 'Input Level', module: 'beads', type: 'led' },
 };
 
-// ===== Placeholder control positions =====
-// All entries at { x: 0, y: 0 } — hand-placement from reference photos is a future step.
-// ViewBox: 0 0 200 380 (14HP eurorack module)
+// ===== Hand-placed control positions matching the physical Beads panel =====
+// ViewBox: 0 0 210 380 (14HP eurorack module, ~4:5 aspect ratio)
+//
+// Layout from reference panel photo:
+//
+// Top (y ~15):          "Beads" title + "texture synthesizer"
+// Row 1 (y ~48):        FREEZE button (green, left) + SEED button (silver, right)
+// Row 2 (y ~80):        DENSITY (large knob, center)
+// Row 3 (y ~118):       Input level LED (center)
+// Row 4 (y ~158):       TIME (large, left) + PITCH (large, right)
+// Row 5 (y ~188):       Quality btn (centered between knobs) + CV Assign btn (left edge, below TIME)
+// Row 6 (y ~215):       SIZE (large, center-left) + SHAPE (large, center-right)
+// Row 7 (y ~262):       4 attenurandomizer small knobs
+// Row 8 (y ~310):       Jack row 1: IN L, IN R, FREEZE, SEED, PITCH CV, ASSIGN CV
+// Row 9 (y ~345):       Jack row 2: DENSITY CV, TIME CV, SIZE CV, SHAPE CV, L out, R out
+// Bottom (y ~375):      Mutable Instruments brand
+//
+// NOTE: feedback, dry-wet, reverb are not visible physical knobs on the panel.
+// They may be secondary functions accessed via button combos.
 
 export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
-  // Buttons
-  'button-beads-quality':   { x: 0, y: 0 },
-  'button-beads-freeze':    { x: 0, y: 0 },
-  'button-beads-seed':      { x: 0, y: 0 },
-  'button-beads-cv-assign': { x: 0, y: 0 },
+  // ===== Top buttons =====
+  'button-beads-freeze':    { x: 28, y: 48 },
+  'button-beads-seed':      { x: 182, y: 48 },
 
-  // Large knobs
-  'knob-beads-density':     { x: 0, y: 0 },
-  'knob-beads-time':        { x: 0, y: 0 },
-  'knob-beads-pitch':       { x: 0, y: 0 },
-  'knob-beads-size':        { x: 0, y: 0 },
+  // ===== DENSITY (large knob, center top) =====
+  'knob-beads-density':     { x: 105, y: 80 },
 
-  // Medium knobs
-  'knob-beads-shape':       { x: 0, y: 0 },
-  'knob-beads-feedback':    { x: 0, y: 0 },
-  'knob-beads-dry-wet':     { x: 0, y: 0 },
-  'knob-beads-reverb':      { x: 0, y: 0 },
+  // ===== Quality button + LED (center, between DENSITY and TIME/PITCH) =====
+  'led-beads-input-level':  { x: 88, y: 118 },
+  'button-beads-quality':   { x: 105, y: 118 },
 
-  // Attenurandomizers
-  'knob-beads-time-atten':  { x: 0, y: 0 },
-  'knob-beads-size-atten':  { x: 0, y: 0 },
-  'knob-beads-shape-atten': { x: 0, y: 0 },
-  'knob-beads-pitch-atten': { x: 0, y: 0 },
+  // ===== CV Assign button (left edge, below TIME knob) =====
+  'button-beads-cv-assign': { x: 15, y: 195 },
 
-  // Audio inputs
-  'jack-beads-in-l':        { x: 0, y: 0 },
-  'jack-beads-in-r':        { x: 0, y: 0 },
+  // ===== Large knobs =====
+  'knob-beads-time':        { x: 35, y: 158 },
+  'knob-beads-pitch':       { x: 175, y: 158 },
+  'knob-beads-size':        { x: 72, y: 215 },
+  'knob-beads-shape':       { x: 140, y: 215 },
 
-  // Gate inputs
-  'jack-beads-freeze-gate': { x: 0, y: 0 },
-  'jack-beads-seed-gate':   { x: 0, y: 0 },
+  // ===== Attenurandomizers (row below SIZE/SHAPE) =====
+  'knob-beads-time-atten':  { x: 40, y: 262 },
+  'knob-beads-size-atten':  { x: 82, y: 262 },
+  'knob-beads-shape-atten': { x: 124, y: 262 },
+  'knob-beads-pitch-atten': { x: 166, y: 262 },
 
-  // CV inputs
-  'jack-beads-density-cv':  { x: 0, y: 0 },
-  'jack-beads-time-cv':     { x: 0, y: 0 },
-  'jack-beads-size-cv':     { x: 0, y: 0 },
-  'jack-beads-shape-cv':    { x: 0, y: 0 },
-  'jack-beads-pitch-cv':    { x: 0, y: 0 },
-  'jack-beads-assign-cv':   { x: 0, y: 0 },
+  // ===== Jack row 1 (y: 310): IN L, IN R, FREEZE, SEED, PITCH CV, ASSIGN CV =====
+  'jack-beads-in-l':        { x: 22, y: 310 },
+  'jack-beads-in-r':        { x: 58, y: 310 },
+  'jack-beads-freeze-gate': { x: 94, y: 310 },
+  'jack-beads-seed-gate':   { x: 130, y: 310 },
+  'jack-beads-pitch-cv':    { x: 166, y: 310 },
+  'jack-beads-assign-cv':   { x: 196, y: 310 },
 
-  // Audio outputs
-  'jack-beads-out-l':       { x: 0, y: 0 },
-  'jack-beads-out-r':       { x: 0, y: 0 },
-
-  // LED
-  'led-beads-input-level':  { x: 0, y: 0 },
+  // ===== Jack row 2 (y: 345): DENSITY CV, TIME CV, SIZE CV, SHAPE CV, L out, R out =====
+  'jack-beads-density-cv':  { x: 22, y: 345 },
+  'jack-beads-time-cv':     { x: 58, y: 345 },
+  'jack-beads-size-cv':     { x: 94, y: 345 },
+  'jack-beads-shape-cv':    { x: 130, y: 345 },
+  'jack-beads-out-l':       { x: 166, y: 345 },
+  'jack-beads-out-r':       { x: 196, y: 345 },
 };
 
-// ===== Section bounds (placeholder) =====
+// ===== Section bounds =====
 
 export const SECTION_BOUNDS: Record<string, { x: number; y: number; width: number; height: number }> = {
-  'beads': { x: 0, y: 0, width: 200, height: 380 },
+  'beads': { x: 0, y: 0, width: 210, height: 380 },
 };
 
 /**

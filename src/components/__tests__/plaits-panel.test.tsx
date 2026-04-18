@@ -31,10 +31,10 @@ describe('PlaitsPanel', () => {
     expect(svg).toBeTruthy();
   });
 
-  test('renders SVG with correct default viewBox (0 0 180 560)', () => {
+  test('renders SVG with correct default viewBox (0 0 180 380)', () => {
     const { container } = render(<PlaitsPanel />);
     const svg = container.querySelector('svg');
-    expect(svg?.getAttribute('viewBox')).toContain('0 0 180 560');
+    expect(svg?.getAttribute('viewBox')).toContain('0 0 180 380');
   });
 
   test('exports PlaitsPanel component', () => {

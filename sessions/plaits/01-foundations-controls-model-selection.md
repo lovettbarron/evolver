@@ -21,7 +21,9 @@ section: Foundations
 **Objective:** Learn the Plaits panel layout, cycle through Bank 1 models, explore the main tone controls, and discover the built-in LPG and internal envelope behavior.
 
 > [!tip] If you only have 5 minutes
-> Set Plaits to init state. Patch V/OCT + OUT. Press the MODEL 1 button repeatedly and listen to each of the 8 Bank 1 models change character. Sweep HARMONICS on model 1 -- you will hear two oscillators detune against each other. That is the core concept: one module, sixteen instruments.
+> Set Plaits to init state. Patch V/OCT + OUT. Press the MODEL 1 button repeatedly and listen to each of the 8 Bank 1 models change character. Sweep HARMONICS on model 1 -- you will hear two oscillators detune against each other. That is the core concept: one module, many instruments.
+>
+> **Firmware 1.2 note:** If your Plaits has firmware 1.2 installed, there are three banks (Green, Red, Orange) with 24 total models. Press both MODEL buttons to cycle banks. Sessions 01-08 cover Green and Red; Sessions 09-10 cover the Orange bank additions.
 
 ## Warm-Up (2 min)
 

@@ -5,10 +5,10 @@ import { motion } from 'motion/react';
 import { clsx } from 'clsx';
 import {
   CONTROL_METADATA,
+  CONTROL_POSITIONS,
   SECTION_BOUNDS,
   midiToRotation,
 } from '@/lib/maths-panel-data';
-import type { MathsControlMeta } from '@/lib/maths-panel-data';
 
 // ===== Types =====
 
@@ -27,7 +27,9 @@ interface MathsPanelProps {
   className?: string;
 }
 
-// ===== Cable Colors =====
+// ===== Constants =====
+
+const VIEWBOX = '0 0 300 380';
 
 const CABLE_COLORS: Record<string, string> = {
   audio: '#ff6644',
@@ -37,82 +39,7 @@ const CABLE_COLORS: Record<string, string> = {
   default: '#888888',
 };
 
-// ===== Channel order for layout =====
-
 const CHANNEL_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'buses'] as const;
-
-// ===== Channel display names =====
-
-const CHANNEL_DISPLAY_NAMES: Record<string, string> = {
-  'ch1': 'CH 1',
-  'ch2': 'CH 2',
-  'ch3': 'CH 3',
-  'ch4': 'CH 4',
-  'buses': 'BUSES',
-};
-
-// ===== Hand-placed control positions =====
-// Imported from maths-panel-data.ts via CONTROL_POSITIONS
-// ViewBox: 0 0 300 700 (20HP eurorack module)
-
-interface ControlPosition { x: number; y: number }
-
-const CONTROL_POSITIONS: Record<string, ControlPosition> = {
-  // ===== Channel 1 (LEFT side) =====
-  'button-ch1-cycle':      { x: 55, y: 55 },
-  'led-ch1-cycle':         { x: 55, y: 38 },
-  'knob-ch1-rise':         { x: 35, y: 115 },
-  'knob-ch1-fall':         { x: 85, y: 115 },
-  'knob-ch1-vari-response': { x: 60, y: 175 },
-  'knob-ch1-attenuverter': { x: 60, y: 240 },
-  'jack-ch1-signal-in':    { x: 35, y: 315 },
-  'jack-ch1-trig-in':      { x: 80, y: 315 },
-  'jack-ch1-rise-cv-in':   { x: 25, y: 400 },
-  'jack-ch1-fall-cv-in':   { x: 60, y: 400 },
-  'jack-ch1-both-cv-in':   { x: 95, y: 400 },
-  'jack-ch1-cycle-in':     { x: 60, y: 480 },
-  'led-ch1-unity':         { x: 30, y: 480 },
-  'led-ch1-eor':           { x: 90, y: 480 },
-  'jack-ch1-unity-out':    { x: 25, y: 560 },
-  'jack-ch1-eor-out':      { x: 60, y: 560 },
-  'jack-ch1-var-out':      { x: 95, y: 560 },
-
-  // ===== Channel 2 (CENTER-LEFT) =====
-  'knob-ch2-attenuverter': { x: 120, y: 240 },
-  'jack-ch2-signal-in':    { x: 120, y: 315 },
-  'jack-ch2-var-out':      { x: 120, y: 560 },
-
-  // ===== Channel 3 (CENTER-RIGHT) =====
-  'knob-ch3-attenuverter': { x: 180, y: 240 },
-  'jack-ch3-signal-in':    { x: 180, y: 315 },
-  'jack-ch3-var-out':      { x: 180, y: 560 },
-
-  // ===== Channel 4 (RIGHT side — mirror of Ch1) =====
-  'button-ch4-cycle':      { x: 245, y: 55 },
-  'led-ch4-cycle':         { x: 245, y: 38 },
-  'knob-ch4-rise':         { x: 215, y: 115 },
-  'knob-ch4-fall':         { x: 265, y: 115 },
-  'knob-ch4-vari-response': { x: 240, y: 175 },
-  'knob-ch4-attenuverter': { x: 240, y: 240 },
-  'jack-ch4-signal-in':    { x: 220, y: 315 },
-  'jack-ch4-trig-in':      { x: 265, y: 315 },
-  'jack-ch4-rise-cv-in':   { x: 205, y: 400 },
-  'jack-ch4-fall-cv-in':   { x: 240, y: 400 },
-  'jack-ch4-both-cv-in':   { x: 275, y: 400 },
-  'jack-ch4-cycle-in':     { x: 240, y: 480 },
-  'led-ch4-unity':         { x: 270, y: 480 },
-  'led-ch4-eoc':           { x: 210, y: 480 },
-  'jack-ch4-unity-out':    { x: 275, y: 560 },
-  'jack-ch4-eoc-out':      { x: 240, y: 560 },
-  'jack-ch4-var-out':      { x: 205, y: 560 },
-
-  // ===== Buses (BOTTOM CENTER) =====
-  'jack-or-out':           { x: 110, y: 645 },
-  'jack-sum-out':          { x: 150, y: 645 },
-  'jack-inv-out':          { x: 190, y: 645 },
-  'led-sum-pos':           { x: 135, y: 625 },
-  'led-sum-neg':           { x: 165, y: 625 },
-};
 
 // ===== Jack positions lookup (for cable rendering) =====
 
@@ -136,7 +63,7 @@ const styles = {
   sectionLabel: {
     fill: '#999',
     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    fontSize: '7px',
+    fontSize: '6px',
     fontWeight: 700,
     textTransform: 'uppercase' as const,
     letterSpacing: '1px',
@@ -145,7 +72,7 @@ const styles = {
   brandText: {
     fill: '#666',
     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    fontSize: '10px',
+    fontSize: '8px',
     fontWeight: 700,
     textTransform: 'uppercase' as const,
     letterSpacing: '2px',
@@ -154,7 +81,7 @@ const styles = {
   titleText: {
     fill: '#ccc',
     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    fontSize: '16px',
+    fontSize: '14px',
     fontWeight: 700,
     textTransform: 'uppercase' as const,
     letterSpacing: '4px',
@@ -174,13 +101,13 @@ const styles = {
   knobLabel: {
     fill: '#aaa',
     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    fontSize: '5.5px',
+    fontSize: '5px',
     textAnchor: 'middle' as const,
   } as React.CSSProperties,
   jackLabel: {
     fill: '#aaa',
     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    fontSize: '4.5px',
+    fontSize: '4px',
     textAnchor: 'middle' as const,
   } as React.CSSProperties,
   ledOff: {
@@ -293,21 +220,24 @@ function computeZoomViewBox(sections: string[]): string | null {
 
 // ===== CablePath Component =====
 
-interface CablePathProps {
+function CablePath({
+  sourceId,
+  destId,
+  signalType,
+  purpose,
+}: {
   sourceId: string;
   destId: string;
   signalType: 'audio' | 'cv' | 'gate' | 'modulation' | 'default';
   purpose?: string;
-}
-
-function CablePath({ sourceId, destId, signalType, purpose }: CablePathProps) {
+}) {
   const src = JACK_POSITIONS[sourceId];
   const dst = JACK_POSITIONS[destId];
   if (!src || !dst) return null;
 
   const dx = Math.abs(dst.x - src.x);
   const midX = (src.x + dst.x) / 2;
-  const droop = Math.min(80, 30 + dx * 0.15);
+  const droop = Math.min(40, 15 + dx * 0.1);
   const midY = Math.max(src.y, dst.y) + droop;
 
   const color = CABLE_COLORS[signalType] || CABLE_COLORS.default;
@@ -317,7 +247,7 @@ function CablePath({ sourceId, destId, signalType, purpose }: CablePathProps) {
       d={`M ${src.x},${src.y} Q ${midX},${midY} ${dst.x},${dst.y}`}
       fill="none"
       stroke={color}
-      strokeWidth={3}
+      strokeWidth={2.5}
       strokeOpacity={0.8}
       strokeLinecap="round"
       style={{ pointerEvents: 'stroke' }}
@@ -331,17 +261,6 @@ function CablePath({ sourceId, destId, signalType, purpose }: CablePathProps) {
 
 // ===== KnobGroup Component (memo'd) =====
 
-interface KnobProps {
-  id: string;
-  x: number;
-  y: number;
-  label: string;
-  rotation: number;
-  highlighted?: boolean;
-  highlightColor?: 'blue' | 'amber';
-  dragHandlers: ReturnType<typeof useKnobDrag>;
-}
-
 function KnobGroupInner({
   id,
   x,
@@ -351,7 +270,16 @@ function KnobGroupInner({
   highlighted,
   highlightColor,
   dragHandlers,
-}: KnobProps) {
+}: {
+  id: string;
+  x: number;
+  y: number;
+  label: string;
+  rotation: number;
+  highlighted?: boolean;
+  highlightColor?: 'blue' | 'amber';
+  dragHandlers: ReturnType<typeof useKnobDrag>;
+}) {
   const r = 12;
 
   return (
@@ -369,7 +297,7 @@ function KnobGroupInner({
           fill="none"
           stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
           strokeOpacity={0.6}
-          filter={`url(#glow-${highlightColor || 'blue'})`}
+          filter={`url(#maths-glow-${highlightColor || 'blue'})`}
         />
       )}
       {dragHandlers.isDragging && (
@@ -384,7 +312,7 @@ function KnobGroupInner({
         style={styles.knobIndicator}
         transform={`rotate(${rotation})`}
       />
-      <text y={20} style={styles.knobLabel}>
+      <text y={18} style={styles.knobLabel}>
         {label}
       </text>
     </g>
@@ -448,7 +376,7 @@ function ButtonComponent({
   highlighted?: boolean;
   highlightColor?: 'blue' | 'amber';
 }) {
-  const r = 8;
+  const r = 6;
 
   return (
     <g id={id} transform={`translate(${x}, ${y})`} style={{ cursor: 'pointer' }}>
@@ -458,12 +386,12 @@ function ButtonComponent({
           fill="none"
           stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
           strokeOpacity={0.6}
-          filter={`url(#glow-${highlightColor || 'blue'})`}
+          filter={`url(#maths-glow-${highlightColor || 'blue'})`}
         />
       )}
       <circle r={r} fill="#2a2a2a" stroke="#666" strokeWidth={1.2} />
-      <circle r={r - 3} fill="#333" stroke="none" />
-      <text y={16} style={styles.knobLabel}>
+      <circle r={r - 2} fill="#333" stroke="none" />
+      <text y={12} style={styles.knobLabel}>
         {label}
       </text>
     </g>
@@ -497,7 +425,7 @@ function JackGroupComponent({
           fill="none"
           stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
           strokeOpacity={0.6}
-          filter={`url(#glow-${highlightColor || 'blue'})`}
+          filter={`url(#maths-glow-${highlightColor || 'blue'})`}
         />
       )}
       <circle
@@ -506,7 +434,7 @@ function JackGroupComponent({
         stroke={isOutput ? '#fff' : '#555'}
         strokeWidth={isOutput ? 1.5 : 1}
       />
-      <text y={12} style={styles.jackLabel}>
+      <text y={11} style={styles.jackLabel}>
         {label}
       </text>
     </g>
@@ -536,7 +464,7 @@ function LEDComponent({
           fill="none"
           stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
           strokeOpacity={0.6}
-          filter={`url(#glow-${highlightColor || 'blue'})`}
+          filter={`url(#maths-glow-${highlightColor || 'blue'})`}
         />
       )}
       <circle r={3} style={styles.ledOff} />
@@ -545,7 +473,6 @@ function LEDComponent({
 }
 
 // ===== Maths Panel Tooltip =====
-// Self-contained tooltip that uses Maths CONTROL_METADATA (not Evolver's)
 
 function MathsPanelTooltip({
   controlId,
@@ -623,9 +550,8 @@ function MathsPanelInner({
 
   const viewBox =
     (zoomSections?.length ? computeZoomViewBox(zoomSections) : null) ??
-    '0 0 300 700';
+    VIEWBOX;
 
-  // Event delegation for hover
   const findControlId = useCallback(
     (target: EventTarget | null): string | null => {
       let el = target as Element | null;
@@ -660,7 +586,7 @@ function MathsPanelInner({
       <motion.svg
         ref={svgRef}
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 300 700"
+        viewBox={VIEWBOX}
         whileInView={{ viewBox: viewBox }}
         viewport={{ once: true, amount: 0.7 }}
         transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
@@ -669,7 +595,6 @@ function MathsPanelInner({
         onMouseLeave={onMouseLeave}
       >
         <defs>
-          {/* Glow filters for highlights */}
           <filter id="maths-glow-blue" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
             <feFlood floodColor="#3388ff" floodOpacity="0.6" result="color" />
@@ -690,35 +615,42 @@ function MathsPanelInner({
           </filter>
         </defs>
 
-        {/* Panel background — dark Make Noise aesthetic */}
-        <rect style={styles.panelBg} x="0" y="0" width="300" height="700" rx="4" />
-        <rect style={styles.panelBorder} x="0" y="0" width="300" height="700" rx="4" />
+        {/* Panel background */}
+        <rect style={styles.panelBg} x="0" y="0" width="300" height="380" rx="4" />
+        <rect style={styles.panelBorder} x="0" y="0" width="300" height="380" rx="4" />
 
-        {/* Brand text */}
-        <text style={styles.brandText} x={150} y={18}>MAKE NOISE</text>
+        {/* MATHS title at top */}
+        <text style={styles.titleText} x={150} y={20}>MATHS</text>
 
-        {/* Title */}
-        <text style={styles.titleText} x={150} y={690}>MATHS</text>
+        {/* Signal-to-attenuverter indicator lines (Ch2 and Ch3 only, 90-deg elbow style) */}
+        {/* Ch2 Signal (x:122,y:75) → down to y:157 → right to Ch2 Atten (x:138,y:157) */}
+        <polyline points="122,82 122,157 138,157" fill="none" stroke="#555" strokeWidth={0.7} />
+        {/* Ch3 Signal (x:178,y:75) → down to y:194 → left to Ch3 Atten (x:162,y:194) */}
+        <polyline points="178,82 178,194 162,194" fill="none" stroke="#555" strokeWidth={0.7} />
+
+        {/* Rise/Fall indicator lines — connect CV input jacks to knobs */}
+        {/* Ch1: Rise CV (x:17,y:150) → Rise knob (x:65,y:128) */}
+        <line x1={23} y1={150} x2={53} y2={128} stroke="#555" strokeWidth={0.8} />
+        {/* Ch1: Fall CV (x:17,y:200) → Fall knob (x:65,y:175) */}
+        <line x1={23} y1={200} x2={53} y2={175} stroke="#555" strokeWidth={0.8} />
+        {/* Ch4: Rise CV (x:283,y:150) → Rise knob (x:235,y:128) */}
+        <line x1={277} y1={150} x2={247} y2={128} stroke="#555" strokeWidth={0.8} />
+        {/* Ch4: Fall CV (x:283,y:200) → Fall knob (x:235,y:175) */}
+        <line x1={277} y1={200} x2={247} y2={175} stroke="#555" strokeWidth={0.8} />
 
         {/* Section separator lines */}
-        {/* Horizontal divider below cycle buttons */}
-        <line style={styles.divider} x1={10} y1={80} x2={290} y2={80} />
-        {/* Horizontal divider below Rise/Fall/Response knobs */}
-        <line style={styles.divider} x1={10} y1={205} x2={290} y2={205} />
-        {/* Horizontal divider below attenuverters */}
-        <line style={styles.divider} x1={10} y1={275} x2={290} y2={275} />
-        {/* Horizontal divider below signal/trig jacks */}
-        <line style={styles.divider} x1={10} y1={365} x2={290} y2={365} />
-        {/* Horizontal divider below CV jacks */}
-        <line style={styles.divider} x1={10} y1={450} x2={290} y2={450} />
-        {/* Horizontal divider below cycle-in / LEDs */}
-        <line style={styles.divider} x1={10} y1={520} x2={290} y2={520} />
-        {/* Horizontal divider below output jacks */}
-        <line style={styles.divider} x1={10} y1={600} x2={290} y2={600} />
-        {/* Vertical divider between Ch1 and center */}
-        <line style={styles.divider} x1={108} y1={210} x2={108} y2={595} />
-        {/* Vertical divider between center and Ch4 */}
-        <line style={styles.divider} x1={192} y1={210} x2={192} y2={595} />
+        {/* Below top input jack row */}
+        <line style={styles.divider} x1={10} y1={90} x2={290} y2={90} />
+        {/* Below knob/input area */}
+        <line style={styles.divider} x1={10} y1={250} x2={290} y2={250} />
+        {/* Below variable output jacks */}
+        <line style={styles.divider} x1={10} y1={310} x2={290} y2={310} />
+        {/* Vertical dividers between outer stacks and knob columns */}
+        <line style={styles.divider} x1={35} y1={92} x2={35} y2={248} />
+        <line style={styles.divider} x1={265} y1={92} x2={265} y2={248} />
+        {/* Vertical dividers between knob columns and center */}
+        <line style={styles.divider} x1={108} y1={92} x2={108} y2={248} />
+        <line style={styles.divider} x1={192} y1={92} x2={192} y2={248} />
 
         {/* Section tint rectangles */}
         {activeSections?.map((section) => {
@@ -740,11 +672,13 @@ function MathsPanelInner({
         })}
 
         {/* Section labels */}
-        <text style={styles.sectionLabel} x={55} y={30}>CH 1</text>
-        <text style={styles.sectionLabel} x={120} y={220}>CH 2</text>
-        <text style={styles.sectionLabel} x={180} y={220}>CH 3</text>
-        <text style={styles.sectionLabel} x={245} y={30}>CH 4</text>
-        <text style={styles.sectionLabel} x={150} y={615}>BUSES</text>
+        <text style={styles.sectionLabel} x={65} y={100}>CH 1</text>
+        <text style={styles.sectionLabel} x={130} y={108}>1</text>
+        <text style={styles.sectionLabel} x={150} y={145}>2</text>
+        <text style={styles.sectionLabel} x={150} y={182}>3</text>
+        <text style={styles.sectionLabel} x={170} y={219}>4</text>
+        <text style={styles.sectionLabel} x={235} y={100}>CH 4</text>
+        <text style={styles.sectionLabel} x={150} y={322}>BUSES</text>
 
         {/* Render all controls by channel */}
         {CHANNEL_ORDER.map((channelName) => {
@@ -831,6 +765,9 @@ function MathsPanelInner({
             purpose={cable.purpose}
           />
         ))}
+
+        {/* MAKE NOISE brand at bottom */}
+        <text style={styles.brandText} x={150} y={372}>MAKE NOISE</text>
       </motion.svg>
 
       {/* Tooltip */}

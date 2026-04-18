@@ -48,7 +48,7 @@ export const CONTROL_METADATA: Record<string, PlaitsControlMeta> = {
   'jack-plaits-model-cv': { id: 'jack-plaits-model-cv', name: 'MODEL', module: 'plaits', type: 'jack-in', signalType: 'cv' },
   'jack-plaits-timbre-cv': { id: 'jack-plaits-timbre-cv', name: 'TIMBRE', module: 'plaits', type: 'jack-in', signalType: 'cv' },
   'jack-plaits-fm-cv': { id: 'jack-plaits-fm-cv', name: 'FM', module: 'plaits', type: 'jack-in', signalType: 'cv' },
-  'jack-plaits-morph-cv': { id: 'jack-plaits-morph-cv', name: 'HARMO', module: 'plaits', type: 'jack-in', signalType: 'cv' },
+  'jack-plaits-harmonics-cv': { id: 'jack-plaits-harmonics-cv', name: 'HARMO', module: 'plaits', type: 'jack-in', signalType: 'cv' },
   'jack-plaits-trig': { id: 'jack-plaits-trig', name: 'TRIG', module: 'plaits', type: 'jack-in', signalType: 'gate' },
   'jack-plaits-level': { id: 'jack-plaits-level', name: 'LEVEL', module: 'plaits', type: 'jack-in', signalType: 'cv' },
   'jack-plaits-v-oct': { id: 'jack-plaits-v-oct', name: 'V/OCT', module: 'plaits', type: 'jack-in', signalType: 'cv' },
@@ -57,66 +57,63 @@ export const CONTROL_METADATA: Record<string, PlaitsControlMeta> = {
   'jack-plaits-out': { id: 'jack-plaits-out', name: 'OUT', module: 'plaits', type: 'jack-out', signalType: 'audio' },
   'jack-plaits-aux': { id: 'jack-plaits-aux', name: 'AUX', module: 'plaits', type: 'jack-out', signalType: 'audio' },
 
-  // ===== LEDs (2 column entries — decorative model-selection indicators) =====
-  'led-plaits-bank-1': { id: 'led-plaits-bank-1', name: 'Bank 1 LEDs', module: 'plaits', type: 'led' },
-  'led-plaits-bank-2': { id: 'led-plaits-bank-2', name: 'Bank 2 LEDs', module: 'plaits', type: 'led' },
+  // ===== LEDs (single column of 8, with bank 1 icons left / bank 2 icons right) =====
+  'led-plaits-model': { id: 'led-plaits-model', name: 'Model LEDs', module: 'plaits', type: 'led' },
 };
 
 // ===== Hand-placed control positions matching the physical Plaits panel =====
-// ViewBox: 0 0 180 560 (12HP eurorack module, vertically oriented)
+// ViewBox: 0 0 180 380 (12HP eurorack module, ~4:5 aspect ratio)
 //
 // Layout from manual front plate diagram (pp. 3-5):
-// Top area (y ~30-50):     Model selection buttons (A) + LED columns
-// Row 1 (y ~100-130):      FREQUENCY (B, large, left) + HARMONICS (C, large, right)
-// Row 2 (y ~200-230):      TIMBRE (D, medium, left) + MORPH (E, medium, right)
-// Row 3 (y ~290-310):      Attenuverters (F, 3 small knobs in a row)
-// Row 4 (y ~360-380):      CV input jacks: MODEL, TIMBRE, FM, HARMO
-// Row 5 (y ~430-460):      TRIG, LEVEL, V/OCT input jacks
-// Row 6 (y ~500-530):      OUT, AUX output jacks
 //
-// Placeholder positions — hand-place from Plaits manual pp. 3-5 when panel renderer is ready
+// Top (y ~15):         MI logo + "Plaits" title
+// Row A (y ~35):       Model selection buttons (left/right) + icons between
+// Row B (y ~85-95):    FREQUENCY (large, left) + HARMONICS (large, right)
+//                      LED columns between them (y ~55-115)
+// Row C-E (y ~155):    TIMBRE (medium, left) + MORPH (medium, right)
+// Row F (y ~195-215):  Attenuverters in V shape: Timbre att, FM att (lower), Morph att
+// Jack row 1 (y ~260): MODEL ——— [timbre cv] [fm cv] ——— HARMO
+// Jack row 2 (y ~315): TRIG, LEVEL, V/OCT (left) + OUT, AUX (right)
+// Bottom (y ~360):     Mutable Instruments brand
 
 export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
-  // Buttons + LEDs (top)
-  'button-plaits-model-1':          { x: 50, y: 40 },
-  'button-plaits-model-2':         { x: 130, y: 40 },
-  'led-plaits-bank-1':             { x: 75, y: 100 },
-  'led-plaits-bank-2':             { x: 105, y: 100 },
+  // ===== Model buttons + LED columns (top) =====
+  'button-plaits-model-1':           { x: 45, y: 38 },
+  'button-plaits-model-2':           { x: 135, y: 38 },
+  'led-plaits-model':                  { x: 90, y: 58 },
 
-  // Large knobs (FREQUENCY left, HARMONICS right)
-  'knob-plaits-frequency':         { x: 45, y: 130 },
-  'knob-plaits-harmonics':         { x: 135, y: 130 },
+  // ===== Large knobs =====
+  'knob-plaits-frequency':           { x: 40, y: 95 },
+  'knob-plaits-harmonics':           { x: 140, y: 95 },
 
-  // Medium knobs (TIMBRE left, MORPH right)
-  'knob-plaits-timbre':            { x: 35, y: 220 },
-  'knob-plaits-morph':             { x: 145, y: 220 },
+  // ===== Medium knobs =====
+  'knob-plaits-timbre':              { x: 35, y: 160 },
+  'knob-plaits-morph':               { x: 145, y: 160 },
 
-  // Attenuverters (3 small knobs in a row)
-  'knob-plaits-timbre-attenuverter': { x: 45, y: 300 },
-  'knob-plaits-fm-attenuverter':     { x: 90, y: 300 },
-  'knob-plaits-morph-attenuverter':  { x: 135, y: 300 },
+  // ===== Attenuverters (V shape between TIMBRE and MORPH) =====
+  'knob-plaits-timbre-attenuverter': { x: 55, y: 195 },
+  'knob-plaits-fm-attenuverter':     { x: 90, y: 215 },
+  'knob-plaits-morph-attenuverter':  { x: 125, y: 195 },
 
-  // CV input jacks row 1: MODEL, TIMBRE, FM, HARMO
-  'jack-plaits-model-cv':          { x: 25, y: 370 },
-  'jack-plaits-timbre-cv':         { x: 65, y: 370 },
-  'jack-plaits-fm-cv':             { x: 105, y: 370 },
-  'jack-plaits-morph-cv':          { x: 155, y: 370 },
+  // ===== CV input jacks — MODEL ——— HARMO row (y: 260) =====
+  'jack-plaits-model-cv':            { x: 18, y: 260 },
+  'jack-plaits-timbre-cv':           { x: 58, y: 260 },
+  'jack-plaits-fm-cv':               { x: 98, y: 260 },
+  'jack-plaits-harmonics-cv':        { x: 162, y: 260 },
 
-  // Input jacks row 2: TRIG, LEVEL, V/OCT
-  'jack-plaits-trig':              { x: 25, y: 450 },
-  'jack-plaits-level':             { x: 65, y: 450 },
-  'jack-plaits-v-oct':             { x: 105, y: 450 },
-
-  // Output jacks: OUT, AUX
-  'jack-plaits-out':               { x: 120, y: 520 },
-  'jack-plaits-aux':               { x: 155, y: 520 },
+  // ===== Input jacks (bottom left) + Output jacks (bottom right) =====
+  'jack-plaits-trig':                { x: 18, y: 315 },
+  'jack-plaits-level':               { x: 55, y: 315 },
+  'jack-plaits-v-oct':               { x: 92, y: 315 },
+  'jack-plaits-out':                 { x: 130, y: 315 },
+  'jack-plaits-aux':                 { x: 162, y: 315 },
 };
 
 // ===== Section bounds for zoom and tint calculations =====
 // Single-module panel — one section covering the entire panel.
 
 export const SECTION_BOUNDS: Record<string, { x: number; y: number; width: number; height: number }> = {
-  'plaits': { x: 0, y: 0, width: 180, height: 560 },
+  'plaits': { x: 0, y: 0, width: 180, height: 380 },
 };
 
 /**

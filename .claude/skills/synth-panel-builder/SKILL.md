@@ -19,10 +19,13 @@ Build interactive SVG panel components that faithfully reproduce physical synthe
 
 **Every control must be hand-placed based on the physical panel image.** Do not use algorithmic grid layouts, computed positions, or uniform spacing. Real synth panels have intentional, non-uniform layouts that cannot be derived from control counts.
 
+**HARD GATE: Do not place controls without a reference image.** If the manual PDF is missing, the download failed, or the panel layout pages are unclear — STOP and ask the user for a panel photo before writing any position code. Proceeding without a reference produces layouts that look nothing like the physical instrument and require a full rewrite. A textual description of a panel layout is not a substitute for seeing it.
+
 Before writing any code:
 1. Read the instrument manual PDF (in `references/`) for panel layout pages
-2. Ask the user for panel photos if the manual is unclear
-3. Map the physical layout structure: which rows, which modules break the grid, which sections contain sub-sections
+2. If the manual is unavailable or unclear, **ask the user for a panel photo** — do not proceed without one
+3. Study the image carefully: identify the layout archetype (row, columnar, cluster), which controls are adjacent, signal flow direction, and decorative routing lines
+4. Map the physical layout structure: which rows/columns, which modules break the grid, which sections contain sub-sections
 
 ## Two Approaches — When to Use Which
 
@@ -227,9 +230,36 @@ The `>` character in cable syntax (`jack-source>jack-dest`) breaks naive HTML at
 /<div data-cascadia-panel((?:[^>"]|"[^"]*")*)>\s*<\/div>/g
 ```
 
+## Physical Format Dimensions
+
+ViewBox dimensions must match the real physical aspect ratio. Getting this wrong makes the panel unrecognizable regardless of control placement.
+
+### Eurorack 3U modules
+Standard eurorack is 128.5mm tall. Width = HP * 5.08mm. Aspect ratio is roughly 4:5 for typical modules.
+
+| HP | Physical (mm) | ViewBox | Aspect |
+|----|--------------|---------|--------|
+| 4  | 20.3 x 128.5 | 60 x 380 | ~1:6.3 |
+| 8  | 40.6 x 128.5 | 120 x 380 | ~1:3.2 |
+| 12 | 60.9 x 128.5 | 180 x 380 | ~1:2.1 |
+| 16 | 81.3 x 128.5 | 240 x 380 | ~1:1.6 |
+| 20 | 101.6 x 128.5 | 300 x 380 | ~1:1.3 |
+| 28 | 142.2 x 128.5 | 420 x 380 | ~1.1:1 |
+
+Use the closest width that's a clean multiple. Height should always be ~380 for a 300-wide base scale.
+
+### Desktop synthesizers
+Landscape orientation, wider than tall. No standard dimensions — derive from the physical panel photo.
+- Evolver: `0 0 1000 340`
+- Cascadia: `0 0 1000 580`
+
+### Elektron devices
+Landscape, roughly 16:9 to 3:2 depending on model.
+- Octatrack MKII: `0 0 1200 420`
+
 ## Layout Rules
 
-### Row Structure (synthesizers / modular instruments)
+### Row Structure (synthesizers / desktop instruments)
 Panels are organized in horizontal rows separated by thin bars:
 ```
 Top strip:   FX/Output controls, or logo/display area
@@ -263,6 +293,66 @@ These four clusters are NOT a 4-row grid. Do not try to align their widths, butt
 
 Horizontal dividers (`<rect fill="#1a1a1a">`) should appear **only** between genuinely separate cluster groups, not between every row of buttons within a cluster.
 
+### Columnar Structure (eurorack modules — Make Noise, Mutable, Intellijel, etc.)
+
+Most eurorack modules do **not** use horizontal rows like a desktop synth. They use a **columnar** layout with top-to-bottom signal flow:
+
+```
+Top:      Logo / title
+Row A:    Input jacks across the width (signal, trigger, CV)
+Middle:   Vertical columns of knobs/controls
+          ┌─────────────────────────────────────┐
+          │ Outer │ Knobs │ Center │ Knobs │ Outer │
+          │ stack │ col   │ column │ col   │ stack │
+          │ (CV)  │ (Ch1) │ (atten)│ (Ch4) │ (CV)  │
+          └─────────────────────────────────────┘
+Row B:    Output jacks across the width
+Bottom:   Bus outputs, brand text
+```
+
+Key characteristics:
+- **Inputs at top, outputs at bottom** — signal flows top-to-bottom, not left-to-right
+- **Vertical knob columns** — knobs stack vertically (Rise → Fall → Response), not in horizontal rows
+- **Outer-edge input stacks** — secondary CV/gate inputs on the far left and right edges, vertically stacked alongside the knob columns they modulate
+- **Symmetrical layouts are common** — left channel mirrors right channel (e.g., Maths Ch1/Ch4, Echophon wet/dry)
+- **Signal flow routing lines** — printed lines on the panel connecting jacks to knobs (see Signal Flow Graphics below)
+- **Compact spacing** — eurorack panels are narrow; controls are tightly packed
+
+Example — Make Noise Maths (20HP):
+```
+Top:        MATHS title
+Input row:  Ch1, Trig, Ch2, Ch3, Trig, Ch4 (6 jacks across)
+Left outer: Cycle btn, Rise CV, Both CV, Fall CV, Cycle In (vertical stack)
+Left knobs: Rise, Fall, Vari-Response (vertical column)
+Center:     Attenuverters 1, 2, 3, 4 (vertical column)
+Right knobs: Rise, Fall, Vari-Response (mirror of left)
+Right outer: Cycle btn, Rise CV, Both CV, Fall CV, Cycle In (mirror)
+Output row: Variable outs (centered), Unity/EOR/EOC + OR/SUM/INV (across bottom)
+```
+
+Do NOT default to horizontal row layouts for eurorack modules. Study the reference image to determine whether the module uses columnar, row, or hybrid structure.
+
+### Signal Flow Graphics (eurorack panels)
+
+Many eurorack panels have printed routing lines showing which jacks feed which controls. These are important visual cues — include them as decorative SVG elements.
+
+**Types of routing lines:**
+- **Straight horizontal** — jack and knob at the same y-coordinate, connected by a horizontal line
+- **Angled** — jack and knob at different y-coordinates, connected by a diagonal line
+- **90-degree elbow** (`<polyline>`) — jack drops straight down, then turns horizontally into the knob. Common when a jack at the panel edge routes to a center-column control (e.g., Ch2 signal jack → Ch2 attenuverter on Maths)
+- **Arrow indicators** — envelope shape graphics showing rise/fall curves
+
+**Implementation:**
+```tsx
+{/* Straight horizontal: Rise CV → Rise knob */}
+<line x1={23} y1={150} x2={53} y2={128} stroke="#555" strokeWidth={0.8} />
+
+{/* 90-degree elbow: Ch2 Signal → Ch2 Attenuverter */}
+<polyline points="122,82 122,157 138,157" fill="none" stroke="#555" strokeWidth={0.7} />
+```
+
+Place routing lines BEFORE the control rendering loop so controls render on top.
+
 ### Grid-Breaking Sections
 Some modules span multiple rows on one side. Handle with:
 - Partial-width separator bars (don't span full width where the column breaks through)
@@ -286,19 +376,36 @@ Complex modules may contain distinct sub-sections needing their own labels and d
 3. **Sliders under jacks** — each slider aligns vertically with its corresponding input jack
 4. **Switches stacked vertically** — never in horizontal rows. Stacked on the side of the module
 5. **Eliminate whitespace** — tighten vertically and horizontally between rows and controls
-6. **ViewBox sizing** — height fits the content exactly, no excess space at bottom
+6. **ViewBox sizing** — use the Physical Format Dimensions table above. Height must match the real aspect ratio, not "fit the content"
+7. **CV inputs align with their knobs** — Rise CV jack at the same y as the Rise knob, Fall CV at Fall knob y, etc. Don't cluster CV jacks together at arbitrary positions
+
+## Label Conventions
+
+Use the **exact text printed on the panel silk-screen**, not verbose descriptions:
+- "Trig" not "Trigger"
+- "Ch 1" not "Channel 1 Signal"
+- "VR" or "Vari-Response" — match what's printed
+- Channel numbers: "1", "2", "3", "4" — not "Channel 1 Attenuverter"
+- Output jacks: signal name only, no "OUT" suffix (existing rule, restated for emphasis)
+
+Eurorack panels have very limited space. Labels must be short. When in doubt, look at the panel photo.
 
 ## Data Model Accuracy Checklist
 
 Before creating control metadata, verify against the physical panel:
 
+- [ ] **Reference image is available** — do not proceed without one
+- [ ] **ViewBox matches physical format** — use the dimensions table, not arbitrary values
+- [ ] **Layout archetype identified** — row (desktop), columnar (eurorack), or cluster (Elektron)
 - [ ] Every jack is typed correctly as `jack-in` or `jack-out`
 - [ ] External inputs (EXT IN) are `jack-in`, not switches/buttons
 - [ ] Rotary selectors with click positions are `knob` type, listed in `SELECTOR_KNOBS`
 - [ ] Toggle switches classified as 2-way or 3-way correctly
 - [ ] No phantom controls that don't exist on the physical panel
 - [ ] Output jack names don't include "OUT"
+- [ ] Labels match panel silk-screen text (short abbreviations, not verbose)
 - [ ] Control count per module matches the physical panel
+- [ ] Signal flow routing lines identified from the panel image
 - [ ] NRPN numbers verified against manual parameter list (if applicable)
 
 ## Integration Points
@@ -388,6 +495,39 @@ Panel building is inherently visual and iterative:
 - ID convention: `{type}-{module}-{name-kebab}` (e.g., `knob-vco-a-pitch`, `jack-mixer-out`, `switch-vcf-mode`)
 
 ## Changelog
+
+### 2026-04-18 — Maths panel exposed eurorack-specific gaps
+
+The Maths panel (Make Noise, 20HP eurorack) was initially generated with a
+completely wrong layout. The agent proceeded without a reference image
+(manual PDF download had failed) and defaulted to Cascadia-style horizontal
+rows — producing a 300x700 viewBox with controls in stacked rows instead of
+the real columnar layout with inputs-at-top / knobs-in-middle / outputs-at-bottom.
+
+Every aspect of the initial generation was wrong: aspect ratio (2:1 instead
+of 4:5), layout archetype (rows instead of columns), signal flow direction,
+CV input placement (horizontal instead of vertical edge stacks), and labels
+("Signal" instead of "Ch 1"). The user provided a panel photo and walked
+through corrections over ~6 rounds of feedback.
+
+**Additions to the skill from this round:**
+- **Physical Format Dimensions table** — eurorack HP-to-viewBox mapping so
+  agents never guess at aspect ratios
+- **Columnar Structure archetype** — eurorack modules use vertical columns
+  with top-to-bottom signal flow, not horizontal rows
+- **Signal Flow Graphics** — routing lines (`<line>`, `<polyline>` with
+  90-degree elbows) connecting jacks to knobs
+- **Hard gate on reference images** — STOP and ask for a photo if the manual
+  is unavailable, do not proceed with textual descriptions
+- **Label Conventions** — use exact panel silk-screen text, not verbose names
+- **CV input alignment rule** — CV jacks should align vertically with the
+  knobs they modulate
+
+**Takeaway**: the skill's existing guidance was desktop-synth-centric. The
+Row Structure and Cluster Structure archetypes didn't cover the most common
+eurorack layout pattern. Future eurorack module builds should now start from
+the right archetype and the right aspect ratio, avoiding the full-rewrite
+cycle that Maths required.
 
 ### 2026-04-16 — Octatrack MKII validated the skill
 Adding the Octatrack MKII panel took only **a handful of prompts** to reach a

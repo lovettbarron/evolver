@@ -29,7 +29,7 @@ interface BeadsPanelProps {
 
 // ===== Constants =====
 
-const VIEWBOX = '0 0 200 380';
+const VIEWBOX = '0 0 210 380';
 
 const CABLE_COLORS: Record<string, string> = {
   audio: '#ff6644',
@@ -637,8 +637,8 @@ function BeadsPanelInner({
         </defs>
 
         {/* Panel background */}
-        <rect style={styles.panelBg} x="0" y="0" width="200" height="380" rx="4" />
-        <rect style={styles.panelBorder} x="0" y="0" width="200" height="380" rx="4" />
+        <rect style={styles.panelBg} x="0" y="0" width="210" height="380" rx="4" />
+        <rect style={styles.panelBorder} x="0" y="0" width="210" height="380" rx="4" />
 
         {/* BEADS title at top */}
         <text style={styles.titleText} x={100} y={20}>BEADS</text>

@@ -31,10 +31,10 @@ describe('SwellsPanel', () => {
     expect(svg).toBeTruthy();
   });
 
-  test('renders SVG with correct default viewBox for 20HP (0 0 420 380)', () => {
+  test('renders SVG with correct default viewBox for 20HP (0 0 300 380)', () => {
     const { container } = render(<SwellsPanel />);
     const svg = container.querySelector('svg');
-    expect(svg?.getAttribute('viewBox')).toContain('0 0 420 380');
+    expect(svg?.getAttribute('viewBox')).toContain('0 0 300 380');
   });
 
   test('exports SwellsPanel component', () => {

@@ -30,7 +30,7 @@ interface SwellsPanelProps {
 
 // ===== Constants =====
 
-const VIEWBOX = '0 0 420 380';
+const VIEWBOX = '0 0 300 380';
 
 const CABLE_COLORS: Record<string, string> = {
   audio: '#ff6644',
@@ -673,8 +673,8 @@ function SwellsPanelInner({
         </defs>
 
         {/* Panel background */}
-        <rect style={styles.panelBg} x="0" y="0" width="420" height="380" rx="4" />
-        <rect style={styles.panelBorder} x="0" y="0" width="420" height="380" rx="4" />
+        <rect style={styles.panelBg} x="0" y="0" width="300" height="380" rx="4" />
+        <rect style={styles.panelBorder} x="0" y="0" width="300" height="380" rx="4" />
 
         {/* SWELLS title at top */}
         <text style={styles.titleText} x={210} y={22}>SWELLS</text>
