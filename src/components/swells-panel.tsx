@@ -294,7 +294,10 @@ function InteractiveKnob({
 }) {
   const dragHandlers = useKnobDrag(id, value, onChange);
   const rotation = midiToRotation(value);
-  const r = 12;
+  // Attenuverter knobs render smaller (r=6) vs standard knobs (r=12)
+  const isSmall = id.includes('-att');
+  const r = isSmall ? 6 : 12;
+  const indicatorLen = isSmall ? 4 : 10;
 
   return (
     <g
@@ -320,15 +323,17 @@ function InteractiveKnob({
       <circle r={r} style={styles.knobBody} />
       <line
         x1={0}
-        y1={-3}
+        y1={-2}
         x2={0}
-        y2={-10}
+        y2={-indicatorLen}
         style={styles.knobIndicator}
         transform={`rotate(${rotation})`}
       />
-      <text y={18} style={styles.knobLabel}>
-        {label}
-      </text>
+      {!isSmall && (
+        <text y={18} style={styles.knobLabel}>
+          {label}
+        </text>
+      )}
     </g>
   );
 }
@@ -352,7 +357,7 @@ function SliderComponent({
   highlighted?: boolean;
   highlightColor?: 'blue' | 'amber';
 }) {
-  const trackHeight = 60;
+  const trackHeight = 90;
   const trackWidth = 6;
   const thumbWidth = 14;
   const thumbHeight = 8;

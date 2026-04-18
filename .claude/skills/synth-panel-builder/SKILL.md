@@ -168,6 +168,33 @@ Small indicator dots (r=3-4). Near switches or controls they indicate.
 - Evolver: colored styles (`ledBlue`, `ledRed`, `ledOff`) for sequencer/mode indication
 - Cascadia: simple off state, used sparingly
 
+### Alt-Function Controls (Intellijel, Elektron, etc.)
+
+Many modules have controls that serve **two labeled purposes** — a primary function and a secondary (ALT/shift) function accessed by holding a modifier button. Both labels are printed on the panel, typically with the primary above and alt below (or primary in bold, alt in smaller text).
+
+**Data model:** Add an `altName` field to the control metadata:
+```typescript
+interface ControlMeta {
+  id: string;
+  name: string;        // Primary function label (e.g., "Rise")
+  altName?: string;    // Secondary function label (e.g., "EF Gain")
+  // ...
+}
+```
+
+**Rendering:** Show both labels on the panel SVG — primary label in normal weight, alt label below in smaller/lighter text. This matches the physical panel silk-screen. Do NOT create separate metadata entries for primary and alt functions of the same physical control.
+
+**Examples from Intellijel Swells:**
+- Rise / EF Gain (one knob, two functions)
+- Fall / →EF (one knob)
+- Input / Trim (one knob)
+- Mix / →Verb (one knob)
+- Freeze / Trig (one button)
+- Reverse / Drive (one button)
+- Burst / Type (one button)
+
+**The ALT button itself** is a real physical control and must be in the metadata. It's the modifier that activates the secondary functions.
+
 ### Special Elements (inline approach only)
 - **LCD Display**: `<rect>` background + monospace `<text>` for program/parameter display
 - **Sequencer LEDs**: Grid of circles with `ledBlue`/`ledOff` states
@@ -378,6 +405,7 @@ Complex modules may contain distinct sub-sections needing their own labels and d
 5. **Eliminate whitespace** — tighten vertically and horizontally between rows and controls
 6. **ViewBox sizing** — use the Physical Format Dimensions table above. Height must match the real aspect ratio, not "fit the content"
 7. **CV inputs align with their knobs** — Rise CV jack at the same y as the Rise knob, Fall CV at Fall knob y, etc. Don't cluster CV jacks together at arbitrary positions
+8. **Check render size before placing** — Every control has a rendered size (knobs: r=12 → 24px, small knobs: r=6-8, jacks: r=6 → 12px, sliders: trackHeight px tall, buttons: r=6-8). When placing controls in adjacent rows, ensure `row_gap >= (size_of_row_above / 2) + (size_of_row_below / 2) + 4px margin`. Controls that overlap visually are worse than controls that are too spread out. Calculate minimum y-offset between rows before writing positions
 
 ## Label Conventions
 
