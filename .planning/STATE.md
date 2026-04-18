@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-04-17)
 Phase: 31 of 32 (just friends + crow)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-04-18
+Last activity: 2026-04-18 - Completed quick task 260418-sii: Add ModularGrid photos alongside SVG panel renderings
 
 Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
 
@@ -62,6 +62,12 @@ None yet.
 - Exact control counts per module must be verified against downloaded manual photos before panel work
 - Crow standalone curriculum scope unclear — may reduce to JF+Crow orientation sessions
 - Ikarie documentation thinner than other manufacturers — sessions may need more experimentation exercises
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260418-sii | Add ModularGrid photos alongside SVG panel renderings | 2026-04-18 | ee26b71 | [260418-sii-add-a-photo-of-the-eurorack-modules-next](./quick/260418-sii-add-a-photo-of-the-eurorack-modules-next/) |
 
 ## Session Continuity
 
