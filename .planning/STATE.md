@@ -5,7 +5,7 @@ milestone_name: Eurorack Module Learning
 status: planning
 stopped_at: Phase 31 context gathered
 last_updated: "2026-04-18T18:40:33.239Z"
-last_activity: "2026-04-18 - Completed quick task 260418-sii: Add ModularGrid photos alongside SVG panel renderings"
+last_activity: "2026-04-19 - Completed quick task 260419-0b2: Fix Ikarie panel diagonal RESONANCE fader"
 progress:
   total_phases: 7
   completed_phases: 4
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-04-17)
 Phase: 31 of 32 (just friends + crow)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-04-18 - Completed quick task 260418-sii: Add ModularGrid photos alongside SVG panel renderings
+Last activity: 2026-04-19 - Completed quick task 260419-0b2: Fix Ikarie panel diagonal RESONANCE fader
 
 Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
 
@@ -68,6 +68,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260418-sii | Add ModularGrid photos alongside SVG panel renderings | 2026-04-18 | ee26b71 | [260418-sii-add-a-photo-of-the-eurorack-modules-next](./quick/260418-sii-add-a-photo-of-the-eurorack-modules-next/) |
+| 260419-0b2 | Fix Ikarie panel diagonal RESONANCE fader | 2026-04-19 | 00929cc | [260419-0b2-fix-ikarie-panel-layout-to-use-diagonal-](./quick/260419-0b2-fix-ikarie-panel-layout-to-use-diagonal-/) |
 
 ## Session Continuity
 
