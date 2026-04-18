@@ -28,7 +28,7 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 - [ ] **PANEL-01**: Generic `ModulePanel` component renders any module from per-module data files
 - [ ] **PANEL-02**: Hand-placed SVG panel for Intellijel Swells (20HP, reverb)
-- [ ] **PANEL-03**: Hand-placed SVG panel for Mutable Instruments Plaits (12HP, VCO)
+- [x] **PANEL-03**: Hand-placed SVG panel for Mutable Instruments Plaits (12HP, VCO)
 - [ ] **PANEL-04**: Hand-placed SVG panel for Mutable Instruments Beads (14HP, granular)
 - [ ] **PANEL-05**: Hand-placed SVG panel for Mannequins Just Friends (14HP, modulator/VCO/EG)
 - [ ] **PANEL-06**: Hand-placed SVG panel for Monome Crow (2HP, scriptable I/O)
@@ -40,7 +40,7 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 ### Curricula
 
 - [x] **CURR-01**: Maths curriculum (10-12 sessions covering envelope, LFO, slew, audio-rate, utilities)
-- [ ] **CURR-02**: Plaits curriculum (8-10 sessions across 16 synthesis modes in 2 banks)
+- [x] **CURR-02**: Plaits curriculum (8-10 sessions across 16 synthesis modes in 2 banks)
 - [ ] **CURR-03**: Beads curriculum (6-8 sessions covering 3 grain modes, quality settings, attenurandomizers)
 - [ ] **CURR-04**: Just Friends curriculum (8-10 sessions for Shape/Cycle/Sound modes)
 - [ ] **CURR-05**: Crow curriculum (4-6 sessions for scripting, i2c, standalone I/O)
