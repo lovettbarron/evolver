@@ -33,7 +33,7 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 - [ ] **PANEL-05**: Hand-placed SVG panel for Mannequins Just Friends (14HP, modulator/VCO/EG)
 - [ ] **PANEL-06**: Hand-placed SVG panel for Monome Crow (2HP, scriptable I/O)
 - [ ] **PANEL-07**: Hand-placed SVG panel for Make Noise Maths (20HP, function generator)
-- [ ] **PANEL-08**: Hand-placed SVG panel for Casper x Bastl Ikarie (8HP, stereo filter)
+- [x] **PANEL-08**: Hand-placed SVG panel for Casper x Bastl Ikarie (8HP, stereo filter)
 - [ ] **PANEL-09**: HP-width-aware rendering (panels display at correct relative sizes)
 - [ ] **PANEL-10**: Session annotation markers work on module panels (same `data-*-panel` pattern)
 
@@ -45,7 +45,7 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 - [ ] **CURR-04**: Just Friends curriculum (8-10 sessions for Shape/Cycle/Sound modes)
 - [ ] **CURR-05**: Crow curriculum (4-6 sessions for scripting, i2c, standalone I/O)
 - [ ] **CURR-06**: Swells curriculum (5-7 sessions covering 9 reverb models, Swell Generator, Freeze/Reverse)
-- [ ] **CURR-07**: Ikarie curriculum (5-7 sessions for filter modes, stereo/dual-peak, envelope follower)
+- [x] **CURR-07**: Ikarie curriculum (5-7 sessions for filter modes, stereo/dual-peak, envelope follower)
 - [ ] **CURR-08**: Module overview pages per module (architecture, controls reference, init state)
 - [ ] **CURR-09**: All sessions follow 15-30 min ADHD-friendly format with tangible output
 

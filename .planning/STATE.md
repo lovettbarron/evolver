@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
-status: ready-to-plan
-stopped_at: null
-last_updated: "2026-04-17"
-last_activity: 2026-04-17
+status: planning
+stopped_at: Completed 30-04-PLAN.md
+last_updated: "2026-04-18T14:09:16.494Z"
+last_activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 0
-  completed_plans: 0
+  completed_plans: 1
   percent: 0
 ---
 
@@ -51,6 +51,7 @@ Recent decisions affecting current work:
 - [v2.0 Research]: Generic ModulePanel renderer + per-module data files — not per-module React components
 - [v2.0 Research]: Maths built first — proves framework handles hardest case
 - [v2.0 Research]: Just Friends and Crow are separate modules with separate configs/panels
+- [Phase 30]: 8HP viewBox (170x380) for Ikarie -- narrowest eurorack module panel
 
 ### Pending Todos
 
@@ -64,6 +65,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-17
-Stopped at: Roadmap created for v2.0 milestone
+Last session: 2026-04-18T14:09:16.485Z
+Stopped at: Completed 30-04-PLAN.md
 Resume file: None
