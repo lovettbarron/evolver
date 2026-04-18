@@ -30,6 +30,11 @@ const PANEL_CONFIG: Record<string, { title: string; description: string; maxWidt
     description: 'Interactive panel reference for Bastl Instruments Ikarie. Stereo dual-peak resonant filter. Drag knobs to explore.',
     maxWidth: 'max-w-[300px]',
   },
+  'just-friends': {
+    title: 'Just Friends Panel',
+    description: 'Interactive panel reference for Mannequins Just Friends. Six-channel function generator and oscillator. Drag knobs to explore.',
+    maxWidth: 'max-w-[400px]',
+  },
 };
 
 async function photoExists(slug: string): Promise<boolean> {

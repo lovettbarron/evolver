@@ -10,6 +10,7 @@ import { PlaitsPanel } from '@/components/plaits-panel';
 import { BeadsPanel } from '@/components/beads-panel';
 import { SwellsPanel } from '@/components/swells-panel';
 import { IkariePanel } from '@/components/ikarie-panel';
+import { JustFriendsPanel } from '@/components/just-friends-panel';
 
 const MermaidRenderer = dynamic(
   () => import('@/components/mermaid-renderer').then((m) => ({ default: m.MermaidRenderer })),
@@ -32,7 +33,8 @@ export function QuickRefPanel({ content, isOpen, onClose, instrumentSlug }: Quic
     instrumentSlug === 'plaits' ||
     instrumentSlug === 'beads' ||
     instrumentSlug === 'swells' ||
-    instrumentSlug === 'ikarie';
+    instrumentSlug === 'ikarie' ||
+    instrumentSlug === 'just-friends';
   const isPanelTab = showPanelTab && activeTab === content.length;
 
   const handleKeyDown = useCallback(
@@ -119,7 +121,9 @@ export function QuickRefPanel({ content, isOpen, onClose, instrumentSlug }: Quic
         <div className="p-lg overflow-y-auto h-[calc(100%-120px)]">
           {isPanelTab ? (
             <div className="py-sm">
-              {instrumentSlug === 'ikarie' ? (
+              {instrumentSlug === 'just-friends' ? (
+                <JustFriendsPanel className="w-full" />
+              ) : instrumentSlug === 'ikarie' ? (
                 <IkariePanel className="w-full" />
               ) : instrumentSlug === 'swells' ? (
                 <SwellsPanel className="w-full" />
