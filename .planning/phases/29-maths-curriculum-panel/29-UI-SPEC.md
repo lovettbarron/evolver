@@ -53,15 +53,18 @@ Exceptions: none — this phase uses only existing spacing tokens.
 |------|------|--------|-------------|
 | Body | 16px (1rem) | 400 (Inter) | 1.6 |
 | Label / Muted | 13px (0.8125rem) | 400 (Inter) | 1.5 |
-| Heading (h3/h4) | 20px / 25px | 700 (Inter) | 1.3 |
+| Subheading (h3/h4) | 20px (1.25rem) | 700 (Inter) | 1.3 |
 | Display (h1/h2) | clamp(1.5rem, ..., 2.4375rem) | 700 (Space Grotesk) | 1.15 |
+
+Four sizes total: 13px, 16px, 20px, Display clamp (24px-39px).
 
 **Source:** globals.css `.prose` rules, Phase 19.
 
 ### Phase-Specific Typography Notes
 
-- **Controls reference table:** Use `.param-table` class for parameter/control listings — 14px body, 13px headers, mono values, accent left border.
+- **Controls reference table:** Use `.param-table` class for parameter/control listings — 13px body text, 13px headers, mono values, accent left border. The 13px Label/Muted size serves both table body and header text for compact data-dense tables.
 - **Session frontmatter metadata:** 13px muted text (`.obsidian-tag` pattern).
+- **Subheadings (h3 and h4):** Both use 20px at weight 700. Differentiation between h3 and h4 is structural (nesting depth), not size-based — consistent with the prose pipeline's semantic hierarchy.
 - **Panel control labels:** Handled by SVG text elements within the panel data file — not governed by CSS typography tokens. Use 10-12px sans-serif within SVG viewBox.
 
 ---
@@ -127,6 +130,8 @@ Example titles (Claude's discretion per D-01 through D-04):
 - "10 - Integration: Maths into Cascadia"
 
 ### Overview Page Sections (per D-05, D-06)
+
+Primary focal point: the module name + tagline in the Hero section draws the eye first; the panel thumbnail (when available) serves as secondary visual anchor.
 
 1. **Hero** — Module name, manufacturer, tagline, HP width badge, category badges
 2. **Architecture** — 4-channel structure description, OR/SUM/INV bus, EOC/EOR outputs
