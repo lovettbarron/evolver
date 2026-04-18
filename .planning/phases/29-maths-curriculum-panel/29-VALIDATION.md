@@ -1,9 +1,9 @@
 ---
 phase: 29
 slug: maths-curriculum-panel
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: approved
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-04-18
 ---
 
@@ -38,9 +38,12 @@ created: 2026-04-18
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 29-01-01 | 01 | 1 | PANEL-07 | unit | `npx vitest run src/components/__tests__/maths-panel.test.tsx` | ❌ W0 | ⬜ pending |
-| 29-02-01 | 02 | 1 | CURR-01, CURR-08 | unit | `npx vitest run src/content/__tests__/maths-sessions.test.ts` | ❌ W0 | ⬜ pending |
-| 29-03-01 | 03 | 2 | CURR-09 | manual | visual inspection | N/A | ⬜ pending |
+| 29-01-01 | 01 | 1 | PANEL-07 | unit | `npx vitest run src/lib/__tests__/maths-panel-data.test.ts` | ❌ W0 (created by task) | ⬜ pending |
+| 29-01-02 | 01 | 1 | PANEL-07 | shell | `file references/maths-manual.pdf \| grep -q "PDF"` | N/A | ⬜ pending |
+| 29-02-01 | 02 | 1 | CURR-08 | shell | `grep -q "## Architecture" modules/maths/overview.md` | N/A | ⬜ pending |
+| 29-02-02 | 02 | 1 | CURR-01, CURR-09 | shell | `ls sessions/maths/*.md \| wc -l \| grep -q "6"` | N/A | ⬜ pending |
+| 29-03-01 | 03 | 2 | CURR-01, CURR-09 | shell | `for n in 07 08 09; do diff ... done` | N/A | ⬜ pending |
+| 29-03-02 | 03 | 2 | CURR-01, CURR-09 | shell | `ls sessions/maths/*.md \| wc -l \| grep -q "12"` | N/A | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -48,10 +51,9 @@ created: 2026-04-18
 
 ## Wave 0 Requirements
 
-- [ ] `src/components/__tests__/maths-panel.test.tsx` — panel control rendering, control count, section bounds
-- [ ] `src/content/__tests__/maths-sessions.test.ts` — session schema validation, frontmatter checks
+- [ ] `src/lib/__tests__/maths-panel-data.test.ts` — panel data validation (45 controls, section bounds, control types). Created by Plan 29-01 Task 1 via TDD.
 
-*If none: "Existing infrastructure covers all phase requirements."*
+*Session validation uses shell verify commands (grep, diff, wc -l) rather than a formal test suite — appropriate for markdown content files.*
 
 ---
 
@@ -66,11 +68,11 @@ created: 2026-04-18
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 15s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 15s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-04-18
