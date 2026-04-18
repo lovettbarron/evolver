@@ -1,4 +1,9 @@
 Make Noise Maths Manual
+Status: Manual browser download required
 Download from: https://www.makenoisemusic.com/modules/maths (Downloads section)
 File: MATHS manual 2020 PDF
-Note: Site requires browser download, curl returns HTML wrapper
+Note: All automated download attempts return HTML — the Make Noise website
+requires browser interaction to download the PDF. The UCSB mirror
+(http://w2.mat.ucsb.edu/200C/Maths_2013.pdf) also redirects to HTML.
+Action: Download manually via browser and save as references/maths-manual.pdf
+Attempted: 2026-04-18
