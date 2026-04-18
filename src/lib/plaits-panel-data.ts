@@ -24,7 +24,7 @@ export interface PlaitsControlMeta {
 
 /**
  * Complete mapping of all SVG control IDs to metadata.
- * 21 entries: 5 knobs + 3 attenuverter knobs + 2 buttons + 7 input jacks + 2 output jacks + 2 LED columns.
+ * 22 entries: 5 knobs + 3 attenuverter knobs + 2 buttons + 8 input jacks + 2 output jacks + 1 LED column.
  */
 export const CONTROL_METADATA: Record<string, PlaitsControlMeta> = {
   // ===== Knobs (5 — controls B, C, D, E from manual) =====
@@ -48,6 +48,7 @@ export const CONTROL_METADATA: Record<string, PlaitsControlMeta> = {
   'jack-plaits-model-cv': { id: 'jack-plaits-model-cv', name: 'MODEL', module: 'plaits', type: 'jack-in', signalType: 'cv' },
   'jack-plaits-timbre-cv': { id: 'jack-plaits-timbre-cv', name: 'TIMBRE', module: 'plaits', type: 'jack-in', signalType: 'cv' },
   'jack-plaits-fm-cv': { id: 'jack-plaits-fm-cv', name: 'FM', module: 'plaits', type: 'jack-in', signalType: 'cv' },
+  'jack-plaits-morph-cv': { id: 'jack-plaits-morph-cv', name: 'MORPH', module: 'plaits', type: 'jack-in', signalType: 'cv' },
   'jack-plaits-harmonics-cv': { id: 'jack-plaits-harmonics-cv', name: 'HARMO', module: 'plaits', type: 'jack-in', signalType: 'cv' },
   'jack-plaits-trig': { id: 'jack-plaits-trig', name: 'TRIG', module: 'plaits', type: 'jack-in', signalType: 'gate' },
   'jack-plaits-level': { id: 'jack-plaits-level', name: 'LEVEL', module: 'plaits', type: 'jack-in', signalType: 'cv' },
@@ -91,14 +92,15 @@ export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
   'knob-plaits-morph':               { x: 145, y: 160 },
 
   // ===== Attenuverters (V shape between TIMBRE and MORPH) =====
-  'knob-plaits-timbre-attenuverter': { x: 55, y: 195 },
+  'knob-plaits-timbre-attenuverter': { x: 52, y: 195 },
   'knob-plaits-fm-attenuverter':     { x: 90, y: 215 },
-  'knob-plaits-morph-attenuverter':  { x: 125, y: 195 },
+  'knob-plaits-morph-attenuverter':  { x: 128, y: 195 },
 
   // ===== CV input jacks — MODEL ——— HARMO row (y: 260) =====
   'jack-plaits-model-cv':            { x: 18, y: 260 },
   'jack-plaits-timbre-cv':           { x: 58, y: 260 },
-  'jack-plaits-fm-cv':               { x: 98, y: 260 },
+  'jack-plaits-fm-cv':               { x: 90, y: 260 },
+  'jack-plaits-morph-cv':            { x: 122, y: 260 },
   'jack-plaits-harmonics-cv':        { x: 162, y: 260 },
 
   // ===== Input jacks (bottom left) + Output jacks (bottom right) =====

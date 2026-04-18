@@ -670,18 +670,18 @@ function PlaitsPanelInner({
         <text style={{ ...styles.sectionLabel, fontSize: '4px', textAnchor: 'end' }} x={162} y={248}>HARMO</text>
 
         {/* Attenuverter ± labels */}
-        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={44} y={195}>-</text>
-        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={66} y={195}>+</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={41} y={195}>-</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={63} y={195}>+</text>
         <text style={{ ...styles.sectionLabel, fontSize: '4px' }} x={90} y={228}>FM</text>
         <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={79} y={215}>-</text>
         <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={101} y={215}>+</text>
-        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={114} y={195}>-</text>
-        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={136} y={195}>+</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={117} y={195}>-</text>
+        <text style={{ ...styles.sectionLabel, fontSize: '3.5px' }} x={139} y={195}>+</text>
 
         {/* Dashed lines from attenuverters to their CV jacks */}
-        <line x1={55} y1={203} x2={58} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
-        <line x1={90} y1={223} x2={98} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
-        <line x1={125} y1={203} x2={162} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
+        <line x1={52} y1={203} x2={58} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
+        <line x1={90} y1={223} x2={90} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
+        <line x1={128} y1={203} x2={122} y2={254} stroke="#666" strokeWidth={0.4} strokeDasharray="2,2" />
 
         {/* Render all controls */}
         {Object.values(CONTROL_METADATA).map((ctrl) => {
