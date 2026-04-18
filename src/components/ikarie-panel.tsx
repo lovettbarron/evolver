@@ -32,6 +32,9 @@ interface IkariePanelProps {
 
 const VIEWBOX = '0 0 170 380';
 
+// Diagonal angle for the RESONANCE fader (upper-left to lower-right, matching physical panel)
+const DIAGONAL_SLIDER_ANGLE = -35;
+
 const CABLE_COLORS: Record<string, string> = {
   audio: '#ff6644',
   cv: '#3388ff',
@@ -405,6 +408,78 @@ function SliderComponent({
   );
 }
 
+// ===== Diagonal Slider Component (for RESONANCE fader) =====
+
+function DiagonalSliderComponent({
+  id,
+  x,
+  y,
+  label,
+  value,
+  angle,
+  highlighted,
+  highlightColor,
+}: {
+  id: string;
+  x: number;
+  y: number;
+  label: string;
+  value: number;
+  angle: number;
+  highlighted?: boolean;
+  highlightColor?: 'blue' | 'amber';
+}) {
+  const trackHeight = 60;
+  const trackWidth = 6;
+  const thumbWidth = 14;
+  const thumbHeight = 8;
+  const position = midiToSliderPosition(value);
+  const thumbY = trackHeight * (1 - position) - thumbHeight / 2;
+
+  return (
+    <g id={id} transform={`translate(${x}, ${y})`}>
+      {/* Rotated fader track + thumb */}
+      <g transform={`rotate(${angle})`}>
+        {highlighted && (
+          <rect
+            x={-thumbWidth / 2 - 3}
+            y={-3}
+            width={thumbWidth + 6}
+            height={trackHeight + 6}
+            rx={4}
+            fill="none"
+            stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
+            strokeOpacity={0.6}
+            filter={`url(#ikarie-glow-${highlightColor || 'blue'})`}
+          />
+        )}
+        {/* Track */}
+        <rect
+          x={-trackWidth / 2}
+          y={0}
+          width={trackWidth}
+          height={trackHeight}
+          rx={2}
+          style={styles.sliderTrack}
+        />
+        {/* Thumb */}
+        <rect
+          x={-thumbWidth / 2}
+          y={thumbY}
+          width={thumbWidth}
+          height={thumbHeight}
+          rx={2}
+          style={styles.sliderThumb}
+        />
+      </g>
+      {/* Label stays horizontal (outside rotated group) */}
+      <text y={trackHeight + 12} style={styles.knobLabel}>
+        {label}
+      </text>
+    </g>
+  );
+}
+
 // ===== SwitchComponent (2-position or 3-position toggle) =====
 
 function SwitchComponent({
@@ -659,20 +734,6 @@ function IkariePanelInner({
         <line style={styles.divider} x1={10} y1={150} x2={160} y2={150} />
         <line style={styles.divider} x1={10} y1={245} x2={160} y2={245} />
 
-        {/* Section labels */}
-        <text style={styles.sectionLabel} x={85} y={44}>CONTROLS</text>
-        <text style={styles.sectionLabel} x={85} y={158}>MODULATION</text>
-        <text style={styles.sectionLabel} x={85} y={253}>I/O</text>
-
-        {/* FOLLOW -> MOD normalling indicator */}
-        <text
-          x={85}
-          y={238}
-          style={{ ...styles.jackLabel, fontSize: '3px', fill: '#666' }}
-        >
-          FOLLOW normalled to MOD
-        </text>
-
         {/* Section tint rectangles */}
         {activeSections?.map((section) => {
           const bounds = SECTION_BOUNDS[section];
@@ -717,6 +778,21 @@ function IkariePanelInner({
                 />
               );
             case 'slider':
+              if (ctrl.id === 'slider-ikarie-resonance') {
+                return (
+                  <DiagonalSliderComponent
+                    key={ctrl.id}
+                    id={ctrl.id}
+                    x={pos.x}
+                    y={pos.y}
+                    label={ctrl.name}
+                    value={getVal(ctrl.id)}
+                    angle={DIAGONAL_SLIDER_ANGLE}
+                    highlighted={highlighted}
+                    highlightColor={highlightColor}
+                  />
+                );
+              }
               return (
                 <SliderComponent
                   key={ctrl.id}
