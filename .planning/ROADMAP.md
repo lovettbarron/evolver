@@ -140,9 +140,9 @@ Plans:
   2. The Maths overview page shows module architecture, controls reference, and recommended init state — matching the pattern established for instruments
   3. The Maths panel SVG (20HP, ~45 controls) renders with hand-placed controls matching the physical module
   4. All Maths sessions follow ADHD-friendly format: zero activation energy start, warm-up referencing previous session, hard stop, and documented output
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 Plans:
-- [ ] 29-01-PLAN.md — Panel data file (45 controls) + test suite + manual PDF download
+- [x] 29-01-PLAN.md — Panel data file (45 controls) + test suite + manual PDF download
 - [ ] 29-02-PLAN.md — Overview page (architecture, controls reference, init state) + sessions 01-06
 - [ ] 29-03-PLAN.md — Sessions 07-12 (Utilities, Advanced, Integration)
 **UI hint**: yes
@@ -232,7 +232,7 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 26. Data Model + Content Pipeline | v2.0 | 3/3 | Complete    | 2026-04-17 |
 | 27. Module Navigation + Routing | v2.0 | 4/4 | Complete    | 2026-04-17 |
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
-| 29. Maths Curriculum + Panel | v2.0 | 0/3 | Planned     | - |
+| 29. Maths Curriculum + Panel | v2.0 | 1/3 | In Progress|  |
 | 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 0/? | Not started | - |
 | 31. Just Friends + Crow | v2.0 | 0/? | Not started | - |
 | 32. Progress, Demo + Cross-Module Polish | v2.0 | 0/? | Not started | - |

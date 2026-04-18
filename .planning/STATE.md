@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
 status: executing
-stopped_at: Phase 29 context gathered
-last_updated: "2026-04-18T06:46:50.735Z"
-last_activity: 2026-04-17
+stopped_at: Completed 29-01-PLAN.md
+last_updated: "2026-04-18T07:25:30Z"
+last_activity: 2026-04-18
 progress:
   total_phases: 7
   completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
-  percent: 0
+  total_plans: 10
+  completed_plans: 8
+  percent: 29
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-17)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 27 — module-navigation-routing
+**Current focus:** Phase 29 — Maths Curriculum + Panel
 
 ## Current Position
 
-Phase: 28
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-04-17
+Phase: 29 of 32 (Maths Curriculum + Panel)
+Plan: 1 of 3 complete
+Status: Executing
+Last activity: 2026-04-18
 
-Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
+Progress: [██░░░░░░░░] 29% (v2.0 milestone)
 
 ## Performance Metrics
 
@@ -58,6 +58,8 @@ Recent decisions affecting current work:
 - [Phase 27]: Sub-pages are static components without redundant loadModuleConfig calls -- layout handles all data loading
 - [Phase 26]: ModuleConfigSchema uses power_specs (required) not power (optional), Zod-inferred type replaces manual interface
 - [Phase 27]: InstrumentModuleCard links to /instruments/{slug}/modules/{moduleSlug}, keeping instrument sub-module routing separate from eurorack /modules/{slug}
+- [Phase 29]: Button type (not switch) for Maths Cycle controls -- physical panel has push buttons with LEDs
+- [Phase 29]: Ch2 and ch3 kept as separate module groups (not combined ch2-3) -- matches physical panel layout
 
 ### Pending Todos
 
@@ -71,6 +73,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-18T06:46:50.731Z
-Stopped at: Phase 29 context gathered
-Resume file: .planning/phases/29-maths-curriculum-panel/29-CONTEXT.md
+Last session: 2026-04-18T07:25:30Z
+Stopped at: Completed 29-01-PLAN.md
+Resume file: .planning/phases/29-maths-curriculum-panel/29-01-SUMMARY.md

@@ -32,7 +32,7 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 - [ ] **PANEL-04**: Hand-placed SVG panel for Mutable Instruments Beads (14HP, granular)
 - [ ] **PANEL-05**: Hand-placed SVG panel for Mannequins Just Friends (14HP, modulator/VCO/EG)
 - [ ] **PANEL-06**: Hand-placed SVG panel for Monome Crow (2HP, scriptable I/O)
-- [ ] **PANEL-07**: Hand-placed SVG panel for Make Noise Maths (20HP, function generator)
+- [x] **PANEL-07**: Hand-placed SVG panel for Make Noise Maths (20HP, function generator)
 - [ ] **PANEL-08**: Hand-placed SVG panel for Casper x Bastl Ikarie (8HP, stereo filter)
 - [ ] **PANEL-09**: HP-width-aware rendering (panels display at correct relative sizes)
 - [ ] **PANEL-10**: Session annotation markers work on module panels (same `data-*-panel` pattern)
