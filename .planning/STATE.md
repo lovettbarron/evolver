@@ -4,13 +4,13 @@ milestone: v2.0
 milestone_name: Eurorack Module Learning
 status: planning
 stopped_at: Completed 30-04-PLAN.md
-last_updated: "2026-04-18T14:09:16.494Z"
-last_activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
+last_updated: "2026-04-18T17:25:15.319Z"
+last_activity: 2026-04-18
 progress:
   total_phases: 7
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 1
+  completed_phases: 4
+  total_plans: 15
+  completed_plans: 15
   percent: 0
 ---
 
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-04-17)
 
 ## Current Position
 
-Phase: 26 of 32 (Data Model + Content Pipeline) — first of 7 v2.0 phases
-Plan: —
+Phase: 31 of 32 (just friends + crow)
+Plan: Not started
 Status: Ready to plan
-Last activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
+Last activity: 2026-04-18
 
 Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
 
