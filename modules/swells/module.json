@@ -1,0 +1,19 @@
+{
+  "display_name": "Swells",
+  "tagline": "Multi-algorithm stereo reverb with swell generator",
+  "manufacturer": "Intellijel",
+  "hp_width": 20,
+  "categories": [
+    "effects"
+  ],
+  "power_specs": {
+    "plus_12v_ma": 146,
+    "minus_12v_ma": 21
+  },
+  "reference_pdfs": [
+    {
+      "label": "Swells Manual",
+      "file": "swells-manual.txt"
+    }
+  ]
+}

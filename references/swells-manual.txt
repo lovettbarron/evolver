@@ -1,0 +1,5 @@
+Intellijel Swells Manual
+Status: PDF not available via automated download
+Action needed: Visit https://intellijel.com/shop/eurorack/swells/ (Manual tab) and download manually
+Save as: references/swells-manual.pdf
+Fallback: Control names verified from ModularGrid + SYNTH ANATOMY. Positions use placeholder values.
