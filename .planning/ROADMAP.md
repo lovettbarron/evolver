@@ -75,7 +75,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 - [x] **Phase 26: Data Model + Content Pipeline** - ModuleConfigSchema, reader functions, module-to-section rename, triple-write pipeline, reference manuals (completed 2026-04-17)
 - [x] **Phase 27: Module Navigation + Routing** - /modules routes, category filtering, module selector, per-module color identity (completed 2026-04-17)
 - [ ] **Phase 28: Panel System + First Panel** - Generic ModulePanel renderer, HP-aware sizing, session annotations, Plaits panel proof
-- [ ] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation
+- [x] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation (completed 2026-04-18)
 - [ ] **Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels** - Four module curricula and panels following proven pattern
 - [ ] **Phase 31: Just Friends + Crow** - Two separate modules with i2c integration, standalone + combined sessions
 - [ ] **Phase 32: Progress, Demo + Cross-Module Polish** - Per-module progress tracking, demo mode, cross-module references and category suggestions
@@ -140,11 +140,11 @@ Plans:
   2. The Maths overview page shows module architecture, controls reference, and recommended init state — matching the pattern established for instruments
   3. The Maths panel SVG (20HP, ~45 controls) renders with hand-placed controls matching the physical module
   4. All Maths sessions follow ADHD-friendly format: zero activation energy start, warm-up referencing previous session, hard stop, and documented output
-**Plans:** 1/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 29-01-PLAN.md — Panel data file (45 controls) + test suite + manual PDF download
-- [ ] 29-02-PLAN.md — Overview page (architecture, controls reference, init state) + sessions 01-06
-- [ ] 29-03-PLAN.md — Sessions 07-12 (Utilities, Advanced, Integration)
+- [x] 29-02-PLAN.md — Overview page (architecture, controls reference, init state) + sessions 01-06
+- [x] 29-03-PLAN.md — Sessions 07-12 (Utilities, Advanced, Integration)
 **UI hint**: yes
 
 ### Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels
@@ -232,7 +232,7 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 26. Data Model + Content Pipeline | v2.0 | 3/3 | Complete    | 2026-04-17 |
 | 27. Module Navigation + Routing | v2.0 | 4/4 | Complete    | 2026-04-17 |
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
-| 29. Maths Curriculum + Panel | v2.0 | 1/3 | In Progress|  |
+| 29. Maths Curriculum + Panel | v2.0 | 3/3 | Complete   | 2026-04-18 |
 | 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 0/? | Not started | - |
 | 31. Just Friends + Crow | v2.0 | 0/? | Not started | - |
 | 32. Progress, Demo + Cross-Module Polish | v2.0 | 0/? | Not started | - |

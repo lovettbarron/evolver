@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
 status: planning
-stopped_at: Completed 29-02-PLAN.md
-last_updated: "2026-04-18T07:29:07.738Z"
+stopped_at: Completed 29-03-PLAN.md
+last_updated: "2026-04-18T07:38:48.090Z"
 last_activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
 progress:
   total_phases: 7
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 1
+  completed_phases: 3
+  total_plans: 10
+  completed_plans: 10
   percent: 0
 ---
 
@@ -53,6 +53,7 @@ Recent decisions affecting current work:
 - [v2.0 Research]: Just Friends and Crow are separate modules with separate configs/panels
 - [Phase 29]: Ch2/Ch3 grouped as 'Channels 2 and 3' in overview; panel markers use ch2-3 section
 - [Phase 29]: Further Reading includes Illustrated Supplement, Patch Guides, Official Manual per D-10
+- [Phase 29]: 12-session Maths curriculum complete: Foundations(3) + Modulation(3) + Utilities(2) + Advanced(2) + Integration(2)
 
 ### Pending Todos
 
@@ -66,6 +67,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-18T07:28:54.006Z
-Stopped at: Completed 29-02-PLAN.md
+Last session: 2026-04-18T07:38:48.087Z
+Stopped at: Completed 29-03-PLAN.md
 Resume file: None
