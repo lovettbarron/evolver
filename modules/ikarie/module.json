@@ -7,13 +7,13 @@
     "filter"
   ],
   "power_specs": {
-    "plus_12v_ma": 50,
-    "minus_12v_ma": 40
+    "plus_12v_ma": 100,
+    "minus_12v_ma": 95
   },
   "reference_pdfs": [
     {
       "label": "Ikarie Manual",
-      "file": "ikarie-manual.txt"
+      "file": "ikarie-manual.pdf"
     }
   ]
 }

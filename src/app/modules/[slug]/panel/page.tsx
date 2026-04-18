@@ -22,6 +22,11 @@ const PANEL_CONFIG: Record<string, { title: string; description: string; maxWidt
     description: 'Interactive panel reference for Intellijel Swells. Multi-algorithm stereo reverb with swell generator. Drag knobs and faders to explore.',
     maxWidth: 'max-w-[500px]',
   },
+  ikarie: {
+    title: 'Ikarie Panel',
+    description: 'Interactive panel reference for Bastl Instruments Ikarie. Stereo dual-peak resonant filter. Drag knobs to explore.',
+    maxWidth: 'max-w-[300px]',
+  },
 };
 
 export default async function ModulePanelPage({ params }: { params: Promise<{ slug: string }> }) {

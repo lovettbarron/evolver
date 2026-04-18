@@ -9,45 +9,45 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 ### Data Model
 
-- [x] **DATA-01**: ModuleConfigSchema validates HP width, manufacturer, power specs, and multi-category array
-- [x] **DATA-02**: Module content directories (`modules/<slug>/`) discovered by reader functions parallel to instruments
-- [x] **DATA-03**: SessionSchema `module` field renamed to `section` across all 95 existing sessions and schema definitions
-- [x] **DATA-04**: Module sessions use `instrument_type: eurorack_module` to distinguish from instrument sessions in queries and routing
-- [x] **DATA-05**: Triple-write pipeline supports module content (working tree, `src/content/modules/`, `~/song/modules/`)
-- [x] **DATA-06**: Module manuals downloaded to `references/` for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie)
+- [ ] **DATA-01**: ModuleConfigSchema validates HP width, manufacturer, power specs, and multi-category array
+- [ ] **DATA-02**: Module content directories (`modules/<slug>/`) discovered by reader functions parallel to instruments
+- [ ] **DATA-03**: SessionSchema `module` field renamed to `section` across all 95 existing sessions and schema definitions
+- [ ] **DATA-04**: Module sessions use `instrument_type: eurorack_module` to distinguish from instrument sessions in queries and routing
+- [ ] **DATA-05**: Triple-write pipeline supports module content (working tree, `src/content/modules/`, `~/song/modules/`)
+- [ ] **DATA-06**: Module manuals downloaded to `references/` for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie)
 
 ### Navigation
 
-- [x] **NAV-01**: Top-level "Modules" section at `/modules` lists all eurorack modules with category filter (`?category=vco`)
-- [x] **NAV-02**: Per-module routes at `/modules/[slug]/` with overview, sessions, and patches pages
-- [x] **NAV-03**: Module selector in main nav alongside instrument selector
-- [x] **NAV-04**: Multi-category modules appear under each category they belong to in filtered views
-- [x] **NAV-05**: Per-module color identity via `[data-instrument]` CSS cascade (7 distinct palettes)
+- [ ] **NAV-01**: Top-level "Modules" section at `/modules` lists all eurorack modules with category filter (`?category=vco`)
+- [ ] **NAV-02**: Per-module routes at `/modules/[slug]/` with overview, sessions, and patches pages
+- [ ] **NAV-03**: Module selector in main nav alongside instrument selector
+- [ ] **NAV-04**: Multi-category modules appear under each category they belong to in filtered views
+- [ ] **NAV-05**: Per-module color identity via `[data-instrument]` CSS cascade (7 distinct palettes)
 
 ### Panels
 
 - [ ] **PANEL-01**: Generic `ModulePanel` component renders any module from per-module data files
 - [ ] **PANEL-02**: Hand-placed SVG panel for Intellijel Swells (20HP, reverb)
-- [x] **PANEL-03**: Hand-placed SVG panel for Mutable Instruments Plaits (12HP, VCO)
+- [ ] **PANEL-03**: Hand-placed SVG panel for Mutable Instruments Plaits (12HP, VCO)
 - [ ] **PANEL-04**: Hand-placed SVG panel for Mutable Instruments Beads (14HP, granular)
 - [ ] **PANEL-05**: Hand-placed SVG panel for Mannequins Just Friends (14HP, modulator/VCO/EG)
 - [ ] **PANEL-06**: Hand-placed SVG panel for Monome Crow (2HP, scriptable I/O)
-- [x] **PANEL-07**: Hand-placed SVG panel for Make Noise Maths (20HP, function generator)
-- [ ] **PANEL-08**: Hand-placed SVG panel for Casper x Bastl Ikarie (8HP, stereo filter)
+- [ ] **PANEL-07**: Hand-placed SVG panel for Make Noise Maths (20HP, function generator)
+- [x] **PANEL-08**: Hand-placed SVG panel for Casper x Bastl Ikarie (8HP, stereo filter)
 - [ ] **PANEL-09**: HP-width-aware rendering (panels display at correct relative sizes)
 - [ ] **PANEL-10**: Session annotation markers work on module panels (same `data-*-panel` pattern)
 
 ### Curricula
 
-- [x] **CURR-01**: Maths curriculum (10-12 sessions covering envelope, LFO, slew, audio-rate, utilities)
-- [x] **CURR-02**: Plaits curriculum (8-10 sessions across 16 synthesis modes in 2 banks)
+- [ ] **CURR-01**: Maths curriculum (10-12 sessions covering envelope, LFO, slew, audio-rate, utilities)
+- [ ] **CURR-02**: Plaits curriculum (8-10 sessions across 16 synthesis modes in 2 banks)
 - [ ] **CURR-03**: Beads curriculum (6-8 sessions covering 3 grain modes, quality settings, attenurandomizers)
 - [ ] **CURR-04**: Just Friends curriculum (8-10 sessions for Shape/Cycle/Sound modes)
 - [ ] **CURR-05**: Crow curriculum (4-6 sessions for scripting, i2c, standalone I/O)
 - [ ] **CURR-06**: Swells curriculum (5-7 sessions covering 9 reverb models, Swell Generator, Freeze/Reverse)
-- [ ] **CURR-07**: Ikarie curriculum (5-7 sessions for filter modes, stereo/dual-peak, envelope follower)
-- [x] **CURR-08**: Module overview pages per module (architecture, controls reference, init state)
-- [x] **CURR-09**: All sessions follow 15-30 min ADHD-friendly format with tangible output
+- [x] **CURR-07**: Ikarie curriculum (5-7 sessions for filter modes, stereo/dual-peak, envelope follower)
+- [ ] **CURR-08**: Module overview pages per module (architecture, controls reference, init state)
+- [ ] **CURR-09**: All sessions follow 15-30 min ADHD-friendly format with tangible output
 
 ### Progress & Demo
 
@@ -81,12 +81,12 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 | REQ-ID | Phase | Plan | Status |
 |--------|-------|------|--------|
-| DATA-01 | Phase 26 | 26-02 | Complete |
-| DATA-02 | Phase 26 | 26-02 | Complete |
-| DATA-03 | Phase 26 | 26-01 | Complete |
-| DATA-04 | Phase 26 | 26-01 | Complete |
-| DATA-05 | Phase 26 | 26-02 | Complete |
-| DATA-06 | Phase 26 | 26-03 | Complete (2 PDFs + 5 placeholders) |
+| DATA-01 | Phase 26 | — | Pending |
+| DATA-02 | Phase 26 | — | Pending |
+| DATA-03 | Phase 26 | — | Pending |
+| DATA-04 | Phase 26 | — | Pending |
+| DATA-05 | Phase 26 | — | Pending |
+| DATA-06 | Phase 26 | — | Pending |
 | NAV-01 | Phase 27 | — | Pending |
 | NAV-02 | Phase 27 | — | Pending |
 | NAV-03 | Phase 27 | — | Pending |

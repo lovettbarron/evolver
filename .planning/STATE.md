@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
-status: in-progress
-stopped_at: "Completed 30-03-PLAN.md"
-last_updated: "2026-04-18"
-last_activity: 2026-04-18
+status: planning
+stopped_at: Completed 30-04-PLAN.md
+last_updated: "2026-04-18T14:09:16.494Z"
+last_activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
 progress:
   total_phases: 7
   completed_phases: 0
-  total_plans: 4
-  completed_plans: 3
-  percent: 75
+  total_plans: 0
+  completed_plans: 1
+  percent: 0
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-17)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 30 — Plaits, Beads, Swells, Ikarie Curricula + Panels
+**Current focus:** Phase 26 — Data Model + Content Pipeline
 
 ## Current Position
 
-Phase: 30 of 32 (Plaits, Beads, Swells, Ikarie Curricula + Panels)
-Plan: 3 of 4
-Status: In progress
-Last activity: 2026-04-18 — Completed 30-03 Swells curriculum + panel
+Phase: 26 of 32 (Data Model + Content Pipeline) — first of 7 v2.0 phases
+Plan: —
+Status: Ready to plan
+Last activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
 
-Progress: [███████░░░] 75% (phase 30)
+Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
 
 ## Performance Metrics
 
@@ -51,6 +51,7 @@ Recent decisions affecting current work:
 - [v2.0 Research]: Generic ModulePanel renderer + per-module data files — not per-module React components
 - [v2.0 Research]: Maths built first — proves framework handles hardest case
 - [v2.0 Research]: Just Friends and Crow are separate modules with separate configs/panels
+- [Phase 30]: 8HP viewBox (170x380) for Ikarie -- narrowest eurorack module panel
 
 ### Pending Todos
 
@@ -64,6 +65,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-18
-Stopped at: Completed 30-03-PLAN.md (Swells curriculum + panel)
+Last session: 2026-04-18T14:09:16.485Z
+Stopped at: Completed 30-04-PLAN.md
 Resume file: None

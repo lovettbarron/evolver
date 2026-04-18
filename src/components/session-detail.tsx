@@ -11,12 +11,14 @@ import { OctatrackPanel } from '@/components/octatrack-panel';
 import { PlaitsPanel } from '@/components/plaits-panel';
 import { BeadsPanel } from '@/components/beads-panel';
 import { SwellsPanel } from '@/components/swells-panel';
+import { IkariePanel } from '@/components/ikarie-panel';
 import { CONTROL_METADATA } from '@/lib/evolver-panel-data';
 import { CONTROL_METADATA as CASCADIA_METADATA } from '@/lib/cascadia-panel-data';
 import { CONTROL_METADATA as OCTATRACK_METADATA } from '@/lib/octatrack-panel-data';
 import { CONTROL_METADATA as PLAITS_METADATA } from '@/lib/plaits-panel-data';
 import { CONTROL_METADATA as BEADS_METADATA } from '@/lib/beads-panel-data';
 import { CONTROL_METADATA as SWELLS_METADATA } from '@/lib/swells-panel-data';
+import { CONTROL_METADATA as IKARIE_METADATA } from '@/lib/ikarie-panel-data';
 import { CompletionToggle } from '@/components/completion-toggle';
 import { NarrowShell } from '@/components/page-shell';
 import dynamic from 'next/dynamic';
@@ -36,6 +38,7 @@ const OCTATRACK_PANEL_RE = /<div data-octatrack-panel((?:[^>"]|"[^"]*")*)>\s*<\/
 const PLAITS_PANEL_RE = /<div data-plaits-panel((?:[^>"]|"[^"]*")*)>\s*<\/div>/g;
 const BEADS_PANEL_RE = /<div data-beads-panel((?:[^>"]|"[^"]*")*)>\s*<\/div>/g;
 const SWELLS_PANEL_RE = /<div data-swells-panel((?:[^>"]|"[^"]*")*)>\s*<\/div>/g;
+const IKARIE_PANEL_RE = /<div data-ikarie-panel((?:[^>"]|"[^"]*")*)>\s*<\/div>/g;
 
 function parsePanelProps(attrString: string) {
   const knobValues: Record<string, number> = {};
@@ -177,6 +180,81 @@ function parseSwellsPanelProps(attrString: string) {
       const [id, val] = pair.split(':');
       if (id && val !== undefined) {
         const meta = SWELLS_METADATA[id.trim()];
+        if (meta) knobValues[id.trim()] = Number(val);
+      }
+    }
+  }
+
+  const highlightsMatch = attrString.match(/data-highlights="([^"]*)"/);
+  if (highlightsMatch) {
+    for (const pair of highlightsMatch[1].split(',')) {
+      const [id, color] = pair.split(':');
+      if (id && (color === 'blue' || color === 'amber')) {
+        highlights.push({ controlId: id.trim(), color });
+      }
+    }
+  }
+
+  const sectionsMatch = attrString.match(/data-sections="([^"]*)"/);
+  if (sectionsMatch) {
+    activeSections.push(...sectionsMatch[1].split(',').map((s) => s.trim()));
+  }
+
+  const zoomMatch = attrString.match(/data-zoom="([^"]*)"/);
+  const hasExplicitZoom = !!zoomMatch;
+  const explicitZoom = zoomMatch && zoomMatch[1] !== 'false'
+    ? zoomMatch[1].split(',').map((s) => s.trim())
+    : [];
+  const zoomSections = hasExplicitZoom ? explicitZoom : activeSections;
+
+  const cablesMatch = attrString.match(/data-cables="([^"]*)"/);
+  if (cablesMatch) {
+    for (const entry of cablesMatch[1].split(',')) {
+      const [connection, signalType] = entry.split(':');
+      const [source, dest] = (connection || '').split('>');
+      if (source && dest) {
+        cables.push({
+          sourceId: source.trim(),
+          destId: dest.trim(),
+          signalType: (signalType?.trim() as 'audio' | 'cv' | 'modulation') || 'default',
+        });
+      }
+    }
+  }
+
+  return {
+    knobValues: Object.keys(knobValues).length > 0 ? knobValues : undefined,
+    highlights: highlights.length > 0 ? highlights : undefined,
+    activeSections: activeSections.length > 0 ? activeSections : undefined,
+    zoomSections: zoomSections.length > 0 ? zoomSections : undefined,
+    cables: cables.length > 0 ? cables : undefined,
+  };
+}
+
+function parseIkariePanelProps(attrString: string) {
+  const knobValues: Record<string, number> = {};
+  const highlights: Array<{ controlId: string; color: 'blue' | 'amber' }> = [];
+  const activeSections: string[] = [];
+  const cables: Array<{ sourceId: string; destId: string; signalType: 'audio' | 'cv' | 'modulation' | 'default'; purpose?: string }> = [];
+
+  const knobsMatch = attrString.match(/data-knobs="([^"]*)"/);
+  if (knobsMatch) {
+    for (const pair of knobsMatch[1].split(',')) {
+      const [id, val] = pair.split(':');
+      if (id && val !== undefined) {
+        const meta = IKARIE_METADATA[id.trim()];
+        if (meta) knobValues[id.trim()] = Number(val);
+      }
+    }
+  }
+
+  // Also parse data-sliders (same format as data-knobs, for slider values)
+  const slidersMatch = attrString.match(/data-sliders="([^"]*)"/);
+  if (slidersMatch) {
+    for (const pair of slidersMatch[1].split(',')) {
+      const [id, val] = pair.split(':');
+      if (id && val !== undefined) {
+        const meta = IKARIE_METADATA[id.trim()];
         if (meta) knobValues[id.trim()] = Number(val);
       }
     }
@@ -441,7 +519,9 @@ export function SessionDetail({
     instrumentSlug === 'beads' && html.includes('data-beads-panel');
   const hasSwellsPanel =
     instrumentSlug === 'swells' && html.includes('data-swells-panel');
-  const hasPanel = hasEvolverPanel || hasCascadiaPanel || hasOctatrackPanel || hasPlaitsPanel || hasBeadsPanel || hasSwellsPanel;
+  const hasIkariePanel =
+    instrumentSlug === 'ikarie' && html.includes('data-ikarie-panel');
+  const hasPanel = hasEvolverPanel || hasCascadiaPanel || hasOctatrackPanel || hasPlaitsPanel || hasBeadsPanel || hasSwellsPanel || hasIkariePanel;
 
   // Split HTML at panel markers and collect marker attributes
   const panelRe = hasEvolverPanel
@@ -454,6 +534,8 @@ export function SessionDetail({
     ? BEADS_PANEL_RE
     : hasSwellsPanel
     ? SWELLS_PANEL_RE
+    : hasIkariePanel
+    ? IKARIE_PANEL_RE
     : OCTATRACK_PANEL_RE;
   const parseProps = hasEvolverPanel
     ? parsePanelProps
@@ -465,6 +547,8 @@ export function SessionDetail({
     ? parseBeadsPanelProps
     : hasSwellsPanel
     ? parseSwellsPanelProps
+    : hasIkariePanel
+    ? parseIkariePanelProps
     : parseOctatrackPanelProps;
   const segments = hasPanel ? html.split(panelRe) : [html];
   // regex with one capture group: split produces [before, attrs1, between, attrs2, after, ...]
@@ -544,6 +628,14 @@ export function SessionDetail({
                       />
                     ) : hasSwellsPanel ? (
                       <SwellsPanel
+                        knobValues={panelPropsArray[i].knobValues}
+                        highlights={panelPropsArray[i].highlights}
+                        activeSections={panelPropsArray[i].activeSections}
+                        zoomSections={panelPropsArray[i].zoomSections}
+                        cables={panelPropsArray[i].cables}
+                      />
+                    ) : hasIkariePanel ? (
+                      <IkariePanel
                         knobValues={panelPropsArray[i].knobValues}
                         highlights={panelPropsArray[i].highlights}
                         activeSections={panelPropsArray[i].activeSections}

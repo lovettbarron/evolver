@@ -4,6 +4,7 @@ import { MathsPanel } from '@/components/maths-panel';
 import { PlaitsPanel } from '@/components/plaits-panel';
 import { BeadsPanel } from '@/components/beads-panel';
 import { SwellsPanel } from '@/components/swells-panel';
+import { IkariePanel } from '@/components/ikarie-panel';
 
 export function ModulePanelClient({ moduleSlug }: { moduleSlug: string }) {
   if (moduleSlug === 'maths') {
@@ -17,6 +18,9 @@ export function ModulePanelClient({ moduleSlug }: { moduleSlug: string }) {
   }
   if (moduleSlug === 'swells') {
     return <SwellsPanel />;
+  }
+  if (moduleSlug === 'ikarie') {
+    return <IkariePanel />;
   }
   return null;
 }
