@@ -6,11 +6,11 @@
 
 ## Summary
 
-Phase 30 creates curricula (25 sessions total) and hand-placed SVG panels for four eurorack modules: Plaits (12HP, 8 sessions), Beads (14HP, 6 sessions), Swells (20HP, 6 sessions), and Ikarie (8HP, 5 sessions). The project has a mature panel-building skill and established session format. The primary challenge is content authoring at scale -- each module needs a data file, panel component, overview page, and multiple sessions written to three locations (working tree, src/content, ~/song vault).
+Phase 30 creates curricula (25 sessions total) and hand-placed SVG panels for four eurorack modules: Plaits (12HP, 8 sessions), Beads (14HP, 6 sessions), Swells (20HP, 6 sessions), and Ikarie (8HP, 5 sessions). The project has a mature panel-building skill and established session format from Phase 29 (Maths). The primary challenge is content authoring at scale -- each module needs a data file, panel component, overview page, and multiple sessions written to three locations (working tree, src/content, ~/song vault).
 
-Plaits and Beads have complete PDF manuals in `references/` with detailed front plate diagrams. Swells and Ikarie currently have placeholder text files; their reference PDFs must be downloaded before panel work begins (D-08). The Ikarie manual PDF was located at `bastl-instruments.com/files/manual-ikarie-web.pdf` and contains complete panel diagrams. Swells requires the PDF from Intellijel's product page (browser download required).
+Plaits and Beads have complete PDF manuals in `references/` with detailed front plate diagrams -- control inventories have been fully verified from these PDFs. The Ikarie manual PDF has been downloaded from bastl-instruments.com and saved to `references/ikarie-manual.pdf` -- it contains a complete annotated panel diagram with numbered controls and detailed patch tips. Swells currently has a placeholder text file; the Intellijel website requires browser download for the PDF manual (all direct URL attempts returned 404). Swells control names are verified from ModularGrid and SYNTH ANATOMY, but exact panel positions require the PDF.
 
-**Primary recommendation:** Execute one module end-to-end (panel data + component + tests + overview + all sessions with triple-write) before starting the next, in order: Plaits, Beads, Swells, Ikarie. Each module becomes its own plan (30-01 through 30-04).
+**Primary recommendation:** Execute one module end-to-end (panel data + component + tests + overview + all sessions with triple-write) before starting the next, in order: Plaits, Beads, Swells, Ikarie. Each module becomes its own plan (30-01 through 30-04). The first task in plan 30-03 (Swells) must be a manual PDF download step.
 
 <user_constraints>
 ## User Constraints (from CONTEXT.md)
@@ -49,10 +49,10 @@ None -- discussion stayed within phase scope
 | CURR-02 | Plaits curriculum (8-10 sessions across 16 synthesis modes in 2 banks) | 8 sessions with mode-pair structure; all 16 modes documented from manual with HARMONICS/TIMBRE/MORPH per mode |
 | CURR-03 | Beads curriculum (6-8 sessions covering 3 grain modes, quality settings, attenurandomizers) | 6 sessions; Granular/Delay/Looper modes documented; attenurandomizer dual-function (CV modulation vs randomization) captured |
 | CURR-06 | Swells curriculum (5-7 sessions covering 9 reverb models, Swell Generator, Freeze/Reverse) | 6 sessions; 9 algorithms identified (Fog, Blur, Shadow, Velvet, Asterion, Deadspace, Buckets, Ritual, Gaze); Swell Generator and effect processors documented |
-| CURR-07 | Ikarie curriculum (5-7 sessions for filter modes, stereo/dual-peak, envelope follower) | 5 sessions; complete control inventory from manual PDF; patch tips section provides exercise inspiration |
-| PANEL-02 | Hand-placed SVG panel for Intellijel Swells (20HP) | Control inventory from web research; PDF manual needed for exact layout |
-| PANEL-04 | Hand-placed SVG panel for Mutable Instruments Beads (14HP) | Complete panel diagrams from manual PDF; control inventory verified |
-| PANEL-08 | Hand-placed SVG panel for Casper x Bastl Ikarie (8HP) | Complete annotated panel diagram from manual PDF with numbered controls |
+| CURR-07 | Ikarie curriculum (5-7 sessions for filter modes, stereo/dual-peak, envelope follower) | 5 sessions; complete control inventory from manual PDF; 8 patch tips provide exercise framework |
+| PANEL-02 | Hand-placed SVG panel for Intellijel Swells (20HP) | Control inventory from web research; PDF manual needed for exact layout (D-08) |
+| PANEL-04 | Hand-placed SVG panel for Mutable Instruments Beads (14HP) | Complete panel diagrams from manual PDF; control inventory fully verified |
+| PANEL-08 | Hand-placed SVG panel for Casper x Bastl Ikarie (8HP) | Complete annotated panel diagram from manual PDF with numbered controls; PDF now in references/ |
 </phase_requirements>
 
 ## Project Constraints (from CLAUDE.md)
@@ -84,12 +84,12 @@ No new packages needed. This phase is entirely content authoring + panel compone
 ```
 modules/<slug>/
   module.json            # Already exists for all 4 modules
-  overview.md            # Placeholder exists -- populate with architecture, controls, init state
+  overview.md            # Populate with architecture, controls, init state
 
 sessions/<slug>/
   01-foundations-*.md     # Always first
   02-*.md through NN-*.md
-  
+
 src/lib/<slug>-panel-data.ts    # Control metadata + positions
 src/components/<slug>-panel.tsx # React SVG panel component
 
@@ -145,150 +145,173 @@ After creating a panel component, update these integration files:
 - **Forgetting triple-write:** Missing any of the 3 write locations causes content to not render in dev or prod
 - **Using instrument_type: instrument:** Must be `eurorack_module` for all module sessions
 
-## Module Control Inventories
+## Verified Module Control Inventories
 
-### Plaits (12HP) -- 16 controls total
-From manual pages 3-5 (front plate diagrams):
+### Plaits (12HP) -- Verified from Manual PDF pp. 3-5
 
-**Knobs (5):**
-- FREQUENCY (large, coarse pitch)
-- HARMONICS (large, model-dependent tone)
-- TIMBRE (medium, model-dependent)
-- MORPH (medium, model-dependent)
-- FM attenuverter (small)
+**Controls (A-F from manual):**
 
-**Buttons (2):**
-- Model selection button 1 (bank 1, 8 modes, with 8 LEDs)
-- Model selection button 2 (bank 2, 8 modes, with 8 LEDs)
+A. **Model selection buttons** (2) + **LEDs** (16 in 2 columns of 8). Each button cycles through a bank of 8 models. LEDs indicate current model with color coding (green/red/yellow for synthesis type).
 
-**Attenuverters (3):**
-- TIMBRE attenuverter
-- FM attenuverter
-- MORPH attenuverter (also HARMONICS attenuverter labeled HARMO)
+B. **FREQUENCY** -- Large coarse frequency knob. 8-octave range by default, narrowable to 14 semitones via hidden setting.
 
-**Jacks (7):**
-- MODEL CV input [1]
-- TIMBRE CV input [2] -- note: labeled with arrows
-- FM CV input
-- MORPH CV input (HARMO)
-- TRIG input [3]
-- LEVEL input [4]
-- V/OCT input [5]
-- OUT output [6]
-- AUX output [7]
+C. **HARMONICS** -- Large model-dependent tone control. Sweeps spectral content from dark/sparse to bright/dense.
 
-**LEDs (16):** 2 columns of 8 (model selection indicators, green/red/yellow)
+D. **TIMBRE** -- Medium knob, model-dependent. With LED indicator for internal LPG.
 
-**Total estimated controls for panel data: ~25-28** (knobs + attenuverters + buttons + jacks + LEDs)
+E. **MORPH** -- Medium knob, model-dependent. With LED indicator for internal decay envelope.
 
-**16 Synthesis Modes (2 banks of 8):**
-Bank 1 (pitched): Pair of classic waveforms, Waveshaping oscillator, Two-operator FM, Granular formant, Harmonic oscillator, Wavetable, Chords, Vowel/speech
-Bank 2 (noise/percussion): Granular cloud, Filtered noise, Particle noise, Inharmonic string, Modal resonator, Analog bass drum, Analog snare drum, Analog hi-hat
+F. **Attenuverters** (3 small knobs) -- For TIMBRE, FM, and MORPH CV inputs. When CV input is left unpatched and trigger is patched, attenuverter adjusts internal decaying envelope modulation amount.
 
-### Beads (14HP) -- ~28 controls total
-From manual pages 4-14 (multiple annotated diagrams):
+**Jacks (1-7 from manual):**
+1. MODEL CV input
+2. CV inputs for TIMBRE, FM, MORPH, HARMONICS (4 jacks with shared attenuverter row F)
+3. TRIG input (triggers internal envelope, excites percussive models, strikes internal LPG)
+4. LEVEL input (opens internal LPG, accent control)
+5. V/OCT input
+6. OUT (main output)
+7. AUX (variant/sidekick/by-product output)
 
-**Large Knobs (4):**
-- FREEZE/feedback section: DENSITY (D)
-- Grain section: TIME (E), PITCH (F)
-- Mix section: SIZE (G)
+**Total panel controls: ~28** (2 buttons + 5 knobs + 3 attenuverters + 7 CV/audio jacks + 2 audio outputs + 16 LEDs -- but LEDs are decorative array, not individual interactive controls)
 
-**Medium Knobs (4):**
-- SHAPE (H)
-- Feedback (J)
-- Dry/Wet (K)
-- Reverb (L)
+**Functional control count for panel data: ~19** (2 buttons, 5 knobs, 3 attenuverters, 7 input jacks, 2 output jacks) + LED array rendered as decorative element
 
-**Small Knobs/Attenuverters (4):**
-- 4x attenurandomizers (I) for TIME, SIZE, SHAPE, PITCH
+**16 Synthesis Modes (verified from manual pp. 7-11):**
 
-**Buttons (3):**
-- Quality selector [A]
-- FREEZE [B]
-- SEED [C]
+Bank 1 (pitched, internal LPG disabled for these):
+1. Pair of classic waveforms (VA synthesis)
+2. Waveshaping oscillator
+3. Two-operator FM
+4. Granular formant oscillator
+5. Harmonic oscillator
+6. Wavetable oscillator
+7. Chords (4-note)
+8. Vowel and speech synthesis
 
-**Jacks -- Inputs (7):**
-- IN L [1-left]
-- IN R [1-right]
-- FREEZE gate input [B-bottom]
-- SEED gate input [4]
-- DENSITY CV [5]
-- 4x CV inputs for TIME/SIZE/SHAPE/PITCH [6]
+Bank 2 (noise/percussion, use own decay envelope):
+1. Granular cloud
+2. Filtered noise
+3. Particle noise
+4. Inharmonic string modeling
+5. Modal resonator (mini-Rings)
+6. Analog bass drum model
+7. Analog snare drum model
+8. Analog hi-hat model
 
-**Jacks -- Outputs (2):**
-- L output [8-left]
-- R output [8-right]
+### Beads (14HP) -- Verified from Manual PDF pp. 4-14
 
-**LEDs (5):**
-- Input level LED [2]
-- 4x quality LEDs (under quality button [A])
+**Controls by section:**
 
-**CV assign button (1):** [M] -- assigns CV input to feedback/dry-wet/reverb
+Recording quality & input (top area):
+- A. Quality selector button (cycles 4 quality modes: bright digital 48kHz/16-bit, cold digital 32kHz/12-bit, sunny tape 24kHz/12-bit, scorched cassette 24kHz/8-bit)
+- 1. Audio inputs: IN L, IN R (stereo pair, mono if only L patched)
+- 2. Input level LED (blinks during auto-gain)
 
-**Total estimated: ~30 controls**
+Grain generation (upper-middle):
+- B. FREEZE button (latching, disables recording) + corresponding gate input jack
+- C. SEED button (grain trigger, also enables latched mode when held 4s) + corresponding gate input (4)
+- D. DENSITY knob (large) -- behavior changes per grain generation mode: rate in latched, probability divider in clocked, repetition rate in gated
+- 5. DENSITY CV input
 
-### Swells (20HP) -- ~40+ controls
-From web research (PDF needed for exact inventory):
+Grain playback (middle):
+- E. TIME knob (large) -- buffer position, from most recent (CCW) to oldest (CW)
+- F. PITCH knob (large) -- transposition, -24 to +24 semitones
+- G. SIZE knob (large) -- grain duration, 30ms to 4s (fully CW = infinite = delay mode)
+- H. SHAPE knob (medium) -- grain amplitude envelope, clicky to rectangular to slow-attack
+- I. Attenurandomizers (4 small knobs) -- for TIME, SIZE, SHAPE, PITCH. CW from noon = CV modulation amount, CCW from noon = randomization amount
+- 6. CV inputs (4) -- for TIME, SIZE, SHAPE, PITCH parameters
 
-**Sliders/Faders (8):**
-- PRE-DELAY, SIZE, DECAY, HI DAMP, LO DAMP, EQ, EBB, FLOW
+Mixing & output (lower):
+- J. Feedback knob (medium) -- feeds output back to input with quality-dependent saturation
+- K. Dry/Wet knob (medium) -- crossfade balance
+- L. Reverb knob (medium) -- built-in reverb amount
+- M. CV assign button -- assigns CV input [7] to J, K, or L
+- 7. Assignable CV input (for feedback/dry-wet/reverb)
+- 8. Audio outputs: L, R (stereo pair)
 
-**Knobs (~8):**
-- INPUT, MIX, DRIVE, TRIM, RISE, FALL, THRESHOLD, EF GAIN
+**Total functional controls for panel data: ~27** (4 buttons, 4 large knobs, 3 medium knobs, 4 small attenurandomizers, 2 audio input jacks, 2 audio output jacks, 2 gate input jacks, 5 CV input jacks, 1 LED)
 
-**Buttons (~6):**
-- SWELL, FREEZE, BURST, REVERSE, Model select (2 buttons for 9 algorithms)
+**Three Grain Modes:**
+- Latched (default): grains generated continuously at rate set by DENSITY
+- Clocked: external clock via SEED input, DENSITY as probability/division
+- Gated: grains only when SEED button held or gate high
 
-**Switches (~2):**
-- LO-FI (3-position: OFF/MIN/MAX), EF source selector (IN/SC/OUT)
+**Special modes:**
+- Delay mode: SIZE fully CW, one infinite grain acts as delay/slicer
+- Wavetable synth: no audio input for 10s, granularizes internal Plaits waveforms
 
-**CV Inputs (9+):** Attenuverters for each major parameter
+### Swells (20HP) -- From Web Sources (PDF needed for positions)
 
-**Audio I/O (5):** Stereo in (L, R), Stereo out (L, R), Side chain in
+**Faders (8):** PRE-DELAY, SIZE, DECAY, HI DAMP, LO DAMP, EQ, EBB (model-specific), FLOW (model-specific)
 
-**Other outputs (1):** SWELL CV output
+**Level controls (2 faders):** INPUT, MIX
 
-**TRIG input (1):** Assignable trigger
+**Knobs (~6):** DRIVE, TRIM, RISE, FALL, THRESHOLD, EF GAIN, EF HIGH CUT
+
+**Buttons (~6):** SWELL, FREEZE, BURST, REVERSE, Model select (2 buttons for cycling through 9 algorithms)
+
+**Switches (2):** LO-FI (3-position: OFF/MIN/MAX), EF source selector (3-position: IN/SC/OUT)
+
+**CV inputs (~9):** Attenuverters for major parameters
+
+**Audio I/O (5 jacks):** Stereo in (L, R), Stereo out (L, R), Side chain in
+
+**Other jacks (2):** SWELL CV output, TRIG input (assignable)
 
 **Total estimated: ~40-45 controls** -- largest panel in this phase
 
 **9 Reverb Algorithms:** Fog, Blur, Shadow, Velvet, Asterion, Deadspace, Buckets, Ritual, Gaze
 
-### Ikarie (8HP) -- ~20 controls
-From manual PDF (annotated panel diagram, page 7):
+**CONFIDENCE: MEDIUM** -- control names verified from multiple sources but exact count and positions require the PDF manual.
 
-**Knobs (5):**
-- CUTOFF (large, LP-HP sweep, labeled 3)
-- STEREO (medium, panning/spread, labeled 7)
-- MOD (medium, attenuverter, labeled 4)
-- INPUT (medium, 0x-5x gain, labeled 1)
+### Ikarie (8HP) -- Verified from Manual PDF (downloaded, in references/)
+
+From the annotated panel diagram (page 7 of manual) with numbered controls:
+
+**Knobs (4):**
+- 3. CUTOFF -- Large knob at top. LP (CCW) to HP (CW). Center = open filter
+- 7. STEREO -- Medium knob. Controls panning (PAN mode) or filter frequency spread (SPREAD mode). Center = no effect
+- 4. MOD -- Medium attenuverter knob. Controls cutoff modulation amount. Center = no modulation. CW = positive, CCW = inverted
+- 1. INPUT -- Medium knob. 0x to 5x gain. Controls input level and overdrive character
 
 **Fader (1):**
-- RESONANCE (vertical fader, labeled 5)
+- 5. RESONANCE -- Diagonal/vertical fader. Emphasizes cutoff frequency, can self-oscillate at maximum
 
 **Switch (1):**
-- FOLLOW speed (3-position: SLOW/MID/FAST, labeled 6)
-- PAN/SPREAD mode (2-position toggle between Stereo modes)
+- PAN/SPREAD -- 2-position toggle between stereo modes (near STEREO knob)
+- 6/9. FOLLOW speed -- 3-position toggle: SLOW (pumping), MID (tight), FAST (full-wave rectifier)
 
-**Jacks -- Inputs (4):**
-- L IN
-- R IN (normalled from L IN)
-- V/OCT
-- MOD
+**Input Jacks (4):**
+- L IN (normalled to R IN)
+- R IN
+- V/OCT (1V/oct cutoff tracking, with front-panel scaling trimmer)
+- MOD (normalled from FOLLOW output)
 
-**Jacks -- Outputs (4):**
-- L OUT (MONO)
+**Output Jacks (4):**
+- L OUT (MONO -- sums both channels when only this patched)
 - R OUT
-- BEYOND (spectral difference output)
-- FOLLOW (envelope follower output)
+- BEYOND (spectral difference of the two filters -- band-pass/twin-peak behavior)
+- FOLLOW (envelope follower CV output)
 
-**Other (1):**
-- VCA CV input (labeled 8)
+**CV Input (1):**
+- 8. VCA CV -- Controls output VCA. 0-5V range, silence to unity gain. No cable = normal level
 
-**Trimmer (1):**
-- V/OCT scaling trimmer (front-panel accessible)
+**Other (2):**
+- Stereo CV input jacks (the two small hex nuts near STEREO and MOD -- these are the CV modulation inputs for stereo and resonance)
 
-**Total: ~17-20 controls** -- smallest panel, very compact at 8HP
+**Total functional controls for panel data: ~17** (4 knobs, 1 fader, 2 switches, 4 input jacks, 4 output jacks, 1 CV input + 2 CV modulation inputs = ~18)
+
+**Key architectural insight from manual:** FOLLOW output is normalled to MOD input -- the filter auto-wahs by default without any patching. This is critical for session 1 (foundations) to explain.
+
+**Patch tips from manual (inspiration for sessions):**
+1. Formant Filtering -- mono dual-peak formant sounds
+2. Quad Acid -- 4 resonant sweeps from one knob turn
+3. Beyond Stereo -- L OUT + BEYOND as stereo pair
+4. Pinging & FM Pinging -- trigger pulses into filter for percussive sounds
+5. Self Oscillation -- resonance to max, input to min, play with V/OCT
+6. Post Filter Ring Modulator -- BEYOND output + PAN mode stereo modulation
+7. Waveform Crossfading -- stereo outputs as crossfaded waveforms
+8. Aggressive 24dB Filtering -- chain L OUT into R IN for steeper slope
 
 ## Recommended Plaits Mode Pairings (Claude's Discretion)
 
@@ -325,10 +348,10 @@ Session 1 = Foundations (controls, model selection, built-in LPG, internal envel
 
 ## Common Pitfalls
 
-### Pitfall 1: Swells/Ikarie Panel Without PDF
+### Pitfall 1: Swells Panel Without PDF
 **What goes wrong:** Panel controls placed from memory or web descriptions produce incorrect layouts
-**Why it happens:** Current references are placeholder text files, not real manuals
-**How to avoid:** D-08 requires downloading PDFs first. Ikarie PDF is at bastl-instruments.com/files/manual-ikarie-web.pdf. Swells PDF requires browser download from intellijel.com
+**Why it happens:** Current reference is a placeholder text file, not a real manual
+**How to avoid:** D-08 requires downloading the PDF first. Plan 30-03 must start with a manual download task. If PDF unavailable via curl, document that user needs to manually download from intellijel.com
 **Warning signs:** If you start panel work and can't see a front plate diagram, stop
 
 ### Pitfall 2: Forgetting the Third Write Location
@@ -346,11 +369,11 @@ Session 1 = Foundations (controls, model selection, built-in LPG, internal envel
 ### Pitfall 4: Plaits LED Grid Complexity
 **What goes wrong:** Plaits has 16 model-selection LEDs in 2 columns of 8 with color-coding -- easy to get wrong
 **Why it happens:** The LED pattern indicates current model and bank; colors (green/red/yellow) encode model type
-**How to avoid:** Study pages 3-4 of the Plaits manual carefully; map each LED position to its model
-**Warning signs:** LED positions not matching the physical 4x4 grid layout shown in manual
+**How to avoid:** Study pages 3-4 of the Plaits manual carefully; render LEDs as a decorative array element, not individual interactive controls
+**Warning signs:** LED positions not matching the physical 2x8 column layout shown in manual
 
 ### Pitfall 5: Beads Multi-Function Controls
-**What goes wrong:** Controls that change behavior based on mode (latched vs gated vs clocked grain generation) are documented as single-function
+**What goes wrong:** Controls that change behavior based on mode (latched vs clocked vs gated grain generation) are documented as single-function
 **Why it happens:** DENSITY knob alone has 3 different behaviors depending on grain generation mode
 **How to avoid:** Document each control's behavior per mode in the curriculum; curriculum sessions should cover mode transitions explicitly
 **Warning signs:** Sessions that describe DENSITY without specifying which grain generation mode is active
@@ -366,6 +389,18 @@ Session 1 = Foundations (controls, model selection, built-in LPG, internal envel
 **Why it happens:** Forgetting to update session-detail.tsx, quick-ref-panel.tsx, panel/page.tsx, and patch-detail.tsx
 **How to avoid:** Each plan must include integration tasks after component creation
 **Warning signs:** Panel component file exists but "coming soon" still shows
+
+### Pitfall 8: Ikarie FOLLOW Normalling Not Documented
+**What goes wrong:** Session 1 doesn't explain why the filter already auto-wahs without any cables
+**Why it happens:** FOLLOW output is normalled to MOD input -- this is invisible on the panel
+**How to avoid:** Session 01 (foundations) must explicitly explain the FOLLOW-to-MOD normalling and how patching a cable into MOD breaks it
+**Warning signs:** Learner confused by filter moving on its own
+
+### Pitfall 9: Plaits Internal Envelope/LPG Attenuverter Confusion
+**What goes wrong:** Attenuverter behavior is documented incorrectly when no CV is patched
+**Why it happens:** When CV input is left unpatched and TRIG is patched, the attenuverter controls how much the internal decaying envelope modulates the parameter. Unplugging a CV cable without resetting the attenuverter to 12 o'clock means the internal envelope takes over
+**How to avoid:** Session 01 must explain the dual-function attenuverter behavior. Reference manual page 3 (control F description)
+**Warning signs:** Sessions describing attenuverters as simple CV scalers without mentioning the internal envelope interaction
 
 ## Code Examples
 
@@ -416,7 +451,7 @@ export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
 };
 
 export const SECTION_BOUNDS: Record<string, { x: number; y: number; width: number; height: number }> = {
-  'plaits': { x: 0, y: 0, width: 0, height: 0 },  // single-module panels have one section
+  'plaits': { x: 0, y: 0, width: 100, height: 100 },  // single-module panels have one section
 };
 
 export function midiToRotation(value: number): number {
@@ -448,7 +483,7 @@ import { CONTROL_METADATA, SECTION_BOUNDS, midiToRotation } from '@/lib/plaits-p
 
 describe('plaits-panel-data', () => {
   test('CONTROL_METADATA has expected number of entries', () => {
-    expect(Object.keys(CONTROL_METADATA).length).toBeGreaterThanOrEqual(20);
+    expect(Object.keys(CONTROL_METADATA).length).toBeGreaterThanOrEqual(17);
   });
 
   test('every entry has required fields', () => {
@@ -500,7 +535,7 @@ describe('plaits-panel-data', () => {
 - **Phase gate:** Full suite green before /gsd:verify-work
 
 ### Wave 0 Gaps
-- [ ] `src/lib/__tests__/plaits-panel-data.test.ts` -- covers PANEL-03 (already assigned to Phase 28 but panel built here)
+- [ ] `src/lib/__tests__/plaits-panel-data.test.ts` -- covers Plaits panel data (built in this phase alongside curriculum)
 - [ ] `src/lib/__tests__/beads-panel-data.test.ts` -- covers PANEL-04
 - [ ] `src/lib/__tests__/swells-panel-data.test.ts` -- covers PANEL-02
 - [ ] `src/lib/__tests__/ikarie-panel-data.test.ts` -- covers PANEL-08
@@ -509,26 +544,31 @@ describe('plaits-panel-data', () => {
 ## Open Questions
 
 1. **Swells PDF manual availability**
-   - What we know: Intellijel's website requires browser download; curl returns HTML wrapper
-   - What's unclear: Exact control positions without the PDF
-   - Recommendation: Plan 30-03 (Swells) should start with a manual download task; if PDF unavailable, use product photos + web documentation as fallback
+   - What we know: Intellijel's website requires browser download; all direct URL attempts (multiple patterns) return 404
+   - What's unclear: Exact control positions and full control count without the PDF
+   - Recommendation: Plan 30-03 (Swells) should start with a manual download task; if automated download fails, document that user needs to manually download from https://intellijel.com/shop/eurorack/swells/ (Manual tab). Use product photos + web documentation as fallback for control identification
 
 2. **Plaits panel already assigned to Phase 28 (PANEL-03)?**
    - What we know: REQUIREMENTS.md assigns PANEL-03 to Phase 28, but Phase 28 hasn't been executed yet
    - What's unclear: Whether the Plaits panel should be built in Phase 28 or Phase 30
-   - Recommendation: Build it in Phase 30 alongside the curriculum since D-11 says "complete curriculum + panel for each module as a self-contained plan"
+   - Recommendation: Build it in Phase 30 alongside the curriculum since D-11 says "complete curriculum + panel for each module as a self-contained plan." PANEL-03 requirement will be satisfied here
 
 3. **Generic ModulePanel renderer (PANEL-01) status**
    - What we know: PANEL-01 is assigned to Phase 28; current module panel page is "coming soon" placeholder
-   - What's unclear: Whether a generic renderer exists or if each module gets its own component
-   - Recommendation: Each module gets its own panel component (data file + TSX) following the established per-instrument pattern. The "generic" aspect can be a shared helper, not a single component
+   - What's unclear: Whether a generic renderer exists yet or if each module gets its own component
+   - Recommendation: Each module gets its own panel component (data file + TSX) following the established per-instrument pattern. Integration with the generic renderer is a Phase 28 concern -- panel data files created here will be consumed by it
+
+4. **Ikarie power specs mismatch**
+   - What we know: module.json says +12V: 50mA / -12V: 40mA. Manual PDF says +12V: 100mA / -12V: 95mA
+   - What's unclear: Which is correct (manual PDF is authoritative)
+   - Recommendation: Update module.json power_specs to match the manual values during the Ikarie plan
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- `references/plaits-manual.pdf` -- Complete front plate diagram, all 16 synthesis modes, control descriptions
-- `references/beads-manual.pdf` -- Complete annotated diagrams for all panel sections, grain generation modes, attenurandomizer behavior
-- `bastl-instruments.com/files/manual-ikarie-web.pdf` -- Complete panel diagram with numbered controls, signal flow diagram, all control descriptions
+- `references/plaits-manual.pdf` -- Complete front plate diagrams (pp. 3-5), all 16 synthesis modes with per-mode HARMONICS/TIMBRE/MORPH descriptions (pp. 7-11), inputs/outputs (p. 5)
+- `references/beads-manual.pdf` -- Complete annotated diagrams for all panel sections (pp. 4-14), grain generation modes (latched/clocked/gated), attenurandomizer behavior, delay and wavetable synth modes
+- `references/ikarie-manual.pdf` -- Downloaded from bastl-instruments.com. Complete numbered panel diagram, signal flow diagram, all 10 control descriptions, 8 patch tips with panel illustrations
 - `.claude/skills/synth-panel-builder/SKILL.md` -- Panel building methodology, data-driven vs inline pattern decision, testing patterns
 
 ### Secondary (MEDIUM confidence)
@@ -537,15 +577,16 @@ describe('plaits-panel-data', () => {
 
 ### Tertiary (LOW confidence)
 - Swells panel exact control positions -- cannot be determined without PDF manual
+- Swells total control count (estimated 40-45) -- requires PDF verification
 
 ## Metadata
 
 **Confidence breakdown:**
 - Standard stack: HIGH -- no new dependencies, all existing patterns
 - Architecture: HIGH -- 3 existing panel implementations + synth-panel-builder skill provide clear template
-- Module control inventories: HIGH for Plaits/Beads/Ikarie (PDF manuals), MEDIUM for Swells (web sources only)
+- Module control inventories: HIGH for Plaits/Beads/Ikarie (PDF manuals verified), MEDIUM for Swells (web sources only)
 - Curriculum structure: HIGH -- locked decisions from CONTEXT.md are specific and well-defined
-- Pitfalls: HIGH -- based on documented issues in CLAUDE.md and skill changelog
+- Pitfalls: HIGH -- based on documented issues in CLAUDE.md, skill changelog, and manual edge cases
 
 **Research date:** 2026-04-18
 **Valid until:** 2026-05-18 (stable domain -- synth hardware doesn't change)
