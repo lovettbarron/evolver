@@ -407,6 +407,41 @@ Complex modules may contain distinct sub-sections needing their own labels and d
 7. **CV inputs align with their knobs** — Rise CV jack at the same y as the Rise knob, Fall CV at Fall knob y, etc. Don't cluster CV jacks together at arbitrary positions
 8. **Check render size before placing** — Every control has a rendered size (knobs: r=12 → 24px, small knobs: r=6-8, jacks: r=6 → 12px, sliders: trackHeight px tall, buttons: r=6-8). When placing controls in adjacent rows, ensure `row_gap >= (size_of_row_above / 2) + (size_of_row_below / 2) + 4px margin`. Controls that overlap visually are worse than controls that are too spread out. Calculate minimum y-offset between rows before writing positions
 
+## Visual Alignment
+
+When placing controls, look for two levels of alignment in the reference image:
+
+### 1. Sections (visual rows/groups)
+Identify which controls form a **visual section** — a horizontal band of related controls at roughly the same y-coordinate. Each section is a conceptual row on the panel. Map sections top-to-bottom before placing any individual controls.
+
+Example from Ikarie (8HP):
+```
+Section 1: CUTOFF (large knob, centered)
+Section 2: STEREO knob (left) + VCA CV jack (right)
+Section 3: PAN/SPREAD switch + STEREO CV jack (45° offset)
+Section 4: RESONANCE diagonal slider (spanning width)
+Section 5: RES CV jack (left) + MOD knob (right)
+Section 6: INPUT knob (left) + FOLLOW SPEED switch (right)
+Section 7: Input jacks row (4 across)
+Section 8: Output jacks row (4 across)
+```
+
+### 2. Entity alignment (cross-section vertical/horizontal relationships)
+After placing sections, check which controls **align vertically or horizontally across different sections**. These alignments are intentional in physical panel design — they create visual columns and make the panel feel organized.
+
+Common alignment patterns:
+- **Vertical columns**: Controls that share the same x-coordinate across multiple sections (e.g., STEREO at x=42 and INPUT at x=42 form a left column; MOD at x=130 and FOLLOW SPEED at x=130 form a right column)
+- **Horizontal rows**: Controls at the same y-coordinate across a section (e.g., INPUT and FOLLOW SPEED share y=242)
+- **Diagonal offsets**: CV jacks placed at ~45° from their associated main control (e.g., STEREO CV at 45° upper-left of PAN/SPREAD, RES CV at 45° below-left of RESONANCE slider)
+
+**How to apply**: After writing initial positions, explicitly verify alignment by checking:
+- Do left-column controls share the same x-value?
+- Do right-column controls share the same x-value?
+- Do same-row controls share the same y-value?
+- Are diagonal-offset jacks at consistent angles from their parent controls?
+
+If two controls should be aligned but have drifted by a few pixels during positioning, snap them to the same coordinate. Misaligned columns look worse than slightly imperfect spacing.
+
 ## Label Conventions
 
 Use the **exact text printed on the panel silk-screen**, not verbose descriptions:
@@ -415,8 +450,21 @@ Use the **exact text printed on the panel silk-screen**, not verbose description
 - "VR" or "Vari-Response" — match what's printed
 - Channel numbers: "1", "2", "3", "4" — not "Channel 1 Attenuverter"
 - Output jacks: signal name only, no "OUT" suffix (existing rule, restated for emphasis)
+- **Do NOT invent section headers** — if the physical panel doesn't have "REVERB PARAMETERS" or "PERFORMANCE" printed on it, don't add them as `<text>` labels in the SVG. Only render text that exists on the real panel silk-screen. Invented labels clutter the layout and inevitably overlap with controls
 
 Eurorack panels have very limited space. Labels must be short. When in doubt, look at the panel photo.
+
+## Coordinate Sanity Checks
+
+After writing `CONTROL_POSITIONS`, verify these invariants before committing:
+
+- [ ] **All x-coordinates within viewBox width** — no control at x > viewBox width - margin
+- [ ] **All y-coordinates within viewBox height** — no control at y > viewBox height - margin
+- [ ] **Divider/separator lines respect panel bounds** — `x2` must not exceed viewBox width. A line to x=410 on a 300px panel is a rendering bug
+- [ ] **Text elements centered correctly** — title and brand text should use `x = viewBox_width / 2` when `textAnchor: 'middle'`, not an arbitrary offset
+- [ ] **No label overlaps** — slider labels (y + trackHeight + 12) must not collide with controls in the next row. Calculate the actual bottom edge of each row before placing the next
+
+These are mechanical checks that catch bugs which are obvious in isolation but get preserved across many rounds of incremental position tweaking.
 
 ## Data Model Accuracy Checklist
 
@@ -494,6 +542,14 @@ Panel building is inherently visual and iterative:
 5. **Small adjustments** — position tweaks of 10-20px are normal. Make the change, reload, check
 6. **Test after changes** — run `npx vitest run` on the data and component test files
 7. **Tighten last** — eliminate whitespace only after positions are structurally correct
+
+### Context degradation warning
+
+After ~5+ rounds of incremental tweaking in a single conversation, accumulated context works against you. You start anchoring to prior position values instead of the reference image. Bugs introduced early (wrong x2 on divider lines, invented section labels, off-center text) survive because attention shifts to whatever was discussed most recently.
+
+**If a panel still doesn't look right after several rounds**: it's more productive to clear context and re-evaluate the code fresh against the reference image than to continue nudging coordinates. A fresh read catches mechanical bugs (coordinates outside viewBox, labels overlapping controls) that are invisible after 20 rounds of "move this 5px down."
+
+Run the **Coordinate Sanity Checks** (below) before and after any multi-round positioning session.
 
 ## Testing
 
@@ -585,3 +641,75 @@ from the same cluster-first framing.
 panel is mostly a positioning exercise, not an architectural one. Keep the
 skill up to date with lessons learned from each new instrument so the next
 build stays fast.
+
+### 2026-04-18 — Swells panel: context degradation during iterative positioning
+
+The Swells panel (Intellijel, 20HP eurorack) was built over a long session
+with many rounds of incremental position tweaks. After clearing context and
+re-evaluating fresh, several bugs were immediately obvious:
+
+- **Divider lines extended to x=410** on a 300px-wide panel (rendering garbage
+  past the right edge)
+- **Invented section labels** ("REVERB PARAMETERS", "LEVEL", "PERFORMANCE",
+  "SWELL GENERATOR", "I/O") that don't exist on the physical panel silk-screen,
+  positioned at y-coordinates that overlapped with controls
+- **Title and brand text off-center** (x=210 instead of x=150 for a 300px panel)
+- **Vertical spacing too tight** in top section — CV jacks, attenuverters, and
+  LEDs crammed into 26px of vertical space
+
+All of these were fixable in a single pass with fresh context. The prior
+session had been tweaking positions for many rounds but never stepped back to
+check whether divider lines respected the viewBox or whether section labels
+actually existed on the physical panel.
+
+**Additions to the skill from this round:**
+- **Coordinate Sanity Checks** — mechanical checklist to catch coordinates
+  outside viewBox, divider lines past panel edges, off-center text
+- **Label convention update** — explicit rule against inventing section headers
+  not printed on the physical panel
+- **Context degradation warning** — after ~5+ rounds of tweaking, clear context
+  and re-evaluate rather than continuing to nudge
+
+**Takeaway**: the skill's iterative workflow guidance assumed indefinite
+productive iteration within one context window. In practice, accumulated
+context causes anchoring to prior values and blindness to mechanical bugs.
+The new guidance prescribes fresh-context checkpoints for long positioning
+sessions.
+
+### 2026-04-18 — Ikarie panel: visual alignment and diagonal sliders
+
+The Ikarie panel (Bastl/Casper, 8HP) exposed two gaps:
+
+1. **Diagonal slider rendering**: Ikarie's RESONANCE fader is physically
+   mounted at a ~55° angle (low-left to high-right). The initial
+   implementation used the wrong rotation direction (-35° instead of +55°),
+   placing high values on the LEFT instead of the RIGHT. A centered track
+   (`y = -halfTrack to +halfTrack` instead of `0 to trackHeight`) was needed
+   so rotation pivots around the slider's visual center, not one end.
+
+2. **Visual alignment was missing from the skill**: The agent placed controls
+   at plausible-looking coordinates without checking whether controls that
+   should share an x or y coordinate actually did. The physical panel has
+   clear vertical columns (STEREO and INPUT at the same x on the left; MOD
+   and FOLLOW SPEED at the same x on the right) and horizontal rows (INPUT
+   and FOLLOW SPEED at the same y). Without explicit alignment checking,
+   these relationships drifted by 5-10px during initial placement.
+
+**Additions to the skill from this round:**
+- **Visual Alignment section** — two-level framework: (1) identify sections
+  (horizontal bands of related controls), (2) check entity alignment across
+  sections (shared x for vertical columns, shared y for horizontal rows,
+  consistent diagonal offsets for CV jacks). Verify alignment explicitly
+  after placing positions
+- **Diagonal slider support** — new `DiagonalSliderComponent` with centered
+  track and configurable rotation angle. `DIAGONAL_SLIDER_ANGLE` constant
+  for easy adjustment. Positive angle = clockwise = high-right/low-left
+- **Horizontal switch support** — `HORIZONTAL_SWITCHES` Set for switches
+  that render circles horizontally (e.g., Ikarie's FOLLOW SPEED: SLOW/MID/FAST)
+
+**Takeaway**: the skill had good rules for spacing and label accuracy but
+lacked explicit guidance on checking alignment relationships between controls
+across different sections. "Place controls based on the reference" is
+necessary but not sufficient — you must also verify that the mathematical
+relationships (shared coordinates) match the visual relationships in the
+reference image.

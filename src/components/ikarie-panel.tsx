@@ -32,8 +32,9 @@ interface IkariePanelProps {
 
 const VIEWBOX = '0 0 170 380';
 
-// Diagonal angle for the RESONANCE fader (upper-left to lower-right, matching physical panel)
-const DIAGONAL_SLIDER_ANGLE = -35;
+// Diagonal angle for the RESONANCE fader (low-left → high-right, matching physical panel)
+// Positive rotation = clockwise: rotates vertical slider so top/high goes right, bottom/low goes left
+const DIAGONAL_SLIDER_ANGLE = 55;
 
 const CABLE_COLORS: Record<string, string> = {
   audio: '#ff6644',
@@ -45,6 +46,14 @@ const CABLE_COLORS: Record<string, string> = {
 
 // 2-position switches (all others are 3-position)
 const TWO_WAY_SWITCHES = new Set(['switch-ikarie-pan-spread']);
+
+// Horizontal switches (circles laid out horizontally instead of vertically)
+const HORIZONTAL_SWITCHES = new Set(['switch-ikarie-follow-speed']);
+
+// Angled switches (circles rotated to a specific angle, label stays horizontal)
+const ANGLED_SWITCHES: Record<string, number> = {
+  'switch-ikarie-pan-spread': 45,
+};
 
 // ===== Jack positions lookup (for cable rendering) =====
 
@@ -409,6 +418,8 @@ function SliderComponent({
 }
 
 // ===== Diagonal Slider Component (for RESONANCE fader) =====
+// Track is centered on the anchor point so rotation pivots around the middle.
+// Positive angle rotates clockwise: top/high end goes RIGHT, bottom/low end goes LEFT.
 
 function DiagonalSliderComponent({
   id,
@@ -429,23 +440,26 @@ function DiagonalSliderComponent({
   highlighted?: boolean;
   highlightColor?: 'blue' | 'amber';
 }) {
-  const trackHeight = 60;
+  const trackLength = 70;
   const trackWidth = 6;
   const thumbWidth = 14;
   const thumbHeight = 8;
+  const halfTrack = trackLength / 2;
   const position = midiToSliderPosition(value);
-  const thumbY = trackHeight * (1 - position) - thumbHeight / 2;
+  // value=127 → position=1 → thumb at -halfTrack (top/high/right end)
+  // value=0   → position=0 → thumb at +halfTrack (bottom/low/left end)
+  const thumbY = halfTrack - position * trackLength - thumbHeight / 2;
 
   return (
     <g id={id} transform={`translate(${x}, ${y})`}>
-      {/* Rotated fader track + thumb */}
+      {/* Rotated fader track + thumb — centered on anchor */}
       <g transform={`rotate(${angle})`}>
         {highlighted && (
           <rect
             x={-thumbWidth / 2 - 3}
-            y={-3}
+            y={-halfTrack - 3}
             width={thumbWidth + 6}
-            height={trackHeight + 6}
+            height={trackLength + 6}
             rx={4}
             fill="none"
             stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
@@ -456,9 +470,9 @@ function DiagonalSliderComponent({
         {/* Track */}
         <rect
           x={-trackWidth / 2}
-          y={0}
+          y={-halfTrack}
           width={trackWidth}
-          height={trackHeight}
+          height={trackLength}
           rx={2}
           style={styles.sliderTrack}
         />
@@ -473,7 +487,7 @@ function DiagonalSliderComponent({
         />
       </g>
       {/* Label stays horizontal (outside rotated group) */}
-      <text y={trackHeight + 12} style={styles.knobLabel}>
+      <text y={halfTrack + 18} style={styles.knobLabel}>
         {label}
       </text>
     </g>
@@ -488,6 +502,8 @@ function SwitchComponent({
   y,
   label,
   isTwoWay,
+  horizontal,
+  angle,
   highlighted,
   highlightColor,
 }: {
@@ -496,42 +512,80 @@ function SwitchComponent({
   y: number;
   label: string;
   isTwoWay?: boolean;
+  horizontal?: boolean;
+  angle?: number;
   highlighted?: boolean;
   highlightColor?: 'blue' | 'amber';
 }) {
   const circleR = 4;
   const spacing = 10;
   const positions = isTwoWay ? 2 : 3;
-  const totalHeight = (positions - 1) * spacing;
 
+  if (horizontal) {
+    const totalWidth = (positions - 1) * spacing;
+    return (
+      <g id={id} transform={`translate(${x}, ${y})`}>
+        {highlighted && (
+          <rect
+            x={-totalWidth / 2 - 8}
+            y={-8}
+            width={totalWidth + 16}
+            height={16}
+            rx={4}
+            fill="none"
+            stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
+            strokeOpacity={0.6}
+            filter={`url(#ikarie-glow-${highlightColor || 'blue'})`}
+          />
+        )}
+        <text y={-10} style={styles.knobLabel}>
+          {label}
+        </text>
+        {Array.from({ length: positions }).map((_, i) => (
+          <circle
+            key={i}
+            cx={(i - (positions - 1) / 2) * spacing}
+            r={circleR}
+            style={i === 0 ? { ...styles.switchCircle, ...styles.switchActive } : styles.switchCircle}
+          />
+        ))}
+      </g>
+    );
+  }
+
+  // Centered vertical layout (optionally rotated by angle)
+  const totalHeight = (positions - 1) * spacing;
+  const halfHeight = totalHeight / 2;
   return (
     <g id={id} transform={`translate(${x}, ${y})`}>
-      {highlighted && (
-        <rect
-          x={-8}
-          y={-8}
-          width={16}
-          height={totalHeight + 16}
-          rx={4}
-          fill="none"
-          stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
-          strokeOpacity={0.6}
-          filter={`url(#ikarie-glow-${highlightColor || 'blue'})`}
-        />
-      )}
-      {/* Label above */}
-      <text y={-10} style={styles.knobLabel}>
+      {/* Label stays horizontal */}
+      <text y={-halfHeight - 10} style={styles.knobLabel}>
         {label}
       </text>
-      {/* Switch positions */}
-      {Array.from({ length: positions }).map((_, i) => (
-        <circle
-          key={i}
-          cy={i * spacing}
-          r={circleR}
-          style={i === 0 ? { ...styles.switchCircle, ...styles.switchActive } : styles.switchCircle}
-        />
-      ))}
+      {/* Circles group — optionally rotated */}
+      <g transform={angle ? `rotate(${angle})` : undefined}>
+        {highlighted && (
+          <rect
+            x={-8}
+            y={-halfHeight - 8}
+            width={16}
+            height={totalHeight + 16}
+            rx={4}
+            fill="none"
+            stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
+            strokeOpacity={0.6}
+            filter={`url(#ikarie-glow-${highlightColor || 'blue'})`}
+          />
+        )}
+        {Array.from({ length: positions }).map((_, i) => (
+          <circle
+            key={i}
+            cy={i * spacing - halfHeight}
+            r={circleR}
+            style={i === 0 ? { ...styles.switchCircle, ...styles.switchActive } : styles.switchCircle}
+          />
+        ))}
+      </g>
     </g>
   );
 }
@@ -729,10 +783,12 @@ function IkariePanelInner({
         {/* IKARIE title at top */}
         <text style={styles.titleText} x={85} y={22}>IKARIE</text>
 
-        {/* Section dividers */}
-        <line style={styles.divider} x1={10} y1={35} x2={160} y2={35} />
-        <line style={styles.divider} x1={10} y1={150} x2={160} y2={150} />
-        <line style={styles.divider} x1={10} y1={245} x2={160} y2={245} />
+        {/* LP / HP labels flanking CUTOFF knob */}
+        <text x={40} y={50} style={{ ...styles.knobLabel, fontSize: '4px' }}>LP</text>
+        <text x={130} y={50} style={{ ...styles.knobLabel, fontSize: '4px' }}>HP</text>
+
+        {/* Divider above jack rows */}
+        <line style={styles.divider} x1={10} y1={265} x2={160} y2={265} />
 
         {/* Section tint rectangles */}
         {activeSections?.map((section) => {
@@ -814,6 +870,8 @@ function IkariePanelInner({
                   y={pos.y}
                   label={ctrl.name}
                   isTwoWay={TWO_WAY_SWITCHES.has(ctrl.id)}
+                  horizontal={HORIZONTAL_SWITCHES.has(ctrl.id)}
+                  angle={ANGLED_SWITCHES[ctrl.id]}
                   highlighted={highlighted}
                   highlightColor={highlightColor}
                 />
@@ -848,8 +906,9 @@ function IkariePanelInner({
           />
         ))}
 
-        {/* BASTL INSTRUMENTS brand at bottom */}
-        <text style={styles.brandText} x={85} y={372}>BASTL</text>
+        {/* CASPER x BASTL brand at bottom */}
+        <text style={styles.brandText} x={85} y={355}>CASPER</text>
+        <text style={styles.brandText} x={85} y={365}>x BASTL</text>
       </motion.svg>
 
       {/* Tooltip */}

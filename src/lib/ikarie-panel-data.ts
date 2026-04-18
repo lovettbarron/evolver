@@ -64,47 +64,54 @@ export const CONTROL_METADATA: Record<string, IkarieControlMeta> = {
   'jack-ikarie-follow': { id: 'jack-ikarie-follow', name: 'FOLLOW', module: 'ikarie', type: 'jack-out', signalType: 'cv' },
 };
 
-// ===== Placeholder control positions -- hand-place from Ikarie manual p.7 annotated panel diagram =====
+// ===== Control positions — hand-placed from Ikarie panel photo & manual =====
 // ViewBox: 0 0 170 380 (8HP eurorack module)
 //
-// Approximate layout (to be refined with manual PDF):
+// Layout (top to bottom, per physical panel):
 //
-// Top (y ~30-50):     INPUT knob
-// Row 1 (y ~80-120):  CUTOFF (large knob, center), RESONANCE fader (right)
-// Row 2 (y ~140-180): MOD knob, STEREO knob, PAN/SPREAD switch
-// Row 3 (y ~200-230): FOLLOW SPEED switch
-// Bottom (y ~260-350): Input/output jacks, CV jacks
+// Row 1 (y ~55):    CUTOFF (large knob, center) with LP/HP labels
+// Row 2 (y ~100):   STEREO knob (left) | VCA CV jack (right)
+// Row 3 (y ~130):   STEREO CV jack (45° upper-left) | PAN/SPREAD switch
+// Row 4 (y ~165):   RESONANCE diagonal slider (low-left → high-right)
+// Row 5 (y ~200):   RES CV jack (45° below slider left end) | MOD knob (right)
+// Row 6 (y ~240):   INPUT knob (left, aligned with STEREO) | FOLLOW SPEED horizontal switch (right, aligned with MOD)
+// Jack row 1 (y ~285): L IN, R IN, V/OCT, MOD
+// Jack row 2 (y ~325): L OUT, R OUT, BEYOND, FOLLOW
 
 export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
-  // ===== Knobs =====
-  'knob-ikarie-input':    { x: 42, y: 50 },
-  'knob-ikarie-cutoff':   { x: 60, y: 110 },
-  'knob-ikarie-mod':      { x: 42, y: 170 },
-  'knob-ikarie-stereo':   { x: 110, y: 170 },
+  // ===== Row 1: CUTOFF =====
+  'knob-ikarie-cutoff':   { x: 85, y: 55 },
 
-  // ===== Fader =====
-  'slider-ikarie-resonance': { x: 130, y: 80 },
+  // ===== Row 2: STEREO + VCA CV =====
+  'knob-ikarie-stereo':   { x: 42, y: 100 },
+  'jack-ikarie-vca-cv':   { x: 138, y: 100 },
 
-  // ===== Switches =====
-  'switch-ikarie-pan-spread':   { x: 130, y: 170 },
-  'switch-ikarie-follow-speed': { x: 85, y: 220 },
+  // ===== Row 3: STEREO CV (left column, above RES CV) + PAN/SPREAD (between STEREO CV and VCA CV, angled 45°) =====
+  'jack-ikarie-stereo-cv':  { x: 48, y: 148 },
+  'switch-ikarie-pan-spread': { x: 93, y: 124 },
 
-  // ===== Audio Input Jacks =====
-  'jack-ikarie-l-in':  { x: 25, y: 270 },
-  'jack-ikarie-r-in':  { x: 55, y: 270 },
+  // ===== Row 4: RESONANCE diagonal slider (center x=109, high end at x≈138 aligns with VCA CV) =====
+  'slider-ikarie-resonance': { x: 109, y: 168 },
 
-  // ===== CV Input Jacks =====
-  'jack-ikarie-v-oct':      { x: 85, y: 270 },
-  'jack-ikarie-mod-in':     { x: 115, y: 270 },
-  'jack-ikarie-vca-cv':     { x: 145, y: 270 },
-  'jack-ikarie-stereo-cv':  { x: 25, y: 310 },
-  'jack-ikarie-res-cv':     { x: 55, y: 310 },
+  // ===== Row 5: RES CV (below STEREO CV, same x) + MOD =====
+  'jack-ikarie-res-cv':   { x: 48, y: 200 },
+  'knob-ikarie-mod':      { x: 130, y: 200 },
 
-  // ===== Output Jacks =====
-  'jack-ikarie-l-out':   { x: 25, y: 350 },
-  'jack-ikarie-r-out':   { x: 55, y: 350 },
-  'jack-ikarie-beyond':  { x: 100, y: 350 },
-  'jack-ikarie-follow':  { x: 145, y: 350 },
+  // ===== Row 6: INPUT + FOLLOW SPEED (horizontal switch) =====
+  'knob-ikarie-input':    { x: 42, y: 242 },
+  'switch-ikarie-follow-speed': { x: 130, y: 242 },
+
+  // ===== Jack row 1: L IN, R IN, V/OCT, MOD =====
+  'jack-ikarie-l-in':    { x: 25, y: 285 },
+  'jack-ikarie-r-in':    { x: 65, y: 285 },
+  'jack-ikarie-v-oct':   { x: 105, y: 285 },
+  'jack-ikarie-mod-in':  { x: 145, y: 285 },
+
+  // ===== Jack row 2: L OUT, R OUT, BEYOND, FOLLOW =====
+  'jack-ikarie-l-out':   { x: 25, y: 325 },
+  'jack-ikarie-r-out':   { x: 65, y: 325 },
+  'jack-ikarie-beyond':  { x: 105, y: 325 },
+  'jack-ikarie-follow':  { x: 145, y: 325 },
 };
 
 // ===== Section bounds for zoom and tint calculations =====
