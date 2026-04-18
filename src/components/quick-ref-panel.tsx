@@ -6,6 +6,7 @@ import { X } from 'lucide-react';
 import { EvolverPanel } from '@/components/evolver-panel';
 import { CascadiaPanel } from '@/components/cascadia-panel';
 import { OctatrackPanel } from '@/components/octatrack-panel';
+import { SwellsPanel } from '@/components/swells-panel';
 
 const MermaidRenderer = dynamic(
   () => import('@/components/mermaid-renderer').then((m) => ({ default: m.MermaidRenderer })),
@@ -24,7 +25,8 @@ export function QuickRefPanel({ content, isOpen, onClose, instrumentSlug }: Quic
   const showPanelTab =
     instrumentSlug === 'evolver' ||
     instrumentSlug === 'cascadia' ||
-    instrumentSlug === 'octatrack';
+    instrumentSlug === 'octatrack' ||
+    instrumentSlug === 'swells';
   const isPanelTab = showPanelTab && activeTab === content.length;
 
   const handleKeyDown = useCallback(
@@ -111,7 +113,9 @@ export function QuickRefPanel({ content, isOpen, onClose, instrumentSlug }: Quic
         <div className="p-lg overflow-y-auto h-[calc(100%-120px)]">
           {isPanelTab ? (
             <div className="py-sm">
-              {instrumentSlug === 'octatrack' ? (
+              {instrumentSlug === 'swells' ? (
+                <SwellsPanel className="w-full" />
+              ) : instrumentSlug === 'octatrack' ? (
                 <OctatrackPanel className="w-full" />
               ) : instrumentSlug === 'cascadia' ? (
                 <CascadiaPanel className="w-full" />
