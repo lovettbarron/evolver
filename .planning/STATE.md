@@ -4,8 +4,8 @@ milestone: v2.0
 milestone_name: Eurorack Module Learning
 status: ready-to-plan
 stopped_at: null
-last_updated: "2026-04-17"
-last_activity: 2026-04-17
+last_updated: "2026-04-18"
+last_activity: 2026-04-18
 progress:
   total_phases: 7
   completed_phases: 0
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-17)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 26 — Data Model + Content Pipeline
+**Current focus:** Phase 30 — Plaits, Beads, Swells, Ikarie Curricula + Panels
 
 ## Current Position
 
-Phase: 26 of 32 (Data Model + Content Pipeline) — first of 7 v2.0 phases
-Plan: —
-Status: Ready to plan
-Last activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
+Phase: 30 of 32 (Plaits, Beads, Swells, Ikarie Curricula + Panels)
+Plan: 2 of 4
+Status: Executing
+Last activity: 2026-04-18 — Completed 30-02 Beads curriculum + panel (28 controls, 6 sessions, integration)
 
 Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
 
@@ -51,6 +51,7 @@ Recent decisions affecting current work:
 - [v2.0 Research]: Generic ModulePanel renderer + per-module data files — not per-module React components
 - [v2.0 Research]: Maths built first — proves framework handles hardest case
 - [v2.0 Research]: Just Friends and Crow are separate modules with separate configs/panels
+- [30-02]: Beads has 28 controls (4 buttons, 8 knobs, 4 attenurandomizers, 10 jacks, 1 LED) verified from manual PDF
 
 ### Pending Todos
 
@@ -64,6 +65,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-17
-Stopped at: Roadmap created for v2.0 milestone
+Last session: 2026-04-18
+Stopped at: Completed 30-02-PLAN.md (Beads curriculum + panel)
 Resume file: None
