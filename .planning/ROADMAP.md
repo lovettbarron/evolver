@@ -68,7 +68,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 
 </details>
 
-### 🚧 v2.0 Eurorack Module Learning (In Progress)
+### v2.0 Eurorack Module Learning (In Progress)
 
 **Milestone Goal:** Extend the instrument mastery system to teach individual eurorack modules — each with its own front plate SVG, sessions, patches, and category-based organization — starting with 7 modules across 5 functional categories.
 
@@ -152,7 +152,11 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   2. User can browse Crow curriculum (4-6 sessions covering scripting, i2c, and standalone I/O) as a standalone module
   3. Both modules have separate panel SVGs (Just Friends 14HP, Crow 2HP), separate `module.json` configs, and separate overview pages
   4. Combined JF+Crow sessions exist as optional extensions demonstrating i2c integration — clearly marked as requiring both modules
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 31-01-PLAN.md — Just Friends end-to-end: panel, 11 sessions, overview, integration wiring
+- [ ] 31-02-PLAN.md — Crow standalone: panel, 3 sessions, overview, integration wiring
+- [ ] 31-03-PLAN.md — Crow i2c combined sessions (3 sessions using Just Type protocol)
 **UI hint**: yes
 
 ### Phase 32: Progress, Demo + Cross-Module Polish
@@ -206,5 +210,5 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
 | 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
 | 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 3/4 | Complete    | 2026-04-18 |
-| 31. Just Friends + Crow | v2.0 | 0/? | Not started | - |
+| 31. Just Friends + Crow | v2.0 | 0/3 | Planning | - |
 | 32. Progress, Demo + Cross-Module Polish | v2.0 | 0/? | Not started | - |
