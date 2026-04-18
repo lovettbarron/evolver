@@ -39,15 +39,15 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 ### Curricula
 
-- [ ] **CURR-01**: Maths curriculum (10-12 sessions covering envelope, LFO, slew, audio-rate, utilities)
+- [x] **CURR-01**: Maths curriculum (10-12 sessions covering envelope, LFO, slew, audio-rate, utilities)
 - [ ] **CURR-02**: Plaits curriculum (8-10 sessions across 16 synthesis modes in 2 banks)
 - [ ] **CURR-03**: Beads curriculum (6-8 sessions covering 3 grain modes, quality settings, attenurandomizers)
 - [ ] **CURR-04**: Just Friends curriculum (8-10 sessions for Shape/Cycle/Sound modes)
 - [ ] **CURR-05**: Crow curriculum (4-6 sessions for scripting, i2c, standalone I/O)
 - [ ] **CURR-06**: Swells curriculum (5-7 sessions covering 9 reverb models, Swell Generator, Freeze/Reverse)
 - [ ] **CURR-07**: Ikarie curriculum (5-7 sessions for filter modes, stereo/dual-peak, envelope follower)
-- [ ] **CURR-08**: Module overview pages per module (architecture, controls reference, init state)
-- [ ] **CURR-09**: All sessions follow 15-30 min ADHD-friendly format with tangible output
+- [x] **CURR-08**: Module overview pages per module (architecture, controls reference, init state)
+- [x] **CURR-09**: All sessions follow 15-30 min ADHD-friendly format with tangible output
 
 ### Progress & Demo
 

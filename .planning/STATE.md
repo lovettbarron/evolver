@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
-status: executing
-stopped_at: Completed 29-01-PLAN.md
-last_updated: "2026-04-18T07:25:30Z"
-last_activity: 2026-04-18
+status: planning
+stopped_at: Completed 29-02-PLAN.md
+last_updated: "2026-04-18T07:29:07.738Z"
+last_activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
 progress:
   total_phases: 7
-  completed_phases: 2
-  total_plans: 10
-  completed_plans: 8
-  percent: 29
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 1
+  percent: 0
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-17)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 29 — Maths Curriculum + Panel
+**Current focus:** Phase 26 — Data Model + Content Pipeline
 
 ## Current Position
 
-Phase: 29 of 32 (Maths Curriculum + Panel)
-Plan: 1 of 3 complete
-Status: Executing
-Last activity: 2026-04-18
+Phase: 26 of 32 (Data Model + Content Pipeline) — first of 7 v2.0 phases
+Plan: —
+Status: Ready to plan
+Last activity: 2026-04-17 — Roadmap created for v2.0 milestone (7 phases, 35 requirements)
 
-Progress: [██░░░░░░░░] 29% (v2.0 milestone)
+Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
 
 ## Performance Metrics
 
@@ -51,15 +51,8 @@ Recent decisions affecting current work:
 - [v2.0 Research]: Generic ModulePanel renderer + per-module data files — not per-module React components
 - [v2.0 Research]: Maths built first — proves framework handles hardest case
 - [v2.0 Research]: Just Friends and Crow are separate modules with separate configs/panels
-- [Phase 27]: Added discoverModules/loadModuleConfig stubs to reader.ts (Rule 3 - Phase 26-02 not yet complete)
-- [Phase 27]: Category list is fixed constant per UI-SPEC D-01, not derived from module data
-- [Phase 27]: Module palettes use inline oklch() values, not @theme primitives
-- [Phase 27]: Dual URL prefix detection: /instruments/ and /modules/ both feed data-instrument attribute
-- [Phase 27]: Sub-pages are static components without redundant loadModuleConfig calls -- layout handles all data loading
-- [Phase 26]: ModuleConfigSchema uses power_specs (required) not power (optional), Zod-inferred type replaces manual interface
-- [Phase 27]: InstrumentModuleCard links to /instruments/{slug}/modules/{moduleSlug}, keeping instrument sub-module routing separate from eurorack /modules/{slug}
-- [Phase 29]: Button type (not switch) for Maths Cycle controls -- physical panel has push buttons with LEDs
-- [Phase 29]: Ch2 and ch3 kept as separate module groups (not combined ch2-3) -- matches physical panel layout
+- [Phase 29]: Ch2/Ch3 grouped as 'Channels 2 and 3' in overview; panel markers use ch2-3 section
+- [Phase 29]: Further Reading includes Illustrated Supplement, Patch Guides, Official Manual per D-10
 
 ### Pending Todos
 
@@ -73,6 +66,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-18T07:25:30Z
-Stopped at: Completed 29-01-PLAN.md
-Resume file: .planning/phases/29-maths-curriculum-panel/29-01-SUMMARY.md
+Last session: 2026-04-18T07:28:54.006Z
+Stopped at: Completed 29-02-PLAN.md
+Resume file: None
