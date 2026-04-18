@@ -1,3 +1,6 @@
+import fs from 'fs/promises';
+import path from 'path';
+import Image from 'next/image';
 import { WideShell } from '@/components/page-shell';
 import { ModulePanelClient } from './module-panel-client';
 
@@ -29,6 +32,15 @@ const PANEL_CONFIG: Record<string, { title: string; description: string; maxWidt
   },
 };
 
+async function photoExists(slug: string): Promise<boolean> {
+  try {
+    await fs.access(path.join(process.cwd(), 'public', 'modules', `${slug}.jpg`));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export default async function ModulePanelPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const config = PANEL_CONFIG[slug];
@@ -46,11 +58,29 @@ export default async function ModulePanelPage({ params }: { params: Promise<{ sl
     );
   }
 
+  const hasPhoto = await photoExists(slug);
+
   return (
-    <div className={`${config.maxWidth} mx-auto px-lg py-2xl`}>
+    <div className="max-w-[900px] mx-auto px-lg py-2xl">
       <h1 className="text-2xl font-bold mb-lg">{config.title}</h1>
       <p className="text-muted mb-xl">{config.description}</p>
-      <ModulePanelClient moduleSlug={slug} />
+      <div className={`flex flex-col ${hasPhoto ? 'md:flex-row' : ''} gap-xl items-start`}>
+        {hasPhoto && (
+          <div className="flex-shrink-0 w-full md:w-[200px]">
+            <Image
+              src={`/modules/${slug}.jpg`}
+              alt={`${config.title} — physical module photo`}
+              width={200}
+              height={600}
+              className="w-full max-h-[600px] object-contain rounded-md"
+            />
+            <p className="text-xs text-muted mt-sm">Photo: ModularGrid</p>
+          </div>
+        )}
+        <div className={`flex-1 ${config.maxWidth}`}>
+          <ModulePanelClient moduleSlug={slug} />
+        </div>
+      </div>
     </div>
   );
 }

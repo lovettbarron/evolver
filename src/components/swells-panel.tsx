@@ -278,6 +278,7 @@ function InteractiveKnob({
   x,
   y,
   label,
+  altLabel,
   value,
   highlighted,
   highlightColor,
@@ -287,6 +288,7 @@ function InteractiveKnob({
   x: number;
   y: number;
   label: string;
+  altLabel?: string;
   value: number;
   highlighted?: boolean;
   highlightColor?: 'blue' | 'amber';
@@ -294,8 +296,9 @@ function InteractiveKnob({
 }) {
   const dragHandlers = useKnobDrag(id, value, onChange);
   const rotation = midiToRotation(value);
-  // Attenuverter knobs render smaller (r=6) vs standard knobs (r=12)
-  const isSmall = id.includes('-att');
+  // Attenuverter and level/threshold knobs render smaller (r=6) vs standard knobs (r=12)
+  const isSmall = id.includes('-att') || id.includes('-level') || id.includes('threshold');
+  const isAttenuverter = id.includes('-att'); // ± knobs hide labels
   const r = isSmall ? 6 : 12;
   const indicatorLen = isSmall ? 4 : 10;
 
@@ -329,10 +332,17 @@ function InteractiveKnob({
         style={styles.knobIndicator}
         transform={`rotate(${rotation})`}
       />
-      {!isSmall && (
-        <text y={18} style={styles.knobLabel}>
-          {label}
-        </text>
+      {!isAttenuverter && (
+        <>
+          <text y={isSmall ? 13 : 18} style={{ ...styles.knobLabel, fontSize: isSmall ? '4px' : '5px' }}>
+            {label}
+          </text>
+          {altLabel && (
+            <text y={isSmall ? 19 : 25} style={{ ...styles.knobLabel, fontSize: '3.5px', fill: '#777' }}>
+              {altLabel}
+            </text>
+          )}
+        </>
       )}
     </g>
   );
@@ -412,6 +422,7 @@ function ButtonComponent({
   x,
   y,
   label,
+  altLabel,
   highlighted,
   highlightColor,
 }: {
@@ -419,6 +430,7 @@ function ButtonComponent({
   x: number;
   y: number;
   label: string;
+  altLabel?: string;
   highlighted?: boolean;
   highlightColor?: 'blue' | 'amber';
 }) {
@@ -440,6 +452,11 @@ function ButtonComponent({
       <text y={12} style={styles.knobLabel}>
         {label}
       </text>
+      {altLabel && (
+        <text y={19} style={{ ...styles.knobLabel, fontSize: '3.5px', fill: '#777' }}>
+          {altLabel}
+        </text>
+      )}
     </g>
   );
 }
@@ -681,21 +698,13 @@ function SwellsPanelInner({
         <rect style={styles.panelBg} x="0" y="0" width="300" height="380" rx="4" />
         <rect style={styles.panelBorder} x="0" y="0" width="300" height="380" rx="4" />
 
-        {/* SWELLS title at top */}
-        <text style={styles.titleText} x={210} y={22}>SWELLS</text>
+        {/* SWELLS title at top right (matches physical panel) */}
+        <text style={styles.titleText} x={150} y={18}>SWELLS</text>
 
         {/* Section dividers */}
-        <line style={styles.divider} x1={10} y1={35} x2={410} y2={35} />
-        <line style={styles.divider} x1={10} y1={175} x2={410} y2={175} />
-        <line style={styles.divider} x1={10} y1={235} x2={410} y2={235} />
-        <line style={styles.divider} x1={10} y1={300} x2={410} y2={300} />
-
-        {/* Section labels */}
-        <text style={styles.sectionLabel} x={190} y={48}>REVERB PARAMETERS</text>
-        <text style={styles.sectionLabel} x={80} y={188}>LEVEL</text>
-        <text style={styles.sectionLabel} x={280} y={188}>PERFORMANCE</text>
-        <text style={styles.sectionLabel} x={160} y={248}>SWELL GENERATOR</text>
-        <text style={styles.sectionLabel} x={200} y={312}>I/O</text>
+        <line style={styles.divider} x1={10} y1={38} x2={290} y2={38} />
+        <line style={styles.divider} x1={10} y1={220} x2={290} y2={220} />
+        <line style={styles.divider} x1={10} y1={270} x2={290} y2={270} />
 
         {/* Section tint rectangles */}
         {activeSections?.map((section) => {
@@ -733,6 +742,7 @@ function SwellsPanelInner({
                   x={pos.x}
                   y={pos.y}
                   label={ctrl.name}
+                  altLabel={ctrl.altName}
                   value={getVal(ctrl.id)}
                   highlighted={highlighted}
                   highlightColor={highlightColor}
@@ -760,6 +770,7 @@ function SwellsPanelInner({
                   x={pos.x}
                   y={pos.y}
                   label={ctrl.name}
+                  altLabel={ctrl.altName}
                   highlighted={highlighted}
                   highlightColor={highlightColor}
                 />
@@ -790,6 +801,12 @@ function SwellsPanelInner({
                   highlightColor={highlightColor}
                 />
               );
+            case 'led':
+              return (
+                <g key={ctrl.id} id={ctrl.id} transform={`translate(${pos.x}, ${pos.y})`}>
+                  <circle r={3} fill="#cc4422" fillOpacity={0.7} />
+                </g>
+              );
             default:
               return null;
           }
@@ -807,7 +824,7 @@ function SwellsPanelInner({
         ))}
 
         {/* INTELLIJEL brand at bottom */}
-        <text style={styles.brandText} x={210} y={372}>INTELLIJEL</text>
+        <text style={styles.brandText} x={150} y={372}>INTELLIJEL</text>
       </motion.svg>
 
       {/* Tooltip */}

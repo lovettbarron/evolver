@@ -46,8 +46,11 @@ export const CONTROL_METADATA: Record<string, BeadsControlMeta> = {
 
   // ===== SHAPE knob (visible on panel, same size as SIZE) =====
   'knob-beads-shape': { id: 'knob-beads-shape', name: 'Shape', module: 'beads', type: 'knob' },
-  // NOTE: Feedback, Dry/Wet, Reverb are secondary functions (hold Quality button),
-  // not physical knobs on the panel. Omitted from metadata.
+
+  // ===== Mixing knobs (J, K, L) — visible physical knobs on the panel =====
+  'knob-beads-feedback': { id: 'knob-beads-feedback', name: 'Feedback', module: 'beads', type: 'knob' },
+  'knob-beads-dry-wet': { id: 'knob-beads-dry-wet', name: 'Dry/Wet', module: 'beads', type: 'knob' },
+  'knob-beads-reverb': { id: 'knob-beads-reverb', name: 'Reverb', module: 'beads', type: 'knob' },
 
   // ===== Attenurandomizers (4) — control I (group of 4 small knobs) =====
   'knob-beads-time-atten': { id: 'knob-beads-time-atten', name: 'Time Att', module: 'beads', type: 'knob' },
@@ -88,9 +91,11 @@ export const CONTROL_METADATA: Record<string, BeadsControlMeta> = {
 // Row 1 (y ~48):        FREEZE button (green, left) + SEED button (silver, right)
 // Row 2 (y ~80):        DENSITY (large knob, center)
 // Row 3 (y ~118):       Input level LED (center)
-// Row 4 (y ~158):       TIME (large, left) + PITCH (large, right)
+// Row 4 (y ~145):       TIME (large, left) + PITCH (large, right)
+// Row 4.5 (y ~172):     Feedback knob (J, left edge)
 // Row 5 (y ~188):       Quality btn (centered between knobs) + CV Assign btn (left edge, below TIME)
-// Row 6 (y ~215):       SIZE (large, center-left) + SHAPE (large, center-right)
+// Row 6 (y ~200):       SIZE (large, center-left) + SHAPE (large, center-right) + Dry/Wet (K, right edge)
+// Row 6.5 (y ~235):     Reverb knob (L, right edge)
 // Row 7 (y ~262):       4 attenurandomizer small knobs
 // Row 8 (y ~310):       Jack row 1: IN L, IN R, FREEZE, SEED, PITCH CV, ASSIGN CV
 // Row 9 (y ~345):       Jack row 2: DENSITY CV, TIME CV, SIZE CV, SHAPE CV, L out, R out
@@ -111,14 +116,19 @@ export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
   'led-beads-input-level':  { x: 88, y: 118 },
   'button-beads-quality':   { x: 105, y: 118 },
 
-  // ===== CV Assign button (left edge, below TIME knob) =====
-  'button-beads-cv-assign': { x: 15, y: 195 },
+  // ===== CV Assign button (left edge, aligned with Reverb) =====
+  'button-beads-cv-assign': { x: 15, y: 230 },
 
   // ===== Large knobs =====
-  'knob-beads-time':        { x: 35, y: 158 },
-  'knob-beads-pitch':       { x: 175, y: 158 },
-  'knob-beads-size':        { x: 72, y: 215 },
-  'knob-beads-shape':       { x: 140, y: 215 },
+  'knob-beads-time':        { x: 35, y: 115 },
+  'knob-beads-pitch':       { x: 175, y: 115 },
+  'knob-beads-size':        { x: 72, y: 170 },
+  'knob-beads-shape':       { x: 140, y: 170 },
+
+  // ===== Mixing knobs (J, K, L) =====
+  'knob-beads-feedback':    { x: 15, y: 185 },   // J — aligned with Dry/Wet
+  'knob-beads-dry-wet':     { x: 195, y: 185 },  // K — aligned with Feedback
+  'knob-beads-reverb':      { x: 195, y: 230 },  // L — aligned with CV Assign
 
   // ===== Attenurandomizers (row below SIZE/SHAPE) =====
   'knob-beads-time-atten':  { x: 40, y: 262 },

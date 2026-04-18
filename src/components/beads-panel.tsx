@@ -45,6 +45,7 @@ const LARGE_KNOBS = new Set([
   'knob-beads-time',
   'knob-beads-pitch',
   'knob-beads-size',
+  'knob-beads-shape',
 ]);
 
 // Attenurandomizer knobs get a smaller radius

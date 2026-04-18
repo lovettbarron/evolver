@@ -35,8 +35,8 @@ export const CONTROL_METADATA: Record<string, SwellsControlMeta> = {
   'slider-swells-pre-delay': { id: 'slider-swells-pre-delay', name: 'PREDLY', module: 'swells', type: 'slider' },
   'slider-swells-size': { id: 'slider-swells-size', name: 'SIZE', module: 'swells', type: 'slider' },
   'slider-swells-decay': { id: 'slider-swells-decay', name: 'DECAY', module: 'swells', type: 'slider' },
-  'slider-swells-hi-damp': { id: 'slider-swells-hi-damp', name: 'DAMP', module: 'swells', type: 'slider' },
-  'slider-swells-lo-damp': { id: 'slider-swells-lo-damp', name: 'DAMP', module: 'swells', type: 'slider' },
+  'slider-swells-lo-damp': { id: 'slider-swells-lo-damp', name: 'Lo-DAMP', module: 'swells', type: 'slider' },
+  'slider-swells-hi-damp': { id: 'slider-swells-hi-damp', name: 'Hi-DAMP', module: 'swells', type: 'slider' },
   'slider-swells-ebb': { id: 'slider-swells-ebb', name: 'EBB', module: 'swells', type: 'slider' },
   'slider-swells-flow': { id: 'slider-swells-flow', name: 'FLOW', module: 'swells', type: 'slider' },
   'slider-swells-eq': { id: 'slider-swells-eq', name: 'EQ', module: 'swells', type: 'slider' },
@@ -55,24 +55,31 @@ export const CONTROL_METADATA: Record<string, SwellsControlMeta> = {
   'led-swells-pre-delay': { id: 'led-swells-pre-delay', name: 'Pre-Delay', module: 'swells', type: 'led' },
   'led-swells-size': { id: 'led-swells-size', name: 'Size', module: 'swells', type: 'led' },
   'led-swells-decay': { id: 'led-swells-decay', name: 'Decay', module: 'swells', type: 'led' },
-  'led-swells-hi-damp': { id: 'led-swells-hi-damp', name: 'Hi Damp', module: 'swells', type: 'led' },
-  'led-swells-lo-damp': { id: 'led-swells-lo-damp', name: 'Lo Damp', module: 'swells', type: 'led' },
+  'led-swells-lo-damp': { id: 'led-swells-lo-damp', name: 'Lo-DAMP', module: 'swells', type: 'led' },
+  'led-swells-hi-damp': { id: 'led-swells-hi-damp', name: 'Hi-DAMP', module: 'swells', type: 'led' },
   'led-swells-ebb': { id: 'led-swells-ebb', name: 'Ebb', module: 'swells', type: 'led' },
   'led-swells-flow': { id: 'led-swells-flow', name: 'Flow', module: 'swells', type: 'led' },
   'led-swells-eq': { id: 'led-swells-eq', name: 'EQ', module: 'swells', type: 'led' },
 
-  // ===== Level/Mix knobs (small knobs, not faders) with alt functions =====
+  // ===== Activity LEDs (Input and Output, near INPUT and MIX knobs) =====
+  'led-swells-input-activity': { id: 'led-swells-input-activity', name: 'Input Activity', module: 'swells', type: 'led' },
+  'led-swells-output-activity': { id: 'led-swells-output-activity', name: 'Output Activity', module: 'swells', type: 'led' },
+
+  // ===== Level/Mix knobs (large knobs) with alt functions =====
   'knob-swells-input': { id: 'knob-swells-input', name: 'INPUT', altName: 'TRIM', module: 'swells', type: 'knob' },
   'knob-swells-mix': { id: 'knob-swells-mix', name: 'MIX', altName: '→VERB', module: 'swells', type: 'knob' },
+
+  // ===== Level attenuverter knobs (small, ± labels, one above INPUT, one above MIX) =====
+  'knob-swells-input-level': { id: 'knob-swells-input-level', name: 'LEVEL', module: 'swells', type: 'knob' },
+  'knob-swells-mix-level': { id: 'knob-swells-mix-level', name: 'LEVEL', module: 'swells', type: 'knob' },
 
   // ===== Swell Generator knobs (bottom row, with alt functions) =====
   'knob-swells-rise': { id: 'knob-swells-rise', name: 'RISE', altName: 'EF GAIN', module: 'swells', type: 'knob' },
   'knob-swells-fall': { id: 'knob-swells-fall', name: 'FALL', altName: '→EF', module: 'swells', type: 'knob' },
   'knob-swells-threshold': { id: 'knob-swells-threshold', name: 'THRESH', module: 'swells', type: 'knob' },
-  'knob-swells-swell-mode': { id: 'knob-swells-swell-mode', name: 'SWELL', altName: 'MODE', module: 'swells', type: 'knob' },
 
   // ===== Buttons (with alt functions) =====
-  'button-swells-swell': { id: 'button-swells-swell', name: 'SWELL', module: 'swells', type: 'button' },
+  'button-swells-swell-mode': { id: 'button-swells-swell-mode', name: 'SWELL', altName: 'MODE', module: 'swells', type: 'button' },
   'button-swells-freeze': { id: 'button-swells-freeze', name: 'FREEZE', altName: 'TRIG', module: 'swells', type: 'button' },
   'button-swells-reverse': { id: 'button-swells-reverse', name: 'REVERSE', altName: 'DRIVE', module: 'swells', type: 'button' },
   'button-swells-burst': { id: 'button-swells-burst', name: 'BURST', altName: 'TYPE', module: 'swells', type: 'button' },
@@ -84,7 +91,7 @@ export const CONTROL_METADATA: Record<string, SwellsControlMeta> = {
   'switch-swells-lo-fi': { id: 'switch-swells-lo-fi', name: 'LO-FI', module: 'swells', type: 'switch' },
   'switch-swells-ef-source': { id: 'switch-swells-ef-source', name: 'EF SRC', module: 'swells', type: 'switch' },
 
-  // ===== CV Input Jacks (7 — one per reverb fader except EQ) =====
+  // ===== CV Input Jacks (8 — one per reverb fader column) =====
   'jack-swells-pre-delay-cv': { id: 'jack-swells-pre-delay-cv', name: 'PREDLY', module: 'swells', type: 'jack-in', signalType: 'cv' },
   'jack-swells-size-cv': { id: 'jack-swells-size-cv', name: 'SIZE', module: 'swells', type: 'jack-in', signalType: 'cv' },
   'jack-swells-decay-cv': { id: 'jack-swells-decay-cv', name: 'DECAY', module: 'swells', type: 'jack-in', signalType: 'cv' },
@@ -92,6 +99,7 @@ export const CONTROL_METADATA: Record<string, SwellsControlMeta> = {
   'jack-swells-lo-damp-cv': { id: 'jack-swells-lo-damp-cv', name: 'DAMP', module: 'swells', type: 'jack-in', signalType: 'cv' },
   'jack-swells-ebb-cv': { id: 'jack-swells-ebb-cv', name: 'EBB', module: 'swells', type: 'jack-in', signalType: 'cv' },
   'jack-swells-flow-cv': { id: 'jack-swells-flow-cv', name: 'FLOW', module: 'swells', type: 'jack-in', signalType: 'cv' },
+  'jack-swells-eq-cv': { id: 'jack-swells-eq-cv', name: 'EQ', module: 'swells', type: 'jack-in', signalType: 'cv' },
 
   // ===== Top row jacks =====
   'jack-swells-in-l': { id: 'jack-swells-in-l', name: 'IN L', module: 'swells', type: 'jack-in', signalType: 'audio' },
@@ -99,11 +107,9 @@ export const CONTROL_METADATA: Record<string, SwellsControlMeta> = {
   'jack-swells-trig': { id: 'jack-swells-trig', name: 'TRIG', module: 'swells', type: 'jack-in', signalType: 'gate' },
   'jack-swells-sidechain': { id: 'jack-swells-sidechain', name: 'SC', module: 'swells', type: 'jack-in', signalType: 'audio' },
   'jack-swells-ef-in': { id: 'jack-swells-ef-in', name: 'LEVEL', module: 'swells', type: 'jack-in', signalType: 'cv' },
+  'jack-swells-swell-cv': { id: 'jack-swells-swell-cv', name: 'SWELL', module: 'swells', type: 'jack-out', signalType: 'cv' },
   'jack-swells-out-l': { id: 'jack-swells-out-l', name: 'OUT L', module: 'swells', type: 'jack-out', signalType: 'audio' },
   'jack-swells-out-r': { id: 'jack-swells-out-r', name: 'OUT R', module: 'swells', type: 'jack-out', signalType: 'audio' },
-
-  // ===== Swell CV output =====
-  'jack-swells-swell-cv': { id: 'jack-swells-swell-cv', name: 'SWELL', module: 'swells', type: 'jack-out', signalType: 'cv' },
 };
 
 // ===== Hand-placed control positions matching the physical Intellijel Swells panel =====
@@ -121,85 +127,92 @@ export const CONTROL_METADATA: Record<string, SwellsControlMeta> = {
 // x: 20, 56, 92, 128, 164, 200, 236, 272
 
 export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
-  // ===== Jack row (y: 25) — below title =====
-  'jack-swells-in-l':          { x: 20, y: 25 },
-  'jack-swells-in-r':          { x: 52, y: 25 },
-  'jack-swells-trig':          { x: 84, y: 25 },
-  'jack-swells-sidechain':     { x: 116, y: 25 },
-  'jack-swells-ef-in':         { x: 148, y: 25 },
-  'button-swells-swell':       { x: 192, y: 25 },
-  'jack-swells-out-l':         { x: 240, y: 25 },
-  'jack-swells-out-r':         { x: 272, y: 25 },
+  // ===== Jack row (y: 48) — below title =====
+  // IN L, IN R, TRIG, SC, LEVEL (inputs), SWELL btn, SWELL CV out, OUT L, OUT R
+  'jack-swells-in-l':          { x: 20, y: 48 },
+  'jack-swells-in-r':          { x: 52, y: 48 },
+  'jack-swells-trig':          { x: 84, y: 48 },
+  'jack-swells-sidechain':     { x: 116, y: 48 },
+  'jack-swells-ef-in':         { x: 148, y: 48 },
+  'jack-swells-swell-cv':      { x: 186, y: 48 },
+  'jack-swells-out-l':         { x: 222, y: 48 },
+  'jack-swells-out-r':         { x: 254, y: 48 },
 
-  // ===== 8 Columns: CV jack → attenuverter (tight pair) → LED → slider =====
-  // CV jack + attenuverter are a tight pair (y:44, y:58), then LED (y:72), then slider (y:110)
-  // Slider track is 90px, so slider spans y:65 to y:155 — LED sits just above slider top
+  // ===== 8 Columns: CV jack → attenuverter → LED → slider =====
+  // CV jacks at y:72, attenuverters at y:90, LEDs at y:105, sliders at y:115
+  // Slider track is 90px, ends at y:205. Labels at y:217.
 
   // Column 1: PREDLY
-  'jack-swells-pre-delay-cv':  { x: 20, y: 44 },
-  'knob-swells-pre-delay-att': { x: 20, y: 58 },
-  'led-swells-pre-delay':      { x: 20, y: 70 },
-  'slider-swells-pre-delay':   { x: 20, y: 110 },
+  'jack-swells-pre-delay-cv':  { x: 20, y: 72 },
+  'knob-swells-pre-delay-att': { x: 20, y: 90 },
+  'led-swells-pre-delay':      { x: 20, y: 105 },
+  'slider-swells-pre-delay':   { x: 20, y: 115 },
 
   // Column 2: SIZE
-  'jack-swells-size-cv':       { x: 56, y: 44 },
-  'knob-swells-size-att':      { x: 56, y: 58 },
-  'led-swells-size':           { x: 56, y: 70 },
-  'slider-swells-size':        { x: 56, y: 110 },
+  'jack-swells-size-cv':       { x: 56, y: 72 },
+  'knob-swells-size-att':      { x: 56, y: 90 },
+  'led-swells-size':           { x: 56, y: 105 },
+  'slider-swells-size':        { x: 56, y: 115 },
 
   // Column 3: DECAY
-  'jack-swells-decay-cv':      { x: 92, y: 44 },
-  'knob-swells-decay-att':     { x: 92, y: 58 },
-  'led-swells-decay':          { x: 92, y: 70 },
-  'slider-swells-decay':       { x: 92, y: 110 },
+  'jack-swells-decay-cv':      { x: 92, y: 72 },
+  'knob-swells-decay-att':     { x: 92, y: 90 },
+  'led-swells-decay':          { x: 92, y: 105 },
+  'slider-swells-decay':       { x: 92, y: 115 },
 
   // Column 4: HI DAMP
-  'jack-swells-hi-damp-cv':    { x: 128, y: 44 },
-  'knob-swells-hi-damp-att':   { x: 128, y: 58 },
-  'led-swells-hi-damp':        { x: 128, y: 70 },
-  'slider-swells-hi-damp':     { x: 128, y: 110 },
+  'jack-swells-hi-damp-cv':    { x: 128, y: 72 },
+  'knob-swells-hi-damp-att':   { x: 128, y: 90 },
+  'led-swells-hi-damp':        { x: 128, y: 105 },
+  'slider-swells-hi-damp':     { x: 128, y: 115 },
 
   // Column 5: LO DAMP
-  'jack-swells-lo-damp-cv':    { x: 164, y: 44 },
-  'knob-swells-lo-damp-att':   { x: 164, y: 58 },
-  'led-swells-lo-damp':        { x: 164, y: 70 },
-  'slider-swells-lo-damp':     { x: 164, y: 110 },
+  'jack-swells-lo-damp-cv':    { x: 164, y: 72 },
+  'knob-swells-lo-damp-att':   { x: 164, y: 90 },
+  'led-swells-lo-damp':        { x: 164, y: 105 },
+  'slider-swells-lo-damp':     { x: 164, y: 115 },
 
   // Column 6: EBB
-  'jack-swells-ebb-cv':        { x: 200, y: 44 },
-  'knob-swells-ebb-att':       { x: 200, y: 58 },
-  'led-swells-ebb':            { x: 200, y: 70 },
-  'slider-swells-ebb':         { x: 200, y: 110 },
+  'jack-swells-ebb-cv':        { x: 200, y: 72 },
+  'knob-swells-ebb-att':       { x: 200, y: 90 },
+  'led-swells-ebb':            { x: 200, y: 105 },
+  'slider-swells-ebb':         { x: 200, y: 115 },
 
   // Column 7: FLOW
-  'jack-swells-flow-cv':       { x: 236, y: 44 },
-  'knob-swells-flow-att':      { x: 236, y: 58 },
-  'led-swells-flow':           { x: 236, y: 70 },
-  'slider-swells-flow':        { x: 236, y: 110 },
+  'jack-swells-flow-cv':       { x: 236, y: 72 },
+  'knob-swells-flow-att':      { x: 236, y: 90 },
+  'led-swells-flow':           { x: 236, y: 105 },
+  'slider-swells-flow':        { x: 236, y: 115 },
 
-  // Column 8: EQ (Swell CV output instead of CV input)
-  'jack-swells-swell-cv':      { x: 272, y: 44 },
-  'knob-swells-eq-att':        { x: 272, y: 58 },
-  'led-swells-eq':             { x: 272, y: 70 },
-  'slider-swells-eq':          { x: 272, y: 110 },
+  // Column 8: EQ (CV input, not SWELL output)
+  'jack-swells-eq-cv':         { x: 272, y: 72 },
+  'knob-swells-eq-att':        { x: 272, y: 90 },
+  'led-swells-eq':             { x: 272, y: 105 },
+  'slider-swells-eq':          { x: 272, y: 115 },
 
-  // ===== Row 5: Level knobs + MODEL switches + LO-FI (y: 200) =====
-  'knob-swells-input':         { x: 56, y: 200 },
-  'knob-swells-mix':           { x: 236, y: 200 },
-  'switch-swells-model-xyz':   { x: 120, y: 198 },
-  'switch-swells-model-123':   { x: 148, y: 198 },
-  'switch-swells-lo-fi':       { x: 182, y: 198 },
+  // ===== Row 5: INPUT/MIX large knobs + LEVEL small knobs + MODEL/LO-FI switches =====
+  'led-swells-input-activity': { x: 50, y: 235 },
+  'knob-swells-input-level':   { x: 80, y: 245 },
+  'knob-swells-input':         { x: 50, y: 255 },
+  'switch-swells-model-xyz':   { x: 120, y: 240 },
+  'switch-swells-model-123':   { x: 150, y: 240 },
+  'switch-swells-lo-fi':       { x: 186, y: 240 },
+  'knob-swells-mix-level':     { x: 218, y: 245 },
+  'knob-swells-mix':           { x: 248, y: 255 },
+  'led-swells-output-activity': { x: 248, y: 235 },
 
-  // ===== Row 6: Bottom controls (y: 280) =====
-  'button-swells-freeze':      { x: 20, y: 285 },
-  'button-swells-reverse':     { x: 55, y: 285 },
-  'knob-swells-rise':          { x: 95, y: 280 },
-  'switch-swells-ef-source':   { x: 133, y: 280 },
-  'knob-swells-threshold':     { x: 163, y: 280 },
-  'knob-swells-swell-mode':    { x: 195, y: 280 },
-  'knob-swells-fall':          { x: 228, y: 280 },
-  'button-swells-burst':       { x: 258, y: 285 },
-  'button-swells-alt':         { x: 286, y: 285 },
+  // ===== THRESH small knob (above and between SWELL MODE button and EF SRC switch) =====
+  'knob-swells-threshold':     { x: 163, y: 298 },
+
+  // ===== Row 6: Bottom controls — brought up ~15px =====
+  'button-swells-freeze':      { x: 20, y: 325 },
+  'button-swells-reverse':     { x: 55, y: 325 },
+  'knob-swells-rise':          { x: 95, y: 315 },
+  'switch-swells-ef-source':   { x: 138, y: 315 },
+  'button-swells-swell-mode':  { x: 195, y: 325 },
+  'knob-swells-fall':          { x: 232, y: 315 },
+  'button-swells-burst':       { x: 263, y: 325 },
+  'button-swells-alt':         { x: 286, y: 325 },
 };
 
 // ===== Section bounds for zoom and tint calculations =====
