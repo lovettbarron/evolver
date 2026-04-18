@@ -7,6 +7,7 @@ import { EvolverPanel } from '@/components/evolver-panel';
 import { CascadiaPanel } from '@/components/cascadia-panel';
 import { OctatrackPanel } from '@/components/octatrack-panel';
 import { PlaitsPanel } from '@/components/plaits-panel';
+import { BeadsPanel } from '@/components/beads-panel';
 
 const MermaidRenderer = dynamic(
   () => import('@/components/mermaid-renderer').then((m) => ({ default: m.MermaidRenderer })),
@@ -26,7 +27,8 @@ export function QuickRefPanel({ content, isOpen, onClose, instrumentSlug }: Quic
     instrumentSlug === 'evolver' ||
     instrumentSlug === 'cascadia' ||
     instrumentSlug === 'octatrack' ||
-    instrumentSlug === 'plaits';
+    instrumentSlug === 'plaits' ||
+    instrumentSlug === 'beads';
   const isPanelTab = showPanelTab && activeTab === content.length;
 
   const handleKeyDown = useCallback(
@@ -113,7 +115,9 @@ export function QuickRefPanel({ content, isOpen, onClose, instrumentSlug }: Quic
         <div className="p-lg overflow-y-auto h-[calc(100%-120px)]">
           {isPanelTab ? (
             <div className="py-sm">
-              {instrumentSlug === 'plaits' ? (
+              {instrumentSlug === 'beads' ? (
+                <BeadsPanel className="w-full" />
+              ) : instrumentSlug === 'plaits' ? (
                 <PlaitsPanel className="w-full" />
               ) : instrumentSlug === 'octatrack' ? (
                 <OctatrackPanel className="w-full" />

@@ -12,6 +12,11 @@ const PANEL_CONFIG: Record<string, { title: string; description: string; maxWidt
     description: 'Interactive panel reference for Mutable Instruments Plaits. 16 synthesis models across 2 banks. Drag knobs to explore.',
     maxWidth: 'max-w-[400px]',
   },
+  beads: {
+    title: 'Beads Panel',
+    description: 'Interactive panel reference for Mutable Instruments Beads. Granular texture synthesizer with 3 grain modes. Drag knobs to explore.',
+    maxWidth: 'max-w-[400px]',
+  },
 };
 
 export default async function ModulePanelPage({ params }: { params: Promise<{ slug: string }> }) {

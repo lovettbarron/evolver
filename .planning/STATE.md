@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
-status: executing
-stopped_at: Completed 30-01-PLAN.md
-last_updated: "2026-04-18T13:16:11.826Z"
+status: ready-to-plan
+stopped_at: null
+last_updated: "2026-04-18"
 last_activity: 2026-04-18
 progress:
   total_phases: 7
-  completed_phases: 3
-  total_plans: 15
-  completed_plans: 12
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-17)
 
 **Core value:** ADHD-friendly instrument mastery through structured micro-sessions, backed by an Obsidian-powered web app that makes learning visible, shareable, and connected to actual music-making.
-**Current focus:** Phase 30 — plaits-beads-swells-ikarie-curricula-panels
+**Current focus:** Phase 30 — Plaits, Beads, Swells, Ikarie Curricula + Panels
 
 ## Current Position
 
-Phase: 30 (plaits-beads-swells-ikarie-curricula-panels) — EXECUTING
+Phase: 30 of 32 (Plaits, Beads, Swells, Ikarie Curricula + Panels)
 Plan: 2 of 4
-Status: Ready to execute
-Last activity: 2026-04-18
+Status: Executing
+Last activity: 2026-04-18 — Completed 30-02 Beads curriculum + panel (28 controls, 6 sessions, integration)
 
 Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
 
@@ -51,10 +51,7 @@ Recent decisions affecting current work:
 - [v2.0 Research]: Generic ModulePanel renderer + per-module data files — not per-module React components
 - [v2.0 Research]: Maths built first — proves framework handles hardest case
 - [v2.0 Research]: Just Friends and Crow are separate modules with separate configs/panels
-- [Phase 29]: Ch2/Ch3 grouped as 'Channels 2 and 3' in overview; panel markers use ch2-3 section
-- [Phase 29]: Further Reading includes Illustrated Supplement, Patch Guides, Official Manual per D-10
-- [Phase 29]: 12-session Maths curriculum complete: Foundations(3) + Modulation(3) + Utilities(2) + Advanced(2) + Integration(2)
-- [Phase 30]: LED columns as 2 decorative entries (not 16 individual controls); 3-tier knob sizing; light grey panel for Plaits
+- [30-02]: Beads has 28 controls (4 buttons, 8 knobs, 4 attenurandomizers, 10 jacks, 1 LED) verified from manual PDF
 
 ### Pending Todos
 
@@ -68,6 +65,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-18T13:16:11.818Z
-Stopped at: Completed 30-01-PLAN.md
+Last session: 2026-04-18
+Stopped at: Completed 30-02-PLAN.md (Beads curriculum + panel)
 Resume file: None

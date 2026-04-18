@@ -72,10 +72,10 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 
 **Milestone Goal:** Extend the instrument mastery system to teach individual eurorack modules — each with its own front plate SVG, sessions, patches, and category-based organization — starting with 7 modules across 5 functional categories.
 
-- [x] **Phase 26: Data Model + Content Pipeline** - ModuleConfigSchema, reader functions, module-to-section rename, triple-write pipeline, reference manuals (completed 2026-04-17)
-- [x] **Phase 27: Module Navigation + Routing** - /modules routes, category filtering, module selector, per-module color identity (completed 2026-04-17)
+- [ ] **Phase 26: Data Model + Content Pipeline** - ModuleConfigSchema, reader functions, module-to-section rename, triple-write pipeline, reference manuals
+- [ ] **Phase 27: Module Navigation + Routing** - /modules routes, category filtering, module selector, per-module color identity
 - [ ] **Phase 28: Panel System + First Panel** - Generic ModulePanel renderer, HP-aware sizing, session annotations, Plaits panel proof
-- [x] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation (completed 2026-04-18)
+- [ ] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation
 - [ ] **Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels** - Four module curricula and panels following proven pattern
 - [ ] **Phase 31: Just Friends + Crow** - Two separate modules with i2c integration, standalone + combined sessions
 - [ ] **Phase 32: Progress, Demo + Cross-Module Polish** - Per-module progress tracking, demo mode, cross-module references and category suggestions
@@ -92,11 +92,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. All 95 existing sessions use `section` (not `module`) in their frontmatter and the SessionSchema definition reflects this rename
   4. Module sessions with `instrument_type: eurorack_module` are distinguishable from instrument sessions in reader queries
   5. Reference PDFs for all 7 modules (Swells, Plaits, Beads, Just Friends, Crow, Maths, Ikarie) exist in `references/`
-**Plans:** 3/3 plans complete
-Plans:
-- [x] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
-- [x] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
-- [x] 26-03-PLAN.md — Download 7 module reference manuals
+**Plans**: TBD
 
 ### Phase 27: Module Navigation + Routing
 **Goal**: Users can browse eurorack modules by category and navigate to individual module pages with per-module visual identity
@@ -108,11 +104,7 @@ Plans:
   3. User sees a "Modules" entry in the main navigation alongside the existing instrument selector
   4. Multi-category modules (e.g., Maths as function generator + envelope + LFO) appear under every category they belong to in filtered views
   5. Each module page uses its own color identity via the `[data-instrument]` CSS cascade — 7 distinct palettes
-**Plans:** 4/4 plans complete
-Plans:
-- [x] 27-01-PLAN.md — Color palettes (7 modules), app-shell slug detection, Modules nav link
-- [x] 27-02-PLAN.md — /modules listing page with category tabs, ModuleCard, HpOutline
-- [x] 27-03-PLAN.md — Per-module routes /modules/[slug]/ with layout, sub-nav, 4 sub-pages
+**Plans**: TBD
 **UI hint**: yes
 
 ### Phase 28: Panel System + First Panel
@@ -124,11 +116,7 @@ Plans:
   2. The Plaits panel (12HP) displays with correct control placement matching the physical module photo — hand-placed, not algorithmic
   3. Panels render at correct relative widths based on HP (12HP Plaits visibly narrower than a 20HP module) using HP-to-px scaling
   4. Session content can embed panel annotations via `data-module-panel` markers that highlight relevant controls — same interaction pattern as Evolver/Cascadia panels
-**Plans:** 3 plans
-Plans:
-- [x] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
-- [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
-- [x] 26-03-PLAN.md — Download 7 module reference manuals
+**Plans**: TBD
 **UI hint**: yes
 
 ### Phase 29: Maths Curriculum + Panel
@@ -138,13 +126,9 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. User can browse 10-12 Maths sessions covering envelope generation, LFO, slew limiting, audio-rate oscillation, and utility uses — each 15-30 minutes with a tangible output
   2. The Maths overview page shows module architecture, controls reference, and recommended init state — matching the pattern established for instruments
-  3. The Maths panel SVG (20HP, ~45 controls) renders with hand-placed controls matching the physical module
+  3. The Maths panel SVG (20HP, ~30 controls) renders with hand-placed controls matching the physical module
   4. All Maths sessions follow ADHD-friendly format: zero activation energy start, warm-up referencing previous session, hard stop, and documented output
-**Plans:** 4/4 plans complete
-Plans:
-- [x] 29-01-PLAN.md — Panel data file (45 controls) + test suite + manual PDF download
-- [x] 29-02-PLAN.md — Overview page (architecture, controls reference, init state) + sessions 01-06
-- [x] 29-03-PLAN.md — Sessions 07-12 (Utilities, Advanced, Integration)
+**Plans**: TBD
 **UI hint**: yes
 
 ### Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels
@@ -156,11 +140,7 @@ Plans:
   2. Each module has a hand-placed panel SVG at correct HP width (Plaits 12HP, Beads 14HP, Swells 20HP, Ikarie 8HP) with controls matching the physical module
   3. All sessions across all four modules follow the 15-30 min ADHD format with tangible output
   4. Each module has an overview page with architecture, controls reference, and init state
-**Plans:** 1/4 plans executed
-Plans:
-- [ ] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
-- [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
-- [ ] 26-03-PLAN.md — Download 7 module reference manuals
+**Plans**: TBD
 **UI hint**: yes
 
 ### Phase 31: Just Friends + Crow
@@ -172,11 +152,7 @@ Plans:
   2. User can browse Crow curriculum (4-6 sessions covering scripting, i2c, and standalone I/O) as a standalone module
   3. Both modules have separate panel SVGs (Just Friends 14HP, Crow 2HP), separate `module.json` configs, and separate overview pages
   4. Combined JF+Crow sessions exist as optional extensions demonstrating i2c integration — clearly marked as requiring both modules
-**Plans:** 3 plans
-Plans:
-- [ ] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
-- [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
-- [ ] 26-03-PLAN.md — Download 7 module reference manuals
+**Plans**: TBD
 **UI hint**: yes
 
 ### Phase 32: Progress, Demo + Cross-Module Polish
@@ -189,11 +165,7 @@ Plans:
   3. Demo mode includes synthetic learner journeys for Maths and Plaits — visitors see realistic progress without local vault data
   4. Session pages show cross-references to related sessions in other modules (e.g., "Maths envelope into Ikarie filter")
   5. Module overview pages show category-based suggestions ("Other modules you own in this category: ...")
-**Plans:** 3 plans
-Plans:
-- [ ] 26-01-PLAN.md — Rename module->section in 95 sessions + add instrument_type to SessionSchema
-- [ ] 26-02-PLAN.md — ModuleConfigSchema, reader functions, 7 module directories with triple-write
-- [ ] 26-03-PLAN.md — Download 7 module reference manuals
+**Plans**: TBD
 **UI hint**: yes
 
 ## Progress
@@ -229,10 +201,10 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 23. Panel & Progress Polish | v1.3 | 4/4 | Complete | 2026-04-12 |
 | 24. Instrument Color Identity | v1.3 | 1/1 | Complete | 2026-04-13 |
 | 25. Octatrack Curriculum + Site Integration | v1.3 | 7/7 | Complete | 2026-04-17 |
-| 26. Data Model + Content Pipeline | v2.0 | 3/3 | Complete    | 2026-04-17 |
-| 27. Module Navigation + Routing | v2.0 | 4/4 | Complete    | 2026-04-17 |
+| 26. Data Model + Content Pipeline | v2.0 | 0/? | Not started | - |
+| 27. Module Navigation + Routing | v2.0 | 0/? | Not started | - |
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
-| 29. Maths Curriculum + Panel | v2.0 | 4/4 | Complete   | 2026-04-18 |
-| 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 1/4 | In Progress|  |
+| 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
+| 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 2/4 | In progress | - |
 | 31. Just Friends + Crow | v2.0 | 0/? | Not started | - |
 | 32. Progress, Demo + Cross-Module Polish | v2.0 | 0/? | Not started | - |
