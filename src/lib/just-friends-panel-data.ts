@@ -22,12 +22,12 @@ export interface JustFriendsControlMeta {
 
 /**
  * Complete mapping of all SVG control IDs to metadata.
- * 30 entries across 4 module groups.
+ * 32 entries across 4 module groups.
  *
  * Controls (7): 5 knobs + 2 switches
  * Triggers (6): 6 trigger gate inputs
  * Outputs (7): 6 channel outputs + MIX
- * IO (10): 4 CV inputs + 6 LEDs
+ * IO (12): 6 CV inputs + 6 LEDs
  */
 export const CONTROL_METADATA: Record<string, JustFriendsControlMeta> = {
   // ===== Controls: Knobs (5) =====
@@ -49,11 +49,13 @@ export const CONTROL_METADATA: Record<string, JustFriendsControlMeta> = {
   'jack-jf-5n-trig': { id: 'jack-jf-5n-trig', name: '5N', module: 'triggers', type: 'jack-in', signalType: 'gate' },
   'jack-jf-6n-trig': { id: 'jack-jf-6n-trig', name: '6N', module: 'triggers', type: 'jack-in', signalType: 'gate' },
 
-  // ===== CV Inputs (4) =====
+  // ===== CV Inputs (6) =====
   'jack-jf-time-in': { id: 'jack-jf-time-in', name: 'V/8 TIME', module: 'io', type: 'jack-in', signalType: 'cv' },
   'jack-jf-intone-in': { id: 'jack-jf-intone-in', name: 'INTONE', module: 'io', type: 'jack-in', signalType: 'cv' },
   'jack-jf-fm-in': { id: 'jack-jf-fm-in', name: 'FM', module: 'io', type: 'jack-in', signalType: 'cv' },
   'jack-jf-run-in': { id: 'jack-jf-run-in', name: 'RUN', module: 'io', type: 'jack-in', signalType: 'cv' },
+  'jack-jf-ramp-in': { id: 'jack-jf-ramp-in', name: 'RAMP', module: 'io', type: 'jack-in', signalType: 'cv' },
+  'jack-jf-curve-in': { id: 'jack-jf-curve-in', name: 'CURVE', module: 'io', type: 'jack-in', signalType: 'cv' },
 
   // ===== Channel Outputs (7) =====
   'jack-jf-identity-out': { id: 'jack-jf-identity-out', name: 'IDENTITY', module: 'outputs', type: 'jack-out', signalType: 'cv' },
@@ -80,51 +82,56 @@ export const CONTROL_METADATA: Record<string, JustFriendsControlMeta> = {
 //
 // Row 1 (y ~15):      "JUST FRIENDS" title
 // Row 2 (y ~55-90):   INTONE knob (left), TIME knob (right, large)
-// Row 3 (y ~135-160): RAMP knob (left), FM knob (center), CURVE knob (right)
-// Row 4 (y ~195-210): MODE 3-way switch (far left), SOUND/SHAPE 2-way switch (center-left)
-// Row 5 (y ~240-250): CV input jacks: RUN, RAMP, FM, V/8 TIME, INTONE, CURVE + MIX output
-// Row 6 (y ~285-295): TRIGGERS label, 6 trigger input jacks + LEDs
-// Row 7 (y ~335-345): 6 channel output jacks (IDENTITY through 6N)
-// Row 8 (y ~370):     MANNEQUINS brand
+// Row 3 (y ~128-148): RAMP knob (left), FM knob (center), CURVE knob (right)
+// Row 4 (y ~198-208): MODE horizontal 3-way switch (far left), SOUND/SHAPE 2-way switch
+// Row 5 (y ~232-272): CV inputs in centered triangle: FM top, RAMP+V/8TIME mid, RUN+INTONE+CURVE bottom + MIX right
+// Row 6 (y ~293-310): LEDs + 6 trigger input jacks
+// Row 7 (y ~345):     6 channel output jacks (IDENTITY through 6N)
+// Row 8 (y ~372):     MANNEQUINS brand
 
 export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
   // ===== Upper knobs row 1: INTONE (left) and TIME (right) =====
   'knob-jf-intone':        { x: 58, y: 68 },
-  'knob-jf-time':          { x: 165, y: 58 },
+  'knob-jf-time':          { x: 165, y: 73 },
 
   // ===== Upper knobs row 2: RAMP (left), FM (center), CURVE (right) =====
-  'knob-jf-ramp':          { x: 42, y: 148 },
-  'knob-jf-fm':            { x: 110, y: 148 },
+  'knob-jf-ramp':          { x: 42, y: 128 },
+  'knob-jf-fm':            { x: 110, y: 138 },
   'knob-jf-curve':         { x: 178, y: 148 },
 
-  // ===== Switches: MODE (far left), SOUND/SHAPE (center-left) =====
-  'switch-jf-mode':        { x: 22, y: 208 },
-  'switch-jf-sound-shape': { x: 78, y: 208 },
+  // ===== Switches: MODE (far left, horizontal, aligned with FM jack), SOUND/SHAPE =====
+  'switch-jf-mode':        { x: 22, y: 232 },
+  'switch-jf-sound-shape': { x: 58, y: 198 },
 
-  // ===== CV input row (y: 248) — left to right: RUN, RAMP, FM, V/8 TIME =====
-  'jack-jf-run-in':        { x: 18, y: 248 },
-  'jack-jf-fm-in':         { x: 78, y: 248 },
-  'jack-jf-time-in':       { x: 108, y: 248 },
-  'jack-jf-intone-in':     { x: 138, y: 248 },
+  // ===== CV inputs — 3 centered groups, center=85, 60px spacing =====
+  // Row 1: FM (centered at 85)
+  'jack-jf-fm-in':         { x: 85, y: 232 },
+  // Row 2: RAMP (left) + V/8 TIME (right), 60px apart centered at 85
+  'jack-jf-ramp-in':       { x: 55, y: 252 },
+  'jack-jf-time-in':       { x: 115, y: 252 },
+  // Row 3: RUN (left) + INTONE (center) + CURVE (right), 60px apart centered at 85
+  'jack-jf-run-in':        { x: 25, y: 272 },
+  'jack-jf-intone-in':     { x: 85, y: 272 },
+  'jack-jf-curve-in':      { x: 145, y: 272 },
 
-  // ===== MIX output (top-right of jack area, distinctive dark background) =====
-  'jack-jf-mix-out':       { x: 190, y: 248 },
+  // ===== MIX output (right side, separate from input cluster) =====
+  'jack-jf-mix-out':       { x: 190, y: 272 },
 
-  // ===== Trigger input row (y: 295) — 6 jacks across =====
-  'jack-jf-identity-trig': { x: 18, y: 295 },
-  'jack-jf-2n-trig':       { x: 50, y: 295 },
-  'jack-jf-3n-trig':       { x: 82, y: 295 },
-  'jack-jf-4n-trig':       { x: 114, y: 295 },
-  'jack-jf-5n-trig':       { x: 146, y: 295 },
-  'jack-jf-6n-trig':       { x: 178, y: 295 },
+  // ===== Trigger input row — moved down closer to outputs (y: 310) =====
+  'jack-jf-identity-trig': { x: 18, y: 310 },
+  'jack-jf-2n-trig':       { x: 50, y: 310 },
+  'jack-jf-3n-trig':       { x: 82, y: 310 },
+  'jack-jf-4n-trig':       { x: 114, y: 310 },
+  'jack-jf-5n-trig':       { x: 146, y: 310 },
+  'jack-jf-6n-trig':       { x: 178, y: 310 },
 
-  // ===== LEDs — above trigger jacks (y: 278) =====
-  'led-jf-identity':       { x: 18, y: 278 },
-  'led-jf-2n':             { x: 50, y: 278 },
-  'led-jf-3n':             { x: 82, y: 278 },
-  'led-jf-4n':             { x: 114, y: 278 },
-  'led-jf-5n':             { x: 146, y: 278 },
-  'led-jf-6n':             { x: 178, y: 278 },
+  // ===== LEDs — above trigger jacks =====
+  'led-jf-identity':       { x: 18, y: 293 },
+  'led-jf-2n':             { x: 50, y: 293 },
+  'led-jf-3n':             { x: 82, y: 293 },
+  'led-jf-4n':             { x: 114, y: 293 },
+  'led-jf-5n':             { x: 146, y: 293 },
+  'led-jf-6n':             { x: 178, y: 293 },
 
   // ===== Output row (y: 345) — 6 channel outputs across =====
   'jack-jf-identity-out':  { x: 18, y: 345 },
@@ -138,16 +145,19 @@ export const CONTROL_POSITIONS: Record<string, { x: number; y: number }> = {
 // ===== Section bounds for zoom and tint calculations =====
 
 export const SECTION_BOUNDS: Record<string, { x: number; y: number; width: number; height: number }> = {
-  controls:  { x: 5, y: 35, width: 200, height: 195 },
-  triggers:  { x: 5, y: 268, width: 200, height: 40 },
+  controls:  { x: 5, y: 35, width: 200, height: 185 },
+  triggers:  { x: 5, y: 283, width: 200, height: 40 },
   outputs:   { x: 5, y: 325, width: 200, height: 40 },
-  io:        { x: 5, y: 230, width: 200, height: 35 },
+  io:        { x: 5, y: 222, width: 200, height: 60 },
 };
 
 // ===== Switch type sets =====
 
 /** 2-way switches render as 2 circles; everything else defaults to 3-way */
 export const TWO_WAY_SWITCHES = new Set(['switch-jf-sound-shape']);
+
+/** Horizontal 3-way switches render as 3 circles in a row */
+export const HORIZONTAL_SWITCHES = new Set(['switch-jf-mode']);
 
 // ===== Jack positions lookup (for cable rendering) =====
 

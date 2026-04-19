@@ -13,8 +13,8 @@ const VALID_SIGNAL_TYPES = new Set(['audio', 'cv', 'gate', 'modulation']);
 const MODULE_NAMES = ['controls', 'triggers', 'outputs', 'io'];
 
 describe('just-friends-panel-data', () => {
-  test('CONTROL_METADATA has exactly 30 entries', () => {
-    expect(Object.keys(CONTROL_METADATA).length).toBe(30);
+  test('CONTROL_METADATA has exactly 32 entries', () => {
+    expect(Object.keys(CONTROL_METADATA).length).toBe(32);
   });
 
   test('every entry has non-empty id, name, module, and type fields', () => {
@@ -62,7 +62,7 @@ describe('just-friends-panel-data', () => {
     }
     expect(counts['knob']).toBe(5);
     expect(counts['switch']).toBe(2);
-    expect(counts['jack-in']).toBe(10);
+    expect(counts['jack-in']).toBe(12);
     expect(counts['jack-out']).toBe(7);
     expect(counts['led']).toBe(6);
   });
@@ -87,7 +87,7 @@ describe('just-friends-panel-data', () => {
   test('CONTROL_POSITIONS has an entry for every key in CONTROL_METADATA', () => {
     const metaKeys = Object.keys(CONTROL_METADATA);
     const posKeys = Object.keys(CONTROL_POSITIONS);
-    expect(posKeys.length).toBe(30);
+    expect(posKeys.length).toBe(32);
     for (const key of metaKeys) {
       expect(CONTROL_POSITIONS[key], `missing position for ${key}`).toBeDefined();
     }

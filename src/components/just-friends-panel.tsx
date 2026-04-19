@@ -8,6 +8,7 @@ import {
   CONTROL_POSITIONS,
   SECTION_BOUNDS,
   TWO_WAY_SWITCHES,
+  HORIZONTAL_SWITCHES,
   JACK_POSITIONS,
   midiToRotation,
 } from '@/lib/just-friends-panel-data';
@@ -437,6 +438,53 @@ function ThreeWaySwitch({
   );
 }
 
+function HorizontalThreeWaySwitch({
+  id,
+  x,
+  y,
+  label,
+  highlighted,
+  highlightColor,
+  positionLabels,
+}: {
+  id: string;
+  x: number;
+  y: number;
+  label: string;
+  highlighted?: boolean;
+  highlightColor?: 'blue' | 'amber';
+  positionLabels?: string[];
+}) {
+  return (
+    <g id={id} transform={`translate(${x}, ${y})`}>
+      {highlighted && (
+        <rect
+          x={-14}
+          y={-8}
+          width={28}
+          height={16}
+          rx={8}
+          fill="none"
+          stroke={highlightColor === 'amber' ? '#ffaa33' : '#3388ff'}
+          strokeOpacity={0.6}
+          filter={`url(#jf-glow-${highlightColor || 'blue'})`}
+        />
+      )}
+      <circle cx={-8} r={3} fill="#cc4422" stroke="#888" strokeWidth={0.5} />
+      <circle cx={0} r={3} fill="none" stroke="#888" strokeWidth={0.5} />
+      <circle cx={8} r={3} fill="none" stroke="#888" strokeWidth={0.5} />
+      {positionLabels && (
+        <>
+          <text x={-8} y={-10} style={{ ...styles.jackLabel, textAnchor: 'middle' as const, fontSize: '3.5px' }}>{positionLabels[0]}</text>
+          <text x={0} y={-10} style={{ ...styles.jackLabel, textAnchor: 'middle' as const, fontSize: '3.5px' }}>{positionLabels[1]}</text>
+          <text x={8} y={-10} style={{ ...styles.jackLabel, textAnchor: 'middle' as const, fontSize: '3.5px' }}>{positionLabels[2]}</text>
+        </>
+      )}
+      <text y={14} style={{ ...styles.jackLabel, textAnchor: 'middle' as const }}>{label}</text>
+    </g>
+  );
+}
+
 // ===== JackGroup Component =====
 
 function JackGroupComponent({
@@ -665,7 +713,7 @@ function JustFriendsPanelInner({
         <text style={styles.titleText} x={105} y={22}>JUST FRIENDS</text>
 
         {/* Section labels */}
-        <text style={styles.sectionLabel} x={18} y={286}>TRIGGERS</text>
+        <text style={styles.sectionLabel} x={18} y={302}>TRIGGERS</text>
 
         {/* Section tint rectangles */}
         {activeSections?.map((section) => {
@@ -687,7 +735,7 @@ function JustFriendsPanelInner({
         })}
 
         {/* MIX output background (dark square like on the physical panel) */}
-        <rect x={181} y={239} width={18} height={18} rx={2} fill="#1a1a1a" />
+        <rect x={181} y={263} width={18} height={18} rx={2} fill="#1a1a1a" />
 
         {/* Render all controls by module */}
         {MODULE_ORDER.map((moduleName) => {
@@ -731,6 +779,20 @@ function JustFriendsPanelInner({
                           label={ctrl.name}
                           highlighted={highlighted}
                           highlightColor={highlightColor}
+                        />
+                      );
+                    }
+                    if (HORIZONTAL_SWITCHES.has(ctrl.id)) {
+                      return (
+                        <HorizontalThreeWaySwitch
+                          key={ctrl.id}
+                          id={ctrl.id}
+                          x={pos.x}
+                          y={pos.y}
+                          label={ctrl.name}
+                          highlighted={highlighted}
+                          highlightColor={highlightColor}
+                          positionLabels={['transient', 'sustain', 'cycle']}
                         />
                       );
                     }
