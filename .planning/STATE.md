@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-04-17)
 ## Current Position
 
 Phase: 32
-Plan: Not started
-Status: Phase complete — ready for verification
+Plan: 1 of 3
+Status: Executing
 Last activity: 2026-04-19
 
 Progress: [░░░░░░░░░░] 0% (v2.0 milestone)
@@ -56,6 +56,7 @@ Recent decisions affecting current work:
 - [Phase 31]: Crow panel dark background (#1a1a1a) matching physical black panel; simplified parser omits knob parsing
 - [Phase 31]: All 3 i2c combined sessions included (D-05 upper range) completing Crow at 6 total sessions
 - [Phase 32]: routePrefix prop added to shared session components for module/instrument route disambiguation
+- [Phase 32 P01]: Cross-reference dedup via inner Map keyed by target moduleSlug/sessionSlug
 
 ### Pending Todos
 
@@ -76,16 +77,11 @@ None yet.
 | Phase 31 P01 | 3min | 2 tasks | 30 files |
 | Phase 31 P02 | 9min | 2 tasks | 21 files |
 | Phase 31 P03 | 4min | 1 tasks | 6 files |
+| Phase 32 P01 | 5min | 2 tasks | 9 files |
 | Phase 32 P02 | 4min | 2 tasks | 7 files |
 
 ## Session Continuity
 
-<<<<<<< HEAD
-Last session: 2026-04-19T05:07:06.435Z
-Stopped at: Phase 32 context gathered
-Resume file: .planning/phases/32-progress-demo-cross-module-polish/32-CONTEXT.md
-=======
-Last session: 2026-04-19T20:33:11.806Z
-Stopped at: Completed 32-02-PLAN.md
+Last session: 2026-04-19T20:42:15Z
+Stopped at: Completed 32-01-PLAN.md
 Resume file: None
->>>>>>> worktree-agent-a1a19315

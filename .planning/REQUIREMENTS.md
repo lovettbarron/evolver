@@ -53,12 +53,12 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 - [x] **PROG-01**: Progress tracking per module in Zustand store (completion toggle, practice metrics)
 - [x] **PROG-02**: Prerequisite badges within module curricula (same soft-gating pattern)
-- [ ] **PROG-03**: Demo mode with synthetic learner journeys for at least 2 modules (Maths + Plaits)
+- [x] **PROG-03**: Demo mode with synthetic learner journeys for at least 2 modules (Maths + Plaits)
 
 ### Cross-Module
 
-- [ ] **XMOD-01**: Session cross-references between modules (e.g., "Maths envelope → Ikarie filter")
-- [ ] **XMOD-02**: Category-based suggestions on module pages ("Other Sound Sources you own: Plaits, Just Friends")
+- [x] **XMOD-01**: Session cross-references between modules (e.g., "Maths envelope → Ikarie filter")
+- [x] **XMOD-02**: Category-based suggestions on module pages ("Other Sound Sources you own: Plaits, Just Friends")
 
 ## Future Requirements
 
