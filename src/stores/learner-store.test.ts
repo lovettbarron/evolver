@@ -53,4 +53,18 @@ describe('learner-store', () => {
     const completed = useLearnerStore.getState().getCompletedSessions('unknown');
     expect(completed).toEqual(new Set());
   });
+
+  it('toggleCompletion works with module slugs (maths)', () => {
+    useLearnerStore.getState().toggleCompletion('maths', 5);
+    const state = useLearnerStore.getState();
+    expect(state.completions['maths']).toContain(5);
+  });
+
+  it('getCompletedSessions returns correct Set for module slug', () => {
+    useLearnerStore.getState().toggleCompletion('maths', 1);
+    useLearnerStore.getState().toggleCompletion('maths', 3);
+    useLearnerStore.getState().toggleCompletion('maths', 5);
+    const completed = useLearnerStore.getState().getCompletedSessions('maths');
+    expect(completed).toEqual(new Set([1, 3, 5]));
+  });
 });

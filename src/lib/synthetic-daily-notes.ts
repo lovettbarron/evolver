@@ -136,3 +136,44 @@ export const SYNTHETIC_OCTATRACK_JOURNEY_WEEKS = [
   { week: 6, sessions: [19, 20, 21], note: 'Scene-and-crossfader depth (focus module)' },
   { week: 7, sessions: [22, 23], note: 'Current position, mid-Parts-module' },
 ] as const;
+
+/**
+ * Synthetic Maths daily note data simulating ~6 weeks of ADHD-paced practice.
+ *
+ * Models a eurorack module learner exploring function generators:
+ * - 12 sessions total, ~8 completed (67%)
+ * - Week 3 break -- exploring other modules
+ * - Week 6 current position -- advanced sessions upcoming
+ */
+export const SYNTHETIC_MATHS_COMPLETED_SESSIONS: Set<number> = new Set([
+  1, 2, 3, 4, 5, 6, 7, 8,
+]);
+
+export const SYNTHETIC_MATHS_JOURNEY_WEEKS = [
+  { week: 1, sessions: [1, 2, 3], note: 'Enthusiastic start -- rise/fall basics' },
+  { week: 2, sessions: [4, 5], note: 'Modulation deep dive, slowing down' },
+  { week: 3, sessions: [], note: 'Break -- exploring other modules' },
+  { week: 4, sessions: [6, 7], note: 'Return to utilities and timing' },
+  { week: 5, sessions: [8], note: 'OR/SUM bus -- getting into advanced territory' },
+  { week: 6, sessions: [], note: 'Current position -- advanced sessions upcoming' },
+] as const;
+
+/**
+ * Synthetic Plaits daily note data simulating ~5 weeks of ADHD-paced practice.
+ *
+ * Models a VCO module learner exploring synthesis models:
+ * - 10 sessions total, ~6 completed (60%)
+ * - Week 4 break -- life happens
+ * - Week 5 current position -- back to harmonic/string models
+ */
+export const SYNTHETIC_PLAITS_COMPLETED_SESSIONS: Set<number> = new Set([
+  1, 2, 3, 4, 5, 6,
+]);
+
+export const SYNTHETIC_PLAITS_JOURNEY_WEEKS = [
+  { week: 1, sessions: [1, 2], note: 'Foundations and classic waveforms' },
+  { week: 2, sessions: [3, 4], note: 'Granular and FM -- exciting territory' },
+  { week: 3, sessions: [5], note: 'Formant synthesis -- slowing down' },
+  { week: 4, sessions: [], note: 'Break -- life happens' },
+  { week: 5, sessions: [6], note: 'Back -- harmonic/string models' },
+] as const;

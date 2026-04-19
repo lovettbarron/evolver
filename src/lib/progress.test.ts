@@ -219,6 +219,58 @@ describe('getSyntheticCompletedSessions', () => {
   });
 });
 
+describe('getSyntheticCompletedSessions - modules', () => {
+  it('returns Set with 8 items for maths', () => {
+    const result = getSyntheticCompletedSessions('maths');
+    expect(result.size).toBe(8);
+  });
+
+  it('returns Set with 6 items for plaits', () => {
+    const result = getSyntheticCompletedSessions('plaits');
+    expect(result.size).toBe(6);
+  });
+
+  it('maths set contains only positive integers', () => {
+    const result = getSyntheticCompletedSessions('maths');
+    for (const n of result) {
+      expect(Number.isInteger(n)).toBe(true);
+      expect(n).toBeGreaterThan(0);
+    }
+  });
+
+  it('plaits set contains only positive integers', () => {
+    const result = getSyntheticCompletedSessions('plaits');
+    for (const n of result) {
+      expect(Number.isInteger(n)).toBe(true);
+      expect(n).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe('SYNTHETIC_MATHS data', () => {
+  it('SYNTHETIC_MATHS_COMPLETED_SESSIONS has 8 entries', async () => {
+    const { SYNTHETIC_MATHS_COMPLETED_SESSIONS } = await import('./synthetic-daily-notes');
+    expect(SYNTHETIC_MATHS_COMPLETED_SESSIONS.size).toBe(8);
+  });
+
+  it('SYNTHETIC_MATHS_JOURNEY_WEEKS has 6 entries', async () => {
+    const { SYNTHETIC_MATHS_JOURNEY_WEEKS } = await import('./synthetic-daily-notes');
+    expect(SYNTHETIC_MATHS_JOURNEY_WEEKS).toHaveLength(6);
+  });
+});
+
+describe('SYNTHETIC_PLAITS data', () => {
+  it('SYNTHETIC_PLAITS_COMPLETED_SESSIONS has 6 entries', async () => {
+    const { SYNTHETIC_PLAITS_COMPLETED_SESSIONS } = await import('./synthetic-daily-notes');
+    expect(SYNTHETIC_PLAITS_COMPLETED_SESSIONS.size).toBe(6);
+  });
+
+  it('SYNTHETIC_PLAITS_JOURNEY_WEEKS has 5 entries', async () => {
+    const { SYNTHETIC_PLAITS_JOURNEY_WEEKS } = await import('./synthetic-daily-notes');
+    expect(SYNTHETIC_PLAITS_JOURNEY_WEEKS).toHaveLength(5);
+  });
+});
+
 describe('SYNTHETIC_CASCADIA data', () => {
   it('SYNTHETIC_CASCADIA_COMPLETED_SESSIONS has 12 entries', async () => {
     const { SYNTHETIC_CASCADIA_COMPLETED_SESSIONS } = await import('./synthetic-daily-notes');
