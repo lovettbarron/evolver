@@ -169,7 +169,11 @@ Plans:
   3. Demo mode includes synthetic learner journeys for Maths and Plaits — visitors see realistic progress without local vault data
   4. Session pages show cross-references to related sessions in other modules (e.g., "Maths envelope into Ikarie filter")
   5. Module overview pages show category-based suggestions ("Other modules you own in this category: ...")
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 32-01-PLAN.md — Schema extension, cross-reference resolution, category suggestions, synthetic Maths/Plaits journeys
+- [ ] 32-02-PLAN.md — Wire module session pages (overview, list, detail) to real data with learner store
+- [ ] 32-03-PLAN.md — RelatedSessionsCard + CategorySuggestions components, cross-reference content authoring
 **UI hint**: yes
 
 ## Progress
@@ -211,4 +215,4 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
 | 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 3/4 | Complete    | 2026-04-18 |
 | 31. Just Friends + Crow | v2.0 | 3/3 | Complete    | 2026-04-19 |
-| 32. Progress, Demo + Cross-Module Polish | v2.0 | 0/? | Not started | - |
+| 32. Progress, Demo + Cross-Module Polish | v2.0 | 0/3 | Not started | - |
