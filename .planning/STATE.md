@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
 status: executing
-stopped_at: Completed 31-01-PLAN.md
-last_updated: "2026-04-19T04:11:59.501Z"
+stopped_at: Completed 31-02-PLAN.md
+last_updated: "2026-04-19T04:24:14.086Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 18
-  completed_plans: 16
+  completed_plans: 17
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-17)
 ## Current Position
 
 Phase: 31 (just-friends-crow) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-04-19
 
@@ -53,6 +53,7 @@ Recent decisions affecting current work:
 - [v2.0 Research]: Just Friends and Crow are separate modules with separate configs/panels
 - [Phase 30]: 8HP viewBox (170x380) for Ikarie -- narrowest eurorack module panel
 - [Phase 31]: 11 JF sessions (exceeding CURR-04 range) justified by three distinct modes each needing dedicated coverage
+- [Phase 31]: Crow panel dark background (#1a1a1a) matching physical black panel; simplified parser omits knob parsing
 
 ### Pending Todos
 
@@ -71,9 +72,10 @@ None yet.
 | 260418-sii | Add ModularGrid photos alongside SVG panel renderings | 2026-04-18 | ee26b71 | [260418-sii-add-a-photo-of-the-eurorack-modules-next](./quick/260418-sii-add-a-photo-of-the-eurorack-modules-next/) |
 | 260419-0b2 | Fix Ikarie panel diagonal RESONANCE fader | 2026-04-19 | 00929cc | [260419-0b2-fix-ikarie-panel-layout-to-use-diagonal-](./quick/260419-0b2-fix-ikarie-panel-layout-to-use-diagonal-/) |
 | Phase 31 P01 | 3min | 2 tasks | 30 files |
+| Phase 31 P02 | 9min | 2 tasks | 21 files |
 
 ## Session Continuity
 
-Last session: 2026-04-19T04:11:59.497Z
-Stopped at: Completed 31-01-PLAN.md
+Last session: 2026-04-19T04:24:14.082Z
+Stopped at: Completed 31-02-PLAN.md
 Resume file: None
