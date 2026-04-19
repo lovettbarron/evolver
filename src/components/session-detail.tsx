@@ -613,6 +613,7 @@ interface SessionDetailProps {
   reference: string | null;
   isDemo: boolean;
   banner?: React.ReactNode;
+  routePrefix?: string;
 }
 
 export function SessionDetail({
@@ -626,6 +627,7 @@ export function SessionDetail({
   reference,
   isDemo,
   banner,
+  routePrefix = 'instruments',
 }: SessionDetailProps) {
   const hasEvolverPanel =
     instrumentSlug === 'evolver' && html.includes('data-evolver-panel');
@@ -698,7 +700,7 @@ export function SessionDetail({
   return (
     <div className="pb-[72px]">
       <StickyHeader
-        backHref={`/instruments/${instrumentSlug}/sessions`}
+        backHref={`/${routePrefix}/${instrumentSlug}/sessions`}
         sessionIdentifier={`Session ${session.session_number}`}
         quickRefContent={quickRefContent}
         instrumentSlug={instrumentSlug}
@@ -814,6 +816,7 @@ export function SessionDetail({
             prev={prev}
             next={next}
             instrumentSlug={instrumentSlug}
+            routePrefix={routePrefix}
           />
         </div>
       </NarrowShell>

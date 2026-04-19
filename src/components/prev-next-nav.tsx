@@ -5,15 +5,16 @@ interface PrevNextNavProps {
   prev: { slug: string; title: string } | null;
   next: { slug: string; title: string } | null;
   instrumentSlug: string;
+  routePrefix?: string;
 }
 
-export function PrevNextNav({ prev, next, instrumentSlug }: PrevNextNavProps) {
+export function PrevNextNav({ prev, next, instrumentSlug, routePrefix = 'instruments' }: PrevNextNavProps) {
   return (
     <nav className="flex items-start justify-between">
       <div className="flex-1">
         {prev && (
           <Link
-            href={`/instruments/${instrumentSlug}/sessions/${prev.slug}`}
+            href={`/${routePrefix}/${instrumentSlug}/sessions/${prev.slug}`}
             className="group inline-flex flex-col text-muted hover:text-accent transition-colors"
           >
             <span className="text-xs uppercase tracking-wider mb-xs flex items-center gap-xs">
@@ -29,7 +30,7 @@ export function PrevNextNav({ prev, next, instrumentSlug }: PrevNextNavProps) {
       <div className="flex-1 text-right">
         {next && (
           <Link
-            href={`/instruments/${instrumentSlug}/sessions/${next.slug}`}
+            href={`/${routePrefix}/${instrumentSlug}/sessions/${next.slug}`}
             className="group inline-flex flex-col items-end text-muted hover:text-accent transition-colors"
           >
             <span className="text-xs uppercase tracking-wider mb-xs flex items-center gap-xs">
