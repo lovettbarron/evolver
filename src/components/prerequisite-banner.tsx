@@ -7,12 +7,14 @@ interface PrerequisiteBannerProps {
   prerequisiteNumber: number;
   prerequisiteSlug: string;
   instrumentSlug: string;
+  routePrefix?: string;
 }
 
 export function PrerequisiteBanner({
   prerequisiteNumber,
   prerequisiteSlug,
   instrumentSlug,
+  routePrefix = 'instruments',
 }: PrerequisiteBannerProps) {
   const [visible, setVisible] = useState(true);
 
@@ -26,7 +28,7 @@ export function PrerequisiteBanner({
       <p className="text-[14px] text-text leading-[1.5]">
         This session builds on{' '}
         <Link
-          href={`/instruments/${instrumentSlug}/sessions/${prerequisiteSlug}`}
+          href={`/${routePrefix}/${instrumentSlug}/sessions/${prerequisiteSlug}`}
           className="text-accent underline"
         >
           Session #{prerequisiteNumber}

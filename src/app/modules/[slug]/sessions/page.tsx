@@ -1,14 +1,32 @@
-import { WideShell } from '@/components/page-shell';
+import { listSessions } from '@/lib/content/reader';
+import { loadConfig } from '@/lib/config';
+import { groupByModule } from '@/lib/sessions';
+import { scanDailyNotes, getSyntheticCompletedSessions } from '@/lib/progress';
+import { SessionListClient } from '@/components/session-list-client';
 
-export default function ModuleSessionsPage() {
+export default async function ModuleSessionsPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const config = await loadConfig();
+  const sessions = await listSessions(slug, config);
+  const groups = groupByModule(sessions);
+
+  const completedSessions = config.vaultPath
+    ? (await scanDailyNotes(config.vaultPath)).sessionNumbers
+    : getSyntheticCompletedSessions(slug);
+
   return (
-    <WideShell className="py-2xl">
-      <div className="bg-sunken rounded-lg p-2xl flex flex-col items-center text-center">
-        <h2 className="font-display text-[20px] font-bold text-text">Sessions coming soon</h2>
-        <p className="text-base text-muted mt-sm max-w-[400px]">
-          Learning sessions for this module are being developed. Check back soon.
-        </p>
-      </div>
-    </WideShell>
+    <div className="max-w-[720px] mx-auto px-lg lg:px-xl py-2xl">
+      <h1 className="text-4xl font-bold mb-2xl">Sessions</h1>
+      <SessionListClient
+        groups={groups}
+        instrumentSlug={slug}
+        vaultCompletedSessions={Array.from(completedSessions)}
+        routePrefix="modules"
+      />
+    </div>
   );
 }

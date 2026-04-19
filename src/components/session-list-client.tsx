@@ -13,12 +13,14 @@ interface SessionListClientProps {
   groups: ModuleGroup[];
   instrumentSlug: string;
   vaultCompletedSessions: number[];
+  routePrefix?: string;
 }
 
 export function SessionListClient({
   groups,
   instrumentSlug,
   vaultCompletedSessions,
+  routePrefix = 'instruments',
 }: SessionListClientProps) {
   const hydrated = useHydrated();
   const manualCompletionsList = useLearnerStore((s) => s.completions[instrumentSlug]);
@@ -47,7 +49,7 @@ export function SessionListClient({
                     number={session.data.session_number}
                     title={session.data.title}
                     duration={session.data.duration}
-                    href={`/instruments/${instrumentSlug}/sessions/${session.slug}`}
+                    href={`/${routePrefix}/${instrumentSlug}/sessions/${session.slug}`}
                     state={state}
                     prerequisiteNumber={session.data.prerequisite}
                   />
