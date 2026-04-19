@@ -35,6 +35,11 @@ const PANEL_CONFIG: Record<string, { title: string; description: string; maxWidt
     description: 'Interactive panel reference for Mannequins Just Friends. Six-channel function generator and oscillator. Drag knobs to explore.',
     maxWidth: 'max-w-[400px]',
   },
+  crow: {
+    title: 'Crow Panel',
+    description: 'Interactive panel reference for Monome Crow. Scriptable USB-CV-i2c bridge.',
+    maxWidth: 'max-w-[200px]',
+  },
 };
 
 async function photoExists(slug: string): Promise<boolean> {
