@@ -77,7 +77,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 - [ ] **Phase 28: Panel System + First Panel** - Generic ModulePanel renderer, HP-aware sizing, session annotations, Plaits panel proof
 - [ ] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation
 - [x] **Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels** - Four module curricula and panels following proven pattern (completed 2026-04-18)
-- [ ] **Phase 31: Just Friends + Crow** - Two separate modules with i2c integration, standalone + combined sessions
+- [x] **Phase 31: Just Friends + Crow** - Two separate modules with i2c integration, standalone + combined sessions (completed 2026-04-19)
 - [ ] **Phase 32: Progress, Demo + Cross-Module Polish** - Per-module progress tracking, demo mode, cross-module references and category suggestions
 
 ## Phase Details
@@ -156,7 +156,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 Plans:
 - [x] 31-01-PLAN.md — Just Friends end-to-end: panel, 11 sessions, overview, integration wiring
 - [x] 31-02-PLAN.md — Crow standalone: panel, 3 sessions, overview, integration wiring
-- [ ] 31-03-PLAN.md — Crow i2c combined sessions (3 sessions using Just Type protocol)
+- [x] 31-03-PLAN.md — Crow i2c combined sessions (3 sessions using Just Type protocol)
 **UI hint**: yes
 
 ### Phase 32: Progress, Demo + Cross-Module Polish
@@ -210,5 +210,5 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 28. Panel System + First Panel | v2.0 | 0/? | Not started | - |
 | 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
 | 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 3/4 | Complete    | 2026-04-18 |
-| 31. Just Friends + Crow | v2.0 | 2/3 | In Progress|  |
+| 31. Just Friends + Crow | v2.0 | 3/3 | Complete   | 2026-04-19 |
 | 32. Progress, Demo + Cross-Module Polish | v2.0 | 0/? | Not started | - |
