@@ -1,5 +1,12 @@
 import { z } from 'zod';
 
+export const CrossReferenceSchema = z.object({
+  ref: z.string(),      // "module-slug/session-slug"
+  reason: z.string(),   // Pedagogical connection description
+});
+
+export type CrossReference = z.infer<typeof CrossReferenceSchema>;
+
 export const SessionSchema = z.object({
   title: z.string(),
   section: z.string(),
@@ -12,6 +19,7 @@ export const SessionSchema = z.object({
   instrument: z.string(),
   instrument_type: z.enum(['instrument', 'eurorack_module']).default('instrument'),
   reference: z.string().optional(),
+  cross_references: z.array(CrossReferenceSchema).optional(),
 }).passthrough();
 
 export const CableConnectionSchema = z.object({

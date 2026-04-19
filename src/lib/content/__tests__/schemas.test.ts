@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { SessionSchema, PatchSchema, InstrumentFileSchema, ConfigSchema, InstrumentConfigSchema, ModuleConfigSchema, ModuleCategoryEnum } from '../schemas.js';
+import { SessionSchema, PatchSchema, InstrumentFileSchema, ConfigSchema, InstrumentConfigSchema, ModuleConfigSchema, ModuleCategoryEnum, CrossReferenceSchema } from '../schemas.js';
 import { ZodError } from 'zod';
 
 describe('SessionSchema', () => {
@@ -56,6 +56,79 @@ describe('SessionSchema', () => {
     };
     const result = SessionSchema.parse(data);
     expect(result.obsidian_custom).toBe('foo');
+  });
+});
+
+describe('CrossReferenceSchema', () => {
+  it('accepts valid cross reference', () => {
+    const result = CrossReferenceSchema.parse({ ref: 'maths/03-slew-portamento', reason: 'Similar envelope shapes' });
+    expect(result.ref).toBe('maths/03-slew-portamento');
+    expect(result.reason).toBe('Similar envelope shapes');
+  });
+
+  it('rejects missing ref', () => {
+    expect(() => CrossReferenceSchema.parse({ reason: 'Test' })).toThrow(ZodError);
+  });
+
+  it('rejects missing reason', () => {
+    expect(() => CrossReferenceSchema.parse({ ref: 'maths/01' })).toThrow(ZodError);
+  });
+});
+
+describe('SessionSchema cross_references', () => {
+  const baseSession = {
+    title: 'Session 01: Test',
+    section: 'Foundations',
+    session_number: 1,
+    duration: 20,
+    prerequisite: null,
+    output_type: 'patch',
+    difficulty: 'beginner',
+    tags: ['test'],
+    instrument: 'maths',
+  };
+
+  it('accepts session with valid cross_references', () => {
+    const data = {
+      ...baseSession,
+      cross_references: [{ ref: 'maths/03-slew-portamento', reason: 'Similar envelope shapes' }],
+    };
+    const result = SessionSchema.parse(data);
+    expect(result.cross_references).toHaveLength(1);
+    expect(result.cross_references![0].ref).toBe('maths/03-slew-portamento');
+  });
+
+  it('accepts session without cross_references (optional)', () => {
+    const result = SessionSchema.parse(baseSession);
+    expect(result.cross_references).toBeUndefined();
+  });
+
+  it('rejects cross_references with missing ref', () => {
+    const data = {
+      ...baseSession,
+      cross_references: [{ reason: 'Test' }],
+    };
+    expect(() => SessionSchema.parse(data)).toThrow(ZodError);
+  });
+
+  it('rejects cross_references with missing reason', () => {
+    const data = {
+      ...baseSession,
+      cross_references: [{ ref: 'maths/01' }],
+    };
+    expect(() => SessionSchema.parse(data)).toThrow(ZodError);
+  });
+
+  it('accepts multiple cross_references', () => {
+    const data = {
+      ...baseSession,
+      cross_references: [
+        { ref: 'maths/03-slew', reason: 'Envelope shapes' },
+        { ref: 'plaits/05-formant', reason: 'Formant synthesis' },
+      ],
+    };
+    const result = SessionSchema.parse(data);
+    expect(result.cross_references).toHaveLength(2);
   });
 });
 
