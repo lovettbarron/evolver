@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Eurorack Module Learning
 status: verifying
-stopped_at: Completed 31-03-PLAN.md
-last_updated: "2026-04-19T04:35:11.137Z"
+stopped_at: Completed 32-02-PLAN.md
+last_updated: "2026-04-19T20:33:11.809Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 18
-  completed_plans: 18
+  completed_plans: 19
   percent: 0
 ---
 
@@ -55,6 +55,7 @@ Recent decisions affecting current work:
 - [Phase 31]: 11 JF sessions (exceeding CURR-04 range) justified by three distinct modes each needing dedicated coverage
 - [Phase 31]: Crow panel dark background (#1a1a1a) matching physical black panel; simplified parser omits knob parsing
 - [Phase 31]: All 3 i2c combined sessions included (D-05 upper range) completing Crow at 6 total sessions
+- [Phase 32]: routePrefix prop added to shared session components for module/instrument route disambiguation
 
 ### Pending Todos
 
@@ -75,9 +76,10 @@ None yet.
 | Phase 31 P01 | 3min | 2 tasks | 30 files |
 | Phase 31 P02 | 9min | 2 tasks | 21 files |
 | Phase 31 P03 | 4min | 1 tasks | 6 files |
+| Phase 32 P02 | 4min | 2 tasks | 7 files |
 
 ## Session Continuity
 
-Last session: 2026-04-19T04:30:36.288Z
-Stopped at: Completed 31-03-PLAN.md
+Last session: 2026-04-19T20:33:11.806Z
+Stopped at: Completed 32-02-PLAN.md
 Resume file: None

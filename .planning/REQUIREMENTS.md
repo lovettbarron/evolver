@@ -51,8 +51,8 @@ Requirements for the eurorack module learning milestone. Each maps to roadmap ph
 
 ### Progress & Demo
 
-- [ ] **PROG-01**: Progress tracking per module in Zustand store (completion toggle, practice metrics)
-- [ ] **PROG-02**: Prerequisite badges within module curricula (same soft-gating pattern)
+- [x] **PROG-01**: Progress tracking per module in Zustand store (completion toggle, practice metrics)
+- [x] **PROG-02**: Prerequisite badges within module curricula (same soft-gating pattern)
 - [ ] **PROG-03**: Demo mode with synthetic learner journeys for at least 2 modules (Maths + Plaits)
 
 ### Cross-Module
