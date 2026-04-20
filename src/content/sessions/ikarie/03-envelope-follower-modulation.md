@@ -2,7 +2,7 @@
 title: 'Session 03: Envelope Follower as Modulation Source'
 session_number: 3
 duration: 25
-prerequisite: 01-foundations-filter-modes-stereo
+prerequisite: 1
 output_type: patch
 difficulty: intermediate
 tags:

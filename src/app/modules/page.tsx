@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { loadConfig } from '@/lib/config';
-import { discoverModules, loadModuleConfig } from '@/lib/content/reader';
+import { discoverModules, loadModuleConfig, listSessions } from '@/lib/content/reader';
 import { WideShell } from '@/components/page-shell';
 import { ModuleCategoryTabs } from '@/components/module-category-tabs';
 
@@ -10,13 +10,14 @@ export default async function ModulesPage() {
   const modules = await Promise.all(
     moduleSlugs.map(async (slug) => {
       const moduleConfig = await loadModuleConfig(slug, config);
+      const sessions = await listSessions(slug, config);
       return {
         slug,
         displayName: moduleConfig.display_name,
         manufacturer: moduleConfig.manufacturer,
         hpWidth: moduleConfig.hp_width,
         categories: moduleConfig.categories,
-        sessionCount: 0, // No sessions until Phase 29+
+        sessionCount: sessions.length,
       };
     })
   );
