@@ -78,7 +78,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 - [ ] **Phase 29: Maths Curriculum + Panel** - Hardest module first: 10-12 sessions, overview page, Maths panel, ADHD format validation
 - [x] **Phase 30: Plaits, Beads, Swells, Ikarie Curricula + Panels** - Four module curricula and panels following proven pattern (completed 2026-04-18)
 - [x] **Phase 31: Just Friends + Crow** - Two separate modules with i2c integration, standalone + combined sessions (completed 2026-04-19)
-- [ ] **Phase 32: Progress, Demo + Cross-Module Polish** - Per-module progress tracking, demo mode, cross-module references and category suggestions
+- [x] **Phase 32: Progress, Demo + Cross-Module Polish** - Per-module progress tracking, demo mode, cross-module references and category suggestions (completed 2026-04-20)
 
 ## Phase Details
 
@@ -173,7 +173,7 @@ Plans:
 Plans:
 - [x] 32-01-PLAN.md — Schema extension, cross-reference resolution, category suggestions, synthetic Maths/Plaits journeys
 - [x] 32-02-PLAN.md — Wire module session pages (overview, list, detail) to real data with learner store
-- [ ] 32-03-PLAN.md — RelatedSessionsCard + CategorySuggestions components, cross-reference content authoring
+- [x] 32-03-PLAN.md — RelatedSessionsCard + CategorySuggestions components, cross-reference content authoring
 **UI hint**: yes
 
 ## Progress
@@ -215,4 +215,4 @@ Phases execute in numeric order: 26 → 27 → 28 → 29 → 30 → 31 → 32
 | 29. Maths Curriculum + Panel | v2.0 | 0/? | Not started | - |
 | 30. Plaits, Beads, Swells, Ikarie + Panels | v2.0 | 3/4 | Complete    | 2026-04-18 |
 | 31. Just Friends + Crow | v2.0 | 3/3 | Complete    | 2026-04-19 |
-| 32. Progress, Demo + Cross-Module Polish | v2.0 | 2/3 | In Progress|  |
+| 32. Progress, Demo + Cross-Module Polish | v2.0 | 3/3 | Complete   | 2026-04-20 |
