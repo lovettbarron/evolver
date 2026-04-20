@@ -24,7 +24,7 @@ An ADHD-friendly learning curriculum with 15-30 minute sessions that produces ta
 
 **v1.3 shipped:** Visual Redesign — OKLCH design system, typography, layout shell, cards, motion, per-instrument color identity, Octatrack curriculum (31 sessions, 5 patches, Elektron-orange identity, demo mode)
 
-**v2.0 in progress:** Phase 31 complete — Just Friends (14HP, 30 controls, 11 sessions) and Crow (2HP, 7 controls, 6 sessions incl. 3 i2c capstone sessions) with full panel visualizers, integration wiring, and triple-written curricula
+**v2.0 complete:** Phase 32 complete — per-module progress tracking, demo mode with Maths/Plaits synthetic journeys, cross-module references (6 sessions cross-referenced across 5 modules), and category-based suggestions on module overview pages
 
 ## Current Milestone: v2.0 Eurorack Module Learning
 
@@ -176,4 +176,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-17 — Phase 27 (Module Navigation + Routing) complete*
+*Last updated: 2026-04-20 — Phase 32 (Progress, Demo + Cross-Module Polish) complete — v2.0 milestone finished*
