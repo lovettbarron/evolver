@@ -2,7 +2,7 @@
 title: 'Session 04: Self-Oscillation & Feedback'
 session_number: 4
 duration: 20
-prerequisite: 02-dual-peak-resonance
+prerequisite: 2
 output_type: patch
 difficulty: advanced
 tags:

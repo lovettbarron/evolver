@@ -2,7 +2,7 @@
 title: 'Session 02: Dual-Peak Resonance Exploration'
 session_number: 2
 duration: 20
-prerequisite: 01-foundations-filter-modes-stereo
+prerequisite: 1
 output_type: patch
 difficulty: intermediate
 tags:

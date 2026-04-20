@@ -2,7 +2,7 @@
 title: 'Session 05: In-Context Patch -- Ikarie in a Voice Chain'
 session_number: 5
 duration: 25
-prerequisite: 03-envelope-follower-modulation
+prerequisite: 3
 output_type: recording
 difficulty: advanced
 tags:
