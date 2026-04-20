@@ -14,6 +14,9 @@ instrument: ikarie
 instrument_type: eurorack_module
 reference: 'Ikarie Manual pp. 3-4'
 section: Modulation
+cross_references:
+  - ref: 'swells/06-freeze-reverse-performance'
+    reason: 'Feed Ikarie filtered output into Swells freeze for spectral snapshots'
 ---
 
 # Session 03: Envelope Follower as Modulation Source

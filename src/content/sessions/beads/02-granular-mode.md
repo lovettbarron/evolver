@@ -14,6 +14,9 @@ instrument: beads
 instrument_type: eurorack_module
 reference: 'Beads Manual pp. 8-10'
 section: Grain Modes
+cross_references:
+  - ref: 'swells/06-freeze-reverse-performance'
+    reason: 'Chain Beads granular output into Swells reverb for deep ambient layers'
 ---
 
 # Session 02: Granular Mode -- Time-Stretching & Pitch-Shifting

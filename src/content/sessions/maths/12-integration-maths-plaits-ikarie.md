@@ -15,6 +15,13 @@ instrument: maths
 instrument_type: eurorack_module
 reference: 'Maths Manual, Plaits Manual, Ikarie Manual'
 section: Integration
+cross_references:
+  - ref: 'ikarie/03-envelope-follower-modulation'
+    reason: 'Use Maths envelopes to modulate Ikarie filter cutoff'
+  - ref: 'plaits/04-fm-synthesis-particle-noise'
+    reason: 'Maths LFO modulates Plaits timbre for evolving FM textures'
+  - ref: 'beads/02-granular-mode'
+    reason: 'Maths cycling envelopes create evolving granular textures'
 ---
 
 # Session 12: Maths as Modulation Hub

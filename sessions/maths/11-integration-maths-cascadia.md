@@ -15,6 +15,9 @@ instrument: maths
 instrument_type: eurorack_module
 reference: 'Maths Manual, Cascadia Manual'
 section: Integration
+cross_references:
+  - ref: 'just-friends/06-cycle-lfo-textures-phase-relationships'
+    reason: 'Combine Maths OR gate logic with Just Friends phase relationships for polyrhythmic modulation'
 ---
 
 # Session 11: Maths + Cascadia

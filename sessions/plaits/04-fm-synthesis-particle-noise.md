@@ -15,6 +15,9 @@ instrument: plaits
 instrument_type: eurorack_module
 reference: 'Plaits Manual pp. 8, 10'
 section: Mode Pairs
+cross_references:
+  - ref: 'ikarie/03-envelope-follower-modulation'
+    reason: 'Route Plaits FM output through Ikarie for resonant filtering of digital harmonics'
 ---
 
 # Session 04: FM Synthesis & Particle Noise
