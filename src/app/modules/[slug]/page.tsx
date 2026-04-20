@@ -4,6 +4,8 @@ import { groupByModule } from '@/lib/sessions';
 import { scanDailyNotes, getSyntheticCompletedSessions } from '@/lib/progress';
 import { SessionListClient } from '@/components/session-list-client';
 import { WideShell } from '@/components/page-shell';
+import { buildCategorySuggestions } from '@/lib/category-suggestions';
+import { CategorySuggestions } from '@/components/category-suggestions';
 
 export default async function ModuleOverviewPage({
   params,
@@ -23,6 +25,8 @@ export default async function ModuleOverviewPage({
   const completedCount = sessions.filter(
     s => completedSessions.has(s.data.session_number)
   ).length;
+
+  const categorySuggestions = await buildCategorySuggestions(slug, config);
 
   return (
     <WideShell className="py-2xl">
@@ -67,6 +71,9 @@ export default async function ModuleOverviewPage({
             </ul>
           </div>
         )}
+
+        {/* Category suggestions */}
+        <CategorySuggestions groups={categorySuggestions} />
       </div>
     </WideShell>
   );
